@@ -25,7 +25,7 @@ function Login() {
 		success: function(data) {
 			sessionStorage.setItem('accessToken',data.data.accessToken);
 			sessionStorage.setItem('userinfo',JSON.stringify(data.data.user));
-			window.location.replace("../Front/index.html");//NewClassRoom//UploadTopics//header
+			window.location.replace("../Front/NewClassRoom.html");//NewClassRoom//UploadTopics//header
 		}
 	})
 }
