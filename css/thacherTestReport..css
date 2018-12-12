@@ -1,0 +1,218 @@
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#repostNav_div{
+			margin-top: -21px;
+			width: 100%;
+			height: 40px;
+			background-color: #3D72FE;
+		}
+		#repostNav{
+			padding-left: 18.75%;
+			padding-right: 18.75%;
+		}
+		#repostNav ul li{
+			float: left;
+			width: 125px;
+			height: 40px;
+			text-align: center;
+			line-height: 37px;
+			list-style:none;
+			/*background-color: #2984CE;*/
+		}
+		#repostNav ul li:hover{
+			background-color: #59E8E3;
+			cursor:pointer;
+		}
+		.repostNavLiHouver{
+			background-color: #59E8E3;
+		}
+		#repostNav ul li a{
+			color: #FFFFFF;
+			text-decoration: none;
+		}
+		#repostNav ul li a:hover{
+			background-color: #59E8E3;
+			cursor:pointer;
+		}
+		#thacherTestReport_div{
+			height: 100%;
+			height: 100%;
+			background-color: #F2F2F2;
+			padding-left: 18.75%;
+			padding-right: 18.75%;
+		}
+		#ClassReport_div{
+			width: 100%;
+			height: 100%;
+			background-color: #FFFFFF;
+			display: inline-block;
+			margin-top: 15px;
+		}
+		/*.Class_schoolyear_select
+            {
+               width                    : 90pt;
+               height                   : 30pt;
+               padding-right            : 20pt;
+               text-indent              : 4pt;
+               text-align               : left;
+               vertical-align           : middle;
+               border                   : 0px;
+               -moz-border-radius       : 6px;
+               -webkit-border-radius    : 6px;
+               border-radius            : 6px;
+               -webkit-appearance       : none;
+               -moz-appearance          : none;
+               appearance               : none;
+               font-family              : SimHei;
+               font-size                : 14pt;
+               cursor                   : pointer;
+               outline                  : none;
+            }*/
+           .Class_schoolyear_select{
+           		width: 150px;
+            	height: 36px;
+           }
+            /*.selectdiv_li_div::after
+            {
+            	float: right;
+            	color: #CFCFCF;
+            	background              : #94c1e7;
+                content                 : "\25bc";
+                top                     : 0;
+                right                   : 0;
+                bottom                  : 0;
+                width                   : 35pt;
+                left 					: 69px;
+                line-height             : 37pt;
+                vertical-align          : middle;
+               text-align              : center;
+                background              : #94c1e7;
+                color                   : #2984ce;
+               -moz-border-radius       : 0 6px 6px 0;
+               -webkit-border-radius    : 0 6px 6px 0;
+                border-radius           : 0 6px 6px 0;
+            }*/
+            .selectdiv_li{
+            	float: left;
+            	list-style: none;
+            	margin-left: 20px;
+            }
+            .selectdiv_li_div{
+            	width: 150px;
+            	height: 36px;
+            	/*border: aqua 1px solid;*/
+            }
+            #ClassReport_headDiv{
+            	margin: 22px;
+            }
+            #ClassReport_headDiv_1{
+            	padding-left: 6px;
+            }
+            #ClassReport_headDiv_2{
+            	padding-top: 60px;
+            }
+            #ClassReport_headDiv_2 div{
+            	display: inline-block;
+            }
+            #ClassReport_headDiv_2 ul li{
+            	list-style: none;
+            	line-height: 29px;
+            	padding-left: 26px;
+            }
+           #ClassReport_headDiv_2 ul li {
+           	margin-top: 4px;
+           }
+           #ClassReport_headDiv_2 ul li a{
+           	margin-left: 10px;
+           }
+           #ClassReport_headDiv_2 ul li a{
+           		padding: 4px;
+           		color: #000000;
+           		text-decoration: none;
+           }
+           .spanclick{
+           	background-color: #3D72FE;
+           	color: #FFFFFF;
+           }
+           #ClassReport_headDiv_2 a:hover{
+           	cursor: pointer;
+           	background-color: #3D72FE;
+           	color: #FFFFFF;
+           	padding: 4px;
+           }
+           #ClassReport_tailDiv{
+           	margin-top: 10px;
+           	width: 100%;
+           	height: 100%;
+           	background-color: #FFFFFF;
+           	font-size: 16px;
+           }
+           .tailDiv_1{
+           	margin-top: 10px;
+           }
+           .tailDiv{
+           	width: 1141px;
+           	border: 1px solid #A0A6AD;
+           	margin: 15px;
+           	display: inline-block;
+           	padding-left: 43px;
+           	position:relative
+           }
+		   .viewType{
+		   	display: inline-block;
+			background-color: #FDF3EC;
+			color: #C75C5A;
+			border: 8px solid #FDF3EC;
+			text-align: center;
+			border-radius: 50% 50% 50% 50%;
+			height: 35px;
+		   }		
+		   .ExaminationName{
+		   	display: inline-block;
+		   }
+		   .tailDiv_2_ul li{
+		   	float: left;
+		   	list-style: none;
+		   }
+		   .tailDiv_nav{
+		   	margin-top: 10px;
+		   	font-size: 14px;
+		   	color: #a0a6ad;
+		   	display: inline-block;
+		   }
+		   .tailDiv_nav:nth-child(n+2){
+			margin-left: -34px;
+			margin-bottom: 10px;
+		   }
+		   .tailDiv_nav p{
+		   	display: inline-block;
+		   	padding-left: 37px;
+		   	text-align: center;
+		   }
+		   .viewReport_div{
+		   	height: 40px;
+		   	width: 120px;
+		   	border: 1px solid #3D72FE;
+		   	text-align: center;
+		   	float: right;
+			line-height: 39px;
+			position:absolute; 
+			top:23px;
+			right:23px;
+			color: #3D72FE;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		   }
+		   .viewReport_div:hover{
+		   	background-color: #3D72FE;
+		   	color: #FFFFFF;
+		   	cursor: pointer;
+		   }
+		   .tailDiv:hover{
+		   	border: 1px solid #3D72FE;
+		   }
+		   

@@ -1,0 +1,113 @@
+/*html body {
+  font-size: 16px;
+  font-family: "微软雅黑";
+  color: #FFFFFF;
+}*/
+.s-side i {
+	color: #0000FF;
+  font-size: 12px;
+}
+.s-side a {
+  text-decoration: none;
+  color: #000000;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.s-side ul {
+  list-style: none;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+/*清除浮动*/
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+/*定位居中*/
+.middle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.s-side {
+	font-size: 16px;
+  font-family: "微软雅黑";
+  color: #000000;
+	overflow: auto;
+ /* min-width: 200px;*/
+  width: 230px;
+  height: 500px;
+  position: fixed;
+  top: 13%;
+  left:368px;
+  bottom: 0;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px #313131;
+  padding: 10px;
+}
+.s-side .s-firstItem i {
+  font-size: 20px;
+}
+.s-side .s-firstItem span {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 20px;
+  text-shadow: 0px 0px 5px #F1A899;
+  white-space: 10px;
+}
+.s-side .first {
+	padding: 10px 0px;
+	border-bottom: 1px solid #424242;
+}
+.s-side .d-firstNav span {
+  display: inline-block;
+  margin-left: 10px;
+}
+.d-firstNavs span {
+  display: inline-block;
+  margin-left: 10px;
+}
+.s-side .d-firstNav i.fr {
+  font-size: 25px;
+}
+.s-side .d-firstNavs i.fr {
+  font-size: 25px;
+}
+.s-side .s-secondNav,
+.s-side .s-secondItem {
+  margin-left: 14px;
+  margin-top: 10px;
+}
+.s-secondNav:hover,.d-firstNav:hover{
+	background-color: #00B83F;cursor: pointer
+}
+.s-secondNav:hover,.d-firstNavs:hover{
+	background-color: #00B83F;cursor: pointer
+}
+.s-side .d-secondDrop {
+  margin-left: 41px;
+  margin-top: 10px;
+}
+.iconRotate {
+  transform: rotate(90deg);
+  transition: transform 0.5s;
+}
+.s-firstDrop,
+.s-secondDrop {
+  display: none;
+}

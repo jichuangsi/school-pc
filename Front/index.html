@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+		<title></title>
+	</head>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/progressBar.js"></script>
+	<script type="text/javascript" src="../js/homePage.js"></script>
+	<script type="text/javascript" src="../lib/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../js/progressBar.js"></script>
+	<link rel="stylesheet" href="../lib/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/homePage.css" />
+	<style type="text/css">
+		.la {
+			float: left;
+			width: 40px;
+			height: 20px;
+			border-bottom: 1px solid #e6edf1;
+		}
+		
+		.lato {
+			float: left;
+			width: 220px;
+			height: 20px;
+			border-bottom: 1px solid #e6edf1;
+		}
+		
+		.lb {
+			float: left;
+			width: 10px;
+			height: 10px;
+			margin: 15px 2px;
+			border-left: 1px solid #e6edf1;
+			border-top: 1px solid #e6edf1;
+			transform: rotate(45deg);
+		}
+		
+		.lcto {
+			float: left;
+			width: 64.5%;
+			height: 20px;
+			border-bottom: 1px solid #e6edf1;
+		}
+		
+		.lc {
+			float: left;
+			width: 85%;
+			height: 20px;
+			border-bottom: 1px solid #e6edf1;
+		}
+	</style>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" marginwidth=0 SRC="../public/header.html"></iframe>
+		<div class="main-1"></div>
+		<div class="conterToIndex">
+			<!--主体部分-->
+			<div class="conterToIndex-middle">
+				<div class="conterToIndex-middle-one">
+					<div class="conterToIndex-middle-one-ks">
+						<div class="conterToIndex-middle-ys"></div><label style="float:left;margin-left: 20px;margin-top: 15px;font-weight: 900;">考试</label>
+					</div>
+					<div class="conterToIndex-middle-title">
+						2018-2019学年第一学期高二期中测验（理科）<label id="date"></label>
+					</div>
+					<div class="conterToIndex-middle-xm">
+						<ul>
+							<li><label class="label-color" style="margin-left: 40px;">高二年级15班&nbsp;-&nbsp;物理</label></li>
+							<li>
+								<font class="font-size">70.04</font><label class="label-color">平均分</label></li>
+							<li>
+								<font class="font-size">70.04%</font><label class="label-color">及格率</label></li>
+							<li>
+								<div class="conterToIndex-middle-xm-score">成绩一览</div>
+							</li>
+						</ul>
+						<div class="hr-div"></div>
+					</div>
+					<div class="conterToIndex-middle-xm">
+						<ul>
+							<li><label class="label-color" style="margin-left: 40px;">高二年级15班&nbsp;-&nbsp;物理</label></li>
+							<li>
+								<font class="font-size">70.04</font><label class="label-color">平均分</label></li>
+							<li>
+								<font class="font-size">70.04%</font><label class="label-color">及格率</label></li>
+							<li>
+								<div class="conterToIndex-middle-xm-score">成绩一览</div>
+							</li>
+						</ul>
+						<div class="hr-div"></div>
+					</div>
+					<div class="conterToIndex-middle-xm">
+						<ul>
+							<li class="fcolor" onclick="navs(1)" style="margin-left: 40px;"><label style="font-size: 12px;cursor: pointer;">高二年级16班-物理</label></li>
+							<li style="margin-left: 75px;" onclick="navs(2)"><label style="font-size: 12px;cursor: pointer;">高二年级16班-物理</label></li>
+						</ul>
+						<div class="la" style="clear: both;margin-left: 40px;" id="la"></div>
+						<div class="lb"></div>
+						<div class="lc" id="lc"></div>
+					</div>
+					<div class="conterToIndex-middle-xm">
+						<ul class="ul">
+							<li class="showli">
+								<div class="font">
+									<i class="glyphicon glyphicon-sort-by-attributes-alt" style="color:#c86666; font-size:" 18px; "></i>
+									<font style="font-size:24px ">18</font>
+									<span style="font-size: 12px;color:#d0d3d6 ">成绩下降</span>
+								</div>
+							</li>
+							<li>
+								<div class="font ">
+									<i class="glyphicon glyphicon-thumbs-down " style="color:#c86666; font-size: "18px;"></i>
+									<font style="font-size:24px">18</font>
+									<span style="font-size: 12px;color:#d0d3d6 ">临界生</span>
+								</div>
+							</li>
+							<li>
+								<div class="font">
+									<i class="glyphicon glyphicon-bell" style="color:#c86666; font-size:" 18px; "></i>
+									<font style="font-size:24px ">5</font>
+									<span style="font-size: 12px;color:#d0d3d6 ">波动生</span>
+								</div>
+							</li>
+							<li>
+								<div class="font ">
+									<i class="glyphicon glyphicon-star " style="color:#c86666; font-size: "18px;"></i>
+									<font style="font-size:24px">7</font>
+									<span style="font-size: 12px;color:#d0d3d6 ">关注生</span>
+								</div>
+							</li>
+						</ul>
+						<div id="lookDetail">去辅导</div>
+						<ul class="nav-number">
+							<li class="showU">
+								<div class="achievement">
+									<p style="margin-left: 48px;margin-top: 10px;">
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+										<label style="width: 70px;height: 28px;font-size: 12px;">李冰冰</label>
+									</p>
+									<p class="ps">注：近三次考试中班级排名连续下降，不足三次，计算最近两次考试。</p>
+								</div>
+							</li>
+							<li class="conceal">
+								<div class="achievement">
+									<p></p>
+									<p class="ps">注：近三次考试中，成绩均在及格率临界线上下5分内波动的学生。</p>
+								</div>
+							</li>
+							<li class="conceal">
+								<div class="achievement">
+									<p></p>
+									<p class="ps">注：近两次考试中出现大幅的进步和退步的学生，且进退步名次相减的绝对值大于等于10。</p>
+								</div>
+							</li>
+							<li class="conceal">
+								<div class="achievement">
+									<p></p>
+									<p class="ps">注：老师手动添加关注的学生。</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--中间部分-->
+				<div class="MiddlePart">
+					<div class="conterToIndex-middle-one-ks">
+						<div class="conterToIndex-middle-ys"></div><label style="float:left;margin-left: 20px;margin-top: 15px;font-weight: 900;">班级情况</label>
+					</div>
+					<div class="MiddlePartSect ng">
+						<div class="name">高二年级15班-物理</div>
+						<div class="displayExample">近一个月，新增错题<span>33</span>题，薄弱知识点<span>0</span>个 </div>
+						<div class="knowledge">
+							<table style="margin-left: 20px;">
+								<tr>
+									<td>物理知识点1</td>
+									<td>
+										<dl class="barbox">
+											<dd class="barline">
+												<div w="60" class="charts" style="width:0px">
+												</div>
+											</dd>
+										</dl>
+									</td>
+									<td >
+										<label style="margin-left:25px;"></label>
+									</td>
+								</tr>
+								<tr>
+									<td>物理知识点1</td>
+									<td>
+										<dl class="barbox">
+											<dd class="barline">
+												<div w="50" class="charts" style="width:0px">
+												</div>
+											</dd>
+										</dl>
+									</td>
+									<td >
+										<label style="margin-left:25px;"></label>
+									</td>
+								</tr>
+								<tr>
+									<td>物理知识点1</td>
+									<td>
+										<dl class="barbox">
+											<dd class="barline">
+												<div w="40" class="charts" style="width:0px">
+												</div>
+											</dd>
+										</dl>
+									</td>
+									<td >
+										<label style="margin-left:25px;"></label>
+									</td>
+								</tr>
+								<tr>
+									<td>物理知识点1</td>
+									<td>
+										<dl class="barbox">
+											<dd class="barline">
+												<div w="30" class="charts" style="width:0px">
+												</div>
+											</dd>
+										</dl>
+									</td>
+									<td >
+										<label style="margin-left:25px;"></label>
+									</td>
+								</tr>
+							</table>
+							<div class="">
+								
+							</div>
+						</div>
+					</div>
+					<div class="MiddlePartSect">
+						<div class="name">高二年级15班-物理</div>
+						<div class="displayExample">近一个月，新增错题<span>33</span>题，薄弱知识点<span>0</span>个 </div>
+					</div>
+				</div>
+				<!--右边部分-->
+			</div>
+			<script>
+				function navs(obj) {
+					if(obj == 1) {
+						$('#la').addClass('la');
+						$('#la').removeClass("lato");
+						$('#lc').addClass("lc");
+						$('#lc').removeClass("lcto");
+					} else {
+						$('#la').addClass("lato");
+						$('#la').removeClass("la");
+						$('#lc').addClass("lcto");
+						$('#lc').removeClass("lc");
+					}
+				}
+				$().ready(function() {
+					$(".ul>li ").mouseover(function() {
+						var _index = $(this).index();
+						console.log(_index);
+						if(_index == 0) {
+							$('.nav-number').find('li').eq(_index).addClass("showU").siblings().removeClass("showU");
+						} else {
+							$('.nav-number').find('li').eq(_index).addClass("showU").siblings().removeClass("showU");
+							$('.nav-number').find('li').eq(_index).siblings().addClass("conceal").removeClass("showU");
+						}
+
+						$(this).addClass("showli").siblings().removeClass("showli");
+					})
+				});
+			</script>
+	</body>
+
+</html>

@@ -1,0 +1,101 @@
+@charset "utf-8";
+body {
+	background-color: #F2F2F2;
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.herd-group {
+	width: 100%;
+	height: 80px;
+	background-color: white;
+	float: left;
+}
+
+.herd-img {
+	width: 190px;
+	position: relative;
+	left: 18.75%;
+	float: left;
+}
+
+.herd-nav {
+	float: left;
+	position: relative;
+	left: 18.75%;
+}
+
+.herd-nav ul li {
+	list-style: none;
+	text-align: center;
+	width: 80px;
+	line-height: 80px;
+	list-style: none;
+	margin-left: 4px;
+	border-radius: 5px;
+	float: left;
+	font-weight: 400;
+}
+
+.herd-xx {
+	position: relative;
+	left: 50%;
+}
+
+.tx-img {
+	position: relative;
+	top: 30px;
+	left: -35px;
+}
+
+#userSelect {
+	width: 90pt;
+	height: 30pt;
+	padding-right: 20pt;
+	text-indent: 4pt;
+	text-align: center;
+	vertical-align: middle;
+	border: 0px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	font-family: SimHei;
+	font-size: 14pt;
+	font-weight: 500;
+	cursor: pointer;
+	outline: none;
+}
+
+div#headerUserSelect {
+	position: relative;
+	display: inline-block;
+	margin-top: -18px;
+}
+
+
+/*DOWNWARD ARROW (25bc)*/
+
+div#headerUserSelect::after {
+	content: "\25bc";
+	position: absolute;
+	top: -6px;
+	right: 0;
+	bottom: 0;
+	width: 18pt;
+	left: 69px;
+	line-height: 37pt;
+	vertical-align: middle;
+	text-align: center;
+	/* background              : #94c1e7;
+                color                   : #2984ce;*/
+	-moz-border-radius: 0 6px 6px 0;
+	-webkit-border-radius: 0 6px 6px 0;
+	border-radius: 0 6px 6px 0;
+	pointer-events: none;
+}

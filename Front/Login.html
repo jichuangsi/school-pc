@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+		<title>登录</title>
+	</head>
+	<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="../js/httplocation.js"></script>
+	<script type="text/javascript" src="../js/Login.js"></script>
+
+	<link rel="stylesheet" href="../css/Login.css" />
+
+	<body>
+		<div id="Whole" class=" ">
+			<div id="head" class="Navigation">
+				<div class="LogImg">
+					<img src="../img/jcs.png" />
+				</div>
+				<div class="Longzt">登录</div>
+			</div>
+			<div id="main" class="Logding-main">
+				<img src="../img/_20181116103602.png" />
+				<div class="Landing-box">
+					<div class="login-top">
+						用户登陆
+					</div>
+					<div class="login-center clearfix">
+						<div class="login-center-img"><img src="../img/name.png" /></div>
+						<div class="login-center-input">
+							<input type="text" id="UserName" name="username" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的用户名'" />
+							<div class="login-center-input-text">用户名</div>
+						</div>
+					</div>
+					<div class="login-center2 clearfix">
+						<div class="login-center-img-pwd"><img src="../img/password.png" /></div>
+						<div class="login-center-input">
+							<input type="password" id="pwd" name="pwd" value="" placeholder="请输入您的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'" />
+							<div class="login-center-input-text">密码</div>
+						</div>
+					</div>
+					<div class="login-conter-bottom">
+						<div class="login-conter-bottom-ts1">
+							<a href="#">立即注册</a><img src="../img/_0005_形状-1.png" />
+						</div>
+						<div class="login-conter-bottom-ts2">
+							<a href="#">忘记密码</a>
+						</div>
+					</div>
+					<div class="login-center-but" onclick="Login()">
+						登陆
+					</div>
+				</div>
+			</div>
+	</body>
+
+</html>

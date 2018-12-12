@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+		<title>浏览题目</title>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="../js/BorwseTopics.js"></script>
+		<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
+		<link rel="stylesheet" href="../css/BrowseTopics.css" />
+		<link rel="stylesheet" href="../css/js.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<link rel="stylesheet" href="../css/Newclassroom_Newtestpaper.css" />
+	</head>
+	<style>
+		.MathJye table {
+			border-collapse: collapse;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			vertical-align: middle;
+			line-height: normal;
+			font-size: inherit;
+			_font-size: 100%;
+			font-style: normal;
+			font-weight: normal;
+			border: 0;
+			float: none;
+			display: inline-block;
+			zoom: 0;
+		}
+		
+		.mathjye-underpoint2 {
+			border-bottom: 2px dotted #000;
+			padding-bottom: 3px;
+		}
+		
+		#q_answer {
+			display: none;
+		}
+		
+		table.edittable {
+			border-collapse: collapse;
+			text-align: center;
+			margin: 2px
+		}
+		
+		table.edittable td,
+		table.edittable th {
+			line-height: 30px;
+			padding: 5px;
+			white-space: normal;
+			word-break: break-all;
+			border: 1px solid #000;
+			vertical-align: middle
+		}
+		
+		table.composition {
+			border-collapse: collapse;
+			text-align: left;
+			margin: 2px;
+			width: 98%
+		}
+		
+		table.composition td,
+		table.composition th {
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		table.composition2 {
+			border-collapse: collapse;
+			width: auto
+		}
+		
+		table.composition2 td,
+		table.composition2 th {
+			text-align: left;
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border: none;
+			border-width: 0;
+			vertical-align: middle
+		}
+	</style>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" marginwidth=0 SRC="../public/header.html"></iframe>
+		<div class="Mian">
+			<div class="nav-top">
+				<div class="nav-top-manin">
+					<div class="nav-top-manin-content">课堂摆排</div>
+					<div class="nav-top-manin-content  pr">新增课堂</div>
+					<div class="nav-top-manin-but">高中-物理</div>
+				</div>
+			</div>
+			<div class="Mian-conter" id="main-conter">
+				<div style="float: left;position: relative;left: 250px;top: 50px;">
+					<label onclick="toNewRoom()" style="cursor: pointer;">&lt;返回新建课堂<a style="cursor: pointer;" ></a></label>
+				</div>
+				<div class="title">
+					牛顿小测试1
+				</div>
+				<div class="souCla">
+					<div class="search bar6">
+						<form>
+							<input type="text" placeholder="请输入考试、作业名称" id="cname">
+							<button type="submit"></button>
+						</form>
+					</div>
+				</div>
+				<div class="List">
+					<div style="color: #3d72fe;font-weight: 800;margin-bottom: 5px;">题量分析</div>
+					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style">
+						<tr>
+							<th>题型</th>
+							<th>题量</th>
+						</tr>
+						<tr>
+							<td>选择题</td>
+							<td>36</td>
+						</tr>
+						<tr>
+							<td>判断题</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>简答题</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>论述题</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>简析题</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>探究题</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>合計</td>
+							<td>42</td>
+						</tr>
+					</table>
+					<div style="color: #3d72fe;font-weight: 800;margin-top: 5px;margin-bottom: 5px;">题量分析</div>
+					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style-two">
+						<tr>
+							<th>难度</th>
+							<th>题量</th>
+						</tr>
+						<tr>
+							<td>容易</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>较易</td>
+							<td>15</td>
+						</tr>
+						<tr>
+							<td>一般</td>
+							<td>18</td>
+						</tr>
+						<tr>
+							<td>较难</td>
+							<td>4</td>
+						</tr>
+					</table>
+				</div>
+				<div id="listTo" style="float: right;margin-right: 15px;">
+					<div class="subjectList">
+						<div class="subjectList_top">
+							<span>1</span>
+							<img onclick="CollectionImg_click(this)" src="../img/CollectionYes.png" />
+							<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
+							<div id="speech" class="speech-bubble speech-bubble-top" style="display: none;">
+								<ul>
+									<li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li>
+									<li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li>
+								</ul>
+							</div>
+						</div>
+						<div class="subjectinfo">
+							<div>
+								习近平指出：中国梦归根到底是人民的梦，必须紧紧依靠人民来实现，必须不断为人民造福。“中国梦归根到底是人民的梦”根本原因在于（　　）<br /> ①依托自主开发提高社会劳动生产率，使商品价值增加
+								<br /> ②个别劳动生产率高于社会劳动生产率，获得竞争优势
+								<br /> ③依托自主创新提高商品的使用价值，扩大了商品需求
+								<br /> ④个别劳动时间大于社会必要劳动时间，商品价值增加。
+							</div>
+							<div>
+								<table>
+									<tbody>
+										<tr>
+											<td>A. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+										</tr>
+										<tr>
+											<td>B. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+										</tr>
+										<tr>
+											<td>C. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+										</tr>
+										<tr>
+											<td>D. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="subjectDetails">
+							<span class="s_span">
+								组卷
+								<i class="num1">1536</i>
+								次
+							</span>
+							<span class="s_span">
+								作答
+								<i class="num2">70541</i>
+								人次
+							</span>
+							<span class="s_span">
+								平均得分率
+								<i class="num3">78.97%</i>
+							</span>
+							<a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;">
+								<i><img src="../img/analysis.png" /> </i> 解析
+							</a>
+							<a class="Situation" onclick="Situation_click(this)">
+								<i><img src="../img/Situation.png" /> </i> 考情
+							</a>
+						</div>
+						<!--点击解析出现的div-->
+						<div class="subject_info" style="display: none;">
+							<div class="info_1">
+								<span>【答案】</span>
+								<span>C</span>
+							</div>
+							<div class="info_2">
+								<span>【解析】</span>
+								<div class="info_2_div">
+									A说法错误，我国人民是国家的主人；<br /> B说法错误，我国社会主义国家必须为人民谋福利，而不是全民；
+									<br /> C符合题意，“中国梦归根到底是人民的梦”根本原因在于我国是人民民主专政的社会主义国家，人民是国家的主人；
+									<br /> D说法错误，人民民主具有广泛性，是人民享有民主，而不是全民的民主。
+									<br /> 故选：C。
+									<br /> 本题考查：我国的国家性质
+									<br /> ①我国宪法规定：“中华人民共和国是工人阶级领导的、以工农联盟为基础的人民民主专政的社会主义国家”。这是我国宪法对我国国家性质的明确规定。
+									<br /> ②人民民主专政是我国的国体，在我国社会主义制度中具有根本性意义。
+									<br /> ③人民民主专政的本质是人民当家作主。
+									<br /> 考查学生提取信息、调动所学知识理解和解决问题的能力。解答本题，一方面要把握材料要阐明的主旨，并和所学知识对应起来，另一方面运用排除法去除错误的选项。
+								</div>
+							</div>
+							<div class="info_3">
+								<span> 【知识点】</span>
+								<div class="info_3_div">
+									<p>
+										<span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span>
+									</p>
+								</div>
+							</div>
+							<div class="info_4">
+								<span>【题型】</span>
+								<span class="info_4_span">选择题</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="pagelist" style="width: 700px;position: relative;top: 20px;left:415px;"></div>
+			</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<script>
+//			var pageSize = 2;
+//			layui.use(['laypage', 'layer'], function() {
+//				var laypage = layui.laypage,
+//					layer = layui.layer;
+//
+//				//自定义每页条数的选择项
+//				laypage.render({
+//					elem: 'pagelist',
+//					count: questionNode.length,
+//					layout: ['prev', 'page', 'next'],
+//					limit: pageSize,
+//					limits: false,
+//					jump: function(obj, first) {
+//						if(!first) {
+//							$("#listTo").empty();
+//						}
+//						getDate((obj.curr - 1) * pageSize);
+//					}
+//				});
+//			});
+		</script>
+		<script type="text/javascript">
+			$(".img").click(function() {
+
+				if(this.src.search("../img/00025.png") != -1) {
+
+					this.src = "../img/e60eb6b8370b1910d42f3ecba911e25.png";
+
+				} else {
+
+					this.src = "../img/00025.png"
+				}
+			})
+		</script>
+	</body>
+
+</html>

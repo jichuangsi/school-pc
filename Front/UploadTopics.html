@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>上传题目</title>
+		<meta charset="UTF-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<meta content="telephone=no" name="format-detection" />
+	</head>
+	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/UploadTopics.js"></script>
+	<script type="text/javascript" src="../js/httplocation.js" ></script>
+	<link rel="stylesheet" href="../css/tinyImgUpload.css" />
+	<link rel="stylesheet" href="../css/UploadTopics.css" />
+	<link rel="stylesheet" href="../css/checkbox_radio.css" />
+	<link rel="stylesheet" href="../styles/chosen.css" />
+	<style>
+		.black_overlay {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.8;
+			opacity: .80;
+			filter: alpha(opacity=80);
+		}
+		
+		.white_content {
+			display: none;
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			width: 80%;
+			height: 80%;
+			border: 1px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+		}
+		
+		.white_content_small {
+			display: none;
+			position: absolute;
+			top: 20%;
+			left: 30%;
+			width: 40%;
+			height: 50%;
+			border: 16px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+			#onsubmit {
+				width: 80px;
+				height: 40px;
+				color: white;
+				background-color: #3d72fe;
+				border-radius: 5px;
+			}
+		}
+	</style>
+	<script type="text/javascript">
+		//弹出隐藏层
+		function ShowDiv(show_div, bg_div) {
+			document.getElementById(show_div).style.display = 'block';
+			document.getElementById(bg_div).style.display = 'block';
+			var bgdiv = document.getElementById(bg_div);
+			bgdiv.style.width = document.body.scrollWidth;
+			// bgdiv.style.height = $(document).height();
+			$("#" + bg_div).height($(document).height());
+		};
+		//关闭弹出层
+		function CloseDiv(show_div, bg_div) {
+			document.getElementById(show_div).style.display = 'none';
+			document.getElementById(bg_div).style.display = 'none';
+		};
+	</script>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" marginwidth=0 SRC="../public/header.html"></iframe>
+		<div class="nav-top">
+			<div class="nav-top-manin">
+				<div class="nav-top-manin-content">组题组卷</div>
+				<div class="nav-top-manin-content pr">试卷库</div>
+				<div class="nav-top-manin-but">高中-物理</div>
+			</div>
+		</div>
+		<div class="mainConter">
+			<div class="Conter">
+				<div class="conterh4">
+					<label>上传试题</label>
+					<div style="float: right;">
+						<label>返回组题组卷  <a href="../thacherPage/Newclassroom_Newtestpaper.html" style="text-decoration: none; color: #3d72fe;">&gt;</a></label>
+					</div>
+					<div class="tab">
+						<label style="float: left;line-height: 50px;">选择添加题目类型：</label>
+						<div class="upImg" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
+						<div id="fade" class="black_overlay">
+						</div>
+						<div id="MyDiv" class="white_content" style="width: 785px;height:800px;margin-left: 17%;">
+							<div style="text-align: right; cursor: default; height: 40px;">
+								<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
+								<div id="upload">
+
+								</div>
+								<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 440px;top: 100px;" class="submit">提交</button>
+							</div>
+						</div>
+						<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+						<script>
+							
+						</script>
+						<input type="hidden" name="questionPic" value="" />
+						<ul class="tab-hd">
+							<li class="active">选择题</li>
+							<li>多选题</li>
+							<li>判断题</li>
+							<li>填空题</li>
+						</ul>
+						<ul class="tab-bd">
+							<li class="thisclass">
+								<table>
+									<tr>
+										<td style="float: left;">题目</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea maxlength="400" name="Choicequestion" id="Choicequestion" class="text-tm"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">选项个数</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt">
+												<div class="but-xzt-an" onclick="optionNumber(this)">1</div>
+												<div class="but-xzt-an" onclick="optionNumber(this)">2</div>
+												<div class="but-xzt-an" onclick="optionNumber(this)">3</div>
+												<div class="but-xzt-an" onclick="optionNumber(this)">4</div>
+												<div class="but-xzt-an" onclick="optionNumber(this)">5</div>
+											</div>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<td style="float: left;">知识点</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px;">
+												<select name="dept" data-placeholder="选择知识点" style="width: 958px;height: 40px;" id="dept">
+												</select>
+												<!--<iframe style="width: 958px;height: 40px;" src="select.html"></iframe>-->
+											</div>
+										</td>
+									</tr>
+									<!--<script>
+										$(function() {
+											bodyevent("#typenum ", "#makeupCo ", "#search-button ");
+										})
+									</script>-->
+									<tr>
+										<td style="float: left;">解析 </td>
+									</tr>
+									<tr>
+										<td>
+											<textarea maxlength="400" name="parse" class="text-tm" id="parse" style="height: 230px;width: 958px;font-weight: 500;"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">难易度</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>困难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>较难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>一般</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>较易</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>容易</label></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td style="float: left;">题目</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea maxlength="400" name="ChoicequestionStone" class="text-tm"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">选项个数</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt">
+												<div class="but-xzt-an" onclick="optionNumberChe(this)">1</div>
+												<div class="but-xzt-an" onclick="optionNumberChe(this)">2</div>
+												<div class="but-xzt-an" onclick="optionNumberChe(this)">3</div>
+												<div class="but-xzt-an" onclick="optionNumberChe(this)">4</div>
+												<div class="but-xzt-an" onclick="optionNumberChe(this)">5</div>
+											</div>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<td style="float: left;">知识点</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px;">
+												<select id="deptselect" name="select" style="width: 958px;height: 40px;"></select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">解析 </td>
+									</tr>
+									<tr>
+										<td>
+											<textarea maxlength="400" name="stone" class="text-tm" style="height: 230px;width: 958px;font-weight: 500;"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">难易度</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>困难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>较难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>一般</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>较易</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>容易</label></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td style="float: left;">题目</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea class="text-tm"  maxlength="400" name="ChoicequestionPack"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left;">答案</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio-a"  onclick="packanswer(this) "><i class="icon-radio"></i>正确 </label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio-a"  onclick="packanswer(this) "><i class="icon-radio"></i>錯誤</label></div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">知识点</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px; ">
+												<select id="packselect" name="select "style="width: 958px;height: 40px; "></select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">解析</td>
+									</tr>
+									<tr>
+										<td><textarea maxlength="600" name="parsePack" class="text-tm" style="height: 230px; "></textarea></td>
+									</tr>
+									<tr>
+										<td style="float: left; ">难易度</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>困难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>较难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>一般</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>较易</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>容易</label></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td style="float: left; ">题目</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea class="text-tm" maxlength="400" name="ChoicequestionCompletion"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">填空个数</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt">
+												<div class="but-xzt-an" onclick="optionAnswer(this) ">1</div>
+												<div class="but-xzt-an" onclick="optionAnswer(this) ">2</div>
+												<div class="but-xzt-an" onclick="optionAnswer(this) ">3</div>
+												<div class="but-xzt-an" onclick="optionAnswer(this) ">4</div>
+												<div class="but-xzt-an" onclick="optionAnswer(this) " >5</div>
+											</div>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<td style="float: left; ">知识点</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px; ">
+												<select id="isselect" name="select "style="width: 958px;height: 40px; "></select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">解析</td>
+									</tr>
+									<tr>
+										<td><textarea maxlength="600 " name="Completion" class="text-tm" style="height: 230px; "></textarea></td>
+									</tr>
+									<tr>
+										<td style="float: left; ">难易度</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot ">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>困难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>较难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>一般</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>较易</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>容易</label></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</li>
+						</ul>
+						<div class="update " onclick="Choice() ">
+							新建题目
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript " src="../js/chosen.jquery.js " ></script>
+	<script>
+	$(function(){
+    $('.dept_select').chosen();
+	});
+	</script>
+	</body>
+
+</html>

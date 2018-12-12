@@ -1,0 +1,11 @@
+$(function() {
+
+});
+
+$("[name='group']").click(functon(this) {
+	alert(111);
+	$(this).next(".Answerone").html("正确答案");
+});
+function clickRadio(){
+	
+}

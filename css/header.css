@@ -1,0 +1,85 @@
+		*{
+			margin: 0;
+			padding: 0;
+		 }
+		.publicheader{
+			width: 100%;
+			height: 80px;
+			background-color: white;
+			/*display: inline-block;*/
+		}		
+		.publicheaderdiv{
+			padding-left: 18.75%;
+			padding-right: 18.75%;
+		}
+		.publicheaderdiv img{
+			float: left;
+		}
+		#publicheaderNav{
+			padding-top: 21px;
+			padding-left: 17px;
+		}
+		#publicheaderNav a{
+			padding-left: 25px;
+		}
+		#PublicHeaderUserDiv{
+			float: right;
+			padding-right: 18.75%;
+			display: inline-block;
+			margin-top: -26px;
+		}
+		#PublicHeaderUserDiv figure{
+			float: left;
+		}
+		#PublicHeaderUserDiv select{
+			border: 0;
+			 margin-top: 5px;
+			 margin-left: 5px;
+		}
+		#userSelect
+            {
+               width                    : 90pt;
+               height                   : 30pt;
+               /*line-height              : 40pt;*/
+               padding-right            : 20pt;
+               text-indent              : 4pt;
+               text-align               : left;
+               vertical-align           : middle;
+               border                   : 0px;
+               -moz-border-radius       : 6px;
+               -webkit-border-radius    : 6px;
+               border-radius            : 6px;
+               -webkit-appearance       : none;
+               -moz-appearance          : none;
+               appearance               : none;
+               font-family              : SimHei;
+               font-size                : 14pt;
+               font-weight              : 500;
+              /* color                    : RGBA(102,102,102,0.7);*/
+               cursor                   : pointer;
+               outline                  : none;
+            }
+		/*LABEL FOR SELECT*/
+            div#headerUserSelect{ position: relative; display: inline-block;margin-top: -18px;}
+
+
+            /*DOWNWARD ARROW (25bc)*/
+            div#headerUserSelect::after
+            {
+                content                 : "\25bc";
+                position                : absolute;
+                top                     : 0;
+                right                   : 0;
+                bottom                  : 0;
+                width                   : 35pt;
+                left 					: 69px;
+                line-height             : 37pt;
+                vertical-align          : middle;
+                text-align              : center;
+               /* background              : #94c1e7;
+                color                   : #2984ce;*/
+               -moz-border-radius       : 0 6px 6px 0;
+               -webkit-border-radius    : 0 6px 6px 0;
+                border-radius           : 0 6px 6px 0;
+                pointer-events          : none;
+            }
