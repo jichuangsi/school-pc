@@ -153,7 +153,8 @@ table th{
 	text-align: center;
 	float: right;
 	position: relative;
-	top: 55px;
+	top: 5px;
+	right: 10px;
 }
 .sub-del:hover{
 	cursor: pointer;

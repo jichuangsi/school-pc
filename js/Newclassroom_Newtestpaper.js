@@ -212,7 +212,6 @@ function find(str,cha,num){
     }
 //循环展示题目
 function Obtain_subject(obj, Chapterid) {
-	alert(Chapterid);
 	$("#newtestpaper_div2_01 .subjectList").remove();
 	$("#newtestpaper_div2_01").css("display", "block");
 	$("#newtestpaper_div2_02").css("display", "none");
@@ -365,7 +364,6 @@ function Chapter_click() {
 }
 //获取知识点
 function edition_click(obj, editionid) {
-	alert(editionid);
 	var cc = {
 		"pharseId": "2",
 		"subjectId": "2",
@@ -460,7 +458,6 @@ function year_a_click(obj, yearid) {
 function questionType_a_click(obj, questionTypeid) {
 	/*paquestionTypeid = questionTypeid;*/
 	paquestionTypeid = $(obj).text();
-	alert(paquestionTypeid);
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
 }
@@ -515,13 +512,11 @@ function are_click(obj, areasid) {
 
 //综合排序
 function b1(obj) {
-	alert($(obj).hasClass("choice1"));
 	$(obj).addClass("choice1");
 	$(obj).siblings().removeClass("choice1");
 }
 //组卷次数
 function b2(obj) {
-	alert($(obj).hasClass("choice1"));
 	$(obj).addClass("choice1");
 	$(obj).siblings().removeClass("choice1");
 	if($(obj).children().text() == "▲") {

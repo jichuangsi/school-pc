@@ -10,6 +10,7 @@ function getLocation() {
 }
 $(function() {
 	getLocation();
+	getgradename();
 	inintClassDate();
 	//LookClass();
 	inintUPdate();
@@ -35,7 +36,14 @@ $(function() {
 		});
 	});
 });
-
+var user;
+function getgradename(){
+	user=getUser()
+	var gname=user.roles[0].phrase.phraseName;
+	var sname=user.roles[0].primarySubject.subjectName;
+	$(".Gradename").html(gname);
+	$(".Subjectname").html(sname);
+}
 //function liall(){
 //	var obj =document.getElementsByClassName('li-all');
 //	obj.setAttribute("background","#3d72fe");
@@ -94,11 +102,11 @@ function LookClass(start, datalist) {
 		//$(sourceNode).remove("#main-ch .room-class");
 		var num = 1;
 		var len
-		console.log((start * pageSize) % datalist.length);
 		if(((start * pageSize) % datalist.length) == 0) {
 			len = start + pageSize;
 		}else{
-			len=start * pageSize-datalist.length;
+			len = questionNode.length
+			start = start * pageSize - len;
 		}
 		for(i = start; i < len; i++, num++) {
 //			if(len>datalist.length){
@@ -166,7 +174,6 @@ function inintUPdate() {
 			initAttendClass('', data.data.transferClasses);
 		},
 		error: function() {
-			// alert(returndata);
 		}
 	});
 }
@@ -195,7 +202,6 @@ function updateSub() {
 	var mm = document.getElementById("time-min").value;
 	var ymd = document.getElementById("test30").value;
 	var id = $("input[name='courseId']").val();
-	alert(id)
 	var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 	var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 	var cc = {
@@ -347,5 +353,4 @@ function showLoad() {
 }
 
 function isComplete() {
-
 }

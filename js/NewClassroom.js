@@ -4,14 +4,15 @@ var accessToken;
 var datalist;
 var pageSize = 3;
 
+
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
-} //	<script type="text/javascript" src="../js/httplocation.js"></script>
+}
 $(function() {
+	getNowFormatDate();
 	getLocation();
-	//initAttendClass('',[]); //获取页面数据
-	//initAttendTest('',[]);
+	getgradename();
 	initAttendtimehour('');
 	initAttendtimemin('');
 	inintDate();
@@ -19,30 +20,19 @@ $(function() {
 	creaClass();
 	getQuestionNode();
 
-	layui.use(['laypage', 'layer'], function() {
-		var laypage = layui.laypage,
-			layer = layui.layer;
-
-		//自定义每页条数的选择项
-		laypage.render({
-			elem: 'pagelist',
-			count: datalist.length,
-			layout: ['prev', 'page', 'next'],
-			limit: pageSize,
-			limits: false,
-			jump: function(obj, first) {
-				if(!first) {
-					$("#look-class").empty();
-				}
-				LookRoomClass((obj.curr - 1) * pageSize, datalist)
-			}
-		});
-	});
 });
+var user;
+function getgradename(){
+	user=getUser()
+	var gname=user.roles[0].phrase.phraseName;
+	var sname=user.roles[0].primarySubject.subjectName;
+	$(".Gradename").html(gname);
+	$(".Subjectname").html(sname);
+}
 var sClass;
 var eaxms;
 var questionNode;
-
+var currentdate;//获取当前日期
 //加载页面获取数据获取保存的题目
 function getQuestionNode() {
 	if(typeof(Storage) !== "undefined") {
@@ -54,16 +44,16 @@ function getQuestionNode() {
 		var hh = sessionStorage.getItem('hh', hh);
 		var mm = sessionStorage.getItem('mm', mm);
 		var ymd = sessionStorage.getItem('ymd', ymd);
-		if(hh != undefined ) {
-			initAttendtimehour(hh);
+		if(hh == undefined ) {
+			initAttendtimehour("");
 		}
 		if(mm != undefined ) {
-			initAttendtimemin(mm);
+			initAttendtimemin("");
 		}
 		if(ymd!=undefined ){
-			$("#test30").val(ymd);
+			$("#test30").val("");
 		}else{
-			$("#test30").val(getNowFormatDate());
+			$("#test30").val(currentdate);
 		}
 		if(Name!=undefined ){
 			$("#ClassName").val(Name);
@@ -96,8 +86,8 @@ function getNowFormatDate() {
 	if(strDate >= 0 && strDate <= 9) {
 		strDate = "0" + strDate;
 	}
-	var currentdate = year + seperator1 + month + seperator1 + strDate;
-	$("#date").text(currentdate); 
+	 currentdate= year + seperator1 + month + seperator1 + strDate;
+	 $("#test30").attr('placeholder',currentdate);
 }
 function toList() {
 	if(questionNode.questionContent != "") {
@@ -162,7 +152,7 @@ function creaClass() {
 		data: {},
 		success: function(data) {
 			datalist = data.data;
-			//LookRoomClass(start,data);
+			LookRoomClass(datalist);
 		},
 		error: function() {
 
@@ -353,24 +343,15 @@ function copyClass() {
 	}
 }
 
-function LookRoomClass(start, datalist) {
-	//	$("div").find("#look-class").remove(".box-room-anp");
+function LookRoomClass(datalist) {
 	if(datalist != null) {
 		var soure = document.getElementById("look-class");
 		var num = 1;
-		var len;
-		console.log((start * pageSize) % datalist.length);
-		if(((start * pageSize) % datalist.length) == 0) {
-			len = start + pageSize;
-		} else {
-			len = start *pageSize - datalist.length
-		}
-		for(i = start; i < len; i++, num++) {
+		for(i = 0; i < datalist.length; i++, num++) {
 			var datenew = datalist[i].beginTime.split(" ");
 			var hour = splitStr(datenew);
 			var conClass = document.createElement('div');
 			var id = datalist[i].courseForTeacher.courseId;
-			console.log(typeof id);
 			conClass.setAttribute('class', 'box-room-anp');
 			conClass.innerHTML = '<div class="box-bq" id="sz">' + num + '</div>';
 			conClass.innerHTML += '<div class="box-bq-copy" onclick="copyClassRoom(this)">复制课堂</div>';
@@ -407,7 +388,7 @@ function DelDate(obj) {
 			showLoad();
 		},
 		error: function() {
-			// alert(returndata);
+			// alert(returndata);	
 		}
 	});
 }

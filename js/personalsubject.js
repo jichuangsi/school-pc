@@ -246,7 +246,7 @@ function isExistFavor(md52){
 			isExistFavorResult=data.data.result;
 		},
 		error: function() {
-			alert("失败as");
+			alert("收藏失败");
 		}
 	});
 }

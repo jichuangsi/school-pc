@@ -1,7 +1,8 @@
 $(function() {
 	getNowFormatDate();
+	getView();
 });
-
+//获取当前日期
 function getNowFormatDate() {
 	var date = new Date();
 	var seperator1 = "-";
@@ -19,4 +20,16 @@ function getNowFormatDate() {
 }
 function tabnav(){
 	
+}
+//查看详情
+function getView(){
+	var name=$(".View").html();
+	$(".View").mouseover(function(){
+		$(this).html('查看详情');
+		$(this).css({"background-color":"#3D72FE","color":"white","border-radius":"5px"});
+	});
+	$(".View").mouseout(function(){
+		$(this).html(name);
+		$(this).css({"background-color":"","color":"","border-radius":""});
+	});
 }

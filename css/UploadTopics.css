@@ -61,14 +61,15 @@ body {
 .mainConter {
 	width: 62.5%;
 	margin-left: 18.75%;
-	height: 1300px;
+	height: 100%;
 	font-size: 18px;
 	font-weight: 400;
 	background-color: white;
+	float: left;
 }
 
 .tab {
-	margin-top: 30px;
+	margin-top: 15px;
 }
 
 .Conter {

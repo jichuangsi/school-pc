@@ -10,6 +10,12 @@
  * 调用方法
  * tinyImgUpload('div', options)
  */
+document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
+var local;
+var accessToken;
+$(function(){
+	accessToken = getAccessToken();
+});
 function tinyImgUpload(ele, options) {
 	// 判断容器元素合理性并且添加基础元素
 	var eleList = document.querySelectorAll(ele);
@@ -21,7 +27,7 @@ function tinyImgUpload(ele, options) {
 		return;
 	} else {
 		eleList[0].innerHTML = '<div id="img-container" >' +
-			'<div class="img-up-add  img-item"> <span class="img-add-icon"  style="font-size: 160px;">+</span> </div>' +
+			'<div class="img-up-add  img-item"> <span class="img-add-icon"  style="font-size: 160px;cursor: pointer;">+</span> </div>' +
 			'<input type="file" name="files" id="img-file-input" multiple>' +
 			'</div>';
 		var ele = eleList[0].querySelector('#img-container');
@@ -81,7 +87,6 @@ function tinyImgUpload(ele, options) {
 	// 删除图片
 	function removeImg(evt) {
 		if(evt.target.className.match(/img-remove/)) {
-			console.log('3', ele.files);
 			// 获取删除的节点的索引
 			function getIndex(ele) {
 
@@ -105,14 +110,12 @@ function tinyImgUpload(ele, options) {
 			} else {
 				ele.files.splice(index, 1);
 			}
-			console.log('4', ele.files);
 		}
 	}
 	ele.addEventListener('click', removeImg, false);
 
 	// 上传图片
 	function uploadImg() {
-		console.log(ele.files);
 
 		var xhr = new XMLHttpRequest();
 		var formData = new FormData();
@@ -121,8 +124,6 @@ function tinyImgUpload(ele, options) {
 		formData.append('file', ele.files[0]);
 		/*   }*/
 
-		console.log('1', ele.files);
-		console.log('2', formData);
 
 		xhr.onreadystatechange = function(e) {
 			if(xhr.readyState == 4) {
@@ -135,7 +136,7 @@ function tinyImgUpload(ele, options) {
 		}
 
 		xhr.open('POST', options.path, true);
-		xhr.setRequestHeader("accessToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcInRpbWVTdGFtcFwiOjE1MzkyNDUzODQzMDYsXCJ1c2VySWRcIjpcIjEyM1wiLFwidXNlck5hbWVcIjpcIuW8oOS4iVwifSJ9.Vdc-5R7I3I-EGriPu9ytbdAKt_X21HrSnLNoqS-TANQ6OALuFEasWhnbOoG5_wJmHA__nDgVHeN6DSxjJZ1Biw")
+		xhr.setRequestHeader("accessToken", accessToken)
 		xhr.setRequestHeader("type", "Post");
 		xhr.send(formData);
 

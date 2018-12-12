@@ -24,7 +24,8 @@ function Login() {
 		data: JSON.stringify(cs),
 		success: function(data) {
 			sessionStorage.setItem('accessToken',data.data.accessToken);
-			window.location.replace("../Front/UploadTopics.html");
+			sessionStorage.setItem('userinfo',JSON.stringify(data.data.user));
+			window.location.replace("../Front/index.html");//NewClassRoom//UploadTopics//header
 		}
 	})
 }

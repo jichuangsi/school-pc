@@ -27,13 +27,10 @@ $(function() {
 			var data = JSON.parse(res);
 			alert("上传成功！");
 			CloseDiv('MyDiv', 'fade');
-			console.log(res);
 			var questionPic = data.data.questionPic;
-			console.log(questionPic);
 			$("input[name='questionPic']").val(questionPic);
 		},
 		onFailure: function(res) {
-			console.log(res);
 		}
 	}
 
@@ -68,7 +65,6 @@ function con() {
 			//console.log(data);
 			//var dept=document.getElementsByName("dept");
 			var dept = document.getElementById("dept");
-			console.log(dept);
 			for(var i = 0; i < data.data.length; i++) {
 				//console.log(data.data[i])//第一级别
 				var two = data.data[i];
@@ -95,7 +91,6 @@ function con() {
 
 function selectChex(arr) {
 	var dept = document.getElementById("deptselect");
-	console.log(dept);
 	for(var i = 0; i < arr.data.length; i++) {
 		//console.log(data.data[i])//第一级别
 		var two = arr.data[i];
@@ -115,7 +110,6 @@ function selectChex(arr) {
 
 function SelectPakc(arr) {
 	var dept = document.getElementById("packselect");
-	console.log(dept);
 	for(var i = 0; i < arr.data.length; i++) {
 		//console.log(data.data[i])//第一级别
 		var two = arr.data[i];
@@ -212,14 +206,12 @@ function optionNumber(obj) {
 	number = $(obj).text();
 	var charater = new Array("A", "B", "C", "D", "E");
 	var soure = $(obj).parent().parent().parent();
-	console.log(soure);
 	soure.next().empty();
 	for(i = 0; i < number; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left;">' + charater[i] + '.&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="group"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
 		nodetwo.innerHTML = '<td><input type="text" name="potions' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
-		console.log(node);
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
@@ -230,14 +222,12 @@ var charater = new Array("A.", "B.", "C.", "D.", "E.");
 function optionNumberChe(obj) {
 	var number = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
-	console.log(soure);
 	soure.next().empty();
 	for(i = 0; i < number; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
 		nodetwo.innerHTML = '<td><input type="text" name="potionlist' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
-		console.log(node);
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
@@ -247,14 +237,12 @@ var ansCha = new Array("答案1", "答案2", "答案3", "答案4", "答案5");
 function optionAnswer(obj) {
 	var number = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
-	console.log(soure);
 	soure.next().empty();
 	for(i = 0; i < number; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left; ">' + ansCha[i] + '</td>'
 		nodetwo.innerHTML = '<td><input type="t " name="completion' + i + ' " style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
-		console.log(node);
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
@@ -333,7 +321,6 @@ function saveQuestionPack() {
 		"createTime": "",
 		"updateTime": ""
 	}
-	console.log(JSON.stringify(cc));
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
 		headers: {
@@ -362,7 +349,6 @@ function saveQuestionStone() {
 	for(i = 0; i < number; i++) {
 		answerOptions.push( $("input[name=potionsStone" + i + "]").val());
 	}
-	console.log(answerOptions);
 	var parse = $("textarea[name='stone']").val();
 	var cc = {
 		"questionContent": content,
@@ -382,7 +368,6 @@ function saveQuestionStone() {
 		"createTime": "",
 		"updateTime": ""
 	}
-	console.log(JSON.stringify(cc));
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
 		headers: {
@@ -412,7 +397,6 @@ function saveCompletionQuestion() {
 		answerOptions.push( $("input[name=potionlist" + i + "]").val());
 	}
 	con
-	console.log(answerOptions);
 	var parse = $("textarea[name='Completion']").val();
 	var cc = {
 		"questionContent": content,
@@ -432,7 +416,6 @@ function saveCompletionQuestion() {
 		"createTime": "",
 		"updateTime": ""
 	}
-	console.log(JSON.stringify(cc));
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
 		headers: {
