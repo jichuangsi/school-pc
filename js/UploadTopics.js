@@ -270,8 +270,8 @@ function saveQuestion() {
 		"gradeId": "",
 		"knowledge": knowledge,
 		"questionIdMD52": "",
-		"teacherId": questionPic,
-		"questionPic": "",
+		"teacherId": "",
+		"questionPic": questionPic,
 		"teacherName": "",
 		"createTime": "",
 		"updateTime": ""
@@ -436,18 +436,26 @@ function saveCompletionQuestion() {
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
-	$.ajax({
-		url:"192.168.31.144/createQR",
-		headers :{
-			'accessToken': accessToken
-		},
-		type:"get",
-		async: false,
-		data:{},
-		success: function(data) {
-			
-		}
-	});
+	var moveInArray = $("#move_in").val().split('-');
+	var d = new Date();
+	d.setYear(moveInArray[0]);
+	d.setMonth(moveInArray[1] - 1);
+	d.setDate(moveInArray[2]);
+	var code = = d.getTime();
+	var cc={"code":code}
+		$.ajax({
+			url: "192.168.31.144/createQR",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "get",
+			async: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(data) {
+				$('#ylimg').attr("src", "data:image/jpeg;base64," + data.data.content)
+			}
+		});
 	document.getElementById(show_div).style.display = 'block';
 	document.getElementById(bg_div).style.display = 'block';
 	var bgdiv = document.getElementById(bg_div);
