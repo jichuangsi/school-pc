@@ -436,12 +436,7 @@ function saveCompletionQuestion() {
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
-	var moveInArray = $("#move_in").val().split('-');
-	var d = new Date();
-	d.setYear(moveInArray[0]);
-	d.setMonth(moveInArray[1] - 1);
-	d.setDate(moveInArray[2]);
-	var code = = d.getTime();
+	var code = getNowFormatDate();
 	var cc={"code":code}
 		$.ajax({
 			url: "192.168.31.144/createQR",
@@ -468,3 +463,18 @@ function CloseDiv(show_div, bg_div) {
 	document.getElementById(show_div).style.display = 'none';
 	document.getElementById(bg_div).style.display = 'none';
 };
+function getNowFormatDate() {
+	var date = new Date();
+	var seperator1 = "-";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var strDate = date.getDate();
+	if(month >= 1 && month <= 9) {
+		month = "0" + month;
+	}
+	if(strDate >= 0 && strDate <= 9) {
+		strDate = "0" + strDate;
+	}
+	 currentdate= year + seperator1 + month + seperator1 + strDate;
+	 return currentdate;
+}
