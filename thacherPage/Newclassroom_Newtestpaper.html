@@ -126,7 +126,7 @@
 			<div class="newtestpaper_right">
 				<div class="newtestpaper_div1">
 					<div class="div1">
-						<div>已选试题: <i id="paper_number"></i></div>
+						<div>已选试题: <i id="paper_number">0</i></div>
 						<div>课堂小测</div>
 						<div>2018年11-30好 10：30</div>
 						<!--<div><label>总分数: <i id="paper_Fraction">2</i> </label></div>-->
@@ -194,7 +194,7 @@
 									<a onclick="d1_click(this)">本省</a>
 									<a id="address" onclick="d1_click(this),focus_click(this);">其他区域 <span style="color: #59E8E3;">▼</span> </a>
 									<div>
-										<div class="areas" style="display: none;background-color: white;">
+										<div class="areas" style="display: contents;background-color: white;">
 											<input type="text" placeholder="请输入地区关键字" id="ads1">
 											<button onclick="search_areas(this)">搜索</button>
 											<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
@@ -349,30 +349,6 @@
 			<!--<div id="content" onClick="show();">点击打开</div>-->
 
 		</div>
-		<!--<script>
-				function show() //显示隐藏层和弹出层 
-				{
-					var hideobj = document.getElementById("hidebg");
-					hidebg.style.display = "block"; //显示隐藏层 
-					//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
-					document.getElementById("previews").style.display = "block"; //显示弹出层 
-				}
-
-				function hide() //去除隐藏层和弹出层 
-				{
-					document.getElementById("hidebg").style.display = "none";
-					document.getElementById("previews").style.display = "none";
-				}
-			</script>-->
-		<!--<script>
-				$(".tcdPageCode").createPage({
-					pageCount: 2900,  /*总页数*/
-					current: 1,       /*默认显示哪一页*/
-					backFn: function(p) { 
-						console.log(p);  /*当前页*/
-					}
-				});
-			</script>-->
 	</body>
 
 </html>

@@ -7,6 +7,8 @@ function getLocation() {
 }
 $(function(){
 	getLocation();
+	inits();
+	$(".areas").hide();
 });
 var areass = null; //地区信息集合
 //参数列表
@@ -240,69 +242,22 @@ function Obtain_subject(obj, Chapterid) {
 		}
 		a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li><li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li></ul></div></div>";
 		a1 += "<div class='subjectinfo'><div>";
-				if(subjectlist.content[i].questionNode.title.indexOf('src="')!=-1){
-					/*var info=subjectlist.content[i].questionNode.title.split('src="');
-					var ass1;
-					for(var ss=0;ss<info.length;ss++){
-						ass1=info[i]+'  src="http://www.jichuangsi.com/'+subjectlist.content[i].questionNode.title.substring(info[i].length+5,subjectlist.content[i].questionNode.title.length);
-					}*/
-					/*var infos=subjectlist.content[i].questionNode.title;
-					var indexArr=[]
-					for(var ji=0;ji<=10;ji++){
-						var x=infos.indexOf('src="');
-						for(var ii=0;i<ji;ii++){
-							indexArr.push(infos.indexOf('src="',x+1));
-						}
-						console.log(indexArr);
-					}*/
-					var infolength = (subjectlist.content[i].questionNode.title.split('src="')).length-1;
-					var ass1;
-					for(var ii=0;ii<infolength;ii++){
-						if(ii==0){
-							ass1=subjectlist.content[i].questionNode.title.slice(0,find(subjectlist.content[i].questionNode.title,'src="',ii)+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.title.slice(find(subjectlist.content[i].questionNode.title,'src="',ii)+6,subjectlist.content[i].questionNode.title.length);
-							subjectlist.content[i].questionNode.title=ass1;
-						}else{
-							ass1=ass1.slice(0,find(ass1,'src="',ii)+5)+"http://www.jichuangsi.com/"+ass1.slice(find(ass1,'src="',ii)+6,ass1.length);
-						}
-					}
-				 var ass=subjectlist.content[i].questionNode.title.slice(0,subjectlist.content[i].questionNode.title.indexOf('src="')+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.title.slice(subjectlist.content[i].questionNode.title.indexOf('src="')+6,subjectlist.content[i].questionNode.title.length);
-				a1+= ass1;
-				}else{
-					a1+=subjectlist.content[i].questionNode.title;
-				}
+		a1+=subjectlist.content[i].questionNode.title;
 		a1 += 	"</div>";
 			//判断是否有选项
 			if(subjectlist.content[i].questionNode.option_a.length>0 ||subjectlist.content[i].questionNode.option_b.length>0 ||subjectlist.content[i].questionNode.option_c.length>0 ||subjectlist.content[i].questionNode.option_d.length>0){
 				a1 +="<div><table><tbody>";
 				if(subjectlist.content[i].questionNode.option_a.length>0){
-					if(subjectlist.content[i].questionNode.option_a.indexOf('src="')!=-1){
-						a1+="<tr><td>A:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_a.slice(0,subjectlist.content[i].questionNode.option_a.indexOf('src="')+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.option_a.slice(subjectlist.content[i].questionNode.option_a.indexOf('src="')+6,subjectlist.content[i].questionNode.option_a.length)+"</td></tr>";
-					}else{
 						a1+="<tr><td>A:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_a+"</td></tr>";
-					}
 				}
 				if(subjectlist.content[i].questionNode.option_b.length>0){
-					if(subjectlist.content[i].questionNode.option_b.indexOf('src="')!=-1){
-						a1+="<tr><td>B:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_b.slice(0,subjectlist.content[i].questionNode.option_b.indexOf('src="')+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.option_b.slice(subjectlist.content[i].questionNode.option_b.indexOf('src="')+6,subjectlist.content[i].questionNode.option_b.length)+"</td></tr>";
-					}else{
 						a1+="<tr><td>B:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_b+"</td></tr>";
-					}
-//					a1+="<tr><td>B:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_b+"</td></tr>";
 				}
 				if(subjectlist.content[i].questionNode.option_c.length>0){
-					if(subjectlist.content[i].questionNode.option_c.indexOf('src="')!=-1){
-						a1+="<tr><td>C:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_c.slice(0,subjectlist.content[i].questionNode.option_c.indexOf('src="')+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.option_c.slice(subjectlist.content[i].questionNode.option_c.indexOf('src="')+6,subjectlist.content[i].questionNode.option_c.length)+"</td></tr>";
-					}else{
 						a1+="<tr><td>C:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_c+"</td></tr>";
-					}
 				}
 				if(subjectlist.content[i].questionNode.option_d.length>0){
-					if(subjectlist.content[i].questionNode.option_d.indexOf('src="')!=-1){
-						a1+="<tr><td>D:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_d.slice(0,subjectlist.content[i].questionNode.option_d.indexOf('src="')+5)+"http://www.jichuangsi.com/"+subjectlist.content[i].questionNode.option_d.slice(subjectlist.content[i].questionNode.option_d.indexOf('src="')+6,subjectlist.content[i].questionNode.option_d.length)+"</td></tr>";
-					}else{
 						a1+="<tr><td>D:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_d+"</td></tr>";
-					}
-//					a1+="<tr><td>D:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_d+"</td></tr>";
 				}
 				a1+="</tbody></table></div>";
 			}
@@ -389,11 +344,8 @@ function edition_click(obj, editionid) {
 	});
 }
 
-$(function() {
-	inits();
-});
-
 function inits() {
+	//获取类型信息列表
 	$.ajax({
 		url: local+"/QUESTIONSREPOSITORY/question/getOtherBasicInfo",
 		headers: {
@@ -410,6 +362,7 @@ function inits() {
 			alert("类型失败");
 		}
 	});
+	//获取第一个文件树的学段、年级、科目、版本信息
 	$.ajax({
 		url: local+"/QUESTIONSREPOSITORY/question/getSubjectEditionInfoByTeacher",
 		headers: {
@@ -427,12 +380,6 @@ function inits() {
 		}
 	});
 }
-
-/*$(document).click(function(e){
-	if(e.id != "speech"){
-		$(".speech-bubble-top").hide();
-	}
-});*/
 function Truequestion_click(obj) {
 	if($(obj).siblings(".speech-bubble-top").css("display") == "none") {
 		$(obj).siblings(".speech-bubble-top").show();
@@ -478,11 +425,12 @@ function paperType_a_click(obj, paperTypeid) {
 function focus_click(obj) {
 	$("#address").text("其他区域 ");
 	$("#address").append("<span style='color: #59E8E3;'>▼</span>");
-	if($(".areas").css("display") == "none") {
+	/*if($(".areas").css("display") == "none") {
 		$(".areas").css("display", "block");
 	} else {
 		$(".areas").css("display", "none");
-	}
+	}*/
+	$(".areas").toggle();
 }
 
 function d1_click(obj) {
@@ -497,7 +445,8 @@ function d1_click(obj) {
 	$(obj).siblings().removeClass("d1");
 	$(".areas_1").find("a").remove();
 	$(".areas_1").find("p").remove();
-	$(".areas").css("display", "none");
+	/*$(".areas").css("display", "none");*/
+	$(".areas").hide();
 	Obtain_subject();
 }
 
@@ -622,7 +571,7 @@ function add_paper(obj, istype) {
 				questionList.push({
 					"questionId": "",
 					"questionContent": questionNode[i].title,
-					"options": ['语文', '数学'],
+					"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
 					"answer": questionNode[i].answer1,
 					"answerDetail": questionNode[i].answer2,
 					"parse": questionNode[i].parse,
@@ -678,15 +627,6 @@ function page_nextkey(obj) {
 		}
 	}
 }
-
-/*题目信息列表点击事件*/
-/*function subjectList_click(obj){
-	if($(obj).children(".subject_info").css("display")=="none"){
-		$(obj).children(".subject_info").slideDown();
-	}else{
-		$(obj).children(".subject_info").hide(500);
-	}
-}*/
 //点击解析事件
 function analysis_click(obj) {
 	$(obj).parent().next().next().css("display", "none");

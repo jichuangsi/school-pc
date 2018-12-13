@@ -18,7 +18,7 @@ var partype=null;    //类型(传进后台的查询条件)
 var pardiff=null;	//难度(传进后台的查询条件)
 var isWhichoneItem=1; //判断当前选中的是哪个题库(个人收藏，校本题库，自定义题库)
 var keywordinput=null; //搜索输入的关键字
-var getQuestionPicUrl="self/getQuestionPic";  //获取图片的方法
+var getQuestionPicUrl="self/getQuestionPic";  //获取图片的接口路径
 //个人题库、校本题库、自定义题库点击事件
 function radioItembank(obj){
 	 total=1;     
@@ -80,7 +80,8 @@ function loopitem(){
 					}
 				a1+="</div>";
 				a1+="<div class='subjectinfo'>";
-					a1+="<div>"+"<p>"+itembaklist.content[i].questionContent+"</p>";
+				//题目
+					a1+="<div>"+itembaklist.content[i].questionContent;
 					if(itembaklist.content[i].questionPic!=null &&　itembaklist.content[i].questionPic != ""){
 						console.log(itembaklist.content[i].questionPic);
 						var getquestionpic=getQuestionPic(itembaklist.content[i].questionPic);//调用下载文件的接口返回的数据
@@ -89,8 +90,6 @@ function loopitem(){
 						}
 					}
 					
-//					题目
-						
 					a1+="</div>";
 					//题目选项
 				if(itembaklist.content[i].options!=null){
@@ -197,6 +196,7 @@ function questionType_a_click2(obj) {
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
 }
+//获取个人收藏,校本题库,自定义题库的题目
 function getItembankinfo(){
 	var cc={
 			"keyWord":keywordinput,  //
@@ -205,7 +205,7 @@ function getItembankinfo(){
 			"type":partype,        //类型
 			"sort":"",       
 			"pageIndex":pageIndex,
-			"pageSize":2
+			"pageSize":4
 			};
 	$.ajax({
 		url: local+"/QUESTIONSREPOSITORY/"+itembackMethod,
@@ -218,7 +218,6 @@ function getItembankinfo(){
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			/*alert(data);*/
 			 itembaklist=data.data;
 		},
 		error: function() {

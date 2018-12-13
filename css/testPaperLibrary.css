@@ -1,0 +1,318 @@
+.tpl_div1 {
+	width: 1200px;
+	height: 100%;
+	background-color: #FFFFFF;
+	margin-left: 18.75%;
+	/*margin-right: 11.75%;*/
+}
+
+.testPaperlist {
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 2%;
+	height: 100%;
+}
+
+.testPaperlist table {
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	border-color: #b7b6b6;
+}
+
+.testPaperlist table th {
+	background: #59E8E3;
+	color: #FFFFFF;
+	font-weight: 400;
+}
+
+.testPaperlist table th,
+.testPaperlist table td {
+	padding: 7px 0px;
+}
+
+.tpl_div1_btn {
+	width: 47%;
+	height: 31px;
+	border: 0px solid;
+	border-radius: 5px;
+	background-color: blue;
+	color: #FFFFFF;
+}
+
+.tpl_div1_btn:hover {
+	background-color: #59E8E3;
+}
+
+.tpl_div2 {
+	width: 1200px;
+	height: 100%;
+	background-color: #FFFFFF;
+	margin-left: 18.75%;
+}
+
+.tpl_div2 h3 {
+	padding: 10px;
+}
+
+.tpl_div2_left {
+	width: 20%;
+	height: 100%;
+	display: inline-block;
+	float: left;
+}
+
+.tpl_div2_left table {
+	width: 60%;
+	margin-top: 10px;
+	text-align: center;
+	border-collapse: collapse;
+	border-color: #b7b6b6;
+}
+
+.tpl_div2_left table th {
+	background-color: #F2F2F2;
+}
+
+.tpl_div2_left th,
+.tpl_div2_left td {
+	padding: 5px;
+}
+
+.tpl_div2_right {
+	width: 78%;
+	height: 100%;
+	display: inline-block;
+}
+
+.subjectList {
+	position: relative;
+	height: 100%;
+	border: 1px solid #F2F2F2;
+	font-size: 14px;
+	line-height: 20px;
+	cursor: pointer;
+	margin: 7px 0px;
+}
+
+.subjectList:hover {
+	border: 1px solid #497BFD;
+}
+
+.subjectList_top span {
+	width: 36px;
+	height: 36px;
+	background-color: #F2F2F2;
+	color: #FFFFFF;
+	float: left;
+	line-height: 36px;
+	text-align: center;
+	margin-right: 25px;
+}
+
+.subjectList_top i {
+	float: right;
+	background-color: #FDF3EC;
+	border: 0px solid;
+	border-radius: 15px;
+	padding: 5px 10px;
+	color: #B93535;
+	margin-right: 25px;
+}
+
+.subjectinfo {
+	font-size: 14px;
+	width: 801px;
+	margin-left: 32px;
+}
+
+.subjectDetails {
+	height: 50px;
+	width: 100%;
+	background-color: #F2F2F2;
+	margin-top: 11px;
+}
+
+.s_span {
+	line-height: 50px;
+	padding-left: 20px;
+}
+
+.s_span i {
+	color: #497BFD;
+}
+
+.Situation_click {
+	background-color: #FFFFFF;
+	border-top: 1px solid #F2F2F2;
+}
+
+.subjectDetails a {
+	padding: 15px 16px 20px 20px;
+	padding-left: 20px;
+	text-align: center;
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
+.subjectOperation {
+	margin-left: 40px;
+	display: inline;
+}
+
+.subjectOperation a {
+	padding: 12px 38px;
+	border: 0px solid;
+	border-radius: 5px;
+}
+
+.subjectOperation_add {
+	background-color: #59E8E3;
+	color: #FFFFFF;
+}
+
+.subjectOperation_remove {
+	background-color: #FFFFFF;
+	color: #59E8E3;
+}
+
+.subject_info {
+	width: 92%;
+	height: 100%;
+	margin-left: 32px;
+}
+
+.info_1 {
+	border-bottom: 1px dashed skyblue;
+}
+
+.info_2 {
+	border-bottom: 1px dashed skyblue;
+}
+
+.info_3 {
+	border-bottom: 1px dashed skyblue;
+}
+
+.info_1 span {
+	line-height: 40px;
+	margin-left: 20px;
+	padding-left: 4px;
+}
+
+.info_2 span {
+	margin-left: 20px;
+	line-height: 40px;
+}
+
+.info_2_div {
+	padding-left: 113px;
+	margin-bottom: 20px;
+}
+
+.info_3 {
+	margin-bottom: 20px;
+}
+
+.info_3_div {
+	padding-left: 113px;
+	display: block;
+	padding-bottom: 15px;
+	border: none;
+}
+
+.info_3 span {
+	margin-left: 20px;
+	line-height: 40px;
+}
+
+.info_3_div span {
+	padding: 5px 10px;
+	border: 0px solid;
+	background-color: #3D72FE;
+	border-radius: 5px;
+	color: #FFFFFF;
+	margin: 10px 10px;
+}
+
+.info_4 span {
+	line-height: 40px;
+	margin-left: 30px;
+}
+
+#container {
+	padding-top: 7px;
+}
+
+.bar6 form {
+	position: relative;
+	width: 300px;
+	margin: 0 auto;
+	margin-right: -29px;
+}
+
+.bar6 input,
+button {
+	border: none;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.bar6 input {
+	border: 1.5px solid #D1D4D7;
+	border-radius: 5px;
+	background: transparent;
+	top: 0;
+	right: 0;
+	width: 68%;
+	height: 36px;
+	padding-left: 13px;
+}
+
+.bar6 button {
+	background: #3D72FE;
+	border-radius: 0 5px 5px 0;
+	width: 42px;
+	top: 0;
+	right: 58px;
+	background-image: url(../img/searchBotton.png);
+	background-repeat: no-repeat;
+	background-position: 7px 5px;
+	height: 36px;
+	width: 42px;
+	cursor: pointer;
+	position: absolute;
+}
+.nav-top {
+		width: 100%;
+		height: 40px;
+		background-color: #3d72fe;
+	}
+	
+	.nav-top-manin {
+		margin-left: 18.75%;
+	}
+	
+	.nav-top-manin-content {
+		color: white;
+		text-align: center;
+		line-height: 40px;
+		float: left;
+		width: 120px;
+	}
+	
+	.nav-top-manin-content:hover {
+		cursor: pointer;
+	}
+	
+	.nav-top-manin-but {
+		margin-top: 5px;
+		width: 100px;
+		height: 30px;
+		border-radius: 5px;
+		line-height: 30px;
+		float: right;
+		margin-right: 24.75%;
+		background-color: #59e8e3;
+		text-align: center;
+	}
