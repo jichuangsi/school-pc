@@ -202,3 +202,13 @@ table td {
 .but-xzt-bot{
 	margin-bottom: 30px;
 }
+.imgload{
+	width: 258px;
+	height: 258px;
+	background-color: #3D72FE;
+	border-radius: 5px;
+	position: relative;
+	right: 65px;
+	top: 35px;
+	float: right;
+}

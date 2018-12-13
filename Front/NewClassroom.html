@@ -112,39 +112,55 @@
 			<!--第一一部分-->
 			<div class="main-conter">
 				<div class="main-conter-box">
-					<!--			<form action="http://192.168.1.9:8084/test/saveCourse" method="post" id="form1" onsubmit="formSub()">-->
-					<div class="box-room-name-one">
-						<span>课堂名称:</span>
-						<input id="ClassName" type="text" name="Name" placeholder="请输入课堂名称" onfocus="javascript:if(this.placeholder=='请输入课堂名称')this.placeholder='';" onblur="javascript:if(this.placeholder=='')this.placeholder='请输入课堂名称';" class="input-box" />
-					</div>
-					<div class="box-room-name">
-						<span>上课班级:</span>
-						<select class="box-room-selet" id="AttendClass" name="className">
-						</select>
-					</div>
-					<div class="box-room-name-one1">
-						<span>课堂小测:</span>
-						<select class="box-room-selet-cs" id="ClassRoomSmallTest" name="">
-						</select>
-						<input type="button" value="浏览题目" class="box-room-selet-cs-but" onclick="toList()" />
-						<input type="button" value="新增题目" class="box-room-selet-cs-but" onclick="toQuestion()" />
-					</div>
-					<div class="box-room-name1">
-						<span>上课时间:</span>
-						<select class="time-select" id="time-hour" name="hh">
-						</select>
-						<span>:</span>
-						<select class="time-select" id="time-min" name="mm">
-						</select>
-						<span>日期:</span>
-						<!--<select class="time-select-y">
-								<option>10-20</option>
-							</select>-->
-						<input type="text" class="time-select-y" placeholder="" id="test30" name="ymd">
-					</div>
-					<div class="box-room-rn">
-						<div class="box-room-rn-span">课堂简介:</div>
-						<textarea cols="15" rows="3" class="box-room-rn-text" id="ClassroomSynopsis" name="info"></textarea>
+					<div>
+						<table>
+							<tr>
+								<td>
+									<div class="box-room-name-one">
+										<span>课堂名称:</span>
+										<input id="ClassName" type="text" name="Name" placeholder="请输入课堂名称" onfocus="javascript:if(this.placeholder=='请输入课堂名称')this.placeholder='';" onblur="javascript:if(this.placeholder=='')this.placeholder='请输入课堂名称';" class="input-box" />
+									</div>
+								</td>
+								<td>
+									<div class="box-room-name">
+										<span>上课班级:</span>
+										<select class="box-room-selet" id="AttendClass" name="className">
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="box-room-name-one1">
+										<span>课堂小测:</span>
+										<select class="box-room-selet-cs" id="ClassRoomSmallTest" name="">
+										</select>
+										<input type="button" value="浏览题目" class="box-room-selet-cs-but" onclick="toList()" />
+										<input type="button" value="新增题目" class="box-room-selet-cs-but" onclick="toQuestion()" />
+									</div>
+								</td>
+								<td>
+									<div class="box-room-name1">
+										<span>上课时间:</span>
+										<select class="time-select" id="time-hour" name="hh">
+										</select>
+										<span>:</span>
+										<select class="time-select" id="time-min" name="mm">
+										</select>
+										<span>日期:</span>
+										<input type="text" class="time-select-y" placeholder="" id="test30" name="ymd">
+									</div>
+								</td>
+							</tr>
+							<tr style="height: 150px;">
+								<td colspan="2">
+									<div class="box-room-rn">
+										<div class="box-room-rn-span">课堂简介:</div>
+										<textarea cols="15" rows="3" class="box-room-rn-text" id="ClassroomSynopsis" name="info"></textarea>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</div>
 					<button class="box-sub" id="sub" type="submit" onclick="formSub()">
 							新建课堂

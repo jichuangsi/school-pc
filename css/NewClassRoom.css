@@ -44,8 +44,9 @@ body {
 	height: 30px;
 	border-radius: 5px;
 	line-height: 30px;
-	float: right;
-	margin-right: 24.75%;
+	float: left;
+	position: relative;
+	left: 55%;
 	background-color: #59e8e3;
 	text-align: center;
 }
@@ -61,7 +62,7 @@ body {
 }
 
 .main-conter-box {
-	width: 62.5%;
+	width: 1200px;
 	height: 420px;
 	background-color: white;
 	margin-top: 10px;
@@ -141,7 +142,7 @@ body {
 	font-weight: 400;
 	font-size: 23px;
 	float: left;
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 	margin-left: 116px;
 }
 
@@ -155,7 +156,7 @@ body {
 	float: left;
 	padding-right: 10px;
 	margin-left: 7px;
-	margin-top: 20px;
+/*	margin-top: 20px;*/
 }
 
 .time-select {
@@ -173,7 +174,7 @@ body {
 	font-size: 20px;
 	border: solid 2px #3d72fe;
 	border-radius: 4px;
-	text-indent: 0.5em;
+	text-align: center;
 }
 
 .box-room-rn {
@@ -193,18 +194,19 @@ body {
 }
 
 .box-room-rn-text {
-	width: 810px;
+	width: 821px;
 	height: 80px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	resize: none;
 	border: solid 2px #3d72fe;
 	border-radius: 4px;
-	margin-top: 30px;
 	margin-left: -136px;
 	font-size: 18px;
 	text-indent: 1em;
 	font-weight: 300;
+	position: relative;
+	left: 62px;
 }
 
 .box-sub {
@@ -213,8 +215,8 @@ body {
 	background-color: #59e8e3;
 	border-radius: 5px;
 	color: white;
-	margin-left: 610px;
-	margin-top: 34px;
+	position: relative;
+	left: 500px;
 	text-align: center;
 	line-height: 55px;
 	font-size: 24px;
@@ -225,7 +227,7 @@ body {
 }
 
 .box-room-show {
-	width: 62.5%;
+	width: 1200px;
 	margin-top: 25px;
 	margin-left: 18.75%;
 	background-color: white;
@@ -355,7 +357,6 @@ body {
 	line-height: 30px;
 	float: left;
 	position: relative;
-	left: 68px;
 }
 
 

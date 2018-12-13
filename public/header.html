@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<script type="text/javascript" src="../js/jquery.min.js" ></script>
-		<script type="text/javascript" src="../js/httplocation.js" ></script>
-		<script type="text/javascript" src="../js/header.js" ></script>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/httplocation.js"></script>
+		<script type="text/javascript" src="../js/header.js"></script>
 		<script type="text/javascript" src="../lib/js/bootstrap.js"></script>
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../css/header.css" />
 	</head>
 	<style>
-		a{
+		a {
 			text-decoration: none;
-			color:black ;
+			color: black;
 		}
 	</style>
+
 	<body>
-			
-		<div class="publicheader" >
-			<div class="publicheaderdiv" >
-				<img src="../img/jcs.png"/>
+
+		<div class="publicheader">
+			<div class="publicheaderdiv">
+				<img src="../img/jcs.png" />
 				<nav id="publicheaderNav" style="display: inline-block;">
-					<a href="../Front/index.html">首页</a>
+					<a onclick="window.location.replace('../Front/index.html')" style="cursor: pointer;">首页</a>
 					<a>测试报告</b>
-					<a>考试阅卷</a>
-					<a>作业中心</a>
-					<a href="../thacherPage/Newclassroom_Newtestpaper.html">组题选卷</a>
-					<a href="../Front/Choreography.html">课堂管理</a>
+						<a>考试阅卷</a>
+						<a>作业中心</a>
+						<a onclick="window.location.replace('../thacherPage/Newclassroom_Newtestpaper.html')"style="cursor: pointer;" >组题选卷</a>
+						<a onclick="window.location.replace('../Front/Choreography.html')" style="cursor: pointer;">课堂管理</a>
 				</nav>
+				<div id="PublicHeaderUserDiv" style="cursor: pointer;">
+					<figure><img src="../img/headeruser.png" /></figure>
+					<div id="headerUserSelect">
+						<label style="margin-left: 14px;cursor: pointer;" name="user_name">test000</label>
+						<i id="tb" class="glyphicon glyphicon-chevron-down" style="color:#c86666; font-size:18px; margin-left: 5px;"></i>
+					</div>
+					<div style="display: none;">
+						<a>个人中心</a>
+						<a>系统信息</a>
+						<a>退出登陆</a>
+					</div>
+				</div>
 			</div>
-			<div id="PublicHeaderUserDiv" style="cursor: pointer;">
-				<figure ><img src="../img/headeruser.png" /></figure>
-				<div id="headerUserSelect">
-		            <label style="margin-left: 14px;cursor: pointer;"name="user_name"></label>
-		            <i id="tb" class="glyphicon glyphicon-chevron-down" style="color:#c86666; font-size:18px; margin-left: 5px;"></i>
-		        </div>
-		        <div style="display: none;">
-		        	<a>个人中心</a>
-		        	<a>系统信息</a>
-		        	<a>退出登陆</a>
-		        </div>
-			</div>
+
 		</div>
 	</body>
 

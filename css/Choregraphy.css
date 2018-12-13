@@ -36,8 +36,9 @@
 	height: 30px;
 	border-radius: 5px;
 	line-height: 30px;
-	float: right;
-	margin-right: 24.75%;
+		float: left;
+	position: relative;
+	left: 55%;
 	background-color: #59e8e3;
 	text-align: center;
 }

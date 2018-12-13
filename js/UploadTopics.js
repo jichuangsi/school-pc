@@ -30,8 +30,7 @@ $(function() {
 			var questionPic = data.data.questionPic;
 			$("input[name='questionPic']").val(questionPic);
 		},
-		onFailure: function(res) {
-		}
+		onFailure: function(res) {}
 	}
 
 	var upload = tinyImgUpload('#upload', options);
@@ -179,8 +178,8 @@ function CheckBox(obj) {
 	answer += str + ' ';
 }
 //判断
-function packanswer(obj){
-	if(obj.checked){
+function packanswer(obj) {
+	if(obj.checked) {
 		answer = $(obj).parent().text();
 	}
 }
@@ -255,7 +254,7 @@ function saveQuestion() {
 	var answerOptions = new Array();
 	//console.log(knowledge)
 	for(i = 0; i < number; i++) {
-		answerOptions.push( $("input[name=potions" + i + "]").val());
+		answerOptions.push($("input[name=potions" + i + "]").val());
 	}
 	//console.log(answerOptions);
 	var parse = $("textarea[name='parse']").val();
@@ -347,7 +346,7 @@ function saveQuestionStone() {
 	var knowledge = $("#deptselect option:selected").text();
 	var answerOptions = new Array();
 	for(i = 0; i < number; i++) {
-		answerOptions.push( $("input[name=potionsStone" + i + "]").val());
+		answerOptions.push($("input[name=potionsStone" + i + "]").val());
 	}
 	var parse = $("textarea[name='stone']").val();
 	var cc = {
@@ -394,7 +393,7 @@ function saveCompletionQuestion() {
 	var knowledge = $("#isselect option:selected").text();
 	var answerOptions = new Array();
 	for(i = 0; i < number; i++) {
-		answerOptions.push( $("input[name=potionlist" + i + "]").val());
+		answerOptions.push($("input[name=potionlist" + i + "]").val());
 	}
 	con
 	var parse = $("textarea[name='Completion']").val();
@@ -435,3 +434,29 @@ function saveCompletionQuestion() {
 		}
 	});
 }
+//弹出隐藏层
+function ShowDiv(show_div, bg_div) {
+	$.ajax({
+		url:"192.168.31.144/createQR",
+		headers :{
+			'accessToken': accessToken
+		},
+		type:"get",
+		async: false,
+		data:{},
+		success: function(data) {
+			
+		}
+	});
+	document.getElementById(show_div).style.display = 'block';
+	document.getElementById(bg_div).style.display = 'block';
+	var bgdiv = document.getElementById(bg_div);
+	bgdiv.style.width = document.body.scrollWidth;
+	// bgdiv.style.height = $(document).height();
+	$("#" + bg_div).height($(document).height());
+};
+//关闭弹出层
+function CloseDiv(show_div, bg_div) {
+	document.getElementById(show_div).style.display = 'none';
+	document.getElementById(bg_div).style.display = 'none';
+};

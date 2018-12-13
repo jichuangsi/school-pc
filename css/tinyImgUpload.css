@@ -1,4 +1,6 @@
-#img-container {}
+#img-container {
+	float: left;
+}
 
 #img-container:after {
 	content: '.';
@@ -15,8 +17,8 @@
 	position: relative;
 	top: 35px;
 	left: 70px;
-	height: 2.34375rem;
-	width: 3.34375rem;
+	height: 258px;
+	width: 258px;
 	box-sizing: border-box;
 }
 

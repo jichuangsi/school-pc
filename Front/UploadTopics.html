@@ -66,20 +66,7 @@
 		}
 	</style>
 	<script type="text/javascript">
-		//弹出隐藏层
-		function ShowDiv(show_div, bg_div) {
-			document.getElementById(show_div).style.display = 'block';
-			document.getElementById(bg_div).style.display = 'block';
-			var bgdiv = document.getElementById(bg_div);
-			bgdiv.style.width = document.body.scrollWidth;
-			// bgdiv.style.height = $(document).height();
-			$("#" + bg_div).height($(document).height());
-		};
-		//关闭弹出层
-		function CloseDiv(show_div, bg_div) {
-			document.getElementById(show_div).style.display = 'none';
-			document.getElementById(bg_div).style.display = 'none';
-		};
+		
 	</script>
 
 	<body>
@@ -105,13 +92,17 @@
 						<div class="upImg" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
 						<div id="fade" class="black_overlay">
 						</div>
-						<div id="MyDiv" class="white_content" style="width: 785px;height:800px;margin-left: 17%;">
+						<div id="MyDiv" class="white_content" style="width: 785px;height:475px;margin-left: 17%;">
 							<div style="text-align: right; cursor: default; height: 40px;">
-								<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
+								<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color: white;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
+								<div style="text-align: center;">本地上传图片或者扫描二维码手机上传图片</div>
 								<div id="upload">
 
 								</div>
-								<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 344px;top: 100px ;cursor: pointer;" class="submit">提交</button>
+								<div class="imgload">
+									
+								</div>
+								<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 280px;top: 340px ;cursor: pointer;" class="submit">本地上传</button>
 							</div>
 						</div>
 						<script type="text/javascript" src="../js/tinyImgUpload.js"></script>

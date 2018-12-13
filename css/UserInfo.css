@@ -1,0 +1,67 @@
+@charset "utf-8";
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	background-color: #F2F2F2;
+}
+.conter{
+	width: 1200px;
+	height: 900px;
+	background-color: white;
+	position: relative;
+	left: 360px;
+	top: 20px;
+}
+.main-xq{
+	background-color: white;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	position: relative;
+	left: 360px;
+	top: 20px;
+}
+#img{
+	width: 110px;
+	height: 110px;
+	background-color: #3D72FE;
+	border-radius: 60px;
+	text-align: center;
+	line-height: 110px;
+}
+.updateImage{
+	width: 110px;
+	height: 30px;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #F2F2F2;
+	color: #3D72FE;
+}
+.conter-xq{
+	width: 100%;
+	position: relative;
+	top: 50px;
+}
+.updatebut{
+	width: 70px;
+	height: 30px;
+	background-color: #3D72FE;
+	color: white;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.data{
+	position: relative;
+	top: 100px;
+	left: 150px;
+}
+.data-td{
+	position: relative;
+	left: 700px;
+}

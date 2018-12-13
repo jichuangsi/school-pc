@@ -40,9 +40,9 @@ body {
 	height: 30px;
 	border-radius: 5px;
 	line-height: 30px;
-	float: right;
+		float: left;
 	position: relative;
-	right: 390px;
+	left: 55%;
 	background-color: #59e8e3;
 	text-align: center;
 }
