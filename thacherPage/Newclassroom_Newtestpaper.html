@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+		<script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+		<!--<script type="text/javascript" src="../js/jquery-1.8.3.min.js" ></script>-->
+		<script type="text/javascript" src="../js/Newclassroom_Newtestpaper.js"></script>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/index.js"></script>
+		<script type="text/javascript" src="../js/personalsubject.js"></script>
+		<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
+		<script type="text/javascript"  src="../js/jquery.page.js"></script>
+		<script type="text/javascript" src="../js/httplocation.js" ></script>
+		<link rel="stylesheet" href="../css/page.css" />
+		<script type="text/javascript" src="../js/template.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
+		
+	</head>
+	<style>
+		.MathJye table {
+			border-collapse: collapse;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			vertical-align: middle;
+			line-height: normal;
+			font-size: inherit;
+			_font-size: 100%;
+			font-style: normal;
+			font-weight: normal;
+			border: 0;
+			float: none;
+			display: inline-block;
+			zoom: 0;
+		}
+		
+		.mathjye-underpoint2 {
+			border-bottom: 2px dotted #000;
+			padding-bottom: 3px;
+		}
+		
+		#q_answer {
+			display: none;
+		}
+		
+		table.edittable {
+			border-collapse: collapse;
+			text-align: center;
+			margin: 2px
+		}
+		
+		table.edittable td,
+		table.edittable th {
+			line-height: 30px;
+			padding: 5px;
+			white-space: normal;
+			word-break: break-all;
+			border: 1px solid #000;
+			vertical-align: middle
+		}
+		
+		table.composition {
+			border-collapse: collapse;
+			text-align: left;
+			margin: 2px;
+			width: 98%
+		}
+		
+		table.composition td,
+		table.composition th {
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		table.composition2 {
+			border-collapse: collapse;
+			width: auto
+		}
+		
+		table.composition2 td,
+		table.composition2 th {
+			text-align: left;
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border: none;
+			border-width: 0;
+			vertical-align: middle
+		}
+	</style>
+
+	<body style="background-color: #F2F2F2;margin: 0;padding: 0;">
+		<iframe name="content_frame" width=100% height=80 frameborder="0" marginwidth=0 SRC="../public/header.html"></iframe>
+		<div class="newtestpaper">
+			<!--左边树状图-->
+			<div class="s-side">
+				<ul>
+					<li class="first">
+						<div class="d-firstNav s-firstNav clearfix">
+							<i class="fa fa-bars" style="color: #0000FF;"></i>
+							<span style="color: #003EFF;">教科书版本</span>
+							<i class="fa fa-caret-right fr "></i>
+						</div>
+						<ul id="ff" class="d-firstDrop s-firstDrop">
+						</ul>
+					</li>
+					<li class="first">
+						<div class="d-firstNavs s-firstNav clearfix">
+							<i class="fa fa-bars" style="color: #0000FF;"></i>
+							<span style="color: #003EFF;">知识点目录</span>
+							<i class="fa fa-caret-right fr "></i>
+						</div>
+						<ul id="f2" class="d-firstDrops s-firstDrops">
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="newtestpaper_right">
+				<div class="newtestpaper_div1">
+					<div class="div1">
+						<div>已选试题: <i id="paper_number">0</i></div>
+						<div>课堂小测</div>
+						<div>2018年11-30好 10：30</div>
+						<!--<div><label>总分数: <i id="paper_Fraction">2</i> </label></div>-->
+						<!--<div><input type="text" placeholder="请输入试卷标题" /></div>
+						<div><input type="text" placeholder="请输入试卷副标题" /></div>-->
+					</div>
+					<div style="clear: both;" class="div2">
+						<button onclick="getClass()">保存返回新建课堂</button>
+						<button onclick="window.location.href='../Front/NewClassroom.html'">返回新建课堂</button>
+						<button onclick="window.location.href='../Front/UploadTopics.html'">自定义题目</button>
+						<!--<button>预览试卷</button>-->
+					</div>
+					<div id="content" onClick="PreviewPaper()" class="preview">
+						预览试卷
+					</div>
+				</div>
+				<div id="newtestpaper_div2_01" class="newtestpaper_div2" style="display: block;">
+					<div id="container">
+						<div class="search bar6">
+							<form action="">
+								<input type="text" placeholder="请输入考试、作业名称">
+								<button type="button"></button>
+							</form>
+						</div>
+						<div style="height:1px; width:849px; background-color:red;margin-top: 5px;margin-left: 32px;"></div>
+					</div>
+					<div class="queryNavList_div">
+						<dl>
+							<dd>
+								<div style="float: left;">年份:</div>
+								<div class="f1" style="display: table;">
+									<a class="d1" onclick="year_a_click(this,null)">全部</a>
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">题型:</div>
+								<div class="f2" style="display: table;">
+									<a class="d1" onclick="questionType_a_click(this,null)">全部</a>
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">难度:</div>
+								<div class="f3" style="display: table;">
+									<a class="d1" onclick="difficultyType_a_click(this,null)">全部</a>
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">类型:</div>
+								<div class="f4" style="display: table;">
+									<a class="d1" onclick="paperType_a_click(this,null)">全部</a>
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">来源:</div>
+								<div class="f5">
+									<a class="d1" onclick="d1_click(this)">默认</a>
+									<a onclick="d1_click(this)">本省</a>
+									<a id="address" onclick="d1_click(this),focus_click(this);">其他区域 <span style="color: #59E8E3;">▼</span> </a>
+									<div>
+										<div class="areas" style="display: contents;background-color: white;">
+											<input type="text" placeholder="请输入地区关键字" id="ads1">
+											<button onclick="search_areas(this)">搜索</button>
+											<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
+											</div>
+										</div>
+									</div>
+								</div>
+							</dd>
+						</dl>
+					</div>
+					<div class="conditionChoice">
+						<a onclick="b1(this)" class="choice1">综合排序</a>
+						<!--<a onclick="b2(this)">组卷次数 <span>▲</span> </a>
+						<a onclick="b3(this)">作答次数<span>▲</span></a>
+						<a onclick="b4(this)">平均得分率<span>▲</span></a>-->
+						<div style="display: inline-block;padding-left: 22px;">
+							共
+							<i style="color: #0088CC;">1234</i> 题
+						</div>
+						<div class="page1" style="display: inline;">
+							<a onclick="page_upkey(this)" id="page_up">
+								< </a>
+									第
+									<i class="page_left"> 1 </i> /
+									<i class="page_right">1</i> 页
+									<a onclick="page_nextkey(this)" id="page_next">></a>
+						</div>
+					</div>
+					<!--题目内容-->
+
+					<!--<div class="tcdPageCode"></div>-->
+				</div>
+
+				<div id="newtestpaper_div2_02" class="newtestpaper_div2" style="display: none;">
+					<div id="container">
+						<div class="search bar6">
+							<form>
+								<input type="text" id="keywordinput" placeholder="请输入关键字查询" value="">
+								<button type="button" onclick="keywordserach()"></button>
+							</form>
+						</div>
+						<div style="height:1px; width:849px; background-color:red;margin-top: 5px;margin-left: 32px;"></div>
+					</div>
+					<div class="queryNavList_div">
+						<dl style="display: none;">
+							<dd>
+								<div style="float: left;">年份:</div>
+								<div class="" style="display: table;">
+									<a class="d1" onclick="year_a_click2(this,null)">全部</a>
+									<a onclick="year_a_click2(this)">2018</a>
+									<a onclick="year_a_click2(this)">2017</a>
+									<a onclick="year_a_click2(this)">2016</a>
+									<a onclick="year_a_click2(this)">2015</a>
+									<a onclick="year_a_click2(this)">更早</a>
+
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">题型:</div>
+								<div class="" style="display: table;">
+									<a class="d1" onclick="questionType_a_click2(this,null)">全部</a>
+									<a onclick="questionType_a_click2(this)">选择题</a>
+									<a onclick="questionType_a_click2(this)">多选题</a>
+									<a onclick="questionType_a_click2(this)">判断题</a>
+									<a onclick="questionType_a_click2(this)">填空题</a>
+									<a onclick="questionType_a_click2(this)">辩论题</a>
+									<a onclick="questionType_a_click2(this)">论述题</a>
+									<a onclick="questionType_a_click2(this)">探究题</a>
+									<a onclick="questionType_a_click2(this)">简析题</a>
+									<a onclick="questionType_a_click2(this)">简答题</a>
+								</div>
+							</dd>
+						</dl>
+						<dl>
+							<dd>
+								<div style="float: left;">难度:</div>
+								<div class="" style="display: table;">
+									<a class="d1" onclick="difficultyType_a_click2(this,null)">全部</a>
+									<a onclick="difficultyType_a_click2(this)">困难</a>
+									<a onclick="difficultyType_a_click2(this)">较难</a>
+									<a onclick="difficultyType_a_click2(this)">一般</a>
+									<a onclick="difficultyType_a_click2(this)">较易</a>
+									<a onclick="difficultyType_a_click2(this)">容易</a>
+								</div>
+							</dd>
+						</dl>
+					</div>
+					<div class="conditionChoice">
+						<a onclick="b1(this)" class="choice1">综合排序</a>
+						<!--<a onclick="b2(this)">组卷次数 <span>▲</span> </a>
+						<a onclick="b3(this)">作答次数<span>▲</span></a>
+						<a onclick="b4(this)">平均得分率<span>▲</span></a>-->
+						<div style="display: inline-block;padding-left: 22px;">
+							共
+							<i id="total" style="color: #0088CC;">0</i> 题
+						</div>
+						<div class="page1" style="display: inline;">
+							<a onclick="page_upkeys(this)" id="page_up">
+								< </a>
+									第
+									<i id="page_left2" class="page_left"> 1 </i> /
+									<i id="page_right2" class="page_right">32</i> 页
+									<a onclick="page_nextkeys(this)" id="page_next">></a>
+						</div>
+					</div>
+					<!--题目内容-->
+
+				</div>
+				<!--<div class="tcdPageCode"></div>-->
+			</div>
+		</div>
+
+		<div>
+			<div id="hidebg"></div>
+			<div id="previews" style="cursor: pointer;">
+				<div class="pre_exit" onClick="hide();">X</div>
+				<div id="Previewinfo" style="margin: 20px;">
+					<h1 style="text-align: center;">课堂小测</h1>
+					<!--<h2 style="text-align: center;">副标题</h2>-->
+					<div class=" pres">
+						<p>选择题 一共<span>1</span>题 </p>
+						<div>
+							习近平指出：中国梦归根到底是人民的梦，必须紧紧依靠人民来实现，22222222222222222222222必须不断为人民造福。“中国梦归根到底是人民的梦”根本原因在于（　　）
+							<br /> ①依托自主开发提高社会劳动生产率，使商品价值增加
+							<br /> ②个别劳动生产率高于社会劳动生产率，获得竞争优势
+							<br /> ③依托自主创新提高商品的使用价值，扩大了商品需求
+							<br /> ④个别劳动时间大于社会必要劳动时间，商品价值增加。
+						</div>
+						<div>
+							<table>
+								<tbody>
+									<tr>
+										<td>A. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+									</tr>
+									<tr>
+										<td>B. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+									</tr>
+									<tr>
+										<td>C. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+									</tr>
+									<tr>
+										<td>D. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--<div id="content" onClick="show();">点击打开</div>-->
+
+		</div>
+	</body>
+
+</html>
