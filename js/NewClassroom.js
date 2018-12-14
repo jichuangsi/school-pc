@@ -4,7 +4,6 @@ var accessToken;
 var datalist;
 var pageSize = 3;
 
-
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -22,17 +21,18 @@ $(function() {
 
 });
 var user;
-function getgradename(){
-	user=getUser()
-	var gname=user.roles[0].phrase.phraseName;
-	var sname=user.roles[0].primarySubject.subjectName;
+
+function getgradename() {
+	user = getUser()
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
 var sClass;
 var eaxms;
 var questionNode;
-var currentdate;//获取当前日期
+var currentdate; //获取当前日期
 //加载页面获取数据获取保存的题目
 function getQuestionNode() {
 	if(typeof(Storage) !== "undefined") {
@@ -44,27 +44,25 @@ function getQuestionNode() {
 		var hh = sessionStorage.getItem('hh', hh);
 		var mm = sessionStorage.getItem('mm', mm);
 		var ymd = sessionStorage.getItem('ymd', ymd);
-		if(hh == undefined ) {
+		if(hh == undefined) {
 			initAttendtimehour("");
 		}
-		if(mm != undefined ) {
+		if(mm != undefined) {
 			initAttendtimemin("");
 		}
-		if(ymd!=undefined ){
+		if(ymd != undefined) {
 			$("#test30").val("");
-		}else{
+		} else {
 			$("#test30").val(currentdate);
 		}
-		if(Name!=undefined ){
+		if(Name != undefined) {
 			$("#ClassName").val(Name);
-		}
-		else{
+		} else {
 			$("#ClassName").val("");
 		}
-		if(info!=undefined ){
+		if(info != undefined) {
 			$("#ClassroomSynopsis").val(info);
-		}
-		else{
+		} else {
 			$("#ClassroomSynopsis").val("");
 		}
 		sessionStorage.removeItem("ymd");
@@ -74,6 +72,7 @@ function getQuestionNode() {
 		document.getElementById("result").innerHTML = "抱歉！您的浏览器不支持 Web Storage ...";
 	}
 }
+
 function getNowFormatDate() {
 	var date = new Date();
 	var seperator1 = "-";
@@ -86,9 +85,10 @@ function getNowFormatDate() {
 	if(strDate >= 0 && strDate <= 9) {
 		strDate = "0" + strDate;
 	}
-	 currentdate= year + seperator1 + month + seperator1 + strDate;
-	 $("#test30").attr('placeholder',currentdate);
+	currentdate = year + seperator1 + month + seperator1 + strDate;
+	$("#test30").attr('placeholder', currentdate);
 }
+
 function toList() {
 	if(questionNode.questionContent != "") {
 		sessionStorage.setItem("lastname", JSON.stringify(questionNode));
@@ -196,7 +196,7 @@ function formSub() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('加入课堂');
+			swal("新建成功!", "", "success");
 			showLoad();
 		},
 		error: function(returndata) {
@@ -230,7 +230,7 @@ function copyClassRoom(obj) {
 	initAttendTest($ClassRoomSmallTestVal, eaxms);
 	initAttendtimehour($ClassTimehour);
 	initAttendtimemin($ClassTimemin);
-
+	swal("复制完成!");
 }
 //初始化上课班级
 function initAttendClass(AttendClassText, sClass) {
@@ -368,28 +368,58 @@ function LookRoomClass(datalist) {
 	}
 }
 
+//function DelDate(obj) {
+//	var id = $(obj).find("input").val();
+//	var cc = {
+//		"courseId": id
+//	}
+//	$.ajax({
+//		url: local + "/COURSESERVICE/console/deleteNewCourse",
+//		headers: {
+//			'accessToken': accessToken
+//		},
+//		type: 'DELETE',
+//		async: false,
+//		data: JSON.stringify(cc),
+//		contentType: 'application/json',
+//		success: function(data) {
+//			alert("删除课堂成功！");
+//			showLoad();
+//		},
+//		error: function() {
+//			// alert(returndata);	
+//		}
+//	});
+//}
+
 function DelDate(obj) {
-	alert($(obj).find("input").val());
-	var id = $(obj).find("input").val();
-	var cc = {
-		"courseId": id
-	}
-	$.ajax({
-		url: local + "/COURSESERVICE/console/deleteNewCourse",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'DELETE',
-		async: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(data) {
-			alert("删除课堂成功！");
-			showLoad();
-		},
-		error: function() {
-			// alert(returndata);	
+	swal({
+		title: "您确定要删除吗？",
+		text: "您确定要删除这条数据？",
+		type: "warning",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		confirmButtonText: "是的，我要删除",
+		confirmButtonColor: "#ec6c62"
+	}, function() {
+		var id = $(obj).find("input").val();
+		var cc = {
+			"courseId": id
 		}
+		$.ajax({
+			url: local + "/COURSESERVICE/console/deleteNewCourse",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'DELETE',
+			async: false,
+			data: JSON.stringify(cc),
+		}).done(function(data) {
+			swal("操作成功!", "已成功删除数据！", "success");
+			showLoad();
+		}).error(function(data) {
+			swal("OMG", "删除操作失败了!", "error");
+		});
 	});
 }
 

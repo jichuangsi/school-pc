@@ -28,10 +28,12 @@ $(function() {
 		res: {},
 		onSuccess: function(res) {
 			//var data = JSON.parse(res);
-			alert("上传成功！");
+				swal("上传成功！", "", "success");
 			CloseDiv('MyDiv', 'fade');
 		},
-		onFailure: function(res) {}
+		onFailure: function(res) {
+			swal("上传失败!", "", "error");
+		}
 	}
 
 	var upload = tinyImgUpload('#upload', options);
@@ -283,7 +285,8 @@ function saveQuestion() {
 	var content = $("textarea[name='Choicequestion']").val();
 	var knowledge = $("#dept option:selected").text();
 	if(knowledge == "请选择知识点") {
-		alert("请选择知识点!");
+		swal("请选择知识点!");
+		knowledge="";
 	}
 	var answerOptions = new Array();
 	//console.log(knowledge)
@@ -323,11 +326,12 @@ function saveQuestion() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('保存成功！');
-			window.location.reload()
+			swal("保存成功!", "", "success");
+			//window.setTimeou("ref()",1000*1); 	 	
 		},
 		error: function(returndata) {
 			// alert(returndata);
+			swal("保存失败!", "", "error");
 		}
 	});
 }
@@ -367,11 +371,12 @@ function saveQuestionPack() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('保存成功！');
-			window.location.reload();
+			swal("保存成功!", "", "success");
+			//window.setTimeou("ref()",1000*1);
 		},
 		error: function(returndata) {
 			// alert(returndata);
+			swal("保存失败!", "", "error");
 		}
 	});
 }
@@ -415,11 +420,12 @@ function saveQuestionStone() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('保存成功！');
-			window.location.reload();
+			swal("保存成功!", "", "success");
+			//window.setTimeou("ref()",1000*1);
 		},
 		error: function(returndata) {
 			// alert(returndata);
+			swal("保存失败!", "", "error");
 		}
 	});
 }
@@ -464,11 +470,12 @@ function saveCompletionQuestion() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('保存成功！');
-			window.location.reload();
+			swal("保存成功!", "", "success");
+			//window.setTimeou("ref()",1000*1);
 		},
 		error: function(returndata) {
 			// alert(returndata);
+		swal("保存失败!", "", "error");
 		}
 	});
 }
@@ -485,7 +492,7 @@ function ShowDiv(show_div, bg_div) {
 			$('#ylimg').attr("src", "data:image/jpeg;base64," + data)
 		},
 		error: function(data) {
-			console.log(data.status);
+			swal("保存失败!", "", "error");
 		}
 	});
 	document.getElementById(show_div).style.display = 'block';
@@ -514,4 +521,7 @@ function getNowFormatDate() {
 	}
 	currentdate = year + seperator1 + month + seperator1 + strDate;
 	return currentdate;
+}
+function ref(){
+	window.location.reload();
 }

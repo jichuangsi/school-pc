@@ -260,12 +260,13 @@ function updateSub() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			alert('修改完成');
+			swal("修改完成!", "", "success");
 			closeBg();
 			showLoad();
 		},
 		error: function(returndata) {
 			// alert(returndata);
+			swal("修改失败!", "", "error");
 		}
 	});
 	creaClass();
@@ -331,11 +332,12 @@ function DelDate(obj) {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			alert("删除课堂成功！")
+			swal("删除成功!", "", "success");
 			showLoad();
 		},
 		error: function() {
 			// alert(returndata);
+			swal("删除失败!", "", "error");
 		}
 	});
 }
