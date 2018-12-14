@@ -38,43 +38,25 @@
 				</form>
 			</div>
 		</div>
+		<script type="text/javascript" src="../js/httplocation.js"></script>
 		<script type="text/javascript" src="../js/jquery.min.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap-fileinput.js" ></script>
 		<script type="text/javascript">
 			$(function() {
 				//比较简洁，细节可自行完善
+				var local;
+				function getLocation() {
+					local = httpLocation();
+					accessToken=getAccessToken();
+				}
+				$(function(){
+					getLocation();
+				});
 				$('#uploadSubmit').click(function() {
-					/*var data = new FormData($("#uploadForm")[0]);*/
-					/*var FormData = new FormData();
-					var src = $("#ss").find("img").attr("src");*/
-					/*dataURLtoFile(src.slice(src.indexOf("4,")+2,src.length),"sss");*/
-					/*qq.append("img", convertBase64UrlToBlob(src));*/
-					/*alert(src.slice(src.indexOf("4,")+2,src.length));*/
-					/*var src = $("#ss").find("img").attr("src");*/
-					/*$.ajax({
-						url: 'http://192.168.31.154:8888/QUESTIONSREPOSITORY/self/sendQuestionPic',
-						headers: {
-							'accessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg'
-						},
-						type: 'post',
-						data: data,
-						async: false,
-						cache: false,
-						contentType: false,
-						processData: false,
-						success: function(data) {
-							console.log(data);
-							alert(data);
-						},
-						error: function(data) {
-							console.log(data.status);
-						}
-					});*/
 					var src = $("#ss").find("img").attr("src");
 					if(src == null || src == ""){
 						alert("请选择图片");
 					}else{
-						
 						function dataURLtoFile(dataurl, filename) { //将base64转换为文件
 							var arr = dataurl.split(','),
 								mime = arr[0].match(/:(.*?);/)[1],
@@ -88,14 +70,13 @@
 								type: mime
 							});
 						}
-						alert(getQueryString("code"));
-						alert(getQueryString("teacherId"));
 						var data = new FormData();
 						data.append("file",dataURLtoFile(src,"123.png"));
-						data.append("code","123454654654654"),
-						data.append("teacherId","4564654444");
+						data.append("code",getQueryString("c")),
+						data.append("teacherId",getQueryString("id"));
+						data.append("safeTime",getQueryString("t"));
 						$.ajax({
-							url: 'http://192.168.31.154:8888/QUESTIONSREPOSITORY/self/codeSendQuestionPic',
+							url: local+'/QUESTIONSREPOSITORY/self/codeSendQuestionPic',
 							type: 'POST',
 							data: data,
 							async: false,
@@ -114,9 +95,7 @@
 			});
 			function getQueryString(name) {
 			    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-			   /* var r = window.location.search.substr(1).match(reg);*/
-			  	var ss='http://127.0.0.1:8020/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/index.html?weew="123"&code="234"&teacherId="2313213"'
-			  var r = ss.substr(1).match(reg);
+			    var r = window.location.search.substr(1).match(reg);
 			    if (r != null) {
 			        return unescape(r[2]);
 			    }
