@@ -36,8 +36,8 @@
 /*定位居中*/
 .middle {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  /*left: 50%;
+  top: 50%;*/
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -51,10 +51,10 @@
 	overflow: auto;
  /* min-width: 200px;*/
   width: 230px;
-  height: 500px;
+  height: 600px;
   position: fixed;
-  top: 13%;
-  left:368px;
+  top: 18%;
+  left:18.75%;
   bottom: 0;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px #313131;
