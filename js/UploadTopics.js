@@ -448,13 +448,10 @@ function saveCompletionQuestion() {
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
-	var cc = {
-		"code": orcode
-	}
 	$.ajax({
-		url: local+'/COURSESERVICE/code/createQR',
+		url: local+'/COURSESERVICE/code/createQR?code='+orcode,
 		type: 'POST',
-		data: cc,
+		data:{},
 		headers: {
 			'accessToken': accessToken
 		},
