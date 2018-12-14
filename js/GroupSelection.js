@@ -496,7 +496,6 @@ function Chapter_click() {
 			'accessToken': accessToken
 		},
 		type: 'post',
-		async: false,
 		dataType: "json",
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
