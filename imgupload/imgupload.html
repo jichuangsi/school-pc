@@ -28,7 +28,7 @@
 								<span class="btn btn-primary btn-file">
                            		<span class="fileinput-new">选择文件</span>
 								<span class="fileinput-exists">换一张</span>
-								<input type="file" name="pic1" id="picID" accept="image/gif,image/jpeg,image/x-png,image/jpg,image/png," multiple/>
+								<input type="file" name="pic1" id="picID" />
 								</span>
 								<a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
 							</div>
@@ -84,6 +84,7 @@
 							contentType: false,
 							processData: false,
 							success: function(data) {
+								alert("成功");
 								console.log(data);
 							},
 							error: function(data) {
@@ -96,6 +97,8 @@
 			function getQueryString(name) {
 			    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 			    var r = window.location.search.substr(1).match(reg);
+			 /*  var urls='http://school.jichuangsi.com:82/imgupload/imgupload.html?a=%22123%22&c=123&id=123&t=3089515950460'
+			   var r = urls.substr(1).match(reg);*/
 			    if (r != null) {
 			        return unescape(r[2]);
 			    }
