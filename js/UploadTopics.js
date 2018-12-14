@@ -1,6 +1,6 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
-var accessToken;
+var accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg';
 
 function getLocation() {
 	local = httpLocation();
@@ -10,25 +10,26 @@ var type = "选择题";
 var answer = "";
 var difficulty;
 var arr;
+var orcode
 $(function() {
+	orcode = Math.round(Math.random() * 9999);
 	getLocation();
+	getgradename();
 	tabs(".tab-hd", "active", ".tab-bd"); //选项卡
 	tabtext(".tab-hd", "active", ".tab-bd");
-	con();
-	selectChex(arr);
-	SelectPakc(arr);
-	selectStone(arr);
+		con();
+		selectChex(arr);
+		SelectPakc(arr);
+		selectStone(arr);
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
 
 	var options = {
-		path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic",
+		path: local+"/QUESTIONSREPOSITORY/self/sendQuestionPic?code=" + orcode,
 		res: {},
 		onSuccess: function(res) {
-			var data = JSON.parse(res);
+			//var data = JSON.parse(res);
 			alert("上传成功！");
 			CloseDiv('MyDiv', 'fade');
-			var questionPic = data.data.questionPic;
-			$("input[name='questionPic']").val(questionPic);
 		},
 		onFailure: function(res) {}
 	}
@@ -38,6 +39,15 @@ $(function() {
 		upload();
 	}
 });
+var user;
+
+function getgradename() {
+	user = getUser()
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
+	$(".Gradename").html(gname);
+	$(".Subjectname").html(sname);
+}
 
 function tabs(tabTit, on, tabCon) {
 	$(tabTit).children().click(function() {
@@ -128,7 +138,6 @@ function SelectPakc(arr) {
 
 function selectStone(arr) {
 	var dept = document.getElementById("isselect");
-	console.log(dept);
 	for(var i = 0; i < arr.data.length; i++) {
 		//console.log(data.data[i])//第一级别
 		var two = arr.data[i];
@@ -154,6 +163,7 @@ function tabtext(tabTit, on, tabCon) {
 //填空题
 function pack(obj) {
 	answer = $(obj).parent().text();
+	answer = answer + str + '|';
 }
 //选择题
 function changeRad(obj) {
@@ -167,15 +177,13 @@ function changeRad(obj) {
 }
 //多选题
 function CheckBox(obj) {
-	answer = "";
 	if(obj.checked) {
 		$(obj).parent().parent().find(".Answerone").text("正确答案");
 	} else {
 		$(obj).parent().parent().find(".Answerone").text(" ");
 	}
-
 	var str = $(obj).val();
-	answer += str + ' ';
+	answer = answer + str + '|';
 }
 //判断
 function packanswer(obj) {
@@ -226,7 +234,7 @@ function optionNumberChe(obj) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
-		nodetwo.innerHTML = '<td><input type="text" name="potionlist' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
+		nodetwo.innerHTML = '<td><input type="text" name="potionsStone' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
@@ -271,16 +279,17 @@ function saveQuestion() {
 		"knowledge": knowledge,
 		"questionIdMD52": "",
 		"teacherId": "",
-		"questionPic": questionPic,
+		"questionPic": "",
 		"teacherName": "",
 		"createTime": "",
-		"updateTime": ""
+		"updateTime": "",
+		"code": orcode
 	}
 	console.log(JSON.stringify(cc));
 	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+		url: local +"/QUESTIONSREPOSITORY/self/saveQuestion",
 		headers: {
-			'accessToken': accessToken
+			'accessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg'
 		},
 		type: 'POST',
 		async: false,
@@ -315,10 +324,11 @@ function saveQuestionPack() {
 		"knowledge": knowledge,
 		"questionIdMD52": "",
 		"teacherId": "",
-		"questionPic": questionPic,
+		"questionPic": "",
 		"teacherName": "",
 		"createTime": "",
-		"updateTime": ""
+		"updateTime": "",
+		"code": orcode
 	}
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
@@ -362,10 +372,11 @@ function saveQuestionStone() {
 		"knowledge": knowledge,
 		"questionIdMD52": "",
 		"teacherId": "",
-		"questionPic": questionPic,
+		"questionPic": "",
 		"teacherName": "",
 		"createTime": "",
-		"updateTime": ""
+		"updateTime": "",
+		"code": orcode
 	}
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
@@ -393,7 +404,7 @@ function saveCompletionQuestion() {
 	var knowledge = $("#isselect option:selected").text();
 	var answerOptions = new Array();
 	for(i = 0; i < number; i++) {
-		answerOptions.push($("input[name=potionlist" + i + "]").val());
+		answerOptions.push($("input[name=completion" + i + "]").val() + '<br />');
 	}
 	con
 	var parse = $("textarea[name='Completion']").val();
@@ -410,10 +421,11 @@ function saveCompletionQuestion() {
 		"knowledge": knowledge,
 		"questionIdMD52": "",
 		"teacherId": "",
-		"questionPic": questionPic,
+		"questionPic": "",
 		"teacherName": "",
 		"createTime": "",
-		"updateTime": ""
+		"updateTime": "",
+		"code": orcode
 	}
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
@@ -436,26 +448,27 @@ function saveCompletionQuestion() {
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
-	var code = getNowFormatDate();
-	var cc={"code":code}
-		$.ajax({
-			url: "192.168.31.144/createQR",
-			headers: {
-				'accessToken': accessToken
-			},
-			type: "get",
-			async: false,
-			data: JSON.stringify(cc),
-			contentType: 'application/json',
-			success: function(data) {
-				$('#ylimg').attr("src", "data:image/jpeg;base64," + data.data.content)
-			}
-		});
+	var cc = {
+		"code": orcode
+	}
+	$.ajax({
+		url: local+'/code/createQR',
+		type: 'POST',
+		data: cc,
+		headers: {
+			'accessToken': accessToken
+		},
+		success: function(data) {
+			$('#ylimg').attr("src", "data:image/jpeg;base64," + data)
+		},
+		error: function(data) {
+			console.log(data.status);
+		}
+	});
 	document.getElementById(show_div).style.display = 'block';
 	document.getElementById(bg_div).style.display = 'block';
 	var bgdiv = document.getElementById(bg_div);
 	bgdiv.style.width = document.body.scrollWidth;
-	// bgdiv.style.height = $(document).height();
 	$("#" + bg_div).height($(document).height());
 };
 //关闭弹出层
@@ -463,6 +476,7 @@ function CloseDiv(show_div, bg_div) {
 	document.getElementById(show_div).style.display = 'none';
 	document.getElementById(bg_div).style.display = 'none';
 };
+
 function getNowFormatDate() {
 	var date = new Date();
 	var seperator1 = "-";
@@ -475,6 +489,6 @@ function getNowFormatDate() {
 	if(strDate >= 0 && strDate <= 9) {
 		strDate = "0" + strDate;
 	}
-	 currentdate= year + seperator1 + month + seperator1 + strDate;
-	 return currentdate;
+	currentdate = year + seperator1 + month + seperator1 + strDate;
+	return currentdate;
 }

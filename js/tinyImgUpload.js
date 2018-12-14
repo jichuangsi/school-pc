@@ -136,7 +136,7 @@ function tinyImgUpload(ele, options) {
 		}
 
 		xhr.open('POST', options.path, true);
-		xhr.setRequestHeader("accessToken", accessToken)
+		xhr.setRequestHeader("accessToken", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg")
 		xhr.setRequestHeader("type", "Post");
 		xhr.send(formData);
 
