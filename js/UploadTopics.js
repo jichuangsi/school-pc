@@ -452,7 +452,7 @@ function ShowDiv(show_div, bg_div) {
 		"code": orcode
 	}
 	$.ajax({
-		url: local+'/code/createQR',
+		url: local+'/COURSESERVICE/code/createQR',
 		type: 'POST',
 		data: cc,
 		headers: {
