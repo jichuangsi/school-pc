@@ -142,7 +142,7 @@ function gettestpaperlist() {
 		"updateTime": 0
 	}
 	$.ajax({
-		url: "http://192.168.31.154:8888/EXAMSERVICE/exam/findExams",
+		url: local+"/EXAMSERVICE/exam/findExams",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -209,7 +209,7 @@ var DiffAndQtypelist=null;  //类型和难度的集合
 function getDiffAndQtype(){
 	var cc={"eid":previewexamId}
 	$.ajax({
-		url: "http://192.168.31.154:8888/EXAMSERVICE/exam/getExamInfoCount",
+		url: local+"/EXAMSERVICE/exam/getExamInfoCount",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -258,7 +258,7 @@ function getsubjectlist() {
 		"updateTime": 0
 	}
 	$.ajax({
-		url: "http://192.168.31.154:8888/EXAMSERVICE/exam/getExamInfoForExamId",
+		url: local+"/EXAMSERVICE/exam/getExamInfoForExamId",
 		headers: {
 			'accessToken': accessToken
 		},
