@@ -17,14 +17,14 @@ $(function() {
 	getgradename();
 	tabs(".tab-hd", "active", ".tab-bd"); //选项卡
 	tabtext(".tab-hd", "active", ".tab-bd");
-		con();
-		selectChex(arr);
-		SelectPakc(arr);
-		selectStone(arr);
+	con();
+	selectChex(arr);
+	SelectPakc(arr);
+	selectStone(arr);
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
 
 	var options = {
-		path: local+"/QUESTIONSREPOSITORY/self/sendQuestionPic?code=" + orcode,
+		path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic?code=" + orcode,
 		res: {},
 		onSuccess: function(res) {
 			//var data = JSON.parse(res);
@@ -80,9 +80,14 @@ function con() {
 				for(var j = 0; j < two.data.length; j++) {
 					//console.log(two.data[j]);//第二级别
 					var array = two.data[j];
-
-					for(var n = 0; n < array.data.length; n++) {
+					for(var n = -1; n < array.data.length; n++) {
 						option = document.createElement('option');
+						if(n == -1) {
+							option.setAttribute('value', '-1');
+							option.innerHTML = "请选择知识点";
+							dept.append(option);
+							continue;
+						}
 						option.setAttribute('value', '' + array.data[n].kid + '');
 						option.innerHTML = array.data[n].knowledgeName;
 						dept.append(option);
@@ -106,7 +111,13 @@ function selectChex(arr) {
 		for(var j = 0; j < two.data.length; j++) {
 			//console.log(two.data[j]);//第二级别
 			var array = two.data[j];
-			for(var n = 0; n < array.data.length; n++) {
+			for(var n = -1; n < array.data.length; n++) {
+				if(n == -1) {
+					option.setAttribute('value', '-1');
+					option.innerHTML = "请选择知识点";
+					dept.append(option);
+					continue;
+				}
 				option = document.createElement('option');
 				option.setAttribute('value', '' + array.data[n].kid + '');
 				option.innerHTML = array.data[n].knowledgeName;
@@ -125,7 +136,13 @@ function SelectPakc(arr) {
 		for(var j = 0; j < two.data.length; j++) {
 			//console.log(two.data[j]);//第二级别
 			var array = two.data[j];
-			for(var n = 0; n < array.data.length; n++) {
+			for(var n = -1; n < array.data.length; n++) {
+				if(n == -1) {
+					option.setAttribute('value', '-1');
+					option.innerHTML = "请选择知识点";
+					dept.append(option);
+					continue;
+				}
 				option = document.createElement('option');
 				option.setAttribute('value', '' + array.data[n].kid + '');
 				option.innerHTML = array.data[n].knowledgeName;
@@ -144,7 +161,13 @@ function selectStone(arr) {
 		for(var j = 0; j < two.data.length; j++) {
 			//console.log(two.data[j]);//第二级别
 			var array = two.data[j];
-			for(var n = 0; n < array.data.length; n++) {
+			for(var n = -1; n < array.data.length; n++) {
+				if(n == -1) {
+					option.setAttribute('value', '-1');
+					option.innerHTML = "请选择知识点";
+					dept.append(option);
+					continue;
+				}
 				option = document.createElement('option');
 				option.setAttribute('value', '' + array.data[n].kid + '');
 				option.innerHTML = array.data[n].knowledgeName;
@@ -259,6 +282,9 @@ function saveQuestion() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='Choicequestion']").val();
 	var knowledge = $("#dept option:selected").text();
+	if(knowledge == "请选择知识点") {
+		alert("请选择知识点!");
+	}
 	var answerOptions = new Array();
 	//console.log(knowledge)
 	for(i = 0; i < number; i++) {
@@ -287,9 +313,9 @@ function saveQuestion() {
 	}
 	console.log(JSON.stringify(cc));
 	$.ajax({
-		url: local +"/QUESTIONSREPOSITORY/self/saveQuestion",
+		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
 		headers: {
-			'accessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg'
+			'accessToken': accessToken
 		},
 		type: 'POST',
 		async: false,
@@ -449,9 +475,9 @@ function saveCompletionQuestion() {
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
 	$.ajax({
-		url: local+'/COURSESERVICE/code/createQR?code='+orcode,
+		url: local + '/COURSESERVICE/code/createQR?code=' + orcode,
 		type: 'POST',
-		data:{},
+		data: {},
 		headers: {
 			'accessToken': accessToken
 		},
