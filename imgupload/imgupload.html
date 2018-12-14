@@ -86,6 +86,7 @@
 							success: function(data) {
 								alert("成功");
 								console.log(data);
+								$("#uploadSubmit").hide();
 							},
 							error: function(data) {
 								console.log(data.status);
