@@ -8,6 +8,11 @@ $(function() {
 	getLocation();
 });
 
+function keyup(e){
+	if(event.keyCode==13){
+		 Login();
+	}
+}
 function Login() {
 	var UserName = $("#UserName").val();
 	var pwd =$("#pwd").val();

@@ -229,7 +229,6 @@ function savetestpaper_click() {
 		$("#examName").val("");
 		$("#examSecondName").val("");
 	}
-	
 }
 //保存试卷
 function savetestpaper(){
@@ -364,7 +363,7 @@ function edition_click(obj, editionid) {
 			'accessToken': accessToken
 		},
 		type: 'post',
-		//async: false,
+		async: false,
 		dataType: "json",
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
