@@ -39,24 +39,25 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="../js/httplocation.js"></script>
-		<script type="text/javascript" src="../js/jquery.min.js" ></script>
-		<script type="text/javascript" src="../js/bootstrap-fileinput.js" ></script>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap-fileinput.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				//比较简洁，细节可自行完善
 				var local;
+
 				function getLocation() {
 					local = httpLocation();
-					accessToken=getAccessToken();
+					accessToken = getAccessToken();
 				}
-				$(function(){
+				$(function() {
 					getLocation();
 				});
 				$('#uploadSubmit').click(function() {
 					var src = $("#ss").find("img").attr("src");
-					if(src == null || src == ""){
+					if(src == null || src == "") {
 						alert("请选择图片");
-					}else{
+					} else {
 						function dataURLtoFile(dataurl, filename) { //将base64转换为文件
 							var arr = dataurl.split(','),
 								mime = arr[0].match(/:(.*?);/)[1],
@@ -70,40 +71,118 @@
 								type: mime
 							});
 						}
+
 						var data = new FormData();
-						data.append("file",dataURLtoFile(src,"123.png"));
-						data.append("code",getQueryString("c")),
-						data.append("teacherId",getQueryString("id"));
-						data.append("safeTime",getQueryString("t"));
-						$.ajax({
-							url: local+'/QUESTIONSREPOSITORY/self/codeSendQuestionPic',
-							type: 'POST',
-							data: data,
-							async: false,
-							cache: false,
-							contentType: false,
-							processData: false,
-							success: function(data){
-								alert(data.msg);
-								console.log(data);
-								$("#uploadSubmit").hide();
-							},
-							error: function(data) {
-								console.log(data.status);
-							}
-						});
+						alert(dataURLtoFile(src, "123.png").size);
+						if(dataURLtoFile(src, "123.png").size / 1024 > 1025) {
+							photoCompress(dataURLtoFile(src, "123.png"), {
+								quality: 0.2
+							}, function(base64Codes) {
+								var bl = dataURLtoFile(base64Codes,"456.png");
+								data.append("file", bl);
+								data.append("code", getQueryString("c")),
+									data.append("teacherId", getQueryString("id"));
+								data.append("safeTime", getQueryString("t"));
+								$.ajax({
+									url: local + '/QUESTIONSREPOSITORY/self/codeSendQuestionPic',
+									type: 'POST',
+									data: data,
+									async: false,
+									cache: false,
+									contentType: false,
+									processData: false,
+									success: function(data) {
+										alert(data.msg);
+										console.log(data);
+										if(data.msg=="成功"){
+											$("#uploadSubmit").hide();
+										}
+									},
+									error: function(data) {
+										console.log(data.status);
+									}
+								});
+							});
+						} else {
+							data.append("file", dataURLtoFile(src, "123.png"));
+							data.append("code", getQueryString("c")),
+							data.append("teacherId", getQueryString("id"));
+							data.append("safeTime", getQueryString("t"));
+							$.ajax({
+								url: local + '/QUESTIONSREPOSITORY/self/codeSendQuestionPic',
+								type: 'POST',
+								data: data,
+								async: false,
+								cache: false,
+								contentType: false,
+								processData: false,
+								success: function(data) {
+									alert(data.msg);
+									console.log(data);
+									if(data.msg=="成功"){
+										$("#uploadSubmit").hide();
+									}
+									
+								},
+								error: function(data) {
+									console.log(data.status);
+								}
+							});
+						}
 					}
 				});
 			});
+
+			function photoCompress(file, w, objDiv) {
+				var ready = new FileReader();
+				ready.readAsDataURL(file);
+				ready.onload = function() {
+					var re = this.result;
+					canvasDataURL(re, w, objDiv)
+				}
+			}
+
+			function canvasDataURL(path, obj, callback) {
+				var img = new Image();
+				img.src = $("#ss").find("img").attr("src");
+				img.onload = function() {
+					var that = this;
+					// 默认按比例压缩
+					var w = that.width,
+						h = that.height,
+						scale = w / h;
+					w = obj.width || w;
+					h = obj.height || (w / scale);
+					var quality = 0.7; // 默认图片质量为0.7
+					//生成canvas
+					var canvas = document.createElement('canvas');
+					var ctx = canvas.getContext('2d');
+					// 创建属性节点
+					var anw = document.createAttribute("width");
+					anw.nodeValue = w;
+					var anh = document.createAttribute("height");
+					anh.nodeValue = h;
+					canvas.setAttributeNode(anw);
+					canvas.setAttributeNode(anh);
+					ctx.drawImage(that, 0, 0, w, h);
+					// 图像质量
+					if(obj.quality && obj.quality <= 1 && obj.quality > 0) {
+						quality = obj.quality;
+					}
+					// quality值越小，所绘制出的图像越模糊
+					var base64 = canvas.toDataURL('image/jpeg', quality);
+					// 回调函数返回base64的值
+					callback(base64);
+				}
+			}
+
 			function getQueryString(name) {
-			    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-			    var r = window.location.search.substr(1).match(reg);
-			 /*  var urls='http://school.jichuangsi.com:82/imgupload/imgupload.html?a=%22123%22&c=123&id=123&t=3089515950460'
-			   var r = urls.substr(1).match(reg);*/
-			    if (r != null) {
-			        return unescape(r[2]);
-			    }
-			    return null;
+				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) {
+					return unescape(r[2]);
+				}
+				return null;
 			}
 		</script>
 	</body>
