@@ -113,19 +113,17 @@
 						<tr>
 							<th width="35%">试卷名称</th>
 							<th width="25%">最后修改时间</th>
-							<!--<th width="20%">使用次数</th>-->
 							<th width="20%">操作</th>
 						</tr>
 					</thead>
 					<tbody id="testpaperlist">
 						<tr>
-							<td width="35%">2019某某某高考试卷名称</td>
+							<!--<td width="35%">2019某某某高考试卷名称</td>
 							<td width="25%">2018-16-12 12:00:00</td>
-							<!--<td width="20%">5</td>-->
 							<td width="20%">
 								<button class="tpl_div1_btn ">删除考卷</button>
 								<button class="tpl_div1_btn">浏览考卷</button>
-							</td>
+							</td>-->
 						</tr>
 					</tbody>
 				</table>
@@ -146,22 +144,6 @@
 							<td>选择题</td>
 							<td>36</td>
 						</tr>
-						<tr>
-							<td>判断题</td>
-							<td>36</td>
-						</tr>
-						<tr>
-							<td>简答题</td>
-							<td>36</td>
-						</tr>
-						<tr>
-							<td>简析题</td>
-							<td>36</td>
-						</tr>
-						<tr>
-							<td>描述题</td>
-							<td>36</td>
-						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
@@ -177,187 +159,14 @@
 						<th>题量</th>
 					</thead>
 					<tbody id="diff">
-						<tr>
+						<!--<tr>
 							<td>容易</td>
 							<td>16</td>
-						</tr>
-						<tr>
-							<td>较易</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>一般</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>较难</td>
-							<td>16</td>
-						</tr>
-						<tr>
-							<td>困难</td>
-							<td>16</td>
-						</tr>
+						</tr>-->
 					</tbody>
 				</table>
 			</div>
 			<div class="tpl_div2_right" >
-					<div class="subjectList">
-						<div class="subjectList_top">
-							<span>1</span>
-							<img onclick="CollectionImg_click(this)" src="../img/CollectionYes.png" />
-							<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
-							<div id="speech" class="speech-bubble speech-bubble-top" style="display: none;">
-								<ul>
-									<li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li>
-									<li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li>
-								</ul>
-							</div>
-						</div>
-						<div class="subjectinfo">
-							<div>
-								习近平指出：中国梦归根到底是人民的梦，必须紧紧依靠人民来实现，必须不断为人民造福。“中国梦归根到底是人民的梦”根本原因在于（　　）<br /> ①依托自主开发提高社会劳动生产率，使商品价值增加
-								<br /> ②个别劳动生产率高于社会劳动生产率，获得竞争优势
-								<br /> ③依托自主创新提高商品的使用价值，扩大了商品需求
-								<br /> ④个别劳动时间大于社会必要劳动时间，商品价值增加。
-							</div>
-							<div>
-								<table>
-									<tbody>
-										<tr>
-											<td>A. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-										</tr>
-										<tr>
-											<td>B. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-										</tr>
-										<tr>
-											<td>C. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-										</tr>
-										<tr>
-											<td>D. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="subjectDetails">
-							<span class="s_span">
-								组卷
-								<i class="num1">1536</i>
-								次
-							</span>
-							<span class="s_span">
-								作答
-								<i class="num2">70541</i>
-								人次
-							</span>
-							<span class="s_span">
-								平均得分率
-								<i class="num3">78.97%</i>
-							</span>
-							<a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;">
-								<i><img src="../img/analysis.png" /> </i> 解析
-							</a>
-							<a class="Situation" onclick="Situation_click(this)">
-								<i><img src="../img/Situation.png" /> </i> 考情
-							</a>
-							<div class="subjectOperation">
-								<a onclick="add_paper(this)" class="subjectOperation_add">加入试卷</a>
-								<a onclick="remove_paper(this)" class="subjectOperation_remove" style="display: none;">移除试卷</a>
-							</div>
-						</div>
-						<!--点击解析出现的div-->
-						<div class="subject_info" style="display: none;">
-							<div class="info_1">
-								<span>【答案】</span>
-								<span>C</span>
-							</div>
-							<div class="info_2">
-								<span>【解析】</span>
-								<div class="info_2_div">
-									A说法错误，我国人民是国家的主人；<br /> B说法错误，我国社会主义国家必须为人民谋福利，而不是全民；
-									<br /> C符合题意，“中国梦归根到底是人民的梦”根本原因在于我国是人民民主专政的社会主义国家，人民是国家的主人；
-									<br /> D说法错误，人民民主具有广泛性，是人民享有民主，而不是全民的民主。
-									<br /> 故选：C。
-									<br /> 本题考查：我国的国家性质
-									<br /> ①我国宪法规定：“中华人民共和国是工人阶级领导的、以工农联盟为基础的人民民主专政的社会主义国家”。这是我国宪法对我国国家性质的明确规定。
-									<br /> ②人民民主专政是我国的国体，在我国社会主义制度中具有根本性意义。
-									<br /> ③人民民主专政的本质是人民当家作主。
-									<br /> 考查学生提取信息、调动所学知识理解和解决问题的能力。解答本题，一方面要把握材料要阐明的主旨，并和所学知识对应起来，另一方面运用排除法去除错误的选项。
-								</div>
-							</div>
-							<div class="info_3">
-								<span> 【知识点】</span>
-								<div class="info_3_div">
-									<p>
-										<span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span><span>人民主义sssss</span>
-									</p>
-								</div>
-							</div>
-							<div class="info_4">
-								<span>【题型】</span>
-								<span class="info_4_span">选择题</span>
-							</div>
-						</div>
-						<!--点击考情出现的div-->
-						<div class="subject_Situation" style="display: none;">
-							<div class="Situation_1">
-								<div class="Situation_1_div2">
-									采用此题的考试共
-									<i style="color: blue;">53</i> 场
-								</div>
-								<div class="Situation_1_div1">
-									<a>
-										<</a>
-											<a>></a>
-								</div>
-							</div>
-							<div class="Situation_2">
-								<div class="Situation_2_div">
-									<p>2108学年高一月考</p>
-									<div class="Situation_2_div_01">
-										<a>月考</a>
-										<a>2018-11-12</a>
-										<a>广州市</a>
-										<a>711人答题</a>
-									</div>
-									<div class="Situation_2_div_02">
-										<span>平均得分率</span>
-										<i>73.98%</i>
-									</div>
-								</div>
-							</div>
-							<div class="Situation_2">
-								<div class="Situation_2_div">
-									<p>2108学年高一月考</p>
-									<div class="Situation_2_div_01">
-										<a>月考</a>
-										<a>2018-11-12</a>
-										<a>广州市</a>
-										<a>711人答题</a>
-									</div>
-									<div class="Situation_2_div_02">
-										<span>平均得分率</span>
-										<i>73.98%</i>
-									</div>
-								</div>
-							</div>
-							<div class="Situation_2">
-								<div class="Situation_2_div">
-									<p>2108学年高一月考</p>
-									<div class="Situation_2_div_01">
-										<a>月考</a>
-										<a>2018-11-12</a>
-										<a>广州市</a>
-										<a>711人答题</a>
-									</div>
-									<div class="Situation_2_div_02">
-										<span>平均得分率</span>
-										<i>73.98%</i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="subjectList">
 						<div class="subjectList_top">
 							<span>1</span>
