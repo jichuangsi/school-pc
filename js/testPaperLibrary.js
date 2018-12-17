@@ -234,7 +234,7 @@ function getsubjectlist() {
 		"examName": "string",
 		"examSecondName": "string",
 		"pageIndex": pageindexs1,
-		"pageSize": 2,
+		"pageSize": 3,
 		"questionModels": [{
 			"answer": "string",
 			"answerDetail": "string",
@@ -268,8 +268,6 @@ function getsubjectlist() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			/*Obtain_subject(data.data);*/
-			/*alert(data.data);*/
 			previewitembaklist = data.data;
 		},
 		error: function(data) {
@@ -343,6 +341,81 @@ function loopquestions() {
 	page3();
 	}
 }
+//收藏题目的事件
+function CollectionImg_click(obj) {
+	var Collectiond = null;
+	var id = $(obj).parent().parent().find("input[name='id']").val();
+	for(var i = 0; i < itembaklist.content.length; i++) {
+		if(itembaklist.content[i].questionIdMD52 == id) {
+			Collectiond = {
+				"questionId": "",
+				"questionContent": itembaklist.content[i].questionContent,
+				"options": itembaklist.content[i].options,
+				"answer": itembaklist.content[i].answer,
+				"answerDetail": itembaklist.content[i].answerDetail,
+				"parse": itembaklist.content[i].parse,
+				"quesetionType": itembaklist.content[i].quesetionType,
+				"difficulty": itembaklist.content[i].difficulty,
+				"subjectId": itembaklist.content[i].subjectId,
+				"gradeId": itembaklist.content[i].gradeId,
+				"knowledge": itembaklist.content[i].knowledge,
+				"questionIdMD52": itembaklist.content[i].questionIdMD52,
+				"questionStatus": "NOTSTART",
+				"questionPic": itembaklist.content[i].questionPic,
+				"teacherName": "",
+				"createTime": "",
+				"updateTime": "",
+			}
+		}
+	}
+	if($(obj).attr("src") == "../img/CollectionNo.png") {
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/favor/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "POST",
+			async: true,
+			data: JSON.stringify(Collectiond),
+			contentType: 'application/json',
+			dataType: 'JSON',
+			success: function(data) {
+				swal("收藏成功!", "", "success");
+				$(obj).attr("src", "../img/CollectionYes.png");
+			},
+			error: function() {
+				swal("收藏失败!", "", "success");
+				$(obj).attr("src", "../img/CollectionYes.png");
+			}
+		});
+	} else if($(obj).attr("src") == "../img/CollectionYes.png") {
+		var cs = [];
+		cs.push(id);
+		cc = {
+			"ids": cs
+		};
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/favor/deleteQuestions",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "DELETE",
+			async: true,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			dataType: 'JSON',
+			success: function(data) {
+				swal("已取消收藏!", "", "success");
+				$(obj).attr("src", "../img/CollectionNo.png");
+			},
+			error: function() {
+				swal("取消收藏失败!", "", "success");
+				$(obj).attr("src", "../img/CollectionYes.png");
+			}
+		});
+	}
+}
+
 
 var pagecounts1=1;
 var pageindexs1=1;

@@ -14,7 +14,6 @@
 		<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.page.js"></script>
 		<script type="text/javascript" src="../js/httplocation.js"></script>
-
 		<link rel="stylesheet" href="../css/page.css" />
 		<script type="text/javascript" src="../js/template.js"></script>
 		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -147,7 +146,7 @@
 				</div>
 				<div id="newtestpaper_div2_01" class="newtestpaper_div2" style="display: block;">
 					<div id="container">
-						<div class="search bar6">
+						<div class="search bar6" style="display: none;">
 							<form action="">
 								<input type="text" placeholder="请输入考试、作业名称">
 								<button type="button"></button>
@@ -199,6 +198,7 @@
 										<div class="areas" style="display: contents;background-color: white;">
 											<input type="text" placeholder="请输入地区关键字" id="ads1">
 											<button onclick="search_areas(this)">搜索</button>
+											<button  onclick="areashide()" style="background-color: red; color:#FFFFFF ;margin-left: 20px;">关闭</button>
 											<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
 											</div>
 										</div>
@@ -317,39 +317,11 @@
 				<div class="pre_exit" onClick="hide();">X</div>
 				<div id="Previewinfo" style="margin: 20px;">
 					<h1 style="text-align: center;">课堂小测</h1>
-					<!--<h2 style="text-align: center;">副标题</h2>-->
-					<div class=" pres">
+					<!--<div class=" pres">
 						<p>选择题 一共<span>1</span>题 </p>
-						<div>
-							习近平指出：中国梦归根到底是人民的梦，必须紧紧依靠人民来实现，22222222222222222222222必须不断为人民造福。“中国梦归根到底是人民的梦”根本原因在于（　　）
-							<br /> ①依托自主开发提高社会劳动生产率，使商品价值增加
-							<br /> ②个别劳动生产率高于社会劳动生产率，获得竞争优势
-							<br /> ③依托自主创新提高商品的使用价值，扩大了商品需求
-							<br /> ④个别劳动时间大于社会必要劳动时间，商品价值增加。
-						</div>
-						<div>
-							<table>
-								<tbody>
-									<tr>
-										<td>A. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-									</tr>
-									<tr>
-										<td>B. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-									</tr>
-									<tr>
-										<td>C. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-									</tr>
-									<tr>
-										<td>D. 美元升值→中国商品在美国市场的价格下降→不利于中国商品出口美国</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+					</div>-->
 				</div>
 			</div>
-			<!--<div id="content" onClick="show();">点击打开</div>-->
-
 		</div>
 	</body>
 

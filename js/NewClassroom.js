@@ -189,7 +189,7 @@ function formSub() {
 	console.log(JSON.stringify(cc));
 	$.ajax({
 		//url: local + "/COURSESERVICE/console/saveCourse",
-		url: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourse",
+		url: local+"/COURSESERVICE/console/saveCourse",
 		headers: {
 			'accessToken': accessToken
 		},
