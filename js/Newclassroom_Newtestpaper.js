@@ -333,6 +333,8 @@ function Chapter_click() {
 	var cc = {
 		"knowledgeId": "14256533324081a2ab4c4aaf172a77d4",
 		"diff": "3",
+		"qtypeId":null,
+		"paperType":null,
 		"year": payear,
 		"area": paareas,
 		"pageSize": 10,
@@ -621,6 +623,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 
 	$(".pres").remove();
 	$("#presH2").remove();
+	$("#Previewinfo").find(".subjectList").remove();
 	var num=1;
 	if(questionList.length>0){
 		for(var i = 0; i < questionList.length; i++, num++) {
@@ -637,7 +640,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "<div class='subjectinfo'>";
 			//题目
 			a1 += "<div>" + questionList[i].questionContent;
-			if(questionList.questionPic != null && 　questionList[i].questionPic != "") {
+			if(questionList[i].questionPic != null && 　questionList[i].questionPic != "") {
 				console.log(questionList[i].questionPic);
 				var getquestionpic = getQuestionPic(questionList[i].questionPic); //调用下载文件的接口返回的数据
 				if(getquestionpic.data != null) {
@@ -675,7 +678,6 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + questionList[i].quesetionType + "</span></div>";
 			a1 += "</div>";
 			a1 += "</div>";
-			$("#newtestpaper_div2_02").append(a1);
 			$("#Previewinfo").append(a1);
 		}
 	} else {

@@ -8,6 +8,8 @@
 		<title>图片上传</title>
 		<link rel="stylesheet" href="../css/bootstrap-fileinput.css" />
 		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
+		<link rel="stylesheet" href="../css/sweetalert.css" />
 	</head>
 
 	<body>
@@ -92,14 +94,17 @@
 									contentType: false,
 									processData: false,
 									success: function(data) {
-										alert(data.msg);
 										console.log(data);
 										if(data.msg=="成功"){
+											swal("上传成功", "", "success");
 											$("#uploadSubmit").hide();
+										}else{
+											swal("上传失败", "", "error");
 										}
 									},
 									error: function(data) {
 										console.log(data.status);
+										swal("上传失败", "", "error");
 									}
 								});
 							});

@@ -11,8 +11,9 @@ var areass = null; //地区信息列表
 var payear = null; //年份
 var paquestionTypeid = null; //题型
 var padifficultyTypeid = null; //难度
-var papaperTypeid = null; //类型
+var papaperType = null; //类型
 var paareas = null; //地区
+var paChapterid=null;//知识点id   
 var questionNode = []; //获取题目内容
 var questionList = []; //加入试卷的题目集合
 var subjectlist = null; //根据知识点获取的题目列表
@@ -240,6 +241,78 @@ function page() {
 		}
 	});
 }
+
+//点击预览事件
+function PreviewPaper() //显示隐藏层和弹出层 
+{
+
+	$(".pres").remove();
+	$("#presH2").remove();
+	$("#Previewinfo").find(".subjectList").remove();
+	var num=1;
+	if(questionList.length>0){
+		for(var i = 0; i < questionList.length; i++, num++) {
+			var a1 = "<div class='subjectList'>";
+			a1 += "<div class='subjectList_top' style='height:46px'>";
+			a1 += "<span>" + num + "</span>";
+			a1 += "</div>";
+			a1 += "<div class='subjectinfo'>";
+			//题目
+			a1 += "<div>" + questionList[i].questionContent;
+			if(questionList[i].questionPic != null && 　questionList[i].questionPic != "") {
+				console.log(questionList[i].questionPic);
+				var getquestionpic = getQuestionPic(questionList[i].questionPic); //调用下载文件的接口返回的数据
+				if(getquestionpic.data != null) {
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+				}
+			}
+	
+			a1 += "</div>";
+			//题目选项
+			if(questionList[i].options[0] != null && questionList[i].options[0] != "") {
+				a1 += "<div><table><tbody>";
+				for(var j = 0; j < questionList[i].options.length; j++) {
+					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + questionList[i].options[j] + "</td></tr>";
+				}
+				a1 += "</tbody></table></div>";
+			}
+			a1 += "</div>";
+			a1 += "<div class='subjectDetails'>";
+			a1 += "<span class='s_span'>组卷<i class='num1'>1536</i>次</span>";
+			a1 += "<span class='s_span'>作答<i class='num2'>70541</i>人次</span>";
+			a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
+			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+			a1 += "<input type='hidden' name='id'value='" + questionList[i].questionIdMD52 + "' />";
+			a1 += "</div>";
+			a1 += "<div class='subject_info' style='display: none;'>";
+			a1 += "<div class='info_1'><span>【答案】</span><span>" + questionList[i].answer + "</span></div>";
+			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + questionList[i].parse + "</div></div>";
+			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
+			a1 += "<p>";
+			if(questionList[i].knowledge != null && questionList[i].knowledge != "") {
+				a1 += "<span>" + questionList[i].knowledge + "</span>";
+			}
+			a1 += "</p></div></div>";
+			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + questionList[i].quesetionType + "</span></div>";
+			a1 += "</div>";
+			a1 += "</div>";
+			$("#Previewinfo").append(a1);
+		}
+	} else {
+		$("#Previewinfo").append("<h2 id='presH2' style='color:red;text-align:center;'>暂时没有所选题目</h2>");
+	}
+	var hideobj = document.getElementById("hidebg");
+	hidebg.style.display = "block"; //显示隐藏层 
+	//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+	document.getElementById("previews").style.display = "block"; //显示弹出层 
+}
+
+function hide() { //去除隐藏层和弹出层 
+	document.getElementById("hidebg").style.display = "none";
+	document.getElementById("previews").style.display = "none";
+}
+
 var examName = null;
 var examSecondName = null;
 //保存试卷点击事件
@@ -562,27 +635,36 @@ function year_a_click(obj, yearid) {
 }
 //题型点击事件
 function questionType_a_click(obj, questionTypeid) {
-	paquestionTypeid = $(obj).text();
+	paquestionTypeid = questionTypeid;
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
+	Obtain_subject();
 }
 //难度点击事件
 function difficultyType_a_click(obj, difficultyTypeid) {
 	padifficultyTypeid = difficultyTypeid;
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
+	Obtain_subject();
 }
 //类型点击事件
 function paperType_a_click(obj, paperTypeid) {
-	papaperTypeid = paperTypeid;
+	if($(obj).text()=="全部"){
+		papaperType =null;
+	}else{
+		papaperType =$(obj).text();
+	}
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
+	Obtain_subject();
 }
 //获取题目
 function Chapter_click() {
 	var cc = {
 		"knowledgeId": "14256533324081a2ab4c4aaf172a77d4",
-		"diff": "3",
+		"qtypeId":paquestionTypeid,
+		"paperType":papaperType,
+		"diff": padifficultyTypeid,
 		"year": payear,
 		"area": paareas,
 		"pageSize": 7,
