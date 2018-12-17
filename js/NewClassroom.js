@@ -3,10 +3,12 @@ var local;
 var accessToken;
 var datalist;
 var pageSize = 3;
+var questionNode
 
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
+	questionNode = getQuestion();
 }
 $(function() {
 	getNowFormatDate();
@@ -18,7 +20,7 @@ $(function() {
 	copyClass();
 	creaClass();
 	getQuestionNode();
-
+	getupload();
 });
 var user;
 
@@ -31,12 +33,10 @@ function getgradename() {
 }
 var sClass;
 var eaxms;
-var questionNode;
 var currentdate; //获取当前日期
 //加载页面获取数据获取保存的题目
 function getQuestionNode() {
-	if(typeof(Storage) !== "undefined") {
-		questionNode = JSON.parse(sessionStorage.getItem("lastname"));
+	if(typeof(Storage) !== undefined) {
 		var classid = sessionStorage.getItem('classid', classid);
 		var className = sessionStorage.getItem('className', className);
 		var Name = sessionStorage.getItem('Name', Name);
@@ -90,12 +90,12 @@ function getNowFormatDate() {
 }
 
 function toList() {
-	if(questionNode.questionContent != "") {
-		sessionStorage.setItem("lastname", JSON.stringify(questionNode));
+	if(questionNode == null || questionNode.length == 0) {
+		swal("并没有添加题目哦!");
 	} else {
-		document.getElementById("result").innerHTML = "抱歉！您的浏览器不支持 Web Storage ...";
+		window.location.replace("../Front/BrowseTopics.html");
 	}
-	window.location.replace("../Front/BrowseTopics.html");
+
 }
 
 function toQuestion() {
@@ -127,7 +127,6 @@ function inintDate() {
 		dataType: "json",
 		data: {},
 		success: function(data) {
-			console.log(local);
 			sClass = data.data.transferClasses;
 			eaxms = data.data.eaxms;
 			initAttendClass('', sClass);
@@ -161,6 +160,7 @@ function creaClass() {
 }
 
 function formSub() {
+	questionNode = getQuestion();
 	var classid = document.getElementById("AttendClass").value;
 	var className = $("#AttendClass option:selected").text();
 	var Name = document.getElementById("ClassName").value;
@@ -182,11 +182,14 @@ function formSub() {
 		"pageSize": 0,
 		"questions": questionNode,
 		"teacherId": "string",
-		"teacherName": "string"
+		"teacherName": "string",
+		"coursePic": "",
+		"subjectName": user.roles[0].primarySubject.subjectName
 	};
 	console.log(JSON.stringify(cc));
 	$.ajax({
-		url: local + "/COURSESERVICE/console/saveCourse",
+		//url: local + "/COURSESERVICE/console/saveCourse",
+		url: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourse",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -196,8 +199,13 @@ function formSub() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			swal("新建成功!", "", "success");
-			showLoad();
+			if(returndata.code == "0010") {
+				swal("新建成功!", "", "success");
+				sessionStorage.removeItem('lastname');
+			} else {
+				swal("OMG", "操作失败了!", "error");
+			}
+
 		},
 		error: function(returndata) {
 			// alert(returndata);
@@ -393,6 +401,10 @@ function LookRoomClass(datalist) {
 //}
 
 function DelDate(obj) {
+	var id = $(obj).find("input").val();
+	var cc = {
+		"courseId": id
+	}
 	swal({
 		title: "您确定要删除吗？",
 		text: "您确定要删除这条数据？",
@@ -402,10 +414,7 @@ function DelDate(obj) {
 		confirmButtonText: "是的，我要删除",
 		confirmButtonColor: "#ec6c62"
 	}, function() {
-		var id = $(obj).find("input").val();
-		var cc = {
-			"courseId": id
-		}
+
 		$.ajax({
 			url: local + "/COURSESERVICE/console/deleteNewCourse",
 			headers: {
@@ -413,12 +422,17 @@ function DelDate(obj) {
 			},
 			type: 'DELETE',
 			async: false,
+			contentType: 'application/json',
 			data: JSON.stringify(cc),
 		}).done(function(data) {
-			swal("操作成功!", "已成功删除数据！", "success");
-			showLoad();
+			if(data.code == "0010") {
+				swal("操作成功!", "已成功删除数据！", "success");
+				showLoad();
+			} else {
+				swal("OMG", "删除操作失败了!", "error");
+			}
 		}).error(function(data) {
-			swal("OMG", "删除操作失败了!", "error");
+
 		});
 	});
 }
@@ -433,4 +447,66 @@ function showLoad() {
 	});
 	$("#bonfire-pageloader").show();
 	window.location.reload();
+}
+
+function showmes(code) {
+	if(code == "0050") {
+		swal("OMG", "操作失败了!", "error");
+	} else if(code == "0010") {
+		swal("操作成功!", "", "success");
+	}
+}
+
+function ShowDiv(show_div, bg_div) {
+	$.ajax({
+		//url: local + '/COURSESERVICE/code/createQR',
+		type: 'POST',
+		data: {},
+		headers: {
+			'accessToken': accessToken
+		},
+		success: function(data) {
+			$('#ylimg').attr("src", "data:image/jpeg;base64," + data)
+		},
+		error: function(data) {
+			swal("保存失败!", "", "error");
+		}
+	});
+	document.getElementById(show_div).style.display = 'block';
+	document.getElementById(bg_div).style.display = 'block';
+	var bgdiv = document.getElementById(bg_div);
+	bgdiv.style.width = document.body.scrollWidth;
+	$("#" + bg_div).height($(document).height());
+};
+
+function CloseDiv(show_div, bg_div) {
+	document.getElementById(show_div).style.display = 'none';
+	document.getElementById(bg_div).style.display = 'none';
+};
+
+function getupload() {
+	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
+
+	var options = {
+		//path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic",
+		res: {},
+		onSuccess: function(res) {
+			//var data = JSON.parse(res);
+			if(returndata.code == "0010") {
+				swal("上传成功!", "", "success");
+				sessionStorage.removeItem('lastname');
+			} else {
+				swal("OMG", "操作失败了!", "error");
+			}
+			CloseDiv('MyDiv', 'fade');
+		},
+		onFailure: function(res) {
+			swal("上传失败!", "", "error");
+		}
+	}
+
+	var upload = tinyImgUpload('#upload', options);
+	document.getElementsByClassName('submit')[0].onclick = function(e) {
+		upload();
+	}
 }

@@ -1,6 +1,15 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
+var local;
+var accessToken;
+var questionNode;
+function getLocation() {
+	local = httpLocation();
+	accessToken = getAccessToken();
+	questionNode = getQuestion();
+}
 var pageSize = 2;
 $(function() {
+	getLocation();
 	getDate();
 	getgradename();
 	layui.use(['laypage', 'layer'], function() {
@@ -32,7 +41,7 @@ function getgradename() {
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
-var questionNode = JSON.parse(sessionStorage.getItem("lastname"));
+var Collection;
 
 function getDate(start) {
 	if(typeof(Storage) !== "undefined") {
@@ -50,7 +59,7 @@ function getDate(start) {
 			var node = document.createElement("div");
 			node.setAttribute("class", "subjectList");
 			var a1 = "";
-			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/CollectionYes.png" /><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
+			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/CollectionYes.png" /><input type="hidden" id="Mid" value=" ' + questionNode.questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
 			if(questionNode[i].options != null) {
 				a1 = "<div><table><tbody>";
 				for(var j = 0; j < questionNode[i].options.length; j++) {
@@ -115,7 +124,76 @@ function delObj(obj) {
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].questionIdMD52 == id) {
 			questionNode.splice(i, 1);
-			sessionStorage.setItem("lastname", JSON.stringify(questionList));
 		}
+	}
+	sessionStorage.setItem("lastname", JSON.stringify(questionList));
+}
+
+function CollectionImg_click(obj) {
+	var id = $(obj).next("input[id='Mid']").value;
+	for(var i = 0; i < questionNode.length; i++) {
+		if(questionNode[i].questionIdMD52 == id) {
+			var Collectiond={
+				"questionId": questionNode[i].questionId,
+				"questionContent": questionNode[i].questionContent,
+				"options": questionNode[i].options,
+				"answer": questionNode[i].answer,
+				"answerDetail": questionNode[i].answerDetail,
+				"parse": questionNode[i].parse,
+				"quesetionType": questionNode[i].quesetionType,
+				"difficulty": questionNode[i].difficulty,
+				"subjectId": questionNode[i].subjectId,
+				"gradeId": questionNode[i].gradeId,
+				"knowledge": questionNode[i].knowledge,
+				"questionIdMD52": questionNode[i].questionIdMD52,
+				"questionStatus": "NOTSTART",
+				"questionPic": questionNode[i].questionPic ,
+				"teacherName": "",
+				"createTime": "",
+				"updateTime": ""
+			}
+		}
+	}
+	if(obj.src.search("../img/00025.png") != -1) {
+		obj.src = "../img/e60eb6b8370b1910d42f3ecba911e25.png";
+		$.ajax({
+			url: local + "/COURSESERVICE/favor/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "POST",
+			async: true,
+			data:JSON.stringify(Collectiond),
+			contentType: 'application/json',
+			dataType: 'JSON',
+			success: function(data) {
+			swal("收藏成功!", "", "success");
+			},
+			error: function() {
+
+			}
+		});
+	} else {
+		obj.src = "../img/00025.png";
+		var id=$(obj).next().next("input[id='qid']").value;
+		var cs=[];
+		cs.push(id);
+		$.ajax({
+			url: local + "/COURSESERVICE/favor/deleteQuestions",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "DELETE",
+			async: true,
+			data:JSON.stringify(cs),
+			contentType: 'application/json',
+			dataType: 'JSON',
+			success: function(data) {
+
+			},
+			error: function() {
+
+			}
+		});
 	}
 }

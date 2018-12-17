@@ -1,15 +1,22 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
+var getlist;
+
 function getLocation() {
 	local = httpLocation();
-	accessToken=getAccessToken();
+	accessToken = getAccessToken();
 }
-$(function(){
+$(function() {
 	getLocation();
+	getlistto();
 	inits();
 	$(".areas").hide();
 });
+function getlistto(){
+	getlist = getQuestion();
+}
+
 var areass = null; //地区信息集合
 //参数列表
 var payear = null; //年份
@@ -28,18 +35,28 @@ var pagenum1 = 1; //当前显示的题目是多少页
 var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数据)
 
 function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
-	if(questionList.questionContent != "") {
+	if(questionList == null || questionList.length == 0) {
+			swal("没有选择题目哦!");
+	} else {
+		if(getlist == null || getlist == undefined) {
+		
+		} else {
+			for(var i = 0; getlist.length; i++) {
+				questionList.push(getlist[i]);
+			}
+		}
 		sessionStorage.setItem("lastname", JSON.stringify(questionList));
-//		sessionStorage.setItem('classid', classid);
-//		sessionStorage.setItem('className', className);
-//		sessionStorage.setItem('Name', Name);
-//		sessionStorage.setItem('info', info);
-//		sessionStorage.setItem('hh', hh);
-//		sessionStorage.setItem('mm', mm);
-//		sessionStorage.setItem('ymd', ymd);
-		alert("题目已保存！");
+		//		sessionStorage.setItem('classid', classid);
+		//		sessionStorage.setItem('className', className);
+		//		sessionStorage.setItem('Name', Name);
+		//		sessionStorage.setItem('info', info);
+		//		sessionStorage.setItem('hh', hh);
+		//		sessionStorage.setItem('mm', mm);
+		//		sessionStorage.setItem('ymd', ymd);
+		swal("已经添加题目到课堂!");
 		window.location.replace("../Front/NewClassroom.html");
 	}
+	
 }
 
 function getClass() {
@@ -205,13 +222,14 @@ function dropSwift(dom, drop) {
 		iconChevron.addClass('iconRotate');
 	}
 }
-function find(str,cha,num){
-    var x=str.indexOf(cha);
-    for(var i=0;i<num;i++){
-        x=str.indexOf(cha,x+1);
-    }
-    return x;
-    }
+
+function find(str, cha, num) {
+	var x = str.indexOf(cha);
+	for(var i = 0; i < num; i++) {
+		x = str.indexOf(cha, x + 1);
+	}
+	return x;
+}
 //循环展示题目
 function Obtain_subject(obj, Chapterid) {
 	$("#newtestpaper_div2_01 .subjectList").remove();
@@ -232,9 +250,9 @@ function Obtain_subject(obj, Chapterid) {
 
 	var num = 1;
 	for(var i = 0; i < subjectlist.content.length; i++, num++) {
-		
+
 		var a1 = "<div class='subjectList'><div class='subjectList_top'><span>" + num + "</span>";
-		isExistFavor(subjectlist.content[i].questionNode.qid);  //调用判断是否已经收藏该题目
+		isExistFavor(subjectlist.content[i].questionNode.qid); //调用判断是否已经收藏该题目
 		if(isExistFavorResult == "none") {
 			a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionNo.png' />";
 		} else {
@@ -242,25 +260,24 @@ function Obtain_subject(obj, Chapterid) {
 		}
 		a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li><li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li></ul></div></div>";
 		a1 += "<div class='subjectinfo'><div>";
-		a1+=subjectlist.content[i].questionNode.title;
-		a1 += 	"</div>";
-			//判断是否有选项
-			if(subjectlist.content[i].questionNode.option_a.length>0 ||subjectlist.content[i].questionNode.option_b.length>0 ||subjectlist.content[i].questionNode.option_c.length>0 ||subjectlist.content[i].questionNode.option_d.length>0){
-				a1 +="<div><table><tbody>";
-				if(subjectlist.content[i].questionNode.option_a.length>0){
-						a1+="<tr><td>A:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_a+"</td></tr>";
-				}
-				if(subjectlist.content[i].questionNode.option_b.length>0){
-						a1+="<tr><td>B:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_b+"</td></tr>";
-				}
-				if(subjectlist.content[i].questionNode.option_c.length>0){
-						a1+="<tr><td>C:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_c+"</td></tr>";
-				}
-				if(subjectlist.content[i].questionNode.option_d.length>0){
-						a1+="<tr><td>D:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_d+"</td></tr>";
-				}
-				a1+="</tbody></table></div>";
+		a1 += subjectlist.content[i].questionNode.title;
+		a1 += "</div>";
+		//判断是否有选项
+		if(subjectlist.content[i].questionNode.option_a.length > 0 || subjectlist.content[i].questionNode.option_b.length > 0 || subjectlist.content[i].questionNode.option_c.length > 0 || subjectlist.content[i].questionNode.option_d.length > 0) {
+			a1 += "<div><table><tbody>";
+			if(subjectlist.content[i].questionNode.option_a.length > 0) {
+				a1 += "<tr><td>A:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_a + "</td></tr>";
 			}
+			if(subjectlist.content[i].questionNode.option_b.length > 0) {
+				a1 += "<tr><td>B:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_b + "</td></tr>";
+			}
+			if(subjectlist.content[i].questionNode.option_c.length > 0) {
+				a1 += "<tr><td>C:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_c + "</td></tr>";
+			}
+			if(subjectlist.content[i].questionNode.option_d.length > 0) {
+				a1 += "<tr><td>D:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_d + "</td></tr>";
+			}
+<<<<<<< Updated upstream
 			a1+="</div>";
 		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
 		 if(subjectlist.content[i].addPapercount==null){
@@ -283,6 +300,13 @@ function Obtain_subject(obj, Chapterid) {
 		} 
 		a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"+ subjectlist.content[i].questionNodeknowledges+"</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+=======
+			a1 += "</tbody></table></div>";
+		}
+		a1 += "</div>";
+		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>" + subjectlist.content[i].addPapercount + "</i>次</span><span class='s_span'>作答<i class='num2'>" + subjectlist.content[i].answerCount + "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>" + subjectlist.content[i].average + "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>" + subjectlist.content[i].questionNodeknowledges + "</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+>>>>>>> Stashed changes
 		a1 += "</div></div>";
 		$("#newtestpaper_div2_01").append(a1);
 		questionNode[i] = subjectlist.content[i].questionNode;
@@ -318,7 +342,7 @@ function Chapter_click() {
 		"page": pageIndex1
 	};
 	$.ajax({
-		url: local+"/QUESTIONSREPOSITORY/question/getQuestionsExtraByKnowledge",
+		url: local + "/QUESTIONSREPOSITORY/question/getQuestionsExtraByKnowledge",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -345,9 +369,9 @@ function edition_click(obj, editionid) {
 		"editionId": "25"
 	};
 	$.ajax({
-		url: local+"/QUESTIONSREPOSITORY/question/getChapterInfo",
+		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",
 		headers: {
-			'accessToken':accessToken
+			'accessToken': accessToken
 		},
 		type: 'post',
 		//async: false,
@@ -366,7 +390,7 @@ function edition_click(obj, editionid) {
 function inits() {
 	//获取类型信息列表
 	$.ajax({
-		url: local+"/QUESTIONSREPOSITORY/question/getOtherBasicInfo",
+		url: local + "/QUESTIONSREPOSITORY/question/getOtherBasicInfo",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -383,7 +407,7 @@ function inits() {
 	});
 	//获取第一个文件树的学段、年级、科目、版本信息
 	$.ajax({
-		url: local+"/QUESTIONSREPOSITORY/question/getSubjectEditionInfoByTeacher",
+		url: local + "/QUESTIONSREPOSITORY/question/getSubjectEditionInfoByTeacher",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -399,6 +423,7 @@ function inits() {
 		}
 	});
 }
+
 function Truequestion_click(obj) {
 	if($(obj).siblings(".speech-bubble-top").css("display") == "none") {
 		$(obj).siblings(".speech-bubble-top").show();
@@ -525,25 +550,25 @@ function CollectionImg_click(obj) {
 //点击预览事件
 function PreviewPaper() //显示隐藏层和弹出层 
 {
-	
+
 	$(".pres").remove();
 	$("#presH2").remove();
-	if(questionList.length>0){
-		for(var i=0;i<questionList.length;i++){
-			a1="<div  class= 'pres'><p>选择题 一共<span>1</span>题 </p>";
-			a1+="<div>"+questionList[i].questionContent;
-			a1+="</div>";
-			a1+="<div><table><tbody>";
-			if(questionList[i].options!=null){
-				for(var j=0;j<questionList[i].options.length;j++){
-					a1+="<tr><td>"+questionList[i].options[j]+"</td></tr>";
+	if(questionList.length > 0) {
+		for(var i = 0; i < questionList.length; i++) {
+			a1 = "<div  class= 'pres'><p>选择题 一共<span>1</span>题 </p>";
+			a1 += "<div>" + questionList[i].questionContent;
+			a1 += "</div>";
+			a1 += "<div><table><tbody>";
+			if(questionList[i].options != null) {
+				for(var j = 0; j < questionList[i].options.length; j++) {
+					a1 += "<tr><td>" + questionList[i].options[j] + "</td></tr>";
 				}
 			}
-			a1+="</tbody></table></div>";
-			a1+="</div>"
-		$("#Previewinfo").append(a1);
+			a1 += "</tbody></table></div>";
+			a1 += "</div>"
+			$("#Previewinfo").append(a1);
 		}
-	}else{
+	} else {
 		$("#Previewinfo").append("<h2 id='presH2' style='color:red;text-align:center;'>暂时没有所选题目</h2>");
 	}
 	var hideobj = document.getElementById("hidebg");

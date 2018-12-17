@@ -216,10 +216,11 @@ body {
 	border-radius: 5px;
 	color: white;
 	position: relative;
-	left: 500px;
+	left: 476px;
 	text-align: center;
 	line-height: 55px;
 	font-size: 24px;
+	float: left;
 }
 
 .box-sub:hover {

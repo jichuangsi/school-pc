@@ -109,9 +109,6 @@ function LookClass(start, datalist) {
 			start = start * pageSize - len;
 		}
 		for(i = start; i < len; i++, num++) {
-//			if(len>datalist.length){
-//				
-//			}
 			var beginTime = datalist[i].beginTime;
 			var course = datalist[i].course;
 			var con = document.createElement('div');

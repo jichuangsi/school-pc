@@ -194,11 +194,11 @@ function pack(obj) {
 function changeRad(obj) {
 	if(obj.checked) {
 		$(obj).parent().parent().find(".Answerone").text("正确答案");
+		$(obj).parent().parent().nextAll(".Answerone").text("");
 	} else {
-		$(obj).parent().parent().find(".Answerone").text("");
+		
 	}
 	answer = $(obj).val();
-	console.log(answer);
 }
 //多选题
 function CheckBox(obj) {
@@ -242,7 +242,7 @@ function optionNumber(obj) {
 	for(i = 0; i < number; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left;">' + charater[i] + '.&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="group"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
+		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="group"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
 		nodetwo.innerHTML = '<td><input type="text" name="potions' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);

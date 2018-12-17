@@ -28,6 +28,7 @@ function Login() {
 		dataType: 'JSON',
 		data: JSON.stringify(cs),
 		success: function(data) {
+			sessionStorage.clear();
 			sessionStorage.setItem('accessToken',data.data.accessToken);
 			sessionStorage.setItem('userinfo',JSON.stringify(data.data.user));
 			window.location.replace("../Front/NewClassRoom.html");//NewClassRoom//UploadTopics//UserInfo

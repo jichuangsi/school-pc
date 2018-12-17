@@ -15,9 +15,59 @@
 	<script type="text/javascript" src="../js/httplocation.js"></script>
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+	<link rel="stylesheet" href="../css/tinyImgUpload.css" />
 	<link rel="stylesheet" href="../css/sweetalert.css" />
 	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
 	<link rel="stylesheet" id="pageloader-css" href="../css/pageloader.css" type="text/css" media="all" />
+	<style>
+		.black_overlay {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.8;
+			opacity: .80;
+			filter: alpha(opacity=80);
+		}
+		
+		.white_content {
+			display: none;
+			position: absolute;
+			top: 10%;
+			left: 26%;
+			width: 80%;
+			height: 80%;
+			border: 1px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+		}
+		
+		.white_content_small {
+			display: none;
+			position: absolute;
+			top: 20%;
+			left: 30%;
+			width: 40%;
+			height: 50%;
+			border: 16px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+			#onsubmit {
+				width: 80px;
+				height: 40px;
+				color: white;
+				background-color: #3d72fe;
+				border-radius: 5px;
+			}
+		}
+	</style>
 	<script>
 		lay('#version').html('-v' + laydate.v);
 
@@ -162,11 +212,31 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								<td>
+									<div class="box-sub" id="sub" type="submit" onclick="formSub()">新建课堂</div>
+									<div class="box-sub" style="margin-left: 20px;" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
+									<div id="fade" class="black_overlay">
+									</div>
+									<div id="MyDiv" class="white_content" style="width: 390px;height:420px;margin-left: 17%;">
+										<div style="text-align: right; cursor: default; height: 40px;">
+											<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:black;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
+											<div id="upload">
+
+											</div>
+											<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 149px;top: 340px ;cursor: pointer;" class="submit">本地上传</button>
+										</div>
+									</div>
+								</td>
+							</tr>
 						</table>
 					</div>
-					<button class="box-sub" id="sub" type="submit" onclick="formSub()">
-							新建课堂
-						</button>
+
+					<!--<button class="box-sub" onclick="uploadIcon()">上传图标</button>-->
+
+					<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+					<script>
+					</script>
 					<!--	</form>-->
 				</div>
 				<!--第二部分-->

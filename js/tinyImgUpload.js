@@ -27,7 +27,7 @@ function tinyImgUpload(ele, options) {
 		return;
 	} else {
 		eleList[0].innerHTML = '<div id="img-container" >' +
-			'<div class="img-up-add  img-item"> <span class="img-add-icon"  style="font-size: 160px;cursor: pointer;">+</span> </div>' +
+			'<div class="img-up-add  img-item"> <span class="img-add-icon"  style="font-size: 65px;cursor: pointer;">+</span> </div>' +
 			'<input type="file" name="files" id="img-file-input" multiple>' +
 			'</div>';
 		var ele = eleList[0].querySelector('#img-container');
