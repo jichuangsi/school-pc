@@ -189,7 +189,25 @@ function Obtain_subject(obj, Chapterid) {
 			a1 += "</tbody></table></div>";
 		}
 		a1 += "</div>";
-		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>" +if(subjectlist.content[i].addPapercount==null){0}else{subjectlist.content[i].addPapercount} + "</i>次</span><span class='s_span'>作答<i class='num2'>" + if(subjectlist.content[i].answerCount==null){0}else{subjectlist.content[i].answerCount} + "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>" + if(subjectlist.content[i].average==null){0}else{subjectlist.content[i].average} + "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
+		 if(subjectlist.content[i].addPapercount==null){
+			a1+=0;
+		}else{
+			a1+=subjectlist.content[i].addPapercount;
+		}
+		a1 += "</i>次</span><span class='s_span'>作答<i class='num2'>";
+		 if(subjectlist.content[i].answerCount==null){
+			a1+=0;
+		}else{
+			a1+=subjectlist.content[i].answerCount
+		}
+		a1+= "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>"; 
+		 if(subjectlist.content[i].average==null){
+		 	a1+=0;
+		 }else{
+		 	a1+=subjectlist.content[i].average;
+		 }
+		 a1+= "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div>";
 		a1+="<div class='info_2'><span>【解析】</span><div class='info_2_div'>";
 		a1+=subjectlist.content[i].questionNode.parse;
