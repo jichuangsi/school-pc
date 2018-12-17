@@ -86,7 +86,7 @@ function loopitem(){
 						console.log(itembaklist.content[i].questionPic);
 						var getquestionpic=getQuestionPic(itembaklist.content[i].questionPic);//调用下载文件的接口返回的数据
 						if(getquestionpic.data!=null){
-							a1+="<img style='display: inline;' src='data:image/jpeg;base64,"+getquestionpic.data.content+"'/>";
+							a1+="<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64,"+getquestionpic.data.content+"'/>";
 						}
 					}
 					
