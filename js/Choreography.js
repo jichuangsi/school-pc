@@ -2,8 +2,16 @@ document.write("<script type='text/javascript' src='../js/httplocation.js' ></sc
 var local;
 var accessToken;
 var datalist;
-var pageSize = 3;
-var curr;
+var pageSize = 2;
+var curr;//第几页
+var user;
+var count;//多少堂课
+function setCount(){
+	$("#count").text(count);
+	$("#index").text(curr);
+	var size=Math.ceil(count / pageSize);
+	$("#Size").text(size);
+}
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -37,6 +45,7 @@ $(function() {
 		});
 	});
 	
+	
 });
 function getNowFormatDate() {
 	var date = new Date();
@@ -53,7 +62,6 @@ function getNowFormatDate() {
 	currentdate = year + seperator1 + month + seperator1 + strDate;
 	$("#test29").attr('placeholder', currentdate);
 }
-var user;
 
 function getgradename() {
 	user = getUser()
@@ -107,6 +115,7 @@ function inintClassDate() {
 		success: function(data) {
 			//pageIndex(data);
 			datalist = data.data.content;
+			count=datalist.length;
 			//console.log(data.dataList);
 		},
 		error: function() {
@@ -147,6 +156,7 @@ function LookClass(start, datalist) {
 			sourceNode.appendChild(con);
 		}
 	}
+	setCount();
 
 }
 

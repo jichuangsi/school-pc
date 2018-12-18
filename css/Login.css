@@ -42,9 +42,11 @@ body {
 
 .Logding-main {
 	width: 100%;
-	height: 500px;
+	height: 850px;
 	float: left;
-		clear:both;//清除浮动	
+	clear:both;
+	background: url(../img/_20181116103602.png);
+	background-repeat: repeat-x;
 }
 .Logding-main>img{
 	float: left;

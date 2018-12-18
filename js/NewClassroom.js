@@ -162,6 +162,7 @@ function creaClass() {
 
 function formSub() {
 	questionNode = getQuestion();
+	var cpic=$("#icon").value;
 	var classid = document.getElementById("AttendClass").value;
 	var className = $("#AttendClass option:selected").text();
 	var Name = document.getElementById("ClassName").value;
@@ -184,18 +185,12 @@ function formSub() {
 		"questions": questionNode,
 		"teacherId": "string",
 		"teacherName": "string",
-		"coursePic": "",
+		"coursePic": cpic,
 		"subjectName": user.roles[0].primarySubject.subjectName
 	};
 	console.log(JSON.stringify(cc));
 	$.ajax({
-<<<<<<< Updated upstream
-		//url: local + "/COURSESERVICE/console/saveCourse",
-		url: local+"/COURSESERVICE/console/saveCourse",
-=======
 		url: local + "/COURSESERVICE/console/saveCourse",
-		//url: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourse",
->>>>>>> Stashed changes
 		headers: {
 			'accessToken': accessToken
 		},
@@ -465,20 +460,6 @@ function showmes(code) {
 }
 
 function ShowDiv(show_div, bg_div) {
-	$.ajax({
-		//url: local + '/COURSESERVICE/code/createQR',
-		type: 'POST',
-		data: {},
-		headers: {
-			'accessToken': accessToken
-		},
-		success: function(data) {
-			$('#ylimg').attr("src", "data:image/jpeg;base64," + data)
-		},
-		error: function(data) {
-			swal("保存失败!", "", "error");
-		}
-	});
 	document.getElementById(show_div).style.display = 'block';
 	document.getElementById(bg_div).style.display = 'block';
 	var bgdiv = document.getElementById(bg_div);
@@ -493,17 +474,17 @@ function CloseDiv(show_div, bg_div) {
 
 function getupload() {
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
-
 	var options = {
-		//path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic",
+		path: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourseIco",
 		res: {},
 		onSuccess: function(res) {
 			//var data = JSON.parse(res);
-			if(returndata.code == "0010") {
+			if(res.code == "0010") {
 				swal("上传成功!", "", "success");
-				sessionStorage.removeItem('lastname');
+				CloseDiv('MyDiv', 'fade');
 			} else {
 				swal("OMG", "操作失败了!", "error");
+				CloseDiv('MyDiv', 'fade');
 			}
 			CloseDiv('MyDiv', 'fade');
 		},
