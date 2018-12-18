@@ -28,7 +28,7 @@ $(function() {
 		res: {},
 		onSuccess: function(res) {
 			//var data = JSON.parse(res);
-				swal("上传成功！", "", "success");
+			swal("上传成功！", "", "success");
 			CloseDiv('MyDiv', 'fade');
 		},
 		onFailure: function(res) {
@@ -193,10 +193,10 @@ function pack(obj) {
 //选择题
 function changeRad(obj) {
 	if(obj.checked) {
-		$(obj).parent().parent().find(".Answerone").text("正确答案");
-		$(obj).parent().parent().nextAll(".Answerone").text("");
+		$(obj).parent().parent().find('.Answerone').text("正确答案");
+		$(obj).parent().parent().parent().siblings().find(".Answerone").text(" ");
 	} else {
-		
+		$(obj).parent().parent().find(".Answerone").text(" ");
 	}
 	answer = $(obj).val();
 }
@@ -286,54 +286,55 @@ function saveQuestion() {
 	var knowledge = $("#dept option:selected").text();
 	if(knowledge == "请选择知识点") {
 		swal("请选择知识点!");
-		knowledge="";
-	}
-	var answerOptions = new Array();
-	//console.log(knowledge)
-	for(i = 0; i < number; i++) {
-		answerOptions.push($("input[name=potions" + i + "]").val());
-	}
-	//console.log(answerOptions);
-	var parse = $("textarea[name='parse']").val();
-	var cc = {
-		"questionContent": content,
-		"options": answerOptions,
-		"answer": answer,
-		"answerDetail": "",
-		"parse": parse,
-		"quesetionType": type,
-		"difficulty": difficulty,
-		"subjectId": "",
-		"gradeId": "",
-		"knowledge": knowledge,
-		"questionIdMD52": "",
-		"teacherId": "",
-		"questionPic": "",
-		"teacherName": "",
-		"createTime": "",
-		"updateTime": "",
-		"code": orcode
-	}
-	console.log(JSON.stringify(cc));
-	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: false,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			swal("保存成功!", "", "success");
-			//window.setTimeou("ref()",1000*1); 	 	
-		},
-		error: function(returndata) {
-			// alert(returndata);
-			swal("保存失败!", "", "error");
+	} else {
+		var answerOptions = new Array();
+		//console.log(knowledge)
+		for(i = 0; i < number; i++) {
+			answerOptions.push($("input[name=potions" + i + "]").val());
 		}
-	});
+		//console.log(answerOptions);
+		var parse = $("textarea[name='parse']").val();
+		var cc = {
+			"questionContent": content,
+			"options": answerOptions,
+			"answer": answer,
+			"answerDetail": "",
+			"parse": parse,
+			"quesetionType": type,
+			"difficulty": difficulty,
+			"subjectId": "",
+			"gradeId": "",
+			"knowledge": knowledge,
+			"questionIdMD52": "",
+			"teacherId": "",
+			"questionPic": "",
+			"teacherName": "",
+			"createTime": "",
+			"updateTime": "",
+			"code": orcode
+		}
+		console.log(JSON.stringify(cc));
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: false,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				swal("保存成功!", "", "success");
+				//window.setTimeou("ref()",1000*1); 	 	
+			},
+			error: function(returndata) {
+				// alert(returndata);
+				swal("保存失败!", "", "error");
+			}
+		});
+	}
+
 }
 //判断题
 function saveQuestionPack() {
@@ -341,44 +342,49 @@ function saveQuestionPack() {
 	var content = $("textarea[name='ChoicequestionPack']").val();
 	var knowledge = $("#packselect option:selected").text();
 	var parse = $("textarea[name='parsePack']").val();
-	var cc = {
-		"questionContent": content,
-		"options": [],
-		"answer": answer,
-		"answerDetail": "",
-		"parse": parse,
-		"quesetionType": type,
-		"difficulty": difficulty,
-		"subjectId": "",
-		"gradeId": "",
-		"knowledge": knowledge,
-		"questionIdMD52": "",
-		"teacherId": "",
-		"questionPic": "",
-		"teacherName": "",
-		"createTime": "",
-		"updateTime": "",
-		"code": orcode
-	}
-	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: false,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			swal("保存成功!", "", "success");
-			//window.setTimeou("ref()",1000*1);
-		},
-		error: function(returndata) {
-			// alert(returndata);
-			swal("保存失败!", "", "error");
+	if(knowledge == "请选择知识点") {
+		swal("请选择知识点!");
+	} else {
+		var cc = {
+			"questionContent": content,
+			"options": [],
+			"answer": answer,
+			"answerDetail": "",
+			"parse": parse,
+			"quesetionType": type,
+			"difficulty": difficulty,
+			"subjectId": "",
+			"gradeId": "",
+			"knowledge": knowledge,
+			"questionIdMD52": "",
+			"teacherId": "",
+			"questionPic": "",
+			"teacherName": "",
+			"createTime": "",
+			"updateTime": "",
+			"code": orcode
 		}
-	});
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: false,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				swal("保存成功!", "", "success");
+				//window.setTimeou("ref()",1000*1);
+			},
+			error: function(returndata) {
+				// alert(returndata);
+				swal("保存失败!", "", "error");
+			}
+		});
+	}
+
 }
 
 function saveQuestionStone() {
@@ -390,44 +396,48 @@ function saveQuestionStone() {
 		answerOptions.push($("input[name=potionsStone" + i + "]").val());
 	}
 	var parse = $("textarea[name='stone']").val();
-	var cc = {
-		"questionContent": content,
-		"options": answerOptions,
-		"answer": answer,
-		"answerDetail": "",
-		"parse": parse,
-		"quesetionType": type,
-		"difficulty": difficulty,
-		"subjectId": "",
-		"gradeId": "",
-		"knowledge": knowledge,
-		"questionIdMD52": "",
-		"teacherId": "",
-		"questionPic": "",
-		"teacherName": "",
-		"createTime": "",
-		"updateTime": "",
-		"code": orcode
-	}
-	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: false,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			swal("保存成功!", "", "success");
-			//window.setTimeou("ref()",1000*1);
-		},
-		error: function(returndata) {
-			// alert(returndata);
-			swal("保存失败!", "", "error");
+	if(knowledge == "请选择知识点") {
+		swal("请选择知识点!");
+	} else {
+		var cc = {
+			"questionContent": content,
+			"options": answerOptions,
+			"answer": answer,
+			"answerDetail": "",
+			"parse": parse,
+			"quesetionType": type,
+			"difficulty": difficulty,
+			"subjectId": "",
+			"gradeId": "",
+			"knowledge": knowledge,
+			"questionIdMD52": "",
+			"teacherId": "",
+			"questionPic": "",
+			"teacherName": "",
+			"createTime": "",
+			"updateTime": "",
+			"code": orcode
 		}
-	});
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: false,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				swal("保存成功!", "", "success");
+				//window.setTimeou("ref()",1000*1);
+			},
+			error: function(returndata) {
+				// alert(returndata);
+				swal("保存失败!", "", "error");
+			}
+		});
+	}
 }
 
 function saveCompletionQuestion() {
@@ -438,46 +448,49 @@ function saveCompletionQuestion() {
 	for(i = 0; i < number; i++) {
 		answerOptions.push($("input[name=completion" + i + "]").val() + '<br />');
 	}
-	con
 	var parse = $("textarea[name='Completion']").val();
-	var cc = {
-		"questionContent": content,
-		"options": answerOptions,
-		"answer": answer,
-		"answerDetail": "",
-		"parse": parse,
-		"quesetionType": type,
-		"difficulty": difficulty,
-		"subjectId": "",
-		"gradeId": "",
-		"knowledge": knowledge,
-		"questionIdMD52": "",
-		"teacherId": "",
-		"questionPic": "",
-		"teacherName": "",
-		"createTime": "",
-		"updateTime": "",
-		"code": orcode
-	}
-	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: false,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			swal("保存成功!", "", "success");
-			//window.setTimeou("ref()",1000*1);
-		},
-		error: function(returndata) {
-			// alert(returndata);
-		swal("保存失败!", "", "error");
+	if(knowledge == "请选择知识点") {
+		swal("请选择知识点!");
+	} else {
+		var cc = {
+			"questionContent": content,
+			"options": answerOptions,
+			"answer": answer,
+			"answerDetail": "",
+			"parse": parse,
+			"quesetionType": type,
+			"difficulty": difficulty,
+			"subjectId": "",
+			"gradeId": "",
+			"knowledge": knowledge,
+			"questionIdMD52": "",
+			"teacherId": "",
+			"questionPic": "",
+			"teacherName": "",
+			"createTime": "",
+			"updateTime": "",
+			"code": orcode
 		}
-	});
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: false,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				swal("保存成功!", "", "success");
+				//window.setTimeou("ref()",1000*1);
+			},
+			error: function(returndata) {
+				// alert(returndata);
+				swal("保存失败!", "", "error");
+			}
+		});
+	}
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
@@ -522,6 +535,7 @@ function getNowFormatDate() {
 	currentdate = year + seperator1 + month + seperator1 + strDate;
 	return currentdate;
 }
-function ref(){
+
+function ref() {
 	window.location.reload();
 }

@@ -6,6 +6,7 @@ var getlist;
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
+	getlist=getQuestion();
 }
 $(function() {
 	getLocation();
@@ -41,7 +42,7 @@ function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 		if(getlist == null || getlist == undefined) {
 		
 		} else {
-			for(var i = 0; getlist.length; i++) {
+			for(var i = 0; i<getlist.length; i++) {
 				questionList.push(getlist[i]);
 			}
 		}
@@ -299,11 +300,20 @@ function Obtain_subject(obj, Chapterid) {
 			a1+=subjectlist.content[i].average;
 		} 
 		a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+<<<<<<< Updated upstream
 		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
 			if(subjectlist.content[i].questionNode.knowledges!=null && subjectlist.content[i].questionNode.knowledges){
 				a1+="<span>"+subjectlist.content[i].questionNode.knowledges+"</span>";
 			}
 		a1+="</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+=======
+		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"+ subjectlist.content[i].questionNodeknowledges+"</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+			a1 += "</tbody></table></div>";
+		}
+		a1 += "</div>";
+		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>" + subjectlist.content[i].addPapercount + "</i>次</span><span class='s_span'>作答<i class='num2'>" + subjectlist.content[i].answerCount + "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>" + subjectlist.content[i].average + "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>" + subjectlist.content[i].questionNodeknowledges + "</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+>>>>>>> Stashed changes
 		a1 += "</div></div>";
 		$("#newtestpaper_div2_01").append(a1);
 		questionNode[i] = subjectlist.content[i].questionNode;

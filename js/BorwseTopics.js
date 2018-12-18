@@ -8,6 +8,7 @@ function getLocation() {
 	questionNode = getQuestion();
 }
 var pageSize = 2;
+var curr;
 $(function() {
 	getLocation();
 	getDate();
@@ -27,7 +28,8 @@ $(function() {
 				if(!first) {
 					$("#listTo").empty();
 				}
-				getDate((obj.curr - 1) * pageSize);
+				curr=obj.curr;
+				getDate((obj.curr-1)*pageSize);
 			}
 		});
 	});
@@ -48,11 +50,10 @@ function getDate(start) {
 		var source = document.getElementById('listTo');
 		var num = 1;
 		var len;
-		if(((start * pageSize) % questionNode.length) == 0) {
+		if((curr*pageSize-questionNode.length)<0) {
 			len = start + pageSize;
 		} else {
-			len = questionNode.length
-			start = start * pageSize - len;
+			len = questionNode.length;
 		}
 		for(i = start; i < len; i++, num++) {
 			var j = 0;

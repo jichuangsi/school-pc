@@ -51,9 +51,9 @@ function getQuestionNode() {
 			initAttendtimemin("");
 		}
 		if(ymd != undefined) {
-			$("#test30").val("");
+			$("#test29").val("");
 		} else {
-			$("#test30").val(currentdate);
+			$("#test29").val(currentdate);
 		}
 		if(Name != undefined) {
 			$("#ClassName").val(Name);
@@ -86,7 +86,7 @@ function getNowFormatDate() {
 		strDate = "0" + strDate;
 	}
 	currentdate = year + seperator1 + month + seperator1 + strDate;
-	$("#test30").attr('placeholder', currentdate);
+	$("#test29").attr('placeholder', currentdate);
 }
 
 function toList() {
@@ -105,7 +105,7 @@ function toQuestion() {
 	var info = document.getElementById("ClassroomSynopsis").value;
 	var hh = document.getElementById("time-hour").value;
 	var mm = document.getElementById("time-min").value;
-	var ymd = document.getElementById("test30").value;
+	var ymd = document.getElementById("test29").value;
 	sessionStorage.setItem('classid', classid);
 	sessionStorage.setItem('className', className);
 	sessionStorage.setItem('Name', Name);
@@ -128,8 +128,9 @@ function inintDate() {
 		data: {},
 		success: function(data) {
 			sClass = data.data.transferClasses;
-			eaxms = data.data.eaxms;
+			eaxms = data.data.transferExams;
 			initAttendClass('', sClass);
+			initAttendTest('',eaxms);
 		},
 		error: function() {
 			// alert(returndata);
@@ -167,7 +168,7 @@ function formSub() {
 	var info = document.getElementById("ClassroomSynopsis").value;
 	var hh = document.getElementById("time-hour").value;
 	var mm = document.getElementById("time-min").value;
-	var ymd = document.getElementById("test30").value;
+	var ymd = document.getElementById("test29").value;
 	var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 	var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 	var cc = {
@@ -188,8 +189,13 @@ function formSub() {
 	};
 	console.log(JSON.stringify(cc));
 	$.ajax({
+<<<<<<< Updated upstream
 		//url: local + "/COURSESERVICE/console/saveCourse",
 		url: local+"/COURSESERVICE/console/saveCourse",
+=======
+		url: local + "/COURSESERVICE/console/saveCourse",
+		//url: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourse",
+>>>>>>> Stashed changes
 		headers: {
 			'accessToken': accessToken
 		},
@@ -225,7 +231,7 @@ function copyClassRoom(obj) {
 	var ymd = $time[0];
 	ymd = ymd.replace(/[^\d]/g, '-');
 	ymd = ymd.substring(0, 10);
-	$("#test30").val(ymd);
+	$("#test29").val(ymd);
 	var info = $(obj).parent().find("input[name='info']").val();
 	$("#ClassroomSynopsis").val(info);
 	var $ClassTimehour = splitStrHour($timehour); //$(obj).find(".hour").text(); //获取小时
@@ -263,7 +269,7 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	$AttendClassTest.find("option").remove();
 	for(var i = 0; i < array.length; i++) {
 		if(array[i] == ClassRoomSmallTestVal) {
-			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].eaxmName + "</option>";
+			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
 		} else {
 			$option = "<option value='" + array[i].eaxmId + "'>" + array[i].eaxmName + "</option>";
 		}
@@ -353,6 +359,7 @@ function copyClass() {
 
 function LookRoomClass(datalist) {
 	if(datalist != null) {
+		$("#look-class").empty();
 		var soure = document.getElementById("look-class");
 		var num = 1;
 		for(i = 0; i < datalist.length; i++, num++) {

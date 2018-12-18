@@ -3,7 +3,7 @@ var local;
 var accessToken;
 var datalist;
 var pageSize = 3;
-
+var curr;
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -12,7 +12,7 @@ $(function() {
 	getLocation();
 	getgradename();
 	inintClassDate();
-	//LookClass();
+	getNowFormatDate();
 	inintUPdate();
 	initAttendtimehour("");
 	initAttendtimemin("");
@@ -31,16 +31,34 @@ $(function() {
 				if(!first) {
 					$("#main-list").empty();
 				}
+				curr=obj.curr;
 				LookClass((obj.curr - 1) * pageSize, datalist);
 			}
 		});
 	});
+	
 });
+function getNowFormatDate() {
+	var date = new Date();
+	var seperator1 = "-";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var strDate = date.getDate();
+	if(month >= 1 && month <= 9) {
+		month = "0" + month;
+	}
+	if(strDate >= 0 && strDate <= 9) {
+		strDate = "0" + strDate;
+	}
+	currentdate = year + seperator1 + month + seperator1 + strDate;
+	$("#test29").attr('placeholder', currentdate);
+}
 var user;
-function getgradename(){
-	user=getUser()
-	var gname=user.roles[0].phrase.phraseName;
-	var sname=user.roles[0].primarySubject.subjectName;
+
+function getgradename() {
+	user = getUser()
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
@@ -65,13 +83,14 @@ function inintClassDate() {
 	if(cname == null || name == '') {
 		cname = "";
 	}
+	var ymd=$("test29").val();
 	var cs = {
 		"keyWord": cname,
 		"pageIndex": 1,
 		"pageSize": 10,
 		"sortNum": 2,
 		"status": "NOTSTART",
-		"time": "2018-12-6"
+		"time": ymd
 	};
 	$.ajax({
 		url: local + "/COURSESERVICE/console/getSortList",
@@ -97,16 +116,17 @@ function inintClassDate() {
 }
 //在哪里调用的
 function LookClass(start, datalist) {
-	if(datalist != null) {
+	if(datalist == null || datalist.length == 0) {
+
+	} else {
 		var sourceNode = document.getElementById("main-list");
 		//$(sourceNode).remove("#main-ch .room-class");
 		var num = 1;
 		var len
-		if(((start * pageSize) % datalist.length) == 0) {
+		if((curr*pageSize-datalist.length)<0) {
 			len = start + pageSize;
-		}else{
-			len = questionNode.length
-			start = start * pageSize - len;
+		} else {
+			len = datalist.length;
 		}
 		for(i = start; i < len; i++, num++) {
 			var beginTime = datalist[i].beginTime;
@@ -121,7 +141,7 @@ function LookClass(start, datalist) {
 			con.innerHTML += '<div class="room-introduction">' + "课堂简介 " + '</div>';
 			con.innerHTML += '<div class="room-static but-kc"><label>上课时间：</label><span name="classTime">' + beginTime + '</span></div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>45分钟</span></div>';
-			con.innerHTML += '<div class="but-update"  onclick="showBg(this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
+			con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
 			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + "班级45人" + '</span><label>签到</label><span>45人</span><div class="class-xq">查看详情</div></div><div><div class="room-class-two"><label>课堂小测：</label><span>' + "牛顿小测 " + '</span></div>';
 			sourceNode.appendChild(con);
@@ -131,17 +151,7 @@ function LookClass(start, datalist) {
 }
 
 function showBg(obj) {
-	var id = $(obj).find("input[name='id']").val();
-	$("[name='courseId']").val(id);
-	var name = $(obj).parent().find("span[name='name']").text();
-	$("#name").val(name);
-	var str = $(obj).parent().find("span[name='classTime']").text();
-	var ymd = str.split(" ")[0];
-	ymd = ymd.replace(/[^\d]/g, '-');
-	ymd = ymd.substring(0, 10);
-	$("#test30").val(ymd);
-	var info = $(obj).parent().find("input[name='info']").val();
-	$("#ClassroomSynopsis").val(info);
+	
 	var bh = $("body").height();
 	var bw = $("body").width();
 	$("#Update").css({
@@ -151,10 +161,6 @@ function showBg(obj) {
 	});
 	$("#Update").show();
 
-}
-//关闭灰色 jQuery 遮罩   
-function closeBg() {
-	$("#Update").hide();
 }
 
 function inintUPdate() {
@@ -170,8 +176,7 @@ function inintUPdate() {
 		success: function(data) {
 			initAttendClass('', data.data.transferClasses);
 		},
-		error: function() {
-		}
+		error: function() {}
 	});
 }
 
@@ -258,7 +263,7 @@ function updateSub() {
 		contentType: 'application/json',
 		success: function(returndata) {
 			swal("修改完成!", "", "success");
-			closeBg();
+			CloseDiv(show_div, bg_div);
 			showLoad();
 		},
 		error: function(returndata) {
@@ -351,5 +356,28 @@ function showLoad() {
 	window.location.reload();
 }
 
-function isComplete() {
-}
+function isComplete() {}
+
+function ShowDiv(MyDiv, fade,obj) {
+	var id = $(obj).find("input[name='id']").val();
+	$("[name='courseId']").val(id);
+	var name = $(obj).parent().find("span[name='name']").text();
+	$("#name").val(name);
+	var str = $(obj).parent().find("span[name='classTime']").text();
+	var ymd = str.split(" ")[0];
+	ymd = ymd.replace(/[^\d]/g, '-');
+	ymd = ymd.substring(0, 10);
+	$("#test30").val(ymd);
+	var info = $(obj).parent().find("input[name='info']").val();
+	$("#ClassroomSynopsis").val(info);
+	document.getElementById("MyDiv").style.display = 'block';
+	document.getElementById("fade").style.display = 'block';
+	var bgdiv = document.getElementById(fade);
+	bgdiv.style.width = document.body.scrollWidth;
+	$("#" + fade).height($(document).height());
+};
+
+function CloseDiv(MyDiv, fade) {
+	document.getElementById("MyDiv").style.display = 'none';
+	document.getElementById("fade").style.display = 'none';
+};

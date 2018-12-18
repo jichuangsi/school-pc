@@ -76,60 +76,7 @@
 		laydate.render({
 			elem: '#test1' //指定元素
 		});
-		//国际版
-		laydate.render({
-			elem: '#test1-1',
-			lang: 'en'
-		});
-		//年选择器
-		laydate.render({
-			elem: '#test2',
-			type: 'year'
-		});
-		//年月选择器
-		laydate.render({
-			elem: '#test3',
-			type: 'month'
-		});
-		//时间选择器
-		laydate.render({
-			elem: '#test4',
-			type: 'time'
-		});
-		//时间选择器
-		laydate.render({
-			elem: '#test5',
-			type: 'datetime'
-		});
-		//日期范围
-		laydate.render({
-			elem: '#test6',
-			range: true
-		});
-		//年范围
-		laydate.render({
-			elem: '#test7',
-			type: 'year',
-			range: true
-		});
-		//年月范围
-		laydate.render({
-			elem: '#test8',
-			type: 'month',
-			range: true
-		});
-		//时间范围
-		laydate.render({
-			elem: '#test9',
-			type: 'time',
-			range: true
-		});
-		//日期时间范围
-		laydate.render({
-			elem: '#test10',
-			type: 'datetime',
-			range: true
-		});
+
 		//墨绿主题
 		laydate.render({
 			elem: '#test29',
@@ -139,11 +86,6 @@
 		laydate.render({
 			elem: '#test30',
 			theme: '#393D49'
-		});
-		//格子主题
-		laydate.render({
-			elem: '#test31',
-			theme: 'grid'
 		});
 	</script>
 	<script>
@@ -200,7 +142,7 @@
 										<select class="time-select" id="time-min" name="mm">
 										</select>
 										<span>日期:</span>
-										<input type="text" class="time-select-y" placeholder="" id="test30" name="ymd">
+										<input type="text" class="time-select-y" placeholder="" id="test29" name="ymd">
 									</div>
 								</td>
 							</tr>
@@ -214,8 +156,8 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="box-sub" id="sub" type="submit" onclick="formSub()">新建课堂</div>
-									<div class="box-sub" style="margin-left: 20px;" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
+									<div class="box-sub" id="sub" type="submit" style="font-size: 18px;" onclick="formSub()">新建课堂</div>
+									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传课堂图标</div>
 									<div id="fade" class="black_overlay">
 									</div>
 									<div id="MyDiv" class="white_content" style="width: 390px;height:420px;margin-left: 17%;">

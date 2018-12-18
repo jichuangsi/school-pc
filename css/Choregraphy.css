@@ -54,16 +54,15 @@
 }
 
 .nav-ul ul li {
+	
 	text-align: center;
 	margin-top: 10px;
 	width: 50px;
 	list-style: none;
 	margin-left: 4px;
 	border-radius: 5px;
-}
-
-.nav-ul ul>:first-child {
-	margin-left: 20px;
+	position: relative;
+	right: 247px;
 }
 
 .nav-ul ul li {
@@ -431,4 +430,15 @@ ul li {
 	/*filter: alpha(Opacity=60);
 	-moz-opacity: 0.6;
 	opacity: 0.6;*/
+}
+.main-time{
+	float: left;
+	position: relative;
+	left: 19%;
+	top: 20px;
+}
+.time{
+	border-radius: 5px;
+	width: 260px;
+	height: 42px;
 }
