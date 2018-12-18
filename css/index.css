@@ -90,17 +90,22 @@
   font-size: 25px;
 }
 .s-side .s-secondNav,
+.s-side .s-secondNavs,
 .s-side .s-secondItem {
   margin-left: 14px;
   margin-top: 10px;
 }
 .s-secondNav:hover,.d-firstNav:hover{
-	background-color: #00B83F;cursor: pointer
+	background-color: #00B83F;cursor: pointer;
 }
-.s-secondNav:hover,.d-firstNavs:hover{
-	background-color: #00B83F;cursor: pointer
+.s-secondNavs:hover,.d-firstNavs:hover{
+	background-color: #00B83F;cursor: pointer;
 }
 .s-side .d-secondDrop {
+  margin-left: 41px;
+  margin-top: 10px;
+}
+.s-side .d-secondDrops {
   margin-left: 41px;
   margin-top: 10px;
 }
@@ -110,5 +115,9 @@
 }
 .s-firstDrop,
 .s-secondDrop {
+  display: none;
+}
+.s-firstDrops,
+.s-secondDrops {
   display: none;
 }

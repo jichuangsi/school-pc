@@ -106,18 +106,18 @@
 				<ul>
 					<li class="first">
 						<div class="d-firstNav s-firstNav clearfix">
-							<i class="fa fa-bars" style="color: #0000FF;"></i>
+							<span class="fa fa-bars" style="color: #0000FF;margin-left: 0px;"></span>
 							<span style="color: #003EFF;">教科书版本</span>
-							<i class="fa fa-caret-right fr "></i>
+							<span class="fa fa-caret-right fr " style="color:#0000Ff;font-size: 23px;"></span>
 						</div>
 						<ul id="ff" class="d-firstDrop s-firstDrop">
 						</ul>
 					</li>
 					<li class="first">
-						<div class="d-firstNavs s-firstNav clearfix">
-							<i class="fa fa-bars" style="color: #0000FF;"></i>
+						<div class="d-firstNavs s-firstNav clearfix" id="KnowledgeCatalog">
+							<span class="fa fa-bars" style="color: #0000FF;margin-left: 0px;"></span>
 							<span style="color: #003EFF;">知识点目录</span>
-							<i class="fa fa-caret-right fr "></i>
+							<span class="fa fa-caret-right fr " style="color:#0000Ff;font-size: 23px;"></span>
 						</div>
 						<ul id="f2" class="d-firstDrops s-firstDrops">
 						</ul>
@@ -129,7 +129,7 @@
 					<div class="div1">
 						<div>已选试题: <i id="paper_number">0</i></div>
 						<div>课堂小测</div>
-						<div>2018年11-30好 10：30</div>
+						<div>2018年11-30号 10：30</div>
 						<!--<div><label>总分数: <i id="paper_Fraction">2</i> </label></div>-->
 						<!--<div><input type="text" placeholder="请输入试卷标题" /></div>
 						<div><input type="text" placeholder="请输入试卷副标题" /></div>-->
@@ -214,20 +214,29 @@
 						<a onclick="b4(this)">平均得分率<span>▲</span></a>-->
 						<div style="display: inline-block;padding-left: 22px;">
 							共
-							<i style="color: #0088CC;">1234</i> 题
+							<i id="totals" style="color: #0088CC;">0</i> 题
 						</div>
-						<div class="page1" style="display: inline;">
+						<!--<div class="page1" style="display: inline;">
 							<a onclick="page_upkey(this)" id="page_up">
 								< </a>
 									第
 									<i class="page_left"> 1 </i> /
 									<i class="page_right">1</i> 页
 									<a onclick="page_nextkey(this)" id="page_next">></a>
+						</div>-->
+						<div class="page1" style="display: inline;">
+							<a onclick="page_upkeys(this)" id="page_ups">
+								< </a>
+									第
+									<i id="page_lefts" class="page_left"> 0 </i> /
+									<i id="page_rights" class="page_right">0</i> 页
+									<a onclick="page_nextkeys(this)" id="page_nexts">></a>
 						</div>
 					</div>
-					<!--题目内容-->
-
-					<!--<div class="tcdPageCode"></div>-->
+					<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;">
+							<img src="../img/Missingdata.png" />
+							<h3 >没有找到相关试题，换个条件试试吧！</h3>
+					</div>
 				</div>
 
 				<div id="newtestpaper_div2_02" class="newtestpaper_div2" style="display: none;">

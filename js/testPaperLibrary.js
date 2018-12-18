@@ -1,15 +1,17 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
+
 function getLocation() {
 	local = httpLocation();
-	accessToken=getAccessToken();
+	accessToken = getAccessToken();
 }
 var user;
-function getgradename(){
-	user=getUser()
-	var gname=user.roles[0].phrase.phraseName;
-	var sname=user.roles[0].primarySubject.subjectName;
+
+function getgradename() {
+	user = getUser()
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
@@ -37,7 +39,7 @@ var pageindexs = 1;
 var pagecouts = 1;
 var pagetotals = 1;
 var pagenums = 1;
-var testpaperlist = null;  //试卷集合
+var testpaperlist = null; //试卷集合
 function page() {
 	$(".tcdPageCode").createPage({
 		pageCount: pagecouts,
@@ -53,6 +55,7 @@ function page() {
 }
 
 //循环遍历试卷
+var ii=0;
 function looptestpaper() {
 	gettestpaperlist();
 	$("#testpaperlist").find("tr").remove();
@@ -63,9 +66,17 @@ function looptestpaper() {
 		pagetotals = testpaperlist.total;
 		for(var i = 0; i < testpaperlist.content.length; i++) {
 			a1 = '<tr><td width="35%">' + testpaperlist.content[i].examName + '</td><td width="25%">' + new Date(testpaperlist.content[i].updateTime).toLocaleString() + '</td>';
-			a1 += '<td width="20%"><button onclick="deltestpaper_click(this)" data"' + testpaperlist.content[i].examId + '" class="tpl_div1_btn ">删除考卷</button>';
+			a1 += '<td width="20%"><button onclick="deltestpaper_click(this)" data="' + testpaperlist.content[i].examId + '" class="tpl_div1_btn ">删除考卷</button>';
 			a1 += '<button onclick="previewtestpaper_click(this)" data="' + testpaperlist.content[i].examId + '" class="tpl_div1_btn">浏览考卷</button></td></tr>';
 			$("#testpaperlist").append(a1);
+			if(ii==0){
+				previewexamId=testpaperlist.content[i].examId;
+				previewexamName= testpaperlist.content[i].examName;
+				getsubjectlist();  
+				loopquestions();  
+				loopDiffAndQtype();
+				ii++;
+			}
 		}
 		$(".tpl_div1").append('<div class="tcdPageCode"></div>');
 	} else {
@@ -88,26 +99,38 @@ Date.prototype.toLocaleString = function() {
 
 //删除试卷
 function deltestpaper_click(obj) {
-	var examId=$(obj).attr('data');
-	var cc = {
-		"ids": [examId]
-	}
-	$.ajax({
-		url: local+"/EXAMSERVICE/exam/deleteExam",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'delete',
-		async: false,
-		dataType: "json",
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(data) {
-			alert(data);
-		},
-		error: function(data) {
-			alert("失败");
+	swal({
+		title: "您确定要删除吗？",
+		text: "您确定要删除这条数据？",
+		type: "warning",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		confirmButtonText: "是的，我要删除",
+		confirmButtonColor: "#ec6c62"
+	}, function() {
+		var examId = $(obj).attr("data");
+		var cc = {
+			"ids": [examId]
 		}
+		$.ajax({
+			url: local + "/EXAMSERVICE/exam/deleteExam",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'delete',
+			async: false,
+			dataType: "json",
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(data) {
+				swal("删除成功","","success");
+				pageindexs=1;
+				looptestpaper();
+			},
+			error: function(data) {
+				swal("删除失败","","error")
+			}
+		});
 	});
 }
 
@@ -118,7 +141,7 @@ function gettestpaperlist() {
 		"examId": "string",
 		"examName": examName,
 		"pageIndex": pageindexs,
-		"pageSize": "1",
+		"pageSize": "3",
 		"questionModels": [{
 			"answer": "string",
 			"answerDetail": "string",
@@ -142,7 +165,7 @@ function gettestpaperlist() {
 		"updateTime": 0
 	}
 	$.ajax({
-		url: local+"/EXAMSERVICE/exam/findExams",
+		url: local + "/EXAMSERVICE/exam/findExams",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -161,53 +184,57 @@ function gettestpaperlist() {
 		}
 	});
 }
-//预览书卷
-var previewexamId=null;
+var previewexamId = null;//试卷id
+var previewexamName=null;//试卷名称
+//预览试卷
 function previewtestpaper_click(obj) {
-	previewexamId=$(obj).attr('data');
-	pageindexs1=1;
-	getsubjectlist();
-	loopquestions();
-	loopDiffAndQtype();
+	previewexamId = $(obj).attr('data');
+	previewexamName=$(obj).parent().parent().children(":first").text();
+	pageindexs1 = 1;
+	getsubjectlist();  //获取试卷的试题集合
+	loopquestions();  //循环遍历试题
+	loopDiffAndQtype();  //遍历题型和难度
 }
 //循环题型和难度
-function loopDiffAndQtype(){
+function loopDiffAndQtype() {
 	getDiffAndQtype();
 	$("#qtype").find("tr").remove();
 	$("#diff").find("tr").remove();
-	if(DiffAndQtypelist!=null){
+	if(DiffAndQtypelist != null) {
 		//循环题目类型
-		var qtypeTotal=0;
-		for(var j=0;j<DiffAndQtypelist.qt.length;j++){
-			qtypeTotal+=DiffAndQtypelist.qt[j].num;
-			a1='<tr><td>'+DiffAndQtypelist.qt[j].type+'</td><td>'+DiffAndQtypelist.qt[j].num+'</td></tr>';
+		var qtypeTotal = 0;
+		for(var j = 0; j < DiffAndQtypelist.qt.length; j++) {
+			qtypeTotal += DiffAndQtypelist.qt[j].num;
+			a1 = '<tr><td>' + DiffAndQtypelist.qt[j].type + '</td><td>' + DiffAndQtypelist.qt[j].num + '</td></tr>';
 			$("#qtype").append(a1);
 		}
 		$("#qtypeTotal").text(qtypeTotal);
 		//循环难度
-		for(var i=0;i<DiffAndQtypelist.dt.length;i++){
-			a1='<tr>';
-			if(DiffAndQtypelist.dt[i].difficulty==1){
-				a1+='<td>简单</td>';
-			}else if(DiffAndQtypelist.dt[i].difficulty==2){
-				a1+='<td>一般</td>';
-			}else if(DiffAndQtypelist.dt[i].difficulty==3){
-				a1+='<td>中等</td>';
-			}else if(DiffAndQtypelist.dt[i].difficulty==4){
-				a1+='<td>较难</td>';
-			}else if(DiffAndQtypelist.dt[i].difficulty==5){
-				a1+='<td>困难</td>';
+		for(var i = 0; i < DiffAndQtypelist.dt.length; i++) {
+			a1 = '<tr>';
+			if(DiffAndQtypelist.dt[i].difficulty == 1) {
+				a1 += '<td>简单</td>';
+			} else if(DiffAndQtypelist.dt[i].difficulty == 2) {
+				a1 += '<td>一般</td>';
+			} else if(DiffAndQtypelist.dt[i].difficulty == 3) {
+				a1 += '<td>中等</td>';
+			} else if(DiffAndQtypelist.dt[i].difficulty == 4) {
+				a1 += '<td>较难</td>';
+			} else if(DiffAndQtypelist.dt[i].difficulty == 5) {
+				a1 += '<td>困难</td>';
 			}
-			a1+='<td>'+DiffAndQtypelist.dt[i].num+'</td></tr>';
+			a1 += '<td>' + DiffAndQtypelist.dt[i].num + '</td></tr>';
 			$("#diff").append(a1);
 		}
-		
+
 	}
 }
-var DiffAndQtypelist=null;  //类型和难度的集合
+var DiffAndQtypelist = null; //类型和难度的集合
 //获取题型难度
-function getDiffAndQtype(){
-	var cc={"eid":previewexamId}
+function getDiffAndQtype() {
+	var cc = {
+		"eid": previewexamId
+	}
 	$.ajax({
 		url: local+"/EXAMSERVICE/exam/getExamInfoCount",
 		headers: {
@@ -219,7 +246,7 @@ function getDiffAndQtype(){
 		data: cc,
 		contentType: 'application/json',
 		success: function(data) {
-			DiffAndQtypelist=data.data;
+			DiffAndQtypelist = data.data;
 		},
 		error: function(data) {
 			alert("失败");
@@ -258,7 +285,7 @@ function getsubjectlist() {
 		"updateTime": 0
 	}
 	$.ajax({
-		url: local+"/EXAMSERVICE/exam/getExamInfoForExamId",
+		url: local + "/EXAMSERVICE/exam/getExamInfoForExamId",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -275,93 +302,94 @@ function getsubjectlist() {
 		}
 	});
 }
-var previewitembaklist=null;
+var previewitembaklist = null;
 //循环试题
 function loopquestions() {
-	if(previewitembaklist.content.length>0){
-	var num=1;
 	$(".tpl_div2_right").find("div").remove();
 	$(".tcdPageCode1").remove();
-	pagecounts1=previewitembaklist.pageCount;
-	pagenums1=previewitembaklist.pageNum;
-	pagetotals1=previewitembaklist.total;
-	for(var i = 0; i < previewitembaklist.content.length; i++, num++) {
-		var a1 = "<div class='subjectList'>";
-		a1 += "<div class='subjectList_top'>";
-		a1 += "<span>" + num + "</span>";
-		isExistFavor(previewitembaklist.content[i].questionIdMD52);
-		if(isExistFavorResult == "none") {
-			a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionNo.png' />";
-		} else {
-			a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionYes.png' />";
-		}
-		a1 += "</div>";
-		//题目
-		a1 += "<div class='subjectinfo'>";
-		a1 += "<div>" + previewitembaklist.content[i].questionContent;
-		if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
-			var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
-			if(getquestionpic.data != null) {
-				a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+	$("#previewexamName").text(previewexamName);
+	if(previewitembaklist.content.length > 0) {
+		var num = 1;
+		pagecounts1 = previewitembaklist.pageCount;
+		pagenums1 = previewitembaklist.pageNum;
+		pagetotals1 = previewitembaklist.total;
+		for(var i = 0; i < previewitembaklist.content.length; i++, num++) {
+			var a1 = "<div class='subjectList'>";
+			a1 += "<div class='subjectList_top'>";
+			a1 += "<span>" + num + "</span>";
+			isExistFavor(previewitembaklist.content[i].questionIdMD52);
+			if(isExistFavorResult == "none") {
+				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionNo.png' />";
+			} else {
+				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionYes.png' />";
 			}
-		}
-		a1 += "</div>";
-		//题目选项
-		if(previewitembaklist.content[i].options[0] != null && previewitembaklist.content[i].options[0] != "") {
-			a1 += "<div><table><tbody>";
-			for(var j = 0; j < previewitembaklist.content[i].options.length; j++) {
-				a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + previewitembaklist.content[i].options[j] + "</td></tr>";
+			a1 += "</div>";
+			//题目
+			a1 += "<div class='subjectinfo'>";
+			a1 += "<div>" + previewitembaklist.content[i].questionContent;
+			if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
+				var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
+				if(getquestionpic.data != null) {
+					a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+				}
 			}
-			a1 += "</tbody></table></div>";
+			a1 += "</div>";
+			//题目选项
+			if(previewitembaklist.content[i].options[0] != null && previewitembaklist.content[i].options[0] != "") {
+				a1 += "<div><table><tbody>";
+				for(var j = 0; j < previewitembaklist.content[i].options.length; j++) {
+					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + previewitembaklist.content[i].options[j] + "</td></tr>";
+				}
+				a1 += "</tbody></table></div>";
+			}
+			a1 += "</div>";
+			a1 += "<div class='subjectDetails'>";
+			a1 += "<span class='s_span'>组卷<i class='num1'>0</i>次</span>";
+			a1 += "<span class='s_span'>作答<i class='num2'>0</i>人次</span>";
+			a1 += "<span class='s_span'>平均得分率<i class='num3'>0%</i></span>";
+			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+			a1 += "<input type='hidden' name='id'value='" + previewitembaklist.content[i].questionIdMD52 + "' />";
+			a1 += "</div>";
+			a1 += "<div class='subject_info' style='display: none;'>";
+			a1 += "<div class='info_1'><span>【答案】</span><span>" + previewitembaklist.content[i].answer + "</span></div>";
+			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + previewitembaklist.content[i].parse + "</div></div>";
+			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
+			a1 += "<p>";
+			if(previewitembaklist.content[i].knowledge != null && previewitembaklist.content[i].knowledge != "") {
+				a1 += "<span>" + previewitembaklist.content[i].knowledge + "</span>";
+			}
+			a1 += "</p></div></div>";
+			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + previewitembaklist.content[i].quesetionType + "</span></div>";
+			a1 += "</div>";
+			a1 += "</div>";
+			$(".tpl_div2_right").append(a1);
 		}
-		a1 += "</div>";
-		a1 += "<div class='subjectDetails'>";
-		a1 += "<span class='s_span'>组卷<i class='num1'>1536</i>次</span>";
-		a1 += "<span class='s_span'>作答<i class='num2'>70541</i>人次</span>";
-		a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
-		a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
-		a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
-		a1 += "<input type='hidden' name='id'value='" + previewitembaklist.content[i].questionIdMD52 + "' />";
-		a1 += "</div>";
-		a1 += "<div class='subject_info' style='display: none;'>";
-		a1 += "<div class='info_1'><span>【答案】</span><span>" + previewitembaklist.content[i].answer + "</span></div>";
-		a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + previewitembaklist.content[i].parse + "</div></div>";
-		a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
-		a1 += "<p>";
-		if(previewitembaklist.content[i].knowledge != null && previewitembaklist.content[i].knowledge != "") {
-			a1 += "<span>" + previewitembaklist.content[i].knowledge + "</span>";
-		}
-		a1 += "</p></div></div>";
-		a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + previewitembaklist.content[i].quesetionType + "</span></div>";
-		a1 += "</div>";
-		a1 += "</div>";
-		$(".tpl_div2_right").append(a1);
-	}
-	$(".tpl_div2_right").append("<div class='tcdPageCode1'></div>");
-	page3();
+		$(".tpl_div2_right").append("<div class='tcdPageCode1'></div>");
+		page3();
 	}
 }
 //收藏题目的事件
 function CollectionImg_click(obj) {
 	var Collectiond = null;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	for(var i = 0; i < itembaklist.content.length; i++) {
-		if(itembaklist.content[i].questionIdMD52 == id) {
+	for(var i = 0; i < previewitembaklist.content.length; i++) {
+		if(previewitembaklist.content[i].questionIdMD52 == id) {
 			Collectiond = {
 				"questionId": "",
-				"questionContent": itembaklist.content[i].questionContent,
-				"options": itembaklist.content[i].options,
-				"answer": itembaklist.content[i].answer,
-				"answerDetail": itembaklist.content[i].answerDetail,
-				"parse": itembaklist.content[i].parse,
-				"quesetionType": itembaklist.content[i].quesetionType,
-				"difficulty": itembaklist.content[i].difficulty,
-				"subjectId": itembaklist.content[i].subjectId,
-				"gradeId": itembaklist.content[i].gradeId,
-				"knowledge": itembaklist.content[i].knowledge,
-				"questionIdMD52": itembaklist.content[i].questionIdMD52,
+				"questionContent": previewitembaklist.content[i].questionContent,
+				"options": previewitembaklist.content[i].options,
+				"answer": previewitembaklist.content[i].answer,
+				"answerDetail": previewitembaklist.content[i].answerDetail,
+				"parse": previewitembaklist.content[i].parse,
+				"quesetionType": previewitembaklist.content[i].quesetionType,
+				"difficulty": previewitembaklist.content[i].difficulty,
+				"subjectId": previewitembaklist.content[i].subjectId,
+				"gradeId": previewitembaklist.content[i].gradeId,
+				"knowledge": previewitembaklist.content[i].knowledge,
+				"questionIdMD52": previewitembaklist.content[i].questionIdMD52,
 				"questionStatus": "NOTSTART",
-				"questionPic": itembaklist.content[i].questionPic,
+				"questionPic": previewitembaklist.content[i].questionPic,
 				"teacherName": "",
 				"createTime": "",
 				"updateTime": "",
@@ -416,11 +444,11 @@ function CollectionImg_click(obj) {
 	}
 }
 
+var pagecounts1 = 1;
+var pageindexs1 = 1;
+var pagenums1 = 1;
+var pagetotals1 = 1;
 
-var pagecounts1=1;
-var pageindexs1=1;
-var pagenums1=1;
-var pagetotals1=1;
 function page3() {
 	$(".tcdPageCode1").createPage({
 		pageCount: pagecounts1,
@@ -428,7 +456,7 @@ function page3() {
 		current: pagenums1,
 		//默认显示哪一页
 		backFn: function(p) {
-			pageindexs1=p;
+			pageindexs1 = p;
 			getsubjectlist();
 			loopquestions();
 		}
