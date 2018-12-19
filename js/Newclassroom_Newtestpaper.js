@@ -38,7 +38,6 @@ function getlistto() {
 		num = getlist.length;
 		$("#paper_number").text(num);
 	}
-
 }
 //转换时间戳
 Date.prototype.toLocaleString = function() {
@@ -264,7 +263,7 @@ function Knowledge_click(obj){
 	$(".f5").find("a").removeClass("d1");
 	$(".f5").children("a:first").addClass("d1");
 	paquestionTypeid=null;
-	papaperType=null;
+	papaperTypeid=null;
 	padifficultyTypeid=null;
 	payear=null;
 	paareas=null;
@@ -680,17 +679,17 @@ function CollectionImg_click(obj) {
 //点击预览事件
 function PreviewPaper() //显示隐藏层和弹出层 
 {
-
+	getlist = getQuestion();
 	$(".pres").remove();
 	$("#presH2").remove();
 	$("#Previewinfo").find(".subjectList").remove();
 	var num = 1;
-	if(questionList.length > 0) {
-		for(var i = 0; i < questionList.length; i++, num++) {
+	if(getlist!=null) {
+		for(var i = 0; i < getlist.length; i++, num++) {
 			var a1 = "<div class='subjectList'>";
 			a1 += "<div class='subjectList_top'>";
 			a1 += "<span>" + num + "</span>";
-			isExistFavor(questionList[i].questionIdMD52);
+			isExistFavor(getlist[i].questionIdMD52);
 			if(isExistFavorResult == "none") {
 				a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
 			} else {
@@ -699,21 +698,21 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "</div>";
 			a1 += "<div class='subjectinfo'>";
 			//题目
-			a1 += "<div>" + questionList[i].questionContent;
-			if(questionList[i].questionPic != null && 　questionList[i].questionPic != "") {
-				console.log(questionList[i].questionPic);
-				var getquestionpic = getQuestionPic(questionList[i].questionPic); //调用下载文件的接口返回的数据
+			a1 += "<div>" + getlist[i].questionContent;
+			if(getlist[i].questionPic != null && 　getlist[i].questionPic != "") {
+				console.log(getlist[i].questionPic);
+				var getquestionpic = getQuestionPic(getlist[i].questionPic); //调用下载文件的接口返回的数据
 				if(getquestionpic.data != null) {
-					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getlist.data.content + "'/>";
 				}
 			}
 
 			a1 += "</div>";
 			//题目选项
-			if(questionList[i].options[0] != null && questionList[i].options[0] != "") {
+			if(getlist[i].options[0] != null && getlist[i].options[0] != "") {
 				a1 += "<div><table><tbody>";
-				for(var j = 0; j < questionList[i].options.length; j++) {
-					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + questionList[i].options[j] + "</td></tr>";
+				for(var j = 0; j < getlist[i].options.length; j++) {
+					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + getlist[i].options[j] + "</td></tr>";
 				}
 				a1 += "</tbody></table></div>";
 			}
@@ -724,18 +723,18 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
 			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
-			a1 += "<input type='hidden' name='id'value='" + questionList[i].questionIdMD52 + "' />";
+			a1 += "<input type='hidden' name='id'value='" + getlist[i].questionIdMD52 + "' />";
 			a1 += "</div>";
 			a1 += "<div class='subject_info' style='display: none;'>";
-			a1 += "<div class='info_1'><span>【答案】</span><span>" + questionList[i].answer + "</span></div>";
-			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + questionList[i].parse + "</div></div>";
+			a1 += "<div class='info_1'><span>【答案】</span><span>" + getlist[i].answer + "</span></div>";
+			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + getlist[i].parse + "</div></div>";
 			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
 			a1 += "<p>";
-			if(questionList[i].knowledge != null && questionList[i].knowledge != "") {
-				a1 += "<span>" + questionList[i].knowledge + "</span>";
+			if(getlist[i].knowledge != null && getlist[i].knowledge != "") {
+				a1 += "<span>" + getlist[i].knowledge + "</span>";
 			}
 			a1 += "</p></div></div>";
-			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + questionList[i].quesetionType + "</span></div>";
+			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].quesetionType + "</span></div>";
 			a1 += "</div>";
 			a1 += "</div>";
 			$("#Previewinfo").append(a1);

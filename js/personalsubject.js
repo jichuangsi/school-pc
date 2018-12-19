@@ -179,12 +179,13 @@ function page1() {
 	});
 }
 //难度点击事件
-function difficultyType_a_click2(obj) {
-	if($(obj).text() == "全部") {
-		pardiff = null;
-	} else {
-		pardiff = $(obj).text();
-	}
+function difficultyType_a_click2(obj,diff) {
+//	if($(obj).text() == "全部") {
+//		pardiff = null;
+//	} else {
+//		pardiff = $(obj).text();
+//	}
+	pardiff=diff;
 	getItembankinfo();
 	loopitem();
 	$(obj).addClass("d1");

@@ -122,15 +122,14 @@
 								contentType: false,
 								processData: false,
 								success: function(data) {
-									alert(data.msg);
-									console.log(data);
 									if(data.msg=="成功"){
+										swal("上传成功", "", "success");
 										$("#uploadSubmit").hide();
 									}
-									
 								},
 								error: function(data) {
 									console.log(data.status);
+									swal("上传失败", "", "error");
 								}
 							});
 						}

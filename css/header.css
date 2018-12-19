@@ -15,6 +15,7 @@
 		.publicheaderdiv{
 			float: left;
 			padding-left: 18.75%;
+			width:100%;
 		}
 		.publicheaderdiv img{
 			float: left;
@@ -28,9 +29,8 @@
 		}
 		#PublicHeaderUserDiv{
 			width: 130px;
-			position: relative;
-			float: left;
-			left:940px;
+			float: right;
+			margin-right: 18.75%;
 			margin-top: 24px;
 		}
 		#PublicHeaderUserDiv figure{
