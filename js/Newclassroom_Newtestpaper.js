@@ -6,10 +6,11 @@ var getlist;
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
-	getlist = getQuestion();
 }
+
 $(function() {
 	getLocation();
+	getAllList();
 	getlistto();
 	getgradename();
 	$("#showTime").text(new Date().toLocaleString());
@@ -53,26 +54,33 @@ var papaperTypeid = null; //类型
 var paareas = null; //地区
 var questionNode = []; //获取题目内容
 var toGetQuestionNode = []; //获取题目后把这个数组传过去
-var questionList = [ //传递这个数组过去
-];
+var questionList = []; //传递这个数组过去
 var subjectlist = null; //根据知识点获取的题目列表
 var total1 = 1; //题目总条数(总共有多少题)
 var pagecount1 = 1; //题目总页数(总共有多少页)
 var pagenum1 = 1; //当前显示的题目是多少页
 var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数据)
+//添加这个方法在有数据的时候把数据填充到questionList，然后在这个数组进行操作，并且放到sessionStorage里面
+function getAllList() {
+	getlist = getQuestion();
+	if(getlist == null) {} else {
+		questionList = getQuestion();
+	}
+}
 
 function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 	if(questionList == null || questionList.length == 0) {
-		swal("没有选择题目哦!", "", "warning");
-	} else {
+		getAllList();
 		if(getlist == null || getlist == undefined) {
-
+			swal("没有选择题目哦!", "", "warning");
 		} else {
 			for(var i = 0; i < getlist.length; i++) {
 				questionList.push(getlist[i]);
 			}
+			//sessionStorage.setItem("lastname", JSON.stringify(questionList));
+			//swal("已经添加题目到课堂!");
+
 		}
-		sessionStorage.setItem("lastname", JSON.stringify(questionList));
 		//		sessionStorage.setItem('classid', classid);
 		//		sessionStorage.setItem('className', className);
 		//		sessionStorage.setItem('Name', Name);
@@ -80,10 +88,9 @@ function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 		//		sessionStorage.setItem('hh', hh);
 		//		sessionStorage.setItem('mm', mm);
 		//		sessionStorage.setItem('ymd', ymd);
-		swal("已经添加题目到课堂!");
-		window.location.replace("../Front/NewClassroom.html");
-	}
 
+	}
+	window.location.replace("../Front/NewClassroom.html");
 }
 
 function getClass() {
@@ -194,25 +201,25 @@ function subjectinfo(subjectinfo) {
 	$('.d-secondNav').click(function(e) {
 		dropSwifts($(this), '.d-secondDrop');
 		e.stopPropagation();
-		
+
 	});
 }
 //版本信息树状图事件
 function dropSwifts(dom, drop) {
-		if(dom.find("input[type='radio']").val()>=1){
-			dom.parent().parent().find("i").removeClass("fa-minus-square-o");
-			dom.parent().parent().find("i").addClass("fa-plus-square-o");
-		}else{
-		var i=dom.children("i:first");
+	if(dom.find("input[type='radio']").val() >= 1) {
+		dom.parent().parent().find("i").removeClass("fa-minus-square-o");
+		dom.parent().parent().find("i").addClass("fa-plus-square-o");
+	} else {
+		var i = dom.children("i:first");
 		i.toggleClass("fa-minus-square-o");
 		i.toggleClass("fa-plus-square-o");
-		}
-		dom.next().slideToggle();
-		dom.parent().siblings().find(drop).slideUp();
-		dom.parent().siblings().find("i").removeClass("fa-minus-square-o");
-		dom.parent().siblings().find("i").addClass("fa-plus-square-o");
-		
 	}
+	dom.next().slideToggle();
+	dom.parent().siblings().find(drop).slideUp();
+	dom.parent().siblings().find("i").removeClass("fa-minus-square-o");
+	dom.parent().siblings().find("i").addClass("fa-plus-square-o");
+
+}
 //绑定知识点列表
 function load_ChapterInfo(ChapterInfo) {
 	/*alert(ChapterInfo);*/
@@ -721,6 +728,11 @@ function CollectionImg_click(obj) {
 //点击预览事件
 function PreviewPaper() //显示隐藏层和弹出层 
 {
+	getAllList();
+	if(getlist == null) {
+		swal("请先选择题目!");
+	} else {
+		console.log(getlist.length)
 		$(".pres").remove();
 		$("#presH2").remove();
 		$("#Previewinfo").find(".subjectList").remove();
@@ -787,6 +799,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 		hidebg.style.display = "block"; //显示隐藏层 
 		//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
 		document.getElementById("previews").style.display = "block"; //显示弹出层 
+	}
 }
 
 function hide() { //去除隐藏层和弹出层 
@@ -820,7 +833,7 @@ function add_paper(obj, istype) {
 						"questionPic": itembaklist.content[i].questionPic
 					})
 					namber = questionList.length
-					$("#paper_number").text(namber + num);
+					$("#paper_number").text(namber);
 					sessionStorage.setItem("lastname", JSON.stringify(questionList));
 				}
 			}
@@ -852,7 +865,7 @@ function add_paper(obj, istype) {
 						})
 						namber = questionList.length
 						num = getlist.length;
-						$("#paper_number").text(namber + num);
+						$("#paper_number").text(namber);
 						sessionStorage.setItem("lastname", JSON.stringify(questionList));
 					}
 				}
@@ -879,7 +892,7 @@ function add_paper(obj, istype) {
 						"questionPic": ""
 					})
 					var namber = questionList.length
-					$("#paper_number").text(namber + num);
+					$("#paper_number").text(namber);
 					sessionStorage.setItem("lastname", JSON.stringify(questionList));
 				}
 			}
@@ -911,7 +924,7 @@ function add_paper(obj, istype) {
 						})
 						var namber = questionList.length
 						num = getlist.length;
-						$("#paper_number").text(namber + num);
+						$("#paper_number").text(namber);
 						sessionStorage.setItem("lastname", JSON.stringify(questionList));
 					}
 				}
@@ -926,14 +939,27 @@ function remove_paper(obj) {
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	for(var i = 0; i < questionList.length; i++) {
-		if(questionList[i].questionIdMD52 == id) {
-			questionList.splice(i, 1);
-			var namber = questionList.length
-			$("#paper_number").text(namber);
-			sessionStorage.setItem("lastname", JSON.stringify(questionList));
+	if(getlist == null) {
+		for(var i = 0; i < questionList.length; i++) {
+			if(questionList[i].questionIdMD52 == id) {
+				questionList.splice(i, 1);
+				var namber = questionList.length
+				$("#paper_number").text(namber);
+				sessionStorage.setItem("lastname", JSON.stringify(questionList));
+			}
+		}
+	} else {
+		for(var i = 0; i < questionList.length; i++) {
+			if(questionList[i].questionIdMD52 == id) {
+				questionList.splice(i, 1);
+				var namber = questionList.length
+				num = getlist.length;
+				$("#paper_number").text(namber);
+				sessionStorage.setItem("lastname", JSON.stringify(questionList));
+			}
 		}
 	}
+
 }
 
 //类型列表下面的上一页

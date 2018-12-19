@@ -4,18 +4,18 @@ var accessToken;
 var datalist;
 var pageSize = 3;
 var questionNode
+var roomInfo;
 
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
 	questionNode = getQuestion();
+	roomInfo = getUserInfo();
 }
 $(function() {
 	getNowFormatDate();
 	getLocation();
 	getgradename();
-	initAttendtimehour('');
-	initAttendtimemin('');
 	inintDate();
 	copyClass();
 	creaClass();
@@ -35,42 +35,44 @@ var sClass;
 var eaxms;
 var currentdate; //获取当前日期
 //加载页面获取数据获取保存的题目
-function getQuestionNode() {
-	if(typeof(Storage) !== undefined) {
-		var classid = sessionStorage.getItem('classid', classid);
-		var className = sessionStorage.getItem('className', className);
-		var Name = sessionStorage.getItem('Name', Name);
-		var info = sessionStorage.getItem('info', info);
-		var hh = sessionStorage.getItem('hh', hh);
-		var mm = sessionStorage.getItem('mm', mm);
-		var ymd = sessionStorage.getItem('ymd', ymd);
-		if(hh == undefined) {
-			initAttendtimehour("");
-		}
-		if(mm != undefined) {
-			initAttendtimemin("");
-		}
-		if(ymd != undefined) {
-			$("#test29").val("");
-		} else {
-			$("#test29").val(currentdate);
-		}
-		if(Name != undefined) {
-			$("#ClassName").val(Name);
-		} else {
-			$("#ClassName").val("");
-		}
-		if(info != undefined) {
-			$("#ClassroomSynopsis").val(info);
-		} else {
-			$("#ClassroomSynopsis").val("");
-		}
-		sessionStorage.removeItem("ymd");
-		sessionStorage.removeItem("Name");
-		sessionStorage.removeItem("info");
+function getQuestionNode(){
+	if(roomInfo == undefined) {
+		initAttendtimehour('');
+		initAttendtimemin('');
 	} else {
-		document.getElementById("result").innerHTML = "抱歉！您的浏览器不支持 Web Storage ...";
+		$("#AttendClass").val(roomInfo.classid);
+		$("#ClassName").val(roomInfo.Name);
+		$("#ClassroomSynopsis").val(roomInfo.info);
+		initAttendtimehour(roomInfo.hh);
+		initAttendtimemin(roomInfo.mm);
+		$("#test29").val(currentdate);
+		//	$("#hh").val(roomInfo.hh);
+		//	$("#mm").val(roomInfo.mm);
+		//	$("#ymd").val(roomInfo.ymd);
 	}
+
+}
+
+function toQuestion() {
+
+	var classid = $("#AttendClass").val();
+	var className = $("#AttendClass option:selected").text();
+	var Name = $("#ClassName").val();
+	var info = $("#ClassroomSynopsis").val();
+	var hh = $("#time-hour").val();
+	var mm = $("#time-min").val();
+	var ymd = $("#test29").val();
+	var user = {
+		"classid": classid,
+		"className": className,
+		"Name": Name,
+		"info": info,
+		"hh": hh,
+		"mm": mm,
+		"ymd": ymd
+	};
+	sessionStorage.setItem("userIn", JSON.stringify(user));
+	window.location.replace("../thacherPage/Newclassroom_Newtestpaper.html");
 }
 
 function getNowFormatDate() {
@@ -98,24 +100,6 @@ function toList() {
 
 }
 
-function toQuestion() {
-	var classid = document.getElementById("AttendClass").value;
-	var className = $("#AttendClass option:selected").text();
-	var Name = document.getElementById("ClassName").value;
-	var info = document.getElementById("ClassroomSynopsis").value;
-	var hh = document.getElementById("time-hour").value;
-	var mm = document.getElementById("time-min").value;
-	var ymd = document.getElementById("test29").value;
-	sessionStorage.setItem('classid', classid);
-	sessionStorage.setItem('className', className);
-	sessionStorage.setItem('Name', Name);
-	sessionStorage.setItem('info', info);
-	sessionStorage.setItem('hh', hh);
-	sessionStorage.setItem('mm', mm);
-	sessionStorage.setItem('ymd', ymd);
-	window.location.replace("../thacherPage/Newclassroom_Newtestpaper.html");
-}
-
 function inintDate() {
 	$.ajax({
 		url: local + "/COURSESERVICE/console/getClass",
@@ -130,7 +114,7 @@ function inintDate() {
 			sClass = data.data.transferClasses;
 			eaxms = data.data.transferExams;
 			initAttendClass('', sClass);
-			initAttendTest('',eaxms);
+			initAttendTest('', eaxms);
 		},
 		error: function() {
 			// alert(returndata);
@@ -162,7 +146,7 @@ function creaClass() {
 
 function formSub() {
 	questionNode = getQuestion();
-	var cpic=$("#icon").value;
+	var cpic = $("#icon").value;
 	var classid = document.getElementById("AttendClass").value;
 	var className = $("#AttendClass option:selected").text();
 	var Name = document.getElementById("ClassName").value;
@@ -203,6 +187,7 @@ function formSub() {
 			if(returndata.code == "0010") {
 				swal("新建成功!", "", "success");
 				sessionStorage.removeItem('lastname');
+				sessionStorage.removeItem('userIn');
 			} else {
 				swal("OMG", "操作失败了!", "error");
 			}

@@ -2,6 +2,7 @@ var location;
 var accessToken;
 var user;
 var question;
+var userInfo;
 function httpLocation() {
 	onLocation = 'http://school.jichuangsi.com:81';
 	//onLocation='http://192.168.31.154'
@@ -19,4 +20,8 @@ function getUser(){
 function getQuestion(){
 	question=JSON.parse(sessionStorage.getItem("lastname"));
 	return question;
+}
+function getUserInfo(){
+	userInfo=JSON.parse(sessionStorage.getItem("userIn"));
+	return userInfo;
 }
