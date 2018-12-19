@@ -63,7 +63,7 @@ var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数
 
 function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 	if(questionList == null || questionList.length == 0) {
-		swal("没有选择题目哦!","","warning");
+		swal("没有选择题目哦!", "", "warning");
 	} else {
 		if(getlist == null || getlist == undefined) {
 
@@ -170,7 +170,7 @@ function subjectinfo(subjectinfo) {
 					if(subjectinfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>";
 						for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].code +","+subjectinfo[i].child[j].code+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+							a1 += "<li><div class='d-secondNav s-secondNav' onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].code + "," + subjectinfo[i].child[j].code + ")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</div></li>"
 						}
 						a1 += "</ul>";
 					}
@@ -187,7 +187,32 @@ function subjectinfo(subjectinfo) {
 	a2 += "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='2' />校本题库</li></div></li>";
 	a2 += "<li><div class='d-secondNav s-secondNav ' onclick='radioItembank(this)'><input type='radio' name='ther' value='3'/>自定义题库</li></div></li>";
 	$("#ff").append(a2);
+	$('.d-firstNav').click(function(e) {
+		dropSwifts($(this), '.d-firstDrop');
+		e.stopPropagation();
+	});
+	$('.d-secondNav').click(function(e) {
+		dropSwifts($(this), '.d-secondDrop');
+		e.stopPropagation();
+		
+	});
 }
+//版本信息树状图事件
+function dropSwifts(dom, drop) {
+		if(dom.find("input[type='radio']").val()>=1){
+			dom.parent().parent().find("i").removeClass("fa-minus-square-o");
+			dom.parent().parent().find("i").addClass("fa-plus-square-o");
+		}else{
+		var i=dom.children("i:first");
+		i.toggleClass("fa-minus-square-o");
+		i.toggleClass("fa-plus-square-o");
+		}
+		dom.next().slideToggle();
+		dom.parent().siblings().find(drop).slideUp();
+		dom.parent().siblings().find("i").removeClass("fa-minus-square-o");
+		dom.parent().siblings().find("i").addClass("fa-plus-square-o");
+		
+	}
 //绑定知识点列表
 function load_ChapterInfo(ChapterInfo) {
 	/*alert(ChapterInfo);*/
@@ -201,7 +226,7 @@ function load_ChapterInfo(ChapterInfo) {
 			if(ChapterInfo[i].child[j].child != null) {
 				a1 += "<ul class='d-secondDrop s-secondDrop'>"
 				for(var e = 0; e < ChapterInfo[i].child[j].child.length; e++) {
-					a1 += "<li><div class='d-secondNavs s-secondNavs'><a onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId + "'>" + ChapterInfo[i].child[j].child[e].name + "</a></div>"
+					a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId + "'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
 					/*if(ChapterInfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>"
 						for(var q = 0; q < ChapterInfo[i].child[j].child[e].child.length; q++) {
@@ -250,8 +275,11 @@ function find(str, cha, num) {
 	}
 	return x;
 }
-function Knowledge_click(obj){
-	knowledgeId=$(obj).attr("data");
+
+function Knowledge_click(obj) {
+	$(".Knowledges").removeClass("Knowledgesbackground");
+	$(obj).addClass("Knowledgesbackground");
+	knowledgeId = $(obj).attr("data");
 	$(".f1").find("a").removeClass("d1");
 	$(".f1").children("a:first").addClass("d1");
 	$(".f2").find("a").removeClass("d1");
@@ -262,12 +290,12 @@ function Knowledge_click(obj){
 	$(".f4").children("a:first").addClass("d1");
 	$(".f5").find("a").removeClass("d1");
 	$(".f5").children("a:first").addClass("d1");
-	paquestionTypeid=null;
-	papaperTypeid=null;
-	padifficultyTypeid=null;
-	payear=null;
-	paareas=null;
-	pageIndex1=1;
+	paquestionTypeid = null;
+	papaperTypeid = null;
+	padifficultyTypeid = null;
+	payear = null;
+	paareas = null;
+	pageIndex1 = 1;
 	Obtain_subject();
 }
 //循环展示题目
@@ -376,21 +404,21 @@ function page() {
 	});
 }
 //类型列表下面的上一页
-function upkeys(obj){
-	if(pagenum1>1){
-		pageIndex1=pagenum1-1;
+function upkeys(obj) {
+	if(pagenum1 > 1) {
+		pageIndex1 = pagenum1 - 1;
 		Obtain_subject();
 	}
 }
 //类型列表下面的上一页
-function nextkeys(obj){
-	if(pagenum1<pagecount1){
-		pageIndex1=pagenum1+1;
+function nextkeys(obj) {
+	if(pagenum1 < pagecount1) {
+		pageIndex1 = pagenum1 + 1;
 		Obtain_subject();
 	}
 }
 
-var knowledgeId=null;
+var knowledgeId = null;
 //获取题目
 function Chapter_click() {
 	/*alert(Chapterid);*/
@@ -693,73 +721,72 @@ function CollectionImg_click(obj) {
 //点击预览事件
 function PreviewPaper() //显示隐藏层和弹出层 
 {
-	getlist = getQuestion();
-	$(".pres").remove();
-	$("#presH2").remove();
-	$("#Previewinfo").find(".subjectList").remove();
-	var num = 1;
-	if(getlist!=null) {
-		for(var i = 0; i < getlist.length; i++, num++) {
-			var a1 = "<div class='subjectList'>";
-			a1 += "<div class='subjectList_top'>";
-			a1 += "<span>" + num + "</span>";
-			isExistFavor(getlist[i].questionIdMD52);
-			if(isExistFavorResult == "none") {
-				a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
-			} else {
-				a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
-			}
-			a1 += "</div>";
-			a1 += "<div class='subjectinfo'>";
-			//题目
-			a1 += "<div>" + getlist[i].questionContent;
-			if(getlist[i].questionPic != null && 　getlist[i].questionPic != "") {
-				console.log(getlist[i].questionPic);
-				var getquestionpic = getQuestionPic(getlist[i].questionPic); //调用下载文件的接口返回的数据
-				if(getquestionpic.data != null) {
-					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getlist.data.content + "'/>";
+		$(".pres").remove();
+		$("#presH2").remove();
+		$("#Previewinfo").find(".subjectList").remove();
+		var num = 1;
+		if(getlist != null) {
+			for(var i = 0; i < getlist.length; i++, num++) {
+				var a1 = "<div class='subjectList'>";
+				a1 += "<div class='subjectList_top'>";
+				a1 += "<span>" + num + "</span>";
+				isExistFavor(getlist[i].questionIdMD52);
+				if(isExistFavorResult == "none") {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
+				} else {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
 				}
-			}
+				a1 += "</div>";
+				a1 += "<div class='subjectinfo'>";
+				//题目
+				a1 += "<div>" + getlist[i].questionContent;
+				if(getlist[i].questionPic != null && 　getlist[i].questionPic != "") {
+					console.log(getlist[i].questionPic);
+					var getquestionpic = getQuestionPic(getlist[i].questionPic); //调用下载文件的接口返回的数据
+					if(getquestionpic.data != null) {
+						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getlist.data.content + "'/>";
+					}
+				}
 
-			a1 += "</div>";
-			//题目选项
-			if(getlist[i].options[0] != null && getlist[i].options[0] != "") {
-				a1 += "<div><table><tbody>";
-				for(var j = 0; j < getlist[i].options.length; j++) {
-					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + getlist[i].options[j] + "</td></tr>";
+				a1 += "</div>";
+				//题目选项
+				if(getlist[i].options[0] != null && getlist[i].options[0] != "") {
+					a1 += "<div><table><tbody>";
+					for(var j = 0; j < getlist[i].options.length; j++) {
+						a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + getlist[i].options[j] + "</td></tr>";
+					}
+					a1 += "</tbody></table></div>";
 				}
-				a1 += "</tbody></table></div>";
+				a1 += "</div>";
+				a1 += "<div class='subjectDetails'>";
+				a1 += "<span class='s_span'>组卷<i class='num1'>1536</i>次</span>";
+				a1 += "<span class='s_span'>作答<i class='num2'>70541</i>人次</span>";
+				a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
+				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+				a1 += "<input type='hidden' name='id'value='" + getlist[i].questionIdMD52 + "' />";
+				a1 += "</div>";
+				a1 += "<div class='subject_info' style='display: none;'>";
+				a1 += "<div class='info_1'><span>【答案】</span><span>" + getlist[i].answer + "</span></div>";
+				a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + getlist[i].parse + "</div></div>";
+				a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
+				a1 += "<p>";
+				if(getlist[i].knowledge != null && getlist[i].knowledge != "") {
+					a1 += "<span>" + getlist[i].knowledge + "</span>";
+				}
+				a1 += "</p></div></div>";
+				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].quesetionType + "</span></div>";
+				a1 += "</div>";
+				a1 += "</div>";
+				$("#Previewinfo").append(a1);
 			}
-			a1 += "</div>";
-			a1 += "<div class='subjectDetails'>";
-			a1 += "<span class='s_span'>组卷<i class='num1'>1536</i>次</span>";
-			a1 += "<span class='s_span'>作答<i class='num2'>70541</i>人次</span>";
-			a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
-			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
-			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
-			a1 += "<input type='hidden' name='id'value='" + getlist[i].questionIdMD52 + "' />";
-			a1 += "</div>";
-			a1 += "<div class='subject_info' style='display: none;'>";
-			a1 += "<div class='info_1'><span>【答案】</span><span>" + getlist[i].answer + "</span></div>";
-			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + getlist[i].parse + "</div></div>";
-			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
-			a1 += "<p>";
-			if(getlist[i].knowledge != null && getlist[i].knowledge != "") {
-				a1 += "<span>" + getlist[i].knowledge + "</span>";
-			}
-			a1 += "</p></div></div>";
-			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].quesetionType + "</span></div>";
-			a1 += "</div>";
-			a1 += "</div>";
-			$("#Previewinfo").append(a1);
+		} else {
+			$("#Previewinfo").append("<h2 id='presH2' style='color:red;text-align:center;'>暂时没有所选题目</h2>");
 		}
-	} else {
-		$("#Previewinfo").append("<h2 id='presH2' style='color:red;text-align:center;'>暂时没有所选题目</h2>");
-	}
-	var hideobj = document.getElementById("hidebg");
-	hidebg.style.display = "block"; //显示隐藏层 
-	//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
-	document.getElementById("previews").style.display = "block"; //显示弹出层 
+		var hideobj = document.getElementById("hidebg");
+		hidebg.style.display = "block"; //显示隐藏层 
+		//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+		document.getElementById("previews").style.display = "block"; //显示弹出层 
 }
 
 function hide() { //去除隐藏层和弹出层 
