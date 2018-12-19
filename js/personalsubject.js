@@ -135,31 +135,41 @@ function loopitem() {
 
 //类型列表下面的上一页
 function page_upkeys(obj) {
-	if(Number($("#page_left2").text()) > 1) {
-		pageIndex = Number($("#page_left2").text());
+//	if(Number($("#page_left2").text()) > 1) {
+//		pageIndex = Number($("#page_left2").text());
+//		getItembankinfo(); //ajax调用后台获取题目的接口
+//		loopitem(); //循环题目列表
+//		$("#page_up").css("color", "#0044CC");
+//		$("#page_next").css("color", "#0044CC");
+//		$("#page_left2").text(Number($("#page_left2").text()) - 1);
+//		if(Number($("#page_left2").text()) == 1) {
+//			$("#page_up").css("color", "#000000");
+//		}
+//	}
+	if(pagenum>1){
+		pageIndex=pagenum-1;
 		getItembankinfo(); //ajax调用后台获取题目的接口
 		loopitem(); //循环题目列表
-		$("#page_up").css("color", "#0044CC");
-		$("#page_next").css("color", "#0044CC");
-		$("#page_left2").text(Number($("#page_left2").text()) - 1);
-		if(Number($("#page_left2").text()) == 1) {
-			$("#page_up").css("color", "#000000");
-		}
 	}
 }
 //类型列表下面的下一页
 function page_nextkeys(obj) {
-	if(Number($("#page_left2").text()) < Number($("#page_right2").text())) {
-		pageIndex = Number($("#page_left2").text());
+//	if(Number($("#page_left2").text()) < Number($("#page_right2").text())) {
+//		pageIndex = Number($("#page_left2").text());
+//		getItembankinfo(); //ajax调用后台获取题目的接口
+//		loopitem(); //循环题目列表
+//		var i = $("#page_left2").text();
+//		$(".page_left2").text(Number(i) + 1);
+//		$("#page_next2").css("color", "#0044CC");
+//		$("#page_up").css("color", "#0044CC");
+//		if(Number($("#page_left2").text()) == Number($("#page_right2").text())) {
+//			$("#page_next").css("color", "#000000");
+//		}
+//	}
+	if(pagenum<pagecount){
+		pageIndex=pagenum+1;
 		getItembankinfo(); //ajax调用后台获取题目的接口
 		loopitem(); //循环题目列表
-		var i = $("#page_left2").text();
-		$(".page_left2").text(Number(i) + 1);
-		$("#page_next2").css("color", "#0044CC");
-		$("#page_up").css("color", "#0044CC");
-		if(Number($("#page_left2").text()) == Number($("#page_right2").text())) {
-			$("#page_next").css("color", "#000000");
-		}
 	}
 }
 

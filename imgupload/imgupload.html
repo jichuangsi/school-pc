@@ -58,7 +58,7 @@
 				$('#uploadSubmit').click(function() {
 					var src = $("#ss").find("img").attr("src");
 					if(src == null || src == "") {
-						alert("请选择图片");
+						swal("请选择图片", "", "warning");
 					} else {
 						function dataURLtoFile(dataurl, filename) { //将base64转换为文件
 							var arr = dataurl.split(','),
@@ -73,9 +73,7 @@
 								type: mime
 							});
 						}
-
 						var data = new FormData();
-						alert(dataURLtoFile(src, "123.png").size);
 						if(dataURLtoFile(src, "123.png").size / 1024 > 1025) {
 							photoCompress(dataURLtoFile(src, "123.png"), {
 								quality: 0.2

@@ -230,12 +230,19 @@
 		background-color: #FFFFFF;
 		color: #0044CC;
 	}
+	.page1{
+		margin-left: 10px;
+	}
 	
 	.page1 a {
 		border-right: 0px;
+		border: 1px solid #fff;
+		padding: 2px;
 		font-size: 16px;
 	}
-	
+	.page1 a:hover{
+		background:#59E8E3 ;
+	}
 	.subjectList {
 		position: relative;
 		width: 849px;

@@ -375,6 +375,20 @@ function page() {
 		}
 	});
 }
+//类型列表下面的上一页
+function upkeys(obj){
+	if(pagenum1>1){
+		pageIndex1=pagenum1-1;
+		Obtain_subject();
+	}
+}
+//类型列表下面的上一页
+function nextkeys(obj){
+	if(pagenum1<pagecount1){
+		pageIndex1=pagenum1+1;
+		Obtain_subject();
+	}
+}
 
 var knowledgeId=null;
 //获取题目
