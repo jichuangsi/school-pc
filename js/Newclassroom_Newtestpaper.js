@@ -31,7 +31,7 @@ function getlistto(){
 }
 //转换时间戳
 Date.prototype.toLocaleString = function() {
-	return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + "时" + this.getMinutes() + "分"; // + this.getSeconds() + "秒";
+	return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + ":" + this.getMinutes(); // + this.getSeconds() + "秒";
 };
 
 
@@ -161,7 +161,7 @@ function subjectinfo(subjectinfo) {
 					if(subjectinfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>";
 						for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id +","+subjectinfo[i].child[j].id+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].code +","+subjectinfo[i].child[j].code+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
 						}
 						a1 += "</ul>";
 					}
@@ -192,7 +192,7 @@ function load_ChapterInfo(ChapterInfo) {
 			if(ChapterInfo[i].child[j].child != null) {
 				a1 += "<ul class='d-secondDrop s-secondDrop'>"
 				for(var e = 0; e < ChapterInfo[i].child[j].child.length; e++) {
-					a1 += "<li><div class='d-secondNavs s-secondNavs'><a onclick='Obtain_subject(this," + ChapterInfo[i].child[j].child[e].id + ")'>" + ChapterInfo[i].child[j].child[e].name + "</a></div>"
+					a1 += "<li><div class='d-secondNavs s-secondNavs'><a onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId + "'>" + ChapterInfo[i].child[j].child[e].name + "</a></div>"
 					/*if(ChapterInfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>"
 						for(var q = 0; q < ChapterInfo[i].child[j].child[e].child.length; q++) {
@@ -240,6 +240,26 @@ function find(str, cha, num) {
 		x = str.indexOf(cha, x + 1);
 	}
 	return x;
+}
+function Knowledge_click(obj){
+	knowledgeId=$(obj).attr("data");
+	$(".f1").find("a").removeClass("d1");
+	$(".f1").children("a:first").addClass("d1");
+	$(".f2").find("a").removeClass("d1");
+	$(".f2").children("a:first").addClass("d1");
+	$(".f3").find("a").removeClass("d1");
+	$(".f3").children("a:first").addClass("d1");
+	$(".f4").find("a").removeClass("d1");
+	$(".f4").children("a:first").addClass("d1");
+	$(".f5").find("a").removeClass("d1");
+	$(".f5").children("a:first").addClass("d1");
+	paquestionTypeid=null;
+	papaperType=null;
+	padifficultyTypeid=null;
+	payear=null;
+	paareas=null;
+	pageIndex1=1;
+	Obtain_subject();
 }
 //循环展示题目
 function Obtain_subject(obj, Chapterid) {
@@ -347,11 +367,12 @@ function page() {
 	});
 }
 
+var knowledgeId=null;
 //获取题目
 function Chapter_click() {
 	/*alert(Chapterid);*/
 	var cc = {
-		"knowledgeId": "14256533324081a2ab4c4aaf172a77d4",
+		"knowledgeId": knowledgeId,
 		"diff": padifficultyTypeid,
 		"qtypeId":paquestionTypeid,
 		"paperType":papaperTypeid,
@@ -384,8 +405,8 @@ function edition_click(obj, editionid,gradeId) {
 	var cc = {
 		"pharseId": pharseId,
 		"subjectId": subjectId,
-		"gradeId": null,
-		"editionId": null
+		"gradeId": gradeId,
+		"editionId": editionid
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",

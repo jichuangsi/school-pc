@@ -226,7 +226,6 @@ function loopDiffAndQtype() {
 			a1 += '<td>' + DiffAndQtypelist.dt[i].num + '</td></tr>';
 			$("#diff").append(a1);
 		}
-
 	}
 }
 var DiffAndQtypelist = null; //类型和难度的集合
@@ -367,6 +366,8 @@ function loopquestions() {
 		}
 		$(".tpl_div2_right").append("<div class='tcdPageCode1'></div>");
 		page3();
+	}else{
+		$(".tpl_div2_right").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >当前没有试题信息！</h3></div>');
 	}
 }
 //收藏题目的事件

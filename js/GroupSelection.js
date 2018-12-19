@@ -76,29 +76,31 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 }
 //绑定学段、年级、科目、版本信息
 function subjectinfo(subjectinfo) {
-	for(var i = 0; i < subjectinfo.length; i++) {
-		var a1 = "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].name + "</span></div> <ul class='d-secondDrop s-secondDrop'>"
-		for(var j = 0; j < subjectinfo[i].child.length; j++) {
-			a1 += "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].child[j].name + "</span></div> "
-			if(subjectinfo[i].child[j].child != null) {
-				a1 += "<ul class='d-secondDrop s-secondDrop'>";
-				for(var e = 0; e < subjectinfo[i].child[j].child.length; e++) {
-					a1 += "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].child[j].child[e].name + "</span></div>"
-					if(subjectinfo[i].child[j].child[e].child != null) {
-						a1 += "<ul class='d-secondDrop s-secondDrop'>";
-						for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id +","+subjectinfo[i].child[j].id+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+	if(subjectinfo!=null){
+		for(var i = 0; i < subjectinfo.length; i++) {
+			var a1 = "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].name + "</span></div> <ul class='d-secondDrop s-secondDrop'>"
+			for(var j = 0; j < subjectinfo[i].child.length; j++) {
+				a1 += "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].child[j].name + "</span></div> "
+				if(subjectinfo[i].child[j].child != null) {
+					a1 += "<ul class='d-secondDrop s-secondDrop'>";
+					for(var e = 0; e < subjectinfo[i].child[j].child.length; e++) {
+						a1 += "<li><div class='d-secondNav s-secondNav'><i class='fa fa-plus-square-o'></i><span>" + subjectinfo[i].child[j].child[e].name + "</span></div>"
+						if(subjectinfo[i].child[j].child[e].child != null) {
+							a1 += "<ul class='d-secondDrop s-secondDrop'>";
+							for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
+								a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].code +","+subjectinfo[i].child[j].code+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+							}
+							a1 += "</ul>";
 						}
-						a1 += "</ul>";
+						a1 += "</li>";
 					}
-					a1 += "</li>";
+					a1 += "</ul>";
 				}
-				a1 += "</ul>";
+				a1 += "</li>";
 			}
-			a1 += "</li>";
+			a1 += "</ul></li>";
+			$("#ff").append(a1);
 		}
-		a1 += "</ul></li>";
-		$("#ff").append(a1);
 	}
 	a2 = "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='1' />个人收藏</li></div></li>";
 	a2 += "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='2' />校本题库</li></div></li>";
@@ -115,7 +117,7 @@ function load_ChapterInfo(ChapterInfo) {
 			if(ChapterInfo[i].child[j].child != null) {
 				a1 += "<ul class='d-secondDrop s-secondDrop'>"
 				for(var e = 0; e < ChapterInfo[i].child[j].child.length; e++) {
-					a1 += "<li><div class='d-secondNavs s-secondNavs'><a onclick='Obtain_subject(this," + ChapterInfo[i].child[j].child[e].id + ")'>" + ChapterInfo[i].child[j].child[e].name + "</a></div>"
+					a1 += "<li><div class='d-secondNavs s-secondNavs'><a onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</a></div>"
 					/*if(ChapterInfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>"
 						for(var q = 0; q < ChapterInfo[i].child[j].child[e].child.length; q++) {
@@ -173,8 +175,31 @@ function find(str, cha, num) {
 	}
 	return x;
 }
+
+//知识点点击事件
+function Knowledge_click(obj){
+	knowledgeId=$(obj).attr("data");
+	$(".f1").find("a").removeClass("d1");
+	$(".f1").children("a:first").addClass("d1");
+	$(".f2").find("a").removeClass("d1");
+	$(".f2").children("a:first").addClass("d1");
+	$(".f3").find("a").removeClass("d1");
+	$(".f3").children("a:first").addClass("d1");
+	$(".f4").find("a").removeClass("d1");
+	$(".f4").children("a:first").addClass("d1");
+	$(".f5").find("a").removeClass("d1");
+	$(".f5").children("a:first").addClass("d1");
+	paquestionTypeid=null;
+	papaperType=null;
+	padifficultyTypeid=null;
+	payear=null;
+	paareas=null;
+	pageIndex1=1;
+	Obtain_subject();
+	
+}
 //加载题目列表
-function Obtain_subject(obj, Chapterid) {
+function Obtain_subject() {
 	/*alert(Chapterid);*/
 	$("#newtestpaper_div2_01 .subjectList").remove();
 	$("#newtestpaper_div2_01").css("display", "block");
@@ -182,6 +207,7 @@ function Obtain_subject(obj, Chapterid) {
 	$(".tcdPageCode1").remove();
 	$(".tcdPageCode").remove();
 	$("#Missingdata").remove();
+	
 	Chapter_click(); //获取题目
 	if(subjectlist!=null){
 		if(subjectlist.pageCount > 0) {
@@ -491,8 +517,8 @@ function edition_click(obj, editionid,gradeId) {
 	var cc = {
 		"pharseId": pharseId,
 		"subjectId": subjectId,
-		"gradeId": gradeId,
-		"editionId": null
+		"gradeId": gradeId, 
+		"editionId": editionid
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",
@@ -700,16 +726,17 @@ function paperType_a_click(obj, paperTypeid) {
 	$(obj).siblings().removeClass("d1");
 	Obtain_subject();
 }
+var knowledgeId=null;
 //获取题目
 function Chapter_click() {
 	var cc = {
-		"knowledgeId": "14256533324081a2ab4c4aaf172a77d4",
+		"knowledgeId": knowledgeId,
 		"qtypeId":paquestionTypeid,
 		"paperType":papaperType,
 		"diff": padifficultyTypeid,
 		"year": payear,
 		"area": paareas,
-		"pageSize": 7,
+		"pageSize": 10,
 		"page": pageIndex1
 	};
 	$.ajax({
