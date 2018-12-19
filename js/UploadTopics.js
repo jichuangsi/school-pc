@@ -185,18 +185,7 @@ function tabtext(tabTit, on, tabCon) {
 		type = $(this).text();
 	});
 }
-//填空题
-function pack(obj) {
-	answer = $(obj).parent().text();
 
-	if(answer == undefined) {
-		answer = "";
-		answer = answer + str + '|';
-	} else {
-		answer = answer + str + '|';
-	}
-	console.log(answer);
-}
 //选择题
 function changeRad(obj) {
 	if(obj.checked) {
@@ -237,7 +226,6 @@ function packanswer(obj) {
 //困难程度
 function difficulty(obj) {
 	difficulty = $(obj).parent().text();
-
 }
 
 function Choice() {
@@ -251,6 +239,7 @@ function Choice() {
 		saveCompletionQuestion();
 	}
 }
+//选择题
 var number;
 
 function optionNumber(obj) {
@@ -268,13 +257,15 @@ function optionNumber(obj) {
 	}
 
 }
+//多选题
 var charater = new Array("A", "B", "C", "D", "E");
+var potionsStoneNumber;
 
 function optionNumberChe(obj) {
-	var number = $(obj).text();
+	potionsStoneNumber = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
 	soure.next().empty();
-	for(i = 0; i < number; i++) {
+	for(i = 0; i < potionsStoneNumber; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
@@ -284,19 +275,40 @@ function optionNumberChe(obj) {
 	}
 }
 var ansCha = new Array("答案1", "答案2", "答案3", "答案4", "答案5");
+//填空题
+var tknumber;
 
 function optionAnswer(obj) {
-	var number = $(obj).text();
+	tknumber = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
 	soure.next().empty();
-	for(i = 0; i < number; i++) {
+	for(i = 0; i < tknumber; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left; ">' + ansCha[i] + '</td>'
-		nodetwo.innerHTML = '<td><input type="t " name="completion' + i + ' " style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
+		nodetwo.innerHTML = '<td><input type="text" name="completion' + i + '" style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
+}
+//填空题获取答案
+function pack() {
+	for(i = 0; i < tknumber; i++) {
+		if(answer == undefined) {
+			answer = "";
+			answer = answer +ansCha[i]+'|';
+		} else {
+			answer = answer +ansCha[i]+'|';
+		}
+	}
+//	answer = $(obj).parent().text();
+//	if(answer == undefined) {
+//		answer = "";
+//		answer = answer + str + '|';
+//	} else {
+//		answer = answer + str + '|';
+//	}
+	console.log(answer);
 }
 //保存上传题目
 function saveQuestion() {
@@ -304,15 +316,11 @@ function saveQuestion() {
 	var content = $("textarea[name='Choicequestion']").val();
 	var knowledge = $("#dept option:selected").text();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!","","warning");
-	} else {
-
+		knowledge = " ";
 		var answerOptions = new Array();
-		//console.log(knowledge)
 		for(i = 0; i < number; i++) {
 			answerOptions.push($("input[name=potions" + i + "]").val());
 		}
-		//console.log(answerOptions);
 		var parse = $("textarea[name='parse']").val();
 		var cc = {
 			"questionContent": content,
@@ -346,7 +354,7 @@ function saveQuestion() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				//window.setTimeou("ref()",1000*1); 	 	
+				$("input[ type='text']").val("");;
 			},
 			error: function(returndata) {
 				// alert(returndata);
@@ -363,9 +371,7 @@ function saveQuestionPack() {
 	var knowledge = $("#packselect option:selected").text();
 	var parse = $("textarea[name='parsePack']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!","","warning");
-	} else {
-
+		knowledge = " ";
 		var cc = {
 			"questionContent": content,
 			"options": [],
@@ -397,10 +403,9 @@ function saveQuestionPack() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				//window.setTimeou("ref()",1000*1);
+				$("input[ type='text']").val("");
 			},
 			error: function(returndata) {
-				// alert(returndata);
 				swal("保存失败!", "", "error");
 			}
 		});
@@ -414,14 +419,12 @@ function saveQuestionStone() {
 	var knowledge = $("#deptselect option:selected").text();
 	console.log(answer)
 	var answerOptions = new Array();
-	for(i = 0; i < number; i++) {
+	for(i = 0; i < potionsStoneNumber; i++) {
 		answerOptions.push($("input[name=potionsStone" + i + "]").val());
 	}
 	var parse = $("textarea[name='stone']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!","","warning");
-	} else {
-
+		knowledge = " ";
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
@@ -453,10 +456,9 @@ function saveQuestionStone() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				//window.setTimeou("ref()",1000*1);
+				$("input[ type='text']").val("");
 			},
 			error: function(returndata) {
-				// alert(returndata);
 				swal("保存失败!", "", "error");
 			}
 		});
@@ -464,17 +466,17 @@ function saveQuestionStone() {
 }
 //填空题
 function saveCompletionQuestion() {
+	pack();
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionCompletion']").val();
 	var knowledge = $("#isselect option:selected").text();
 	var answerOptions = new Array();
-	for(i = 0; i < number; i++) {
-		answerOptions.push($("input[name=completion" + i + "]").val() + '<br />');
+	for(i = 0; i < tknumber; i++) {
+		answerOptions.push($("input[name=completion" + i + "]").val());
 	}
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!","","warning");
-	} else {
+		knowledge = " ";
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
@@ -506,10 +508,9 @@ function saveCompletionQuestion() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				//window.setTimeou("ref()",1000*1);
+				$("input[ type='text']").val("");
 			},
 			error: function(returndata) {
-				// alert(returndata);
 				swal("保存失败!", "", "error");
 			}
 		});

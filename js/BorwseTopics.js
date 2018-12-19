@@ -313,3 +313,19 @@ function isExistFavor(md52) {
 		}
 	});
 }
+//显示题目类型以及数量
+function getType(){
+	var type=[];
+	var count=1;
+	for(var i=0;i<questionNode.length;i++){
+		if(type==null||type.length==0){
+			type.push({"name":questionNode[i].quesetionType,"count":count});
+		}else{
+			for (j=o;j<type.length;j++) {
+				if(type[j]==questionNode[i].quesetionType){
+			type.push({"name":questionNode[i].quesetionType,"count":++count});
+				}
+			}
+		}
+	}
+}
