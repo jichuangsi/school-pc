@@ -7,7 +7,7 @@ function getLocation() {
 	accessToken = getAccessToken();
 }
 var type = "选择题";
-var answer = "";
+var answer;
 var difficulty;
 var arr;
 var orcode
@@ -188,7 +188,14 @@ function tabtext(tabTit, on, tabCon) {
 //填空题
 function pack(obj) {
 	answer = $(obj).parent().text();
-	answer = answer + str + '|';
+
+	if(answer == undefined) {
+		answer = "";
+		answer = answer + str + '|';
+	} else {
+		answer = answer + str + '|';
+	}
+	console.log(answer);
 }
 //选择题
 function changeRad(obj) {
@@ -208,17 +215,29 @@ function CheckBox(obj) {
 		$(obj).parent().parent().find(".Answerone").text(" ");
 	}
 	var str = $(obj).val();
-	answer = answer + str + '|';
+	if(answer == undefined) {
+		answer = "";
+		answer = answer + str + '|';
+	} else {
+		answer = answer + str + '|';
+	}
+	console.log(answer);
 }
 //判断
 function packanswer(obj) {
 	if(obj.checked) {
 		answer = $(obj).parent().text();
+		if(answer == "正确") {
+			answer = "A";
+		} else if(answer == "错误") {
+			answer = "B";
+		}
 	}
 }
 //困难程度
 function difficulty(obj) {
 	difficulty = $(obj).parent().text();
+
 }
 
 function Choice() {
@@ -249,7 +268,7 @@ function optionNumber(obj) {
 	}
 
 }
-var charater = new Array("A.", "B.", "C.", "D.", "E.");
+var charater = new Array("A", "B", "C", "D", "E");
 
 function optionNumberChe(obj) {
 	var number = $(obj).text();
@@ -285,8 +304,9 @@ function saveQuestion() {
 	var content = $("textarea[name='Choicequestion']").val();
 	var knowledge = $("#dept option:selected").text();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!");
+		swal("请选择知识点!","","warning");
 	} else {
+
 		var answerOptions = new Array();
 		//console.log(knowledge)
 		for(i = 0; i < number; i++) {
@@ -336,15 +356,16 @@ function saveQuestion() {
 	}
 
 }
-//判断题
+//判断题目
 function saveQuestionPack() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionPack']").val();
 	var knowledge = $("#packselect option:selected").text();
 	var parse = $("textarea[name='parsePack']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!");
+		swal("请选择知识点!","","warning");
 	} else {
+
 		var cc = {
 			"questionContent": content,
 			"options": [],
@@ -386,19 +407,21 @@ function saveQuestionPack() {
 	}
 
 }
-
+//多选题
 function saveQuestionStone() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionStone']").val();
 	var knowledge = $("#deptselect option:selected").text();
+	console.log(answer)
 	var answerOptions = new Array();
 	for(i = 0; i < number; i++) {
 		answerOptions.push($("input[name=potionsStone" + i + "]").val());
 	}
 	var parse = $("textarea[name='stone']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!");
+		swal("请选择知识点!","","warning");
 	} else {
+
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
@@ -439,7 +462,7 @@ function saveQuestionStone() {
 		});
 	}
 }
-
+//填空题
 function saveCompletionQuestion() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionCompletion']").val();
@@ -450,7 +473,7 @@ function saveCompletionQuestion() {
 	}
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
-		swal("请选择知识点!");
+		swal("请选择知识点!","","warning");
 	} else {
 		var cc = {
 			"questionContent": content,

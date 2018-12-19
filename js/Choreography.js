@@ -334,24 +334,37 @@ function DelDate(obj) {
 	var cc = {
 		"courseId": id
 	}
-	$.ajax({
-		url: local + "/COURSESERVICE/console/deleteNewCourse",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'DELETE',
-		async: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(data) {
-			swal("删除成功!", "", "success");
-			showLoad();
-		},
-		error: function() {
-			// alert(returndata);
-			swal("删除失败!", "", "error");
-		}
+	swal({
+		title: "您确定要删除吗？",
+		text: "您确定要删除这条数据？",
+		type: "warning",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		confirmButtonText: "是的，我要删除",
+		confirmButtonColor: "#ec6c62"
+	}, function() {
+
+		$.ajax({
+			url: local + "/COURSESERVICE/console/deleteNewCourse",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'DELETE',
+			async: false,
+			contentType: 'application/json',
+			data: JSON.stringify(cc),
+		}).done(function(data) {
+			if(data.code == "0010") {
+				swal("操作成功!", "已成功删除数据！", "success");
+				showLoad();
+			} else {
+				swal("OMG", "删除操作失败了!", "error");
+			}
+		}).error(function(data) {
+
+		});
 	});
+	
 }
 
 function showLoad() {

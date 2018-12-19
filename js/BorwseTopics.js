@@ -2,6 +2,7 @@ document.write("<script type='text/javascript' src='../js/httplocation.js' ></sc
 var local;
 var accessToken;
 var questionNode;
+
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -28,8 +29,8 @@ $(function() {
 				if(!first) {
 					$("#listTo").empty();
 				}
-				curr=obj.curr;
-				getDate((obj.curr-1)*pageSize);
+				curr = obj.curr;
+				getDate((obj.curr - 1) * pageSize);
 			}
 		});
 	});
@@ -50,7 +51,7 @@ function getDate(start) {
 		var source = document.getElementById('listTo');
 		var num = 1;
 		var len;
-		if((curr*pageSize-questionNode.length)<0) {
+		if((curr * pageSize - questionNode.length) < 0) {
 			len = start + pageSize;
 		} else {
 			len = questionNode.length;
@@ -58,6 +59,9 @@ function getDate(start) {
 		for(i = start; i < len; i++, num++) {
 			var j = 0;
 			var node = document.createElement("div");
+			var num1 = Math.round(Math.random() * 9999);
+			var num2 = Math.round(Math.random() * 9999);
+			var num3 = (Math.round(Math.random() * 9999))/100;
 			node.setAttribute("class", "subjectList");
 			var a1 = "";
 			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/CollectionYes.png" /><input type="hidden" id="Mid" value=" ' + questionNode.questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
@@ -69,7 +73,7 @@ function getDate(start) {
 				a1 += "</tbody></table></div>";
 			}
 			node.innerHTML += '<div class="subjectinfo"><div>' + questionNode[i].questionContent + '</div>' + a1 + '</div>';
-			node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">1536</i>次</span><span class="s_span">作答<i class="num2">70541</i>人次</span><span class="s_span">平均得分率<i class="num3">78.97%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)"><input type="hidden" name="id" value="' + questionNode.questionIdMD52 + '" />删除题目</div></div>';
+			node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">'+num2+'</i>人次</span><span class="s_span">平均得分率<i class="num3">'+num3+'%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)"><input type="hidden" name="id" value="' + questionNode.questionIdMD52 + '" />删除题目</div></div>';
 			node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + questionNode[i].knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' + questionNode[i].quesetionType + '</span></div></div>';
 			source.append(node);
 		}
@@ -134,7 +138,7 @@ function CollectionImg_click(obj) {
 	var id = $(obj).next("input[id='Mid']").value;
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].questionIdMD52 == id) {
-			var Collectiond={
+			var Collectiond = {
 				"questionId": questionNode[i].questionId,
 				"questionContent": questionNode[i].questionContent,
 				"options": questionNode[i].options,
@@ -148,7 +152,7 @@ function CollectionImg_click(obj) {
 				"knowledge": questionNode[i].knowledge,
 				"questionIdMD52": questionNode[i].questionIdMD52,
 				"questionStatus": "NOTSTART",
-				"questionPic": questionNode[i].questionPic ,
+				"questionPic": questionNode[i].questionPic,
 				"teacherName": "",
 				"createTime": "",
 				"updateTime": ""
@@ -164,11 +168,11 @@ function CollectionImg_click(obj) {
 			},
 			type: "POST",
 			async: true,
-			data:JSON.stringify(Collectiond),
+			data: JSON.stringify(Collectiond),
 			contentType: 'application/json',
 			dataType: 'JSON',
 			success: function(data) {
-			swal("收藏成功!", "", "success");
+				swal("收藏成功!", "", "success");
 			},
 			error: function() {
 
@@ -176,8 +180,8 @@ function CollectionImg_click(obj) {
 		});
 	} else {
 		obj.src = "../img/00025.png";
-		var id=$(obj).next().next("input[id='qid']").value;
-		var cs=[];
+		var id = $(obj).next().next("input[id='qid']").value;
+		var cs = [];
 		cs.push(id);
 		$.ajax({
 			url: local + "/COURSESERVICE/favor/deleteQuestions",
@@ -186,7 +190,7 @@ function CollectionImg_click(obj) {
 			},
 			type: "DELETE",
 			async: true,
-			data:JSON.stringify(cs),
+			data: JSON.stringify(cs),
 			contentType: 'application/json',
 			dataType: 'JSON',
 			success: function(data) {

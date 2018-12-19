@@ -6,7 +6,7 @@ var getlist;
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
-	getlist=getQuestion();
+	getlist = getQuestion();
 }
 $(function() {
 	getLocation();
@@ -16,24 +16,34 @@ $(function() {
 	inits();
 	$(".areas").hide();
 	Obtain_subject();
-	
+
 });
 var user;
-var pharseId=null;
-var subjectId=null;
+var pharseId = null;
+var subjectId = null;
+var namber = 0;
+var num = 0;
+
 function getgradename() {
 	user = getUser()
-	pharseId=user.roles[0].phrase.phraseId;
-	subjectId=user.roles[0].primarySubject.subjectId;
+	pharseId = user.roles[0].phrase.phraseId;
+	subjectId = user.roles[0].primarySubject.subjectId;
 }
-function getlistto(){
+
+function getlistto() {
 	getlist = getQuestion();
+	if(getlist == null || getlist.length == 0) {
+
+	} else {
+		num = getlist.length;
+		$("#paper_number").text(num);
+	}
+
 }
 //转换时间戳
 Date.prototype.toLocaleString = function() {
 	return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + ":" + this.getMinutes(); // + this.getSeconds() + "秒";
 };
-
 
 var areass = null; //地区信息集合
 //参数列表
@@ -54,12 +64,12 @@ var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数
 
 function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 	if(questionList == null || questionList.length == 0) {
-			swal("没有选择题目哦!");
+		swal("没有选择题目哦!","","warning");
 	} else {
 		if(getlist == null || getlist == undefined) {
-		
+
 		} else {
-			for(var i = 0; i<getlist.length; i++) {
+			for(var i = 0; i < getlist.length; i++) {
 				questionList.push(getlist[i]);
 			}
 		}
@@ -74,7 +84,7 @@ function saveToGetQuestionNode(classid, className, Name, info, hh, mm, ymd) {
 		swal("已经添加题目到课堂!");
 		window.location.replace("../Front/NewClassroom.html");
 	}
-	
+
 }
 
 function getClass() {
@@ -224,7 +234,7 @@ function dropSwift(dom, drop) {
 	//点击当前元素，收起或者伸展下一级菜单
 
 	dom.next().slideToggle();
-	var i=dom.children("i:first");
+	var i = dom.children("i:first");
 	i.toggleClass("fa-minus-square-o");
 	i.toggleClass("fa-plus-square-o");
 
@@ -270,7 +280,7 @@ function Obtain_subject(obj, Chapterid) {
 	$(".tcdPageCode").remove();
 	$("#Missingdata").remove();
 	Chapter_click(); //获取题目
-	if(subjectlist!=null){
+	if(subjectlist != null) {
 		if(subjectlist.pageCount > 0) {
 			pagecount1 = subjectlist.pageCount;
 		}
@@ -285,9 +295,9 @@ function Obtain_subject(obj, Chapterid) {
 		$("#page_rights").text(pagecount1);
 		var num = 1;
 		for(var i = 0; i < subjectlist.content.length; i++, num++) {
-			
+
 			var a1 = "<div class='subjectList'><div class='subjectList_top'><span>" + num + "</span>";
-			isExistFavor(subjectlist.content[i].questionNode.qid);  //调用判断是否已经收藏该题目
+			isExistFavor(subjectlist.content[i].questionNode.qid); //调用判断是否已经收藏该题目
 			if(isExistFavorResult == "none") {
 				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionNo.png' />";
 			} else {
@@ -295,58 +305,58 @@ function Obtain_subject(obj, Chapterid) {
 			}
 			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li><li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li></ul></div></div>";
 			a1 += "<div class='subjectinfo'><div>";
-			a1+=subjectlist.content[i].questionNode.title;
-			a1 += 	"</div>";
-				//判断是否有选项
-				if(subjectlist.content[i].questionNode.option_a.length>0 ||subjectlist.content[i].questionNode.option_b.length>0 ||subjectlist.content[i].questionNode.option_c.length>0 ||subjectlist.content[i].questionNode.option_d.length>0){
-					a1 +="<div><table><tbody>";
-					if(subjectlist.content[i].questionNode.option_a.length>0){
-							a1+="<tr><td>A:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_a+"</td></tr>";
-					}
-					if(subjectlist.content[i].questionNode.option_b.length>0){
-							a1+="<tr><td>B:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_b+"</td></tr>";
-					}
-					if(subjectlist.content[i].questionNode.option_c.length>0){
-							a1+="<tr><td>C:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_c+"</td></tr>";
-					}
-					if(subjectlist.content[i].questionNode.option_d.length>0){
-							a1+="<tr><td>D:&nbsp&nbsp"+subjectlist.content[i].questionNode.option_d+"</td></tr>";
-					}
-					a1+="</tbody></table></div>";
+			a1 += subjectlist.content[i].questionNode.title;
+			a1 += "</div>";
+			//判断是否有选项
+			if(subjectlist.content[i].questionNode.option_a.length > 0 || subjectlist.content[i].questionNode.option_b.length > 0 || subjectlist.content[i].questionNode.option_c.length > 0 || subjectlist.content[i].questionNode.option_d.length > 0) {
+				a1 += "<div><table><tbody>";
+				if(subjectlist.content[i].questionNode.option_a.length > 0) {
+					a1 += "<tr><td>A:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_a + "</td></tr>";
 				}
-				a1+="</div>";
+				if(subjectlist.content[i].questionNode.option_b.length > 0) {
+					a1 += "<tr><td>B:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_b + "</td></tr>";
+				}
+				if(subjectlist.content[i].questionNode.option_c.length > 0) {
+					a1 += "<tr><td>C:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_c + "</td></tr>";
+				}
+				if(subjectlist.content[i].questionNode.option_d.length > 0) {
+					a1 += "<tr><td>D:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_d + "</td></tr>";
+				}
+				a1 += "</tbody></table></div>";
+			}
+			a1 += "</div>";
 			a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
-			 if(subjectlist.content[i].addPapercount==null){
+			if(subjectlist.content[i].addPapercount == null) {
 				a1 += 0;
-				}else{
-				a1+=subjectlist.content[i].addPapercount;
-				}
+			} else {
+				a1 += subjectlist.content[i].addPapercount;
+			}
 			a1 += "</i>次</span>";
 			a1 += "<span class='s_span'>作答<i class='num2'>";
-			 if(subjectlist.content[i].answerCount==null){
-				a1+=0;
-			}else{
-				a1+=subjectlist.content[i].answerCount;
+			if(subjectlist.content[i].answerCount == null) {
+				a1 += 0;
+			} else {
+				a1 += subjectlist.content[i].answerCount;
 			}
 			a1 += "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>";
-			 if(subjectlist.content[i].average==null){
-				a1+=0;
-			}else{
-				a1+=subjectlist.content[i].average;
-			} 
+			if(subjectlist.content[i].average == null) {
+				a1 += 0;
+			} else {
+				a1 += subjectlist.content[i].average;
+			}
 			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
-				if(subjectlist.content[i].questionNode.knowledges!=null && subjectlist.content[i].questionNode.knowledges){
-					a1+="<span>"+subjectlist.content[i].questionNode.knowledges+"</span>";
-				}
-			a1+="</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
+			if(subjectlist.content[i].questionNode.knowledges != null && subjectlist.content[i].questionNode.knowledges) {
+				a1 += "<span>" + subjectlist.content[i].questionNode.knowledges + "</span>";
+			}
+			a1 += "</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
 			a1 += "</div></div>";
 			$("#newtestpaper_div2_01").append(a1);
 			questionNode[i] = subjectlist.content[i].questionNode;
 		}
 		$("#newtestpaper_div2_01").append("<div class='tcdPageCode'></div>");
 		page();
-	}else{
+	} else {
 		$("#newtestpaper_div2_01").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
 	}
 }
@@ -374,8 +384,8 @@ function Chapter_click() {
 	var cc = {
 		"knowledgeId": knowledgeId,
 		"diff": padifficultyTypeid,
-		"qtypeId":paquestionTypeid,
-		"paperType":papaperTypeid,
+		"qtypeId": paquestionTypeid,
+		"paperType": papaperTypeid,
 		"year": payear,
 		"area": paareas,
 		"pageSize": 10,
@@ -401,7 +411,7 @@ function Chapter_click() {
 	});
 }
 //获取知识点
-function edition_click(obj, editionid,gradeId) {
+function edition_click(obj, editionid, gradeId) {
 	var cc = {
 		"pharseId": pharseId,
 		"subjectId": subjectId,
@@ -489,10 +499,10 @@ function year_a_click(obj, yearid) {
 }
 //题型点击事件
 function questionType_a_click(obj, questionTypeid) {
-	if($(obj).text()=="全部"){
-		paquestionTypeid =null;
-	}else{
-		paquestionTypeid =$(obj).text();
+	if($(obj).text() == "全部") {
+		paquestionTypeid = null;
+	} else {
+		paquestionTypeid = $(obj).text();
 	}
 	$(obj).addClass("d1");
 	$(obj).siblings().removeClass("d1");
@@ -525,7 +535,7 @@ function focus_click(obj) {
 	$(".areas").toggle();
 }
 //关闭其他区域弹出的div$
-function areashide(){
+function areashide() {
 	$(".areas").hide();
 }
 
@@ -622,7 +632,7 @@ function CollectionImg_click(obj) {
 	}
 	if($(obj).attr("src") == "../img/CollectionNo.png") {
 		$.ajax({
-			url:local+"/QUESTIONSREPOSITORY/favor/saveQuestion",
+			url: local + "/QUESTIONSREPOSITORY/favor/saveQuestion",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -641,17 +651,19 @@ function CollectionImg_click(obj) {
 			}
 		});
 	} else if($(obj).attr("src") == "../img/CollectionYes.png") {
-		var cs=[];
+		var cs = [];
 		cs.push(id);
-		cc={"ids":cs};
+		cc = {
+			"ids": cs
+		};
 		$.ajax({
-			url:  local+"/QUESTIONSREPOSITORY/favor/deleteQuestions",
+			url: local + "/QUESTIONSREPOSITORY/favor/deleteQuestions",
 			headers: {
 				'accessToken': accessToken
 			},
 			type: "DELETE",
 			async: true,
-			data:JSON.stringify(cc),
+			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			dataType: 'JSON',
 			success: function(data) {
@@ -672,8 +684,8 @@ function PreviewPaper() //显示隐藏层和弹出层
 	$(".pres").remove();
 	$("#presH2").remove();
 	$("#Previewinfo").find(".subjectList").remove();
-	var num=1;
-	if(questionList.length>0){
+	var num = 1;
+	if(questionList.length > 0) {
 		for(var i = 0; i < questionList.length; i++, num++) {
 			var a1 = "<div class='subjectList'>";
 			a1 += "<div class='subjectList_top'>";
@@ -695,7 +707,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
 				}
 			}
-	
+
 			a1 += "</div>";
 			//题目选项
 			if(questionList[i].options[0] != null && questionList[i].options[0] != "") {
@@ -745,53 +757,124 @@ function hide() { //去除隐藏层和弹出层
 function add_paper(obj, istype) {
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
+	var Identification = true;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	if(istype == 2) {
-		for(var i = 0; i < itembaklist.content.length; i++) {
-			if(itembaklist.content[i].questionIdMD52 == id) {
-				questionList.push({
-					"questionId": itembaklist.content[i].questionId,
-					"questionContent": itembaklist.content[i].questionContent,
-					"options": itembaklist.content[i].options,
-					"answer": itembaklist.content[i].answer,
-					"answerDetail": itembaklist.content[i].answerDetail,
-					"parse": itembaklist.content[i].parse,
-					"quesetionType": itembaklist.content[i].quesetionType,
-					"difficulty": itembaklist.content[i].difficulty,
-					"subjectId": itembaklist.content[i].subjectId,
-					"gradeId": itembaklist.content[i].gradeId,
-					"knowledge": itembaklist.content[i].knowledge,
-					"questionIdMD52": itembaklist.content[i].questionIdMD52,
-					"questionStatus": "NOTSTART",
-					"questionPic": itembaklist.content[i].questionPic
-				})
-				var namber = questionList.length
-				$("#paper_number").text(namber);
+		if(getlist == null) {
+			for(var i = 0; i < itembaklist.content.length; i++) {
+				if(itembaklist.content[i].questionIdMD52 == id) {
+					questionList.push({
+						"questionId": itembaklist.content[i].questionId,
+						"questionContent": itembaklist.content[i].questionContent,
+						"options": itembaklist.content[i].options,
+						"answer": itembaklist.content[i].answer,
+						"answerDetail": itembaklist.content[i].answerDetail,
+						"parse": itembaklist.content[i].parse,
+						"quesetionType": itembaklist.content[i].quesetionType,
+						"difficulty": itembaklist.content[i].difficulty,
+						"subjectId": itembaklist.content[i].subjectId,
+						"gradeId": itembaklist.content[i].gradeId,
+						"knowledge": itembaklist.content[i].knowledge,
+						"questionIdMD52": itembaklist.content[i].questionIdMD52,
+						"questionStatus": "NOTSTART",
+						"questionPic": itembaklist.content[i].questionPic
+					})
+					namber = questionList.length
+					$("#paper_number").text(namber + num);
+				}
+			}
+		} else {
+			for(var j = 0; j < getlist.length; j++) {
+				if(id == getlist[j].questionIdMD52) {
+					swal("你已经添加了该题目哦!");
+					Identification = false;
+				}
+			}
+			if(Identification) {
+				for(var i = 0; i < itembaklist.content.length; i++) {
+					if(itembaklist.content[i].questionIdMD52 == id) {
+						questionList.push({
+							"questionId": itembaklist.content[i].questionId,
+							"questionContent": itembaklist.content[i].questionContent,
+							"options": itembaklist.content[i].options,
+							"answer": itembaklist.content[i].answer,
+							"answerDetail": itembaklist.content[i].answerDetail,
+							"parse": itembaklist.content[i].parse,
+							"quesetionType": itembaklist.content[i].quesetionType,
+							"difficulty": itembaklist.content[i].difficulty,
+							"subjectId": itembaklist.content[i].subjectId,
+							"gradeId": itembaklist.content[i].gradeId,
+							"knowledge": itembaklist.content[i].knowledge,
+							"questionIdMD52": itembaklist.content[i].questionIdMD52,
+							"questionStatus": "NOTSTART",
+							"questionPic": itembaklist.content[i].questionPic
+						})
+						namber = questionList.length
+						num = getlist.length;
+						$("#paper_number").text(namber + num);
+					}
+				}
 			}
 		}
 	} else {
-		for(var i = 0; i < questionNode.length; i++) {
-			if(questionNode[i].qid == id) {
-				questionList.push({
-					"questionId": "",
-					"questionContent": questionNode[i].title,
-					"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
-					"answer": questionNode[i].answer1,
-					"answerDetail": questionNode[i].answer2,
-					"parse": questionNode[i].parse,
-					"quesetionType": questionNode[i].qtpye,
-					"difficulty": questionNode[i].diff,
-					"subjectId": questionNode[i].subjectId,
-					"gradeId": "",
-					"knowledge": "",
-					"questionIdMD52": questionNode[i].qid,
-					"questionStatus": "NOTSTART",
-					"questionPic": ""
-				})
-				var namber = questionList.length
-				$("#paper_number").text(namber);
+		if(getlist == null) {
+			for(var i = 0; i < questionNode.length; i++) {
+				if(questionNode[i].qid == id) {
+					questionList.push({
+						"questionId": "",
+						"questionContent": questionNode[i].title,
+						"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
+						"answer": questionNode[i].answer1,
+						"answerDetail": questionNode[i].answer2,
+						"parse": questionNode[i].parse,
+						"quesetionType": questionNode[i].qtpye,
+						"difficulty": questionNode[i].diff,
+						"subjectId": questionNode[i].subjectId,
+						"gradeId": "",
+						"knowledge": "",
+						"questionIdMD52": questionNode[i].qid,
+						"questionStatus": "NOTSTART",
+						"questionPic": ""
+					})
+					var namber = questionList.length
+					$("#paper_number").text(namber + num);
+				}
 			}
+		} else {
+			for(var j = 0; j < getlist.length; j++) {
+				if(id == getlist[j].questionIdMD52) {
+					swal("你已经添加了该题目哦!");
+					Identification = false;
+				}
+			}
+			if(Identification) {
+				for(var i = 0; i < questionNode.length; i++) {
+					if(questionNode[i].qid == id) {
+						questionList.push({
+							"questionId": "",
+							"questionContent": questionNode[i].title,
+							"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
+							"answer": questionNode[i].answer1,
+							"answerDetail": questionNode[i].answer2,
+							"parse": questionNode[i].parse,
+							"quesetionType": questionNode[i].qtpye,
+							"difficulty": questionNode[i].diff,
+							"subjectId": questionNode[i].subjectId,
+							"gradeId": "",
+							"knowledge": "",
+							"questionIdMD52": questionNode[i].qid,
+							"questionStatus": "NOTSTART",
+							"questionPic": ""
+						})
+						var namber = questionList.length
+						num = getlist.length;
+						$("#paper_number").text(namber + num);
+					}
+				}
+			}
+
 		}
+
 	}
 }
 /*移除试卷*/

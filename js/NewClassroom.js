@@ -263,10 +263,10 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	var $AttendClassTest = $("#ClassRoomSmallTest");
 	$AttendClassTest.find("option").remove();
 	for(var i = 0; i < array.length; i++) {
-		if(array[i] == ClassRoomSmallTestVal) {
+		if(array[i].eaxmName == ClassRoomSmallTestVal) {
 			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
 		} else {
-			$option = "<option value='" + array[i].eaxmId + "'>" + array[i].eaxmName + "</option>";
+			$option = "<option value='" + array[i].examId + "'>" + array[i].examName + "</option>";
 		}
 		$AttendClassTest.append($option)
 	}
