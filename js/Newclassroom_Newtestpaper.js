@@ -620,7 +620,7 @@ function CollectionImg_click(obj) {
 				"difficulty": questionNode[i].diff,
 				"subjectId": questionNode[i].subjectId,
 				"gradeId": "",
-				"knowledge": "",
+				"knowledge": questionNode[i].knowledges,
 				"questionIdMD52": questionNode[i].qid,
 				"questionStatus": "NOTSTART",
 				"questionPic": "",
@@ -831,7 +831,7 @@ function add_paper(obj, istype) {
 						"difficulty": questionNode[i].diff,
 						"subjectId": questionNode[i].subjectId,
 						"gradeId": "",
-						"knowledge": "",
+						"knowledge": questionNode[i].knowledges,
 						"questionIdMD52": questionNode[i].qid,
 						"questionStatus": "NOTSTART",
 						"questionPic": ""
@@ -861,7 +861,7 @@ function add_paper(obj, istype) {
 							"difficulty": questionNode[i].diff,
 							"subjectId": questionNode[i].subjectId,
 							"gradeId": "",
-							"knowledge": "",
+							"knowledge": questionNode[i].knowledges,
 							"questionIdMD52": questionNode[i].qid,
 							"questionStatus": "NOTSTART",
 							"questionPic": ""
