@@ -24,17 +24,21 @@ var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数
 
 $(function() {
 	getLocation();
-	inits();
 	$(".areas").hide();
 	getgradename();
+	inits();
 	Obtain_subject();
 });
 var user;
-
+var pharseId=null;
+var subjectId=null;
 function getgradename() {
 	user = getUser()
 	var gname = user.roles[0].phrase.phraseName;
 	var sname = user.roles[0].primarySubject.subjectName;
+	pharseId=user.roles[0].phrase.phraseId;
+	subjectId=user.roles[0].primarySubject.subjectId;
+	/*var gradeId=user.roles[0].primaryGrade.gradeId;*/
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
@@ -46,9 +50,10 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 		var a1 = "<a  onclick='year_a_click(this," + years[i].id + ")'>" + years[i].year + "</a>";
 		$(".f1").append(a1);
 	}
+	
 	var j = 0;
 	for(var i = 0; i < questionType.length; i++) {
-		if(questionType[i].subjectId == 2 && questionType[i].pharseId == 3) {
+		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;
 			var a1;
 			if(j == 10 || j == 20) {
@@ -82,7 +87,7 @@ function subjectinfo(subjectinfo) {
 					if(subjectinfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>";
 						for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id + ")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id +","+subjectinfo[i].child[j].id+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
 						}
 						a1 += "</ul>";
 					}
@@ -482,12 +487,12 @@ function remove_paper(obj) {
 }
 
 //获取知识点
-function edition_click(obj, editionid) {
+function edition_click(obj, editionid,gradeId) {
 	var cc = {
-		"pharseId": "2",
-		"subjectId": "2",
-		"gradeId": "201",
-		"editionId": "25"
+		"pharseId": pharseId,
+		"subjectId": subjectId,
+		"gradeId": gradeId,
+		"editionId": null
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",

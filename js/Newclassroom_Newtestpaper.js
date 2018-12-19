@@ -11,13 +11,29 @@ function getLocation() {
 $(function() {
 	getLocation();
 	getlistto();
+	getgradename();
+	$("#showTime").text(new Date().toLocaleString());
 	inits();
 	$(".areas").hide();
 	Obtain_subject();
+	
 });
+var user;
+var pharseId=null;
+var subjectId=null;
+function getgradename() {
+	user = getUser()
+	pharseId=user.roles[0].phrase.phraseId;
+	subjectId=user.roles[0].primarySubject.subjectId;
+}
 function getlistto(){
 	getlist = getQuestion();
 }
+//转换时间戳
+Date.prototype.toLocaleString = function() {
+	return this.getFullYear() + "年" + (this.getMonth() + 1) + "月" + this.getDate() + "日 " + this.getHours() + "时" + this.getMinutes() + "分"; // + this.getSeconds() + "秒";
+};
+
 
 var areass = null; //地区信息集合
 //参数列表
@@ -85,7 +101,7 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 	}
 	var j = 0;
 	for(var i = 0; i < questionType.length; i++) {
-		if(questionType[i].subjectId == 2 && questionType[i].pharseId == 3) {
+		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;
 			var a1;
 			if(j == 10 || j == 20) {
@@ -145,7 +161,7 @@ function subjectinfo(subjectinfo) {
 					if(subjectinfo[i].child[j].child[e].child != null) {
 						a1 += "<ul class='d-secondDrop s-secondDrop'>";
 						for(var q = 0; q < subjectinfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id + ")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
+							a1 += "<li><div class='d-secondNav s-secondNav'><a onclick='edition_click(this," + subjectinfo[i].child[j].child[e].child[q].id +","+subjectinfo[i].child[j].id+")'>" + subjectinfo[i].child[j].child[e].child[q].name + "</a></div></li>"
 						}
 						a1 += "</ul>";
 					}
@@ -285,25 +301,6 @@ function Obtain_subject(obj, Chapterid) {
 				}else{
 				a1+=subjectlist.content[i].addPapercount;
 				}
-<<<<<<< Updated upstream
-				a1+="</tbody></table></div>";
-			}
-		a1+="</div>";
-		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
-			 if(subjectlist.content[i].addPapercount==null){
-				a1 += 0;
-				}else{
-				a1+=subjectlist.content[i].addPapercount;
-			}
-		a1 += "</i>次</span>";
-		a1 += "<span class='s_span'>作答<i class='num2'>";
-			 if(subjectlist.content[i].answerCount==null){
-				a1+=0;
-			}else{
-				a1+=subjectlist.content[i].answerCount;
-			}
-		a1 += "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>";
-=======
 			a1 += "</i>次</span>";
 			a1 += "<span class='s_span'>作答<i class='num2'>";
 			 if(subjectlist.content[i].answerCount==null){
@@ -312,29 +309,11 @@ function Obtain_subject(obj, Chapterid) {
 				a1+=subjectlist.content[i].answerCount;
 			}
 			a1 += "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>";
->>>>>>> Stashed changes
 			 if(subjectlist.content[i].average==null){
 				a1+=0;
 			}else{
 				a1+=subjectlist.content[i].average;
 			} 
-<<<<<<< Updated upstream
-		a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
-		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
-			if(subjectlist.content[i].questionNode.knowledges!=null && subjectlist.content[i].questionNode.knowledges){
-				a1+="<span>"+subjectlist.content[i].questionNode.knowledges+"</span>";
-			}
-		a1+="</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
-		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"+ subjectlist.content[i].questionNodeknowledges+"</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
-			a1 += "</tbody></table></div>";
-		//}这里的大括号是不是乱了
-		a1 += "</div>";
-		a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>" + subjectlist.content[i].addPapercount + "</i>次</span><span class='s_span'>作答<i class='num2'>" + subjectlist.content[i].answerCount + "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>" + subjectlist.content[i].average + "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
-		a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>" + subjectlist.content[i].questionNodeknowledges + "</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
-		a1 += "</div></div>";
-		$("#newtestpaper_div2_01").append(a1);
-		questionNode[i] = subjectlist.content[i].questionNode;
-=======
 			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
 				if(subjectlist.content[i].questionNode.knowledges!=null && subjectlist.content[i].questionNode.knowledges){
@@ -349,7 +328,6 @@ function Obtain_subject(obj, Chapterid) {
 		page();
 	}else{
 		$("#newtestpaper_div2_01").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
->>>>>>> Stashed changes
 	}
 }
 
@@ -402,12 +380,12 @@ function Chapter_click() {
 	});
 }
 //获取知识点
-function edition_click(obj, editionid) {
+function edition_click(obj, editionid,gradeId) {
 	var cc = {
-		"pharseId": "2",
-		"subjectId": "2",
-		"gradeId": "201",
-		"editionId": "25"
+		"pharseId": pharseId,
+		"subjectId": subjectId,
+		"gradeId": null,
+		"editionId": null
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",
