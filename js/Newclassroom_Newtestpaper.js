@@ -834,6 +834,8 @@ function add_paper(obj, istype) {
 					})
 					namber = questionList.length
 					$("#paper_number").text(namber);
+					console.log();
+					
 					sessionStorage.setItem("lastname", JSON.stringify(questionList));
 				}
 			}
@@ -893,6 +895,7 @@ function add_paper(obj, istype) {
 					})
 					var namber = questionList.length
 					$("#paper_number").text(namber);
+					console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
 					sessionStorage.setItem("lastname", JSON.stringify(questionList));
 				}
 			}
@@ -925,6 +928,7 @@ function add_paper(obj, istype) {
 						var namber = questionList.length
 						num = getlist.length;
 						$("#paper_number").text(namber);
+						console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
 						sessionStorage.setItem("lastname", JSON.stringify(questionList));
 					}
 				}

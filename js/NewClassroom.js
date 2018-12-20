@@ -35,7 +35,7 @@ var sClass;
 var eaxms;
 var currentdate; //获取当前日期
 //加载页面获取数据获取保存的题目
-function getQuestionNode(){
+function getQuestionNode() {
 	if(roomInfo == undefined) {
 		initAttendtimehour('');
 		initAttendtimemin('');
@@ -148,14 +148,14 @@ function formSub() {
 	var cpic = $("#icon").value;
 	var classid = document.getElementById("AttendClass").value;
 	var className = $("#AttendClass option:selected").text();
-	if(className=="请选择试卷"){
-		className="";
+	if(className == "请选择试卷") {
+		className = "";
 	}
 	var Name = document.getElementById("ClassName").value;
-	var info = document.getElementById("ClassroomSynopsis").value;
-	var hh = document.getElementById("time-hour").value;
-	var mm = document.getElementById("time-min").value;
-	var ymd = document.getElementById("test29").value;
+	var info = $("#ClassroomSynopsis").val();
+	var hh = $("#time-hour").val();
+	var mm = $("#time-min").val();
+	var ymd = $("#test29").attr('placeholder');
 	var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 	var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 	var cc = {
@@ -218,7 +218,6 @@ function copyClassRoom(obj) {
 	$("#ClassroomSynopsis").val(info);
 	var $ClassTimehour = splitStrHour($timehour); //$(obj).find(".hour").text(); //获取小时
 	var $ClassTimemin = splitStrmin($timehour); //$(obj).find(".min").text(); //获取分钟
-	//var ClassTimeStr = new Date(ClassTimeVal.parse(value.replace(/[^\d]/g,'/')))
 	$("#ClassName").val($ClassNameVal);
 	initAttendClass($AttendClassText, sClass);
 	$("#time-hour").val($ClassTimehour);
@@ -248,7 +247,7 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	var array;
 	array = eaxms;
 	var $AttendClassTest = $("#ClassRoomSmallTest");
-//	$AttendClassTest.find("option").remove();
+	//	$AttendClassTest.find("option").remove();
 	for(var i = 0; i < array.length; i++) {
 		if(array[i].eaxmName == ClassRoomSmallTestVal) {
 			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
@@ -416,7 +415,7 @@ function DelDate(obj) {
 		}).done(function(data) {
 			if(data.code == "0010") {
 				swal("操作成功!", "已成功删除数据！", "success");
-				showLoad();
+				creaClass();
 			} else {
 				swal("OMG", "删除操作失败了!", "error");
 			}

@@ -83,7 +83,7 @@ function getDate(start) {
 			node.setAttribute("class", "subjectList");
 			var a2 = "";
 			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
-			if(questionNode[i].options != null) {
+			if(questionNode[i].options[0] != null&&questionNode[i].options[0]!="") {
 				a2 = "<div><table><tbody>";
 				for(var j = 0; j < questionNode[i].options.length; j++) {
 					a2 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + questionNode[i].options[j] + "</td></tr>";
@@ -148,6 +148,8 @@ function delObj(obj) {
 		if(questionNode[i].questionIdMD52 == id) {
 			questionNode.splice(i, 1);
 			swal("删除成功!", "", "success");
+			getType();
+			difficultyList();
 		}
 	}
 	sessionStorage.setItem("lastname", JSON.stringify(questionNode));
@@ -351,8 +353,11 @@ function getType() {
 		}
 
 	}
-	console.log(type);
 	var soure = $("#type");
+	soure.empty();
+	var tr =document.createElement("tr");
+	tr.innerHTML = '<th>题型</th><th>题量</th>';
+	soure.append(tr);
 	for(var i = 0; i < type.length; i++) {
 		var node = document.createElement("tr");
 		node.innerHTML = '<td>' + type[i].name + '</td><td>' + type[i].num + '</td>';
@@ -364,18 +369,21 @@ function getType() {
 }
 //难度列表
 function difficultyList() {
-	var one=0, two=0, three=0, four=0, five=0;
-	for(var i = 0; i<questionNode.length; i++) {
-		console.log(questionNode[i].difficulty);
-		if(questionNode[i].difficulty=='1.00') {
+	var one = 0,
+		two = 0,
+		three = 0,
+		four = 0,
+		five = 0;
+	for(var i = 0; i < questionNode.length; i++) {
+		if(questionNode[i].difficulty == '1.00') {
 			one++
-		}else if(questionNode[i].difficulty=='2.00') {
+		} else if(questionNode[i].difficulty == '2.00') {
 			two++;
-		}else if(questionNode[i].difficulty=='3.00') {
+		} else if(questionNode[i].difficulty == '3.00') {
 			three++;
-		}else if(questionNode[i].difficulty=='4.00') {
+		} else if(questionNode[i].difficulty == '4.00') {
 			four++;
-		}else if(questionNode[i].difficulty=='5.00') {
+		} else if(questionNode[i].difficulty == '5.00') {
 			five++;
 		}
 	}
@@ -384,5 +392,4 @@ function difficultyList() {
 	$("#three").html(three);
 	$("#four").html(four);
 	$("#five").html(five);
-	console.log(one, two, three, four, five);
 }
