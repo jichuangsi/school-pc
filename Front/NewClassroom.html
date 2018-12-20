@@ -130,6 +130,7 @@
 									<div class="box-room-name-one1">
 										<span>课堂小测:</span>
 										<select class="box-room-selet-cs" id="ClassRoomSmallTest" name="">
+											<option value="-1">请选择试卷</option>
 										</select>
 										<input type="button" value="浏览题目" class="box-room-selet-cs-but" onclick="toList()" />
 										<input type="button" value="新增题目" class="box-room-selet-cs-but" onclick="toQuestion()" />
@@ -186,12 +187,12 @@
 				<!--第二部分-->
 				<div class="box-room-show">
 					<div class="box-room-show-nav">
-						<div class="box-room-show-nav-span">当前新建的课堂:</div>
+						<div class="box-room-show-nav-span">当前新建的课堂:<label style="color: #e6edf1;font-size:16px ;">最近5堂课</label></div>
 						<div class="hr">
 							<hr/>
 						</div>
 					</div>
-					<div id="look-class">
+					<div id="look-class" style="height: 100%;padding-bottom: 40px;">
 					</div>
 				</div>
 			</div>

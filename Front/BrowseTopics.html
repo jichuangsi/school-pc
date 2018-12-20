@@ -106,7 +106,7 @@
 			</div>
 			<div class="Mian-conter" id="main-conter">
 				<div style="float: left;position: relative;left: 250px;top: 50px;">
-					<label><a href="../Front/NewClassroom.html" style="text-decoration: none; color: #3d72fe;">&lt;返回新建课堂</a> </label>
+					<a href="../Front/NewClassroom.html" style="text-decoration: none; color: #3d72fe;">&lt;返回新建课堂</a>
 				</div>
 				<div class="title">
 					牛顿小测试1
@@ -120,39 +120,11 @@
 					</div>
 				</div>
 				<div class="List">
-					<div style="color: #3d72fe;font-weight: 800;margin-bottom: 5px;">题量分析</div>
-					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style">
+					<div style="color: #3d72fe;font-weight: 800;margin-bottom: 5px;">题型分析</div>
+					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style" id="type">
 						<tr>
 							<th>题型</th>
 							<th>题量</th>
-						</tr>
-						<tr>
-							<td>选择题</td>
-							<td>36</td>
-						</tr>
-						<tr>
-							<td>判断题</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>填空题</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>多选题</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>计算题</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>探究题</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>合計</td>
-							<td>42</td>
 						</tr>
 					</table>
 					<div style="color: #3d72fe;font-weight: 800;margin-top: 5px;margin-bottom: 5px;">题量分析</div>
@@ -163,26 +135,30 @@
 						</tr>
 						<tr>
 							<td>容易</td>
-							<td>5</td>
+							<td id="one"></td>
 						</tr>
 						<tr>
 							<td>较易</td>
-							<td>15</td>
+							<td id="two"></td>
 						</tr>
 						<tr>
 							<td>一般</td>
-							<td>18</td>
+							<td id="three"></td>
 						</tr>
 						<tr>
 							<td>较难</td>
-							<td>4</td>
+							<td id="four"></td>
+						</tr>
+						<tr>
+							<td>困难</td>
+							<td id="five"></td>
 						</tr>
 					</table>
 				</div>
-				<div id="listTo" style="float: right;margin-right: 15px;">
+				<div id="listTo" style="float: right;margin-right: 40px;">
 				</div>
-				<div style="width: 400px;height: 50px;">
-					<div id="pagelist" style="width: 100%;margin-top: 20px;margin-left:610px;"></div>
+				<div style="width:500px;height: 50px;">
+					<div id="pagelist" style="width: 100%;height:60px;margin-top: 20px;margin-left:610px;"></div>
 				</div>
 			</div>
 

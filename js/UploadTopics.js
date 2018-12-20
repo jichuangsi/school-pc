@@ -8,7 +8,7 @@ function getLocation() {
 }
 var type = "选择题";
 var answer;
-var difficulty;
+var difficultys;
 var arr;
 var orcode
 $(function() {
@@ -210,7 +210,7 @@ function CheckBox(obj) {
 	} else {
 		answer = answer + str + '|';
 	}
-	console.log(answer);
+	 
 }
 //判断
 function packanswer(obj) {
@@ -225,7 +225,19 @@ function packanswer(obj) {
 }
 //困难程度
 function difficulty(obj) {
-	difficulty = $(obj).parent().text();
+	difficultys = $(obj).parent().text();
+	if(difficultys == "容易") {
+		difficultys = 1.00;
+	} else if(difficultys == "较易") {
+		difficulty = 2.00;
+	} else if(difficultys == "中等") {
+		difficultys = 3.00;
+	} else if(difficultys == "较难") {
+		difficultys = 4.00;
+	} else if(difficultys == "困难") {
+		difficultys = 5.00;
+	}
+	console.log(difficultys)
 }
 
 function Choice() {
@@ -296,19 +308,11 @@ function pack() {
 	for(i = 0; i < tknumber; i++) {
 		if(answer == undefined) {
 			answer = "";
-			answer = answer +ansCha[i]+'|';
+			answer = answer + ansCha[i] + '|';
 		} else {
-			answer = answer +ansCha[i]+'|';
+			answer = answer + ansCha[i] + '|';
 		}
 	}
-//	answer = $(obj).parent().text();
-//	if(answer == undefined) {
-//		answer = "";
-//		answer = answer + str + '|';
-//	} else {
-//		answer = answer + str + '|';
-//	}
-	console.log(answer);
 }
 //保存上传题目
 function saveQuestion() {
@@ -329,7 +333,7 @@ function saveQuestion() {
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
-			"difficulty": difficulty,
+			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
@@ -379,7 +383,7 @@ function saveQuestionPack() {
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
-			"difficulty": difficulty,
+			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
@@ -417,7 +421,10 @@ function saveQuestionStone() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionStone']").val();
 	var knowledge = $("#deptselect option:selected").text();
-	console.log(answer)
+	var an=answer.substring(0,answer.length-1);
+	var arrAn =an.split("|");
+	arrAn.sort();
+	answer=arrAn.join("|");
 	var answerOptions = new Array();
 	for(i = 0; i < potionsStoneNumber; i++) {
 		answerOptions.push($("input[name=potionsStone" + i + "]").val());
@@ -432,7 +439,7 @@ function saveQuestionStone() {
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
-			"difficulty": difficulty,
+			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
@@ -484,7 +491,7 @@ function saveCompletionQuestion() {
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
-			"difficulty": difficulty,
+			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,

@@ -8,16 +8,22 @@ function getLocation() {
 	accessToken = getAccessToken();
 	questionNode = getQuestion();
 }
-var pageSize = 2;
+var pageSize = 4;
 var curr;
 $(function() {
 	getLocation();
 	getDate();
 	getgradename();
+	getType();
+	difficultyList();
+	pageList();
+});
+var user;
+
+function pageList() {
 	layui.use(['laypage', 'layer'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer;
-
 		//自定义每页条数的选择项
 		laypage.render({
 			elem: 'pagelist',
@@ -34,8 +40,7 @@ $(function() {
 			}
 		});
 	});
-});
-var user;
+}
 
 function getgradename() {
 	user = getUser()
@@ -65,10 +70,10 @@ function getDate(start) {
 				a1 = "CollectionNo";
 			}
 			var knowledge;
-			if(questionNode[i].knowledge==undefined){
-				knowledge="本题暂未归纳！"
-			}else{
-				knowledge=questionNode[i].knowledge;
+			if(questionNode[i].knowledge == undefined) {
+				knowledge = "本题暂未归纳！"
+			} else {
+				knowledge = questionNode[i].knowledge;
 			}
 			var j = 0;
 			var node = document.createElement("div");
@@ -77,7 +82,7 @@ function getDate(start) {
 			var num3 = (Math.round(Math.random() * 9999)) / 100;
 			node.setAttribute("class", "subjectList");
 			var a2 = "";
-			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/'+a1+'.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
+			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
 			if(questionNode[i].options != null) {
 				a2 = "<div><table><tbody>";
 				for(var j = 0; j < questionNode[i].options.length; j++) {
@@ -86,7 +91,7 @@ function getDate(start) {
 				a2 += "</tbody></table></div>";
 			}
 			node.innerHTML += '<div class="subjectinfo"><div>' + questionNode[i].questionContent + '</div>' + a2 + '</div>';
-			node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)"><input type="hidden" name="id" value="' + questionNode.questionIdMD52 + '" />删除题目</div></div>';
+			node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
 			node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' + questionNode[i].quesetionType + '</span></div></div>';
 			source.append(node);
 		}
@@ -125,7 +130,7 @@ function getClass() {
 }
 
 function analysis_click(obj) {
-	/*$(obj).parent().next().css("display", "none");*/	
+	/*$(obj).parent().next().css("display", "none");*/
 	if($(obj).parent().next().css("display") == "none") {
 		$(obj).parent().next().stop();
 		$(obj).parent().next().slideDown();
@@ -138,13 +143,16 @@ function analysis_click(obj) {
 }
 
 function delObj(obj) {
-	var id = $(obj).find("input[name='id']").val();
+	var id = $(obj).parent().find("#delId").val();
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].questionIdMD52 == id) {
 			questionNode.splice(i, 1);
+			swal("删除成功!", "", "success");
 		}
 	}
-	sessionStorage.setItem("lastname", JSON.stringify(questionList));
+	sessionStorage.setItem("lastname", JSON.stringify(questionNode));
+	$("#listTo").empty();
+	pageList();
 }
 
 function CollectionImg_click(obj) {
@@ -314,18 +322,67 @@ function isExistFavor(md52) {
 	});
 }
 //显示题目类型以及数量
-function getType(){
-	var type=[];
-	var count=1;
-	for(var i=0;i<questionNode.length;i++){
-		if(type==null||type.length==0){
-			type.push({"name":questionNode[i].quesetionType,"count":count});
-		}else{
-			for (j=o;j<type.length;j++) {
-				if(type[j]==questionNode[i].quesetionType){
-			type.push({"name":questionNode[i].quesetionType,"count":++count});
+function getType() {
+	var type = [];
+	var num = 1;
+	for(var i = 0; i < questionNode.length; i++) {
+		if(type == null || type.length == 0) {
+			var name = questionNode[i].quesetionType
+			type.push({
+				"name": name,
+				"num": num
+			});
+		} else {
+			var flag = true;
+			for(var j = 0; j < type.length; j++) {
+				if(type[j].name == questionNode[i].quesetionType) {
+					type[j].num = (type[j].num + 1);
+					flag = false;
+					break;
 				}
 			}
+			if(flag) {
+				var name = questionNode[i].quesetionType
+				type.push({
+					"name": name,
+					"num": num
+				});
+			}
+		}
+
+	}
+	console.log(type);
+	var soure = $("#type");
+	for(var i = 0; i < type.length; i++) {
+		var node = document.createElement("tr");
+		node.innerHTML = '<td>' + type[i].name + '</td><td>' + type[i].num + '</td>';
+		soure.append(node);
+	}
+	var node = document.createElement("tr");
+	node.innerHTML = '<td>合计</td><td>' + questionNode.length + '</td>'
+	soure.append(node);
+}
+//难度列表
+function difficultyList() {
+	var one=0, two=0, three=0, four=0, five=0;
+	for(var i = 0; i<questionNode.length; i++) {
+		console.log(questionNode[i].difficulty);
+		if(questionNode[i].difficulty=='1.00') {
+			one++
+		}else if(questionNode[i].difficulty=='2.00') {
+			two++;
+		}else if(questionNode[i].difficulty=='3.00') {
+			three++;
+		}else if(questionNode[i].difficulty=='4.00') {
+			four++;
+		}else if(questionNode[i].difficulty=='5.00') {
+			five++;
 		}
 	}
+	$("#one").html(one);
+	$("#two").html(two);
+	$("#three").html(three);
+	$("#four").html(four);
+	$("#five").html(five);
+	console.log(one, two, three, four, five);
 }

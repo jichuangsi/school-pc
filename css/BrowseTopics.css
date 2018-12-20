@@ -52,7 +52,7 @@ body {
 }
 
 .Mian-conter {
-	width: 62.5%;
+	width: 61.5%;
 	height: 100%;
 	background-color: white;
 	margin-left: 18.75%;
@@ -76,9 +76,11 @@ body {
 	margin-left: 50px;
 	float: left;
 }
-table th{
+
+table th {
 	background-color: #f2f2f2;
 }
+
 .table-style {
 	font-weight: 400;
 	width: 140px;
@@ -94,7 +96,8 @@ table th{
 	height: 200px;
 	border: 1px solid #a0a6ad;
 }
-.list{
+
+.list {
 	position: relative;
 	height: 100%;
 	width: 850px;
@@ -103,10 +106,12 @@ table th{
 	margin-right: 50px;
 	margin-top: 20px;
 }
-.list:hover{
+
+.list:hover {
 	border: 1px solid #3d72fe;
 }
-.number{
+
+.number {
 	width: 36px;
 	height: 36px;
 	background-color: #a0a6ad;
@@ -115,14 +120,17 @@ table th{
 	color: white;
 	float: left;
 }
-.CollectionIcon{
+
+.CollectionIcon {
 	float: left;
 	margin-left: 10px;
 }
-.CollectionIcon:hover{
+
+.CollectionIcon:hover {
 	cursor: pointer;
 }
-.topic{
+
+.topic {
 	width: 60px;
 	height: 20px;
 	float: right;
@@ -133,7 +141,8 @@ table th{
 	line-height: 20px;
 	margin-right: 20px;
 }
-.sub{
+
+.sub {
 	font-size: 16px;
 	width: 600px;
 	height: 46px;
@@ -143,10 +152,11 @@ table th{
 	right: 50px;
 	top: 50px;
 }
-.sub-del{
-	color:white;
+
+.sub-del {
+	color: white;
 	background-color: #b93535;
-	border-radius:5px;
+	border-radius: 5px;
 	width: 80px;
 	height: 40px;
 	line-height: 40px;
@@ -156,26 +166,31 @@ table th{
 	top: 5px;
 	right: 10px;
 }
-.sub-del:hover{
+
+.sub-del:hover {
 	cursor: pointer;
 }
-.Answer{
+
+.Answer {
 	width: 600px;
 	float: left;
 	margin-top: 58px;
 	padding-right: 27px;
 }
-.Answer-b{
+
+.Answer-b {
 	position: relative;
-	left:200px;
+	left: 200px;
 }
-.Answer-two{
+
+.Answer-two {
 	width: 600px;
 	float: left;
 	margin-top: 10px;
 	margin-left: 73px;
-	}
-.upsubject{
+}
+
+.upsubject {
 	width: 80px;
 	height: 40px;
 	color: white;
@@ -187,12 +202,13 @@ table th{
 	border-radius: 5px;
 	text-align: center;
 	line-height: 40px;
-	
 }
-.upsubject:hover{
+
+.upsubject:hover {
 	cursor: pointer;
 }
-.subbottom{
+
+.subbottom {
 	width: 100%;
 	height: 50px;
 	float: left;
@@ -200,18 +216,22 @@ table th{
 	bottom: -6px;
 	background-color: #f2f2f2;
 }
-.font-sub{
+
+.font-sub {
 	color: #3d72fe;
 	font-size: 18px;
 	margin-left: 10px;
 }
-.subbottom{
+
+.subbottom {
 	line-height: 50px;
 }
-.wz{
+
+.wz {
 	margin-left: 15px;
 }
-.jx{
+
+.jx {
 	font-size: 12px;
 	float: left;
 	position: relative;
@@ -219,14 +239,17 @@ table th{
 	text-align: center;
 	line-height: 50px;
 }
-.jx-wz{
+
+.jx-wz {
 	margin-left: 8px;
 	margin-top: 2px;
 }
-.jx>img:hover{
+
+.jx>img:hover {
 	cursor: pointer;
 }
-.page{
+
+.page {
 	width: 850px;
 	height: 30px;
 	font-size: 12px;
@@ -234,29 +257,45 @@ table th{
 	top: 10px;
 	right: -219px;
 	float: right;
-	text-align:center ;
-	 }
-.page>ul{
-	text-align:center ;
-	list-style: none;
-	margin-left: auto; margin-right: auto;
-	
+	text-align: center;
 }
-.page>ul li{
+
+.page>ul {
+	text-align: center;
+	list-style: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.page>ul li {
 	float: left;
 	margin-left: 5px;
 	margin-right: 5px;
 	border: solid 1px;
 }
-.page>ul li:hover{
+
+.page>ul li:hover {
 	cursor: pointer;
 	border: solid 1px #3d72fe;
 }
-.uppage{
+
+.uppage {
 	width: 40px;
 	height: 20px;
 }
-.pageindex{
+
+.pageindex {
 	width: 20px;
 	height: 20px;
+}
+
+.subjectList {
+	position: relative;
+	width: 849px;
+	height: 100%;
+	margin: 12px 30px;
+	border: 1px solid #F2F2F2;
+	font-size: 14px;
+	line-height: 30;
+	cursor: pointer;
 }

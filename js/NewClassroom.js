@@ -46,6 +46,7 @@ function getQuestionNode(){
 		initAttendtimehour(roomInfo.hh);
 		initAttendtimemin(roomInfo.mm);
 		$("#test29").val(currentdate);
+		sessionStorage.removeItem('userIn');
 		//	$("#hh").val(roomInfo.hh);
 		//	$("#mm").val(roomInfo.mm);
 		//	$("#ymd").val(roomInfo.ymd);
@@ -147,6 +148,9 @@ function formSub() {
 	var cpic = $("#icon").value;
 	var classid = document.getElementById("AttendClass").value;
 	var className = $("#AttendClass option:selected").text();
+	if(className=="请选择试卷"){
+		className="";
+	}
 	var Name = document.getElementById("ClassName").value;
 	var info = document.getElementById("ClassroomSynopsis").value;
 	var hh = document.getElementById("time-hour").value;
@@ -244,7 +248,7 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	var array;
 	array = eaxms;
 	var $AttendClassTest = $("#ClassRoomSmallTest");
-	$AttendClassTest.find("option").remove();
+//	$AttendClassTest.find("option").remove();
 	for(var i = 0; i < array.length; i++) {
 		if(array[i].eaxmName == ClassRoomSmallTestVal) {
 			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
