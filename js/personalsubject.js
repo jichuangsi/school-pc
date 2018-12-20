@@ -30,20 +30,31 @@ function radioItembank(obj) {
 	keywordinput = null;
 	$("#newtestpaper_div2_01").css("display", "none");
 	$("#newtestpaper_div2_02").css("display", "block");
-	/*$("input[name='ther']").removeAttr('checked');*/
-	$(obj).children("input").attr("checked", true);
+	$("input[name='ther']").parent().parent().remove();
 	$("#f2").find("li").remove();
 	$(".tcdPageCode1").remove();
 	$(".tcdPageCode").remove();
 	if($(obj).children("input").val() == 1) {
+		a2 = "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='1' checked=checked />个人收藏</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='2' />校本题库</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav ' onclick='radioItembank(this)'><input type='radio' name='ther' value='3'/>自定义题库</li></div></li>";
+		$("#ff").append(a2);
 		isWhichoneItem = 1;
 		itembackMethod = "favor/getQuestions";
 		getQuestionPicUrl = "self/getQuestionPic";
 	} else if($(obj).children("input").val() == 2) {
+		a2 = "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='1'  />个人收藏</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='2' checked=checked />校本题库</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav ' onclick='radioItembank(this)'><input type='radio' name='ther' value='3'/>自定义题库</li></div></li>";
+		$("#ff").append(a2);
 		isWhichoneItem = 2
 		itembackMethod = "school/getQuestions";
 		getQuestionPicUrl = "school/getQuestionPic";
 	} else if($(obj).children("input").val() == 3) {
+		a2 = "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='1'  />个人收藏</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav 'onclick='radioItembank(this)'><input type='radio'  name='ther' value='2'  />校本题库</li></div></li>";
+		a2 += "<li><div class='d-secondNav s-secondNav ' onclick='radioItembank(this)'><input type='radio' name='ther' value='3' checked=checked />自定义题库</li></div></li>";
+		$("#ff").append(a2);
 		isWhichoneItem = 3;
 		itembackMethod = "self/getQuestions";
 		getQuestionPicUrl = "self/getQuestionPic";

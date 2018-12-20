@@ -50,7 +50,6 @@ function getQuestionNode(){
 		//	$("#mm").val(roomInfo.mm);
 		//	$("#ymd").val(roomInfo.ymd);
 	}
-
 }
 
 function toQuestion() {
@@ -97,7 +96,6 @@ function toList() {
 	} else {
 		window.location.replace("../Front/BrowseTopics.html");
 	}
-
 }
 
 function inintDate() {

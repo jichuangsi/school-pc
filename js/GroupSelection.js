@@ -390,13 +390,15 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "</div>";
 			$("#Previewinfo").append(a1);
 		}
+		var hideobj = document.getElementById("hidebg");
+		hidebg.style.display = "block"; //显示隐藏层 
+		hidebg.style.minWidth="1520px";
+		hidebg.style.height=$(document).height()+"px";  //设置隐藏层的高度为当前页面高度 
+		document.getElementById("previews").style.display = "block"; //显示弹出层 
 	} else {
-		$("#Previewinfo").append("<h2 id='presH2' style='color:red;text-align:center;'>暂时没有所选题目</h2>");
+		swal("请先选择题目!");
 	}
-	var hideobj = document.getElementById("hidebg");
-	hidebg.style.display = "block"; //显示隐藏层 
-	//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
-	document.getElementById("previews").style.display = "block"; //显示弹出层 
+	
 }
 
 function hide() { //去除隐藏层和弹出层 

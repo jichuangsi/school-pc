@@ -796,7 +796,8 @@ function PreviewPaper() //显示隐藏层和弹出层
 		}
 		var hideobj = document.getElementById("hidebg");
 		hidebg.style.display = "block"; //显示隐藏层 
-		//hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+		hidebg.style.minWidth="1520px";
+		hidebg.style.height=$(document).height()+"px";  //设置隐藏层的高度为当前页面高度 
 		document.getElementById("previews").style.display = "block"; //显示弹出层 
 	}
 }
