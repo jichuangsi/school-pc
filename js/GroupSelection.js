@@ -27,7 +27,6 @@ $(function() {
 	$(".areas").hide();
 	getgradename();
 	inits();
-	Obtain_subject();
 });
 var user;
 var pharseId=null;
@@ -141,14 +140,27 @@ function load_ChapterInfo(ChapterInfo) {
 			if(ChapterInfo[i].child[j].child != null) {
 				a1 += "<ul class='d-secondDrop s-secondDrop'>"
 				for(var e = 0; e < ChapterInfo[i].child[j].child.length; e++) {
-					a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
-					/*if(ChapterInfo[i].child[j].child[e].child != null) {
+//					a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
+					if(ChapterInfo[i].child[j].child[e].child != null &&ChapterInfo[i].child[j].child[e].child != "" && ChapterInfo[i].child[j].child[e].child.length>0 ) {
+						a1 += "<li><div class='d-secondNavs s-secondNavs' ><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].child[j].child[e].name + "</span></div>"
 						a1 += "<ul class='d-secondDrop s-secondDrop'>"
 						for(var q = 0; q < ChapterInfo[i].child[j].child[e].child.length; q++) {
-							a1 += "<li><div class='d-secondNavs s-secondNavs'><i class='fa fa-plus-square-o'></i><a onclick='Obtain_subject(this," + ChapterInfo[i].child[j].child[e].child[q].id + ")'>" + ChapterInfo[i].child[j].child[e].child[q].name + "</a><i class='fa fa-caret-right fr '></i></div>"
+							if(ChapterInfo[i].child[j].child[e].child[q].child != null && ChapterInfo[i].child[j].child[e].child[q].child != "" && ChapterInfo[i].child[j].child[e].child[q].child.length>0){
+								a1 += "<li><div class='d-secondNavs s-secondNavs '><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].child[j].child[e].child[q].name + "</span></div>"
+								a1 += "<ul class='d-secondDrop s-secondDrop'>"
+								for(var u=0;u<ChapterInfo[i].child[j].child[e].child[q].child.length;u++){
+									a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].child[u].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].child[u].name + "</div>"
+								}
+								a1 += "</ul>"
+							}else{
+								a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].name + "</div>"
+							}
+//						a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].name + "</div>"
 						}
 						a1 += "</ul>"
-					}*/
+					}else{
+						a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
+					}
 					a1 += " </li>"
 				}
 				a1 += "</ul>";

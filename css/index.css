@@ -96,10 +96,10 @@
   margin-top: 10px;
 }
 .s-secondNav:hover,.d-firstNav:hover{
-	background-color: #00B83F;cursor: pointer;
+	color: #00B83F;cursor: pointer;
 }
 .s-secondNavs:hover,.d-firstNavs:hover{
-	background-color: #00B83F;cursor: pointer;
+	color: #00B83F;cursor: pointer;
 }
 .s-side .d-secondDrop {
   margin-left: 41px;
@@ -122,5 +122,8 @@
   display: none;
 }
 .Knowledgesbackground{
-	background: #00B83F;
+	color: #00B83F;
 	}
+.textbookEdition:hover{
+	background-color:#00B83F;
+}	

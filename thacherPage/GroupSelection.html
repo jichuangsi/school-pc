@@ -18,20 +18,6 @@
 		<script src="../js/jquery.page.js"></script>
 		<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
 		<link rel="stylesheet" href="../css/sweetalert.css" />
-		<!--<script type="text/javascript">
-			$(window).resize(function() { 
-				var iframe=document.getElementById("content_frame");
-//				var navtop=document.getElementById("nav-top");
-				iframe.width=document.documentElement.clientWidth;
-				$("#nav-top").css("width",document.documentElement.clientWidth+"px")
-//				navtop.width=window.screen.availWidth;
-//				alert(window.screen.availWidth+"---"+window.screen.width);
-				});
-				function ss(){
-//					alert(window.scrollWidth+"---"+window.screen.width+";;;;"+document.body.scrollWidth);
-					alert(window.innerWidth+"---"+document.documentElement.clientWidth+":body"+document.body.clientWidth);
-				}
-		</script>-->
 	</head>
 	<style>
 		.MathJye table {
@@ -120,10 +106,10 @@
 		</div>
 		<div class="newtestpaper" >
 			<!--左边树状图-->
-			<div class="s-side">
+			<div class="s-side" style="white-space: nowrap;">
 				<ul>
 					<li class="first">
-						<div class="d-firstNav s-firstNav clearfix">
+						<div class="d-firstNav s-firstNav clearfix textbookEdition">
 							<span class="fa fa-bars" style="color: #0000FF;margin-left: 0px;"></span>
 							<span style="color: #003EFF;">教科书版本</span>
 							<span class="fa fa-caret-right fr " style="color:#0000Ff;font-size: 23px;"></span>
@@ -132,7 +118,7 @@
 						</ul>
 					</li>
 					<li class="first">
-						<div class="d-firstNav s-firstNav clearfix" id="KnowledgeCatalog">
+						<div class="d-firstNav s-firstNav clearfix textbookEdition" id="KnowledgeCatalog">
 							<span class="fa fa-bars" style="color: #0000FF;margin-left: 0px;"></span>
 							<span  style="color: #003EFF;">知识点目录</span>
 							<span class="fa fa-caret-right fr " style="color:#0000Ff;font-size: 23px;"></span>
@@ -240,7 +226,7 @@
 					</div>
 					<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;">
 							<img src="../img/Missingdata.png" />
-							<h3 >没有找到相关试题，换个条件试试吧！</h3>
+							<h3 >请先选择相关的知识点！</h3>
 					</div>
 				</div>
 				
@@ -258,21 +244,20 @@
 						<dl style="display: none;">
 							<dd>
 								<div style="float: left;">年份:</div>
-								<div class="" style="display: table;">
+								<div class="f6" style="display: table;">
 									<a class="d1" onclick="year_a_click2(this,null)">全部</a>
 									<a onclick="year_a_click2(this)">2018</a>
 									<a onclick="year_a_click2(this)">2017</a>
 									<a onclick="year_a_click2(this)">2016</a>
 									<a onclick="year_a_click2(this)">2015</a>
 									<a onclick="year_a_click2(this)">更早</a>
-
 								</div>
 							</dd>
 						</dl>
 						<dl>
 							<dd>
 								<div style="float: left;">题型:</div>
-								<div class="" style="display: table;">
+								<div class="f7" style="display: table;">
 									<a class="d1" onclick="questionType_a_click2(this,null)">全部</a>
 									<a onclick="questionType_a_click2(this)">选择题</a>
 									<a onclick="questionType_a_click2(this)">多选题</a>
@@ -289,7 +274,7 @@
 						<dl>
 							<dd>
 								<div style="float: left;">难度:</div>
-								<div class="" style="display: table;">
+								<div class="f8" style="display: table;">
 									<a class="d1" onclick="difficultyType_a_click2(this,null)">全部</a>
 									<a onclick="difficultyType_a_click2(this,1.00)">简单</a>
 									<a onclick="difficultyType_a_click2(this,2.00)">一般</a>
