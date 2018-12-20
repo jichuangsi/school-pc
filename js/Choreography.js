@@ -24,6 +24,10 @@ $(function() {
 	inintUPdate();
 	initAttendtimehour("");
 	initAttendtimemin("");
+	pageList();
+	
+});
+function pageList(){
 	layui.use(['laypage', 'layer'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer;
@@ -45,8 +49,7 @@ $(function() {
 		});
 	});
 	
-	
-});
+}
 function getNowFormatDate() {
 	var date = new Date();
 	var seperator1 = "-";
@@ -273,15 +276,13 @@ function updateSub() {
 		contentType: 'application/json',
 		success: function(returndata) {
 			swal("修改完成!", "", "success");
-			CloseDiv(show_div, bg_div);
-			showLoad();
+			CloseDiv("MyDiv","fade");
 		},
 		error: function(returndata) {
 			// alert(returndata);
 			swal("修改失败!", "", "error");
 		}
 	});
-	creaClass();
 }
 
 function pageIndex(data) {

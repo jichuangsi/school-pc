@@ -54,7 +54,11 @@ function getQuestionNode() {
 }
 
 function toQuestion() {
+	saveRoom();
+	window.location.replace("../thacherPage/Newclassroom_Newtestpaper.html");
+}
 
+function saveRoom() {
 	var classid = $("#AttendClass").val();
 	var className = $("#AttendClass option:selected").text();
 	var Name = $("#ClassName").val();
@@ -72,7 +76,6 @@ function toQuestion() {
 		"ymd": ymd
 	};
 	sessionStorage.setItem("userIn", JSON.stringify(user));
-	window.location.replace("../thacherPage/Newclassroom_Newtestpaper.html");
 }
 
 function getNowFormatDate() {
@@ -92,6 +95,7 @@ function getNowFormatDate() {
 }
 
 function toList() {
+	saveRoom();
 	if(questionNode == null || questionNode.length == 0) {
 		swal("并没有添加题目哦!");
 	} else {

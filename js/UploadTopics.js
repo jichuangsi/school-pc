@@ -210,7 +210,7 @@ function CheckBox(obj) {
 	} else {
 		answer = answer + str + '|';
 	}
-	 
+
 }
 //判断
 function packanswer(obj) {
@@ -286,7 +286,7 @@ function optionNumberChe(obj) {
 		soure.next().append(node);
 	}
 }
-var ansCha = new Array("答案1", "答案2", "答案3", "答案4", "答案5");
+var ansCha = new Array("1:", "2:", "3:", "4:", "5:");
 //填空题
 var tknumber;
 
@@ -310,7 +310,26 @@ function pack() {
 			answer = "";
 			answer = answer + ansCha[i] + '|';
 		} else {
-			answer = answer + ansCha[i] + '|';
+			if(answer.indexOf('A') != -1) {
+				answer = "";
+				answer = answer + ansCha[i] + '|';
+			} else if(answer.indexOf('B') != -1) {
+				answer = "";
+				answer = answer + ansCha[i] + '|';
+			} else if(answer.indexOf('c') != -1) {
+				answer = "";
+				answer = answer + ansCha[i] + '|';
+			} else if(answer.indexOf('D') != -1) {
+				answer = "";
+				answer = answer + ansCha[i] + '|';
+				answer = "";
+			} else if(answer.indexOf('E') != -1) {
+				answer = "";
+				answer = answer + ansCha[i] + '|';
+			} else {
+				answer = answer + ansCha[i] + '|';
+			}
+
 		}
 	}
 }
@@ -358,7 +377,9 @@ function saveQuestion() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				$("input[ type='text']").val("");;
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);
 			},
 			error: function(returndata) {
 				// alert(returndata);
@@ -407,7 +428,9 @@ function saveQuestionPack() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				$("input[ type='text']").val("");
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -421,10 +444,16 @@ function saveQuestionStone() {
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionStone']").val();
 	var knowledge = $("#deptselect option:selected").text();
-	var an=answer.substring(0,answer.length-1);
-	var arrAn =an.split("|");
-	arrAn.sort();
-	answer=arrAn.join("|");
+	if(answer == undefined || answer == null || answer == "") {
+		answer = "";
+	} else {
+		var an = answer.substring(0, answer.length - 1);
+		var arrAn = an.split("|");
+		arrAn.sort();
+		arrAn = unique1(arrAn);
+		answer = arrAn.join("|");
+	}
+
 	var answerOptions = new Array();
 	for(i = 0; i < potionsStoneNumber; i++) {
 		answerOptions.push($("input[name=potionsStone" + i + "]").val());
@@ -463,7 +492,9 @@ function saveQuestionStone() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				$("input[ type='text']").val("");
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -480,6 +511,9 @@ function saveCompletionQuestion() {
 	var answerOptions = new Array();
 	for(i = 0; i < tknumber; i++) {
 		answerOptions.push($("input[name=completion" + i + "]").val());
+	}
+	if(answer != null && answer != undefined) {
+		answer=answer.substring(0, answer.length - 1)
 	}
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
@@ -515,7 +549,9 @@ function saveCompletionQuestion() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				swal("保存成功!", "", "success");
-				$("input[ type='text']").val("");
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -569,4 +605,14 @@ function getNowFormatDate() {
 
 function ref() {
 	window.location.reload();
+}
+//数组去除相同的数据
+function unique1(array) {
+	var r = [];
+	for(var i = 0, l = array.length; i < l; i++) {
+		for(var j = i + 1; j < l; j++)
+			if(array[i] == array[j]) j == ++i;
+		r.push(array[i]);
+	}
+	return r;
 }
