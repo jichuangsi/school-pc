@@ -201,6 +201,7 @@ function Knowledge_click(obj){
 	payear=null;
 	paareas=null;
 	pageIndex1=1;
+	isItembank=0;
 	Obtain_subject();
 }
 //加载题目列表
@@ -409,7 +410,11 @@ function savetestpaper_click() {
 	} else if(Number($("#paper_number").text()) >= 0 && $("#examName").val() != null && $("#examName").val() != "") {
 		savetestpaper();
 		questionList=[];
-		Obtain_subject();
+		if(isItembank>0){
+			loopitem();
+		}else{
+			Obtain_subject();
+		}
 		$("#paper_number").text(0);
 		$("#examName").val("");
 		$("#examSecondName").val("");
@@ -487,7 +492,6 @@ function add_paper(obj, istype) {
 					"gradeId": itembaklist.content[i].gradeId,
 					"knowledge": itembaklist.content[i].knowledge,
 					"questionIdMD52": itembaklist.content[i].questionIdMD52,
-					"questionStatus": "NOTSTART",
 					"questionPic": itembaklist.content[i].questionPic
 				})
 				var namber = questionList.length
@@ -510,7 +514,6 @@ function add_paper(obj, istype) {
 					"gradeId": "",
 					"knowledge": questionNode[i].knowledges,
 					"questionIdMD52": questionNode[i].qid,
-					"questionStatus": "NOTSTART",
 					"questionPic": ""
 				})
 				var namber = questionList.length

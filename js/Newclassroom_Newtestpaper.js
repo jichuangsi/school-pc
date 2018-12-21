@@ -291,6 +291,7 @@ function Knowledge_click(obj) {
 	payear = null;
 	paareas = null;
 	pageIndex1 = 1;
+	isItembank=0;
 	Obtain_subject();
 }
 //循环展示题目

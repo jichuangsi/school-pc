@@ -20,12 +20,14 @@ var pardiff = null; //难度(传进后台的查询条件)
 var isWhichoneItem = 1; //判断当前选中的是哪个题库(个人收藏，校本题库，自定义题库)
 var keywordinput = null; //搜索输入的关键字
 var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
+var isItembank=0;   //用来判断知识点的题目还是个人题库、校本题库、自定义题库的题目
 //个人题库、校本题库、自定义题库点击事件
 function radioItembank(obj) {
 	total = 1;
 	pagecount = 1;
 	pagenum = 1;
 	pageIndex = 1;
+	isItembank=1;
 	$("#keywordinput").val("");
 	keywordinput = null;
 	$("#newtestpaper_div2_01").css("display", "none");
