@@ -130,46 +130,26 @@ function dropSwifts(dom, drop) {
 		dom.parent().siblings().find("i").addClass("fa-plus-square-o");
 		
 	}
+var knowledgeTree="";
+function iterateKnowledgeTree(node){
+	if(node.child && node.child.length > 0){
+		knowledgeTree += "<li><div class='d-secondNavs s-secondNavs'><i class='fa fa-plus-square-o'></i><span>" + node.name + "</span></div><ul class='d-secondDrop s-secondDrop'>";
+		node.child.forEach(function(item, index){
+			iterateKnowledgeTree(item);
+		});
+		knowledgeTree += "</ul></li>";
+	}else{
+		knowledgeTree += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + node.oldId +"'>" + node.name + "</div></li>"
+	}
+}
 //绑定知识点列表
 function load_ChapterInfo(ChapterInfo) {
 	$("#f2").find("li").remove();
+	knowledgeTree="";
 	for(var i = 0; i < ChapterInfo.length; i++) {
-		var a1 = "<li><div class='d-secondNavs s-secondNavs'><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].name + "</span></div> <ul class='d-secondDrop s-secondDrop'>"
-		for(var j = 0; j < ChapterInfo[i].child.length; j++) {
-			a1 += "<li><div class='d-secondNavs s-secondNavs'><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].child[j].name + "</span></div>"
-			if(ChapterInfo[i].child[j].child != null) {
-				a1 += "<ul class='d-secondDrop s-secondDrop'>"
-				for(var e = 0; e < ChapterInfo[i].child[j].child.length; e++) {
-//					a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
-					if(ChapterInfo[i].child[j].child[e].child != null &&ChapterInfo[i].child[j].child[e].child != "" && ChapterInfo[i].child[j].child[e].child.length>0 ) {
-						a1 += "<li><div class='d-secondNavs s-secondNavs' ><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].child[j].child[e].name + "</span></div>"
-						a1 += "<ul class='d-secondDrop s-secondDrop'>"
-						for(var q = 0; q < ChapterInfo[i].child[j].child[e].child.length; q++) {
-							if(ChapterInfo[i].child[j].child[e].child[q].child != null && ChapterInfo[i].child[j].child[e].child[q].child != "" && ChapterInfo[i].child[j].child[e].child[q].child.length>0){
-								a1 += "<li><div class='d-secondNavs s-secondNavs '><i class='fa fa-plus-square-o'></i><span>" + ChapterInfo[i].child[j].child[e].child[q].name + "</span></div>"
-								a1 += "<ul class='d-secondDrop s-secondDrop'>"
-								for(var u=0;u<ChapterInfo[i].child[j].child[e].child[q].child.length;u++){
-									a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].child[u].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].child[u].name + "</div>"
-								}
-								a1 += "</ul>"
-							}else{
-								a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].name + "</div>"
-							}
-//						a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].child[q].oldId +"'>" + ChapterInfo[i].child[j].child[e].child[q].name + "</div>"
-						}
-						a1 += "</ul>"
-					}else{
-						a1 += "<li><div class='d-secondNavs s-secondNavs Knowledges' onclick='Knowledge_click(this)' data='" + ChapterInfo[i].child[j].child[e].oldId +"'>" + ChapterInfo[i].child[j].child[e].name + "</div>"
-					}
-					a1 += " </li>"
-				}
-				a1 += "</ul>";
-			}
-			a1 += "</li>"
-		}
-		a1 += "</ul></li>";
-		$("#f2").append(a1);
+		iterateKnowledgeTree(ChapterInfo[i]);
 	}
+	$("#f2").append(knowledgeTree);
 	$('.d-firstNavs').click(function(e) {
 		dropSwift($(this), '.d-firstDrop');
 		e.stopPropagation();
