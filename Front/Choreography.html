@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!DOCTYPE html PUBLIC“-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml”>
 <html lang="zh-CN">
 
 	<head>
@@ -15,7 +17,6 @@
 	<script type="text/javascript" src="../js/httplocation.js"></script>
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
-
 	<link rel="stylesheet" href="../css/sweetalert.css" />
 	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
 	<link rel="stylesheet" type="text/css" href="../js/css/laydate.css" />
@@ -124,16 +125,16 @@
 					<div class="nav-ul">
 						<ul>
 							<li>教学：</li>
-							<li onclick="liall()" id="li-all">全部</li>
-							<li onclick="liall()" class="li-Completed">已完成</li>
-							<li onclick="liall()" class="li-not">未完成</li>
+							<li onclick="liall(this)" class="xz" id="li-all">全部</li>
+							<li onclick="liall(this)" >已完成</li>
+							<li onclick="liall(this)" >未完成</li>
 						</ul>
 					</div>
 					<div id="container">
 						<div class="search bar6">
 							<form>
 								<input type="text" placeholder="请输入考试、作业名称" id="cname">
-								<button type="submit"></button>
+								<button type="submit" onclick="inintClassDate()"></button>
 							</form>
 						</div>
 					</div>

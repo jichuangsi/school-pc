@@ -2,16 +2,17 @@ document.write("<script type='text/javascript' src='../js/httplocation.js' ></sc
 var local;
 var accessToken;
 var datalist;
-var pageSize = 2;
-var curr;//第几页
+var pageSize = 3;
+var curr; //第几页
 var user;
-var count;//多少堂课
-function setCount(){
+var count; //多少堂课
+function setCount() {
 	$("#count").text(count);
 	$("#index").text(curr);
-	var size=Math.ceil(count / pageSize);
+	var size = Math.ceil(count / pageSize);
 	$("#Size").text(size);
 }
+
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -25,9 +26,10 @@ $(function() {
 	initAttendtimehour("");
 	initAttendtimemin("");
 	pageList();
-	
+
 });
-function pageList(){
+
+function pageList() {
 	layui.use(['laypage', 'layer'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer;
@@ -43,13 +45,14 @@ function pageList(){
 				if(!first) {
 					$("#main-list").empty();
 				}
-				curr=obj.curr;
+				curr = obj.curr;
 				LookClass((obj.curr - 1) * pageSize, datalist);
 			}
 		});
 	});
-	
+
 }
+
 function getNowFormatDate() {
 	var date = new Date();
 	var seperator1 = "-";
@@ -83,10 +86,15 @@ function getgradename() {
 //}
 //lastpage 上一页
 //nextpage 下一页
-function liall() {
-	var obj = document.getElementById("li-all");
-	obj.style.backgroundColor = "#3d72fe";
-	obj.style.color = "white";
+var stasus = 'NOTSTART';
+
+function liall(obj) {
+	$(obj).addClass('xz').siblings().removeClass('xz');
+	if($(obj).text() == "已完成") {
+
+	} else if($(obj).text() == "未完成") {
+		stasus = 'NOTSTART';
+	}
 }
 
 function inintClassDate() {
@@ -94,13 +102,13 @@ function inintClassDate() {
 	if(cname == null || name == '') {
 		cname = "";
 	}
-	var ymd=$("test29").val();
+	var ymd = $("test29").val();
 	var cs = {
 		"keyWord": cname,
 		"pageIndex": 1,
 		"pageSize": 10,
 		"sortNum": 2,
-		"status": "NOTSTART",
+		"status": stasus,
 		"time": ymd
 	};
 	$.ajax({
@@ -118,7 +126,7 @@ function inintClassDate() {
 		success: function(data) {
 			//pageIndex(data);
 			datalist = data.data.content;
-			count=datalist.length;
+			count = datalist.length;
 			//console.log(data.dataList);
 		},
 		error: function() {
@@ -135,7 +143,7 @@ function LookClass(start, datalist) {
 		//$(sourceNode).remove("#main-ch .room-class");
 		var num = 1;
 		var len
-		if((curr*pageSize-datalist.length)<0) {
+		if((curr * pageSize - datalist.length) < 0) {
 			len = start + pageSize;
 		} else {
 			len = datalist.length;
@@ -164,7 +172,7 @@ function LookClass(start, datalist) {
 }
 
 function showBg(obj) {
-	
+
 	var bh = $("body").height();
 	var bw = $("body").width();
 	$("#Update").css({
@@ -276,7 +284,7 @@ function updateSub() {
 		contentType: 'application/json',
 		success: function(returndata) {
 			swal("修改完成!", "", "success");
-			CloseDiv("MyDiv","fade");
+			CloseDiv("MyDiv", "fade");
 		},
 		error: function(returndata) {
 			// alert(returndata);
@@ -365,7 +373,7 @@ function DelDate(obj) {
 
 		});
 	});
-	
+
 }
 
 function showLoad() {
@@ -382,7 +390,7 @@ function showLoad() {
 
 function isComplete() {}
 
-function ShowDiv(MyDiv, fade,obj) {
+function ShowDiv(MyDiv, fade, obj) {
 	var id = $(obj).find("input[name='id']").val();
 	$("[name='courseId']").val(id);
 	var name = $(obj).parent().find("span[name='name']").text();

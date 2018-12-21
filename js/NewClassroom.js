@@ -251,9 +251,12 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	var array;
 	array = eaxms;
 	var $AttendClassTest = $("#ClassRoomSmallTest");
-	//	$AttendClassTest.find("option").remove();
+	$AttendClassTest.find("option").remove();
+	var node = document.createElement("option");
+	node.innerHTML = '<option value="-1">请选择试卷</option>';
+	$AttendClassTest.append(node);
 	for(var i = 0; i < array.length; i++) {
-		if(array[i].eaxmName == ClassRoomSmallTestVal) {
+		if(array[i].examName == ClassRoomSmallTestVal) {
 			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
 		} else {
 			$option = "<option value='" + array[i].examId + "'>" + array[i].examName + "</option>";
@@ -323,10 +326,10 @@ function splitStrmin($timehour) {
 function classname() {
 	var name = document.getElementById("ClassName").value;
 	if(name == null && name == "") {
-		alert("课堂名称不能为空");
+		swal("课堂名称不能为空!","","warning");
 		return false;
 	} else if(name.length < 3 || name.length > 18) {
-		alert("课题名称在4到18个字符之间");
+		swal("课题名称在4到18个字符之间!","","warning");
 		return false;
 	} else {
 		return true;
@@ -362,7 +365,7 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx">教学时长:</label><span id="" class="AttendClassVal-time">45分钟</span></div>';
 			conClass.innerHTML += '<div class="box-body-box">课堂简介	<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
 			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="' + id + '"  />删除课堂</div>';
-			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级44人 签到0人</span></div><div class="box-body-bj-bt"><label>课堂小测:</label><span id="" class="ClassRoomSmallTest">牛顿小测1</span> </div></div>';
+			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级' + datalist[i].courseForTeacher.students.length + '人 签到0人</span></div></div>';
 			soure.appendChild(conClass);
 		} //each
 	}
@@ -398,8 +401,8 @@ function DelDate(obj) {
 		"courseId": id
 	}
 	swal({
-		title: "您确定要删除吗？",
-		text: "您确定要删除这条数据？",
+		title: "您确定要删除这堂课吗？",
+		text: "您确定要删除这堂课？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,
@@ -418,7 +421,7 @@ function DelDate(obj) {
 			data: JSON.stringify(cc),
 		}).done(function(data) {
 			if(data.code == "0010") {
-				swal("操作成功!", "已成功删除数据！", "success");
+				swal("操作成功!", "已成功删除课堂！", "success");
 				creaClass();
 			} else {
 				swal("OMG", "删除操作失败了!", "error");
@@ -465,7 +468,7 @@ function CloseDiv(show_div, bg_div) {
 function getupload() {
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
 	var options = {
-		path: "http://192.168.31.154:8888/COURSESERVICE/console/saveCourseIco",
+		path: local + "/COURSESERVICE/console/saveCourseIco",
 		res: {},
 		onSuccess: function(res) {
 			//var data = JSON.parse(res);
