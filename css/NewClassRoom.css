@@ -428,3 +428,6 @@ body {
 	height: 100%;
 	padding-bottom: 10px;
 }
+.red{
+	border:red 1px solid;
+}

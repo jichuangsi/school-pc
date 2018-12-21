@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC“-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 <html xmlns=”http://www.w3.org/1999/xhtml”>
 
-<html>
+	<html>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
@@ -72,23 +72,26 @@
 		}
 	</style>
 	<script>
-		lay('#version').html('-v' + laydate.v);
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+			lay('#version').html('-v' + laydate.v);
 
-		//执行一个laydate实例
-		//常规用法
-		laydate.render({
-			elem: '#test1' //指定元素
-		});
+			//执行一个laydate实例
+			//常规用法
+			laydate.render({
+				elem: '#test1' //指定元素
+			});
 
-		//墨绿主题
-		laydate.render({
-			elem: '#test29',
-			theme: 'molv'
-		});
-		//自定义颜色
-		laydate.render({
-			elem: '#test30',
-			theme: '#393D49'
+			//墨绿主题
+			laydate.render({
+				elem: '#test29',
+				theme: 'molv'
+			});
+			//自定义颜色
+			laydate.render({
+				elem: '#test30',
+				theme: '#393D49'
+			});
 		});
 	</script>
 	<script>
@@ -114,9 +117,9 @@
 							<tr>
 								<td>
 									<div class="box-room-name-one">
-										<input type="hidden" id="icon" value=""/>
+										<input type="hidden" id="icon" value="" />
 										<span>课堂名称:</span>
-										<input id="ClassName" type="text" name="Name" placeholder="请输入课堂名称" onfocus="javascript:if(this.placeholder=='请输入课堂名称')this.placeholder='';" onblur="classname(),javascript:if(this.placeholder=='')this.placeholder='请输入课堂名称';" class="input-box" />
+										<input id="ClassName" type="text" name="Name" placeholder="请输入课堂名称" onfocus="onFocusName()" onblur="onBlurName(),classname()" class="input-box" />
 									</div>
 								</td>
 								<td>
@@ -132,7 +135,7 @@
 									<div class="box-room-name-one1">
 										<span>课堂小测:</span>
 										<select class="box-room-selet-cs" id="ClassRoomSmallTest" name="">
-											
+
 										</select>
 										<input type="button" value="浏览题目" class="box-room-selet-cs-but" onclick="toList()" />
 										<input type="button" value="新增题目" class="box-room-selet-cs-but" onclick="toQuestion()" />
@@ -245,4 +248,4 @@
 		</script>
 	</body>
 
-</html>
+	</html>

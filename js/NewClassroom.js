@@ -47,9 +47,6 @@ function getQuestionNode() {
 		initAttendtimemin(roomInfo.mm);
 		$("#test29").val(currentdate);
 		sessionStorage.removeItem('userIn');
-		//	$("#hh").val(roomInfo.hh);
-		//	$("#mm").val(roomInfo.mm);
-		//	$("#ymd").val(roomInfo.ymd);
 	}
 }
 
@@ -119,9 +116,7 @@ function inintDate() {
 			initAttendClass('', sClass);
 			initAttendTest('', eaxms);
 		},
-		error: function() {
-			// alert(returndata);
-		}
+		error: function() {}
 	});
 }
 
@@ -148,62 +143,65 @@ function creaClass() {
 }
 
 function formSub() {
-	questionNode = getQuestion();
-	var cpic = $("#icon").value;
-	var classid = document.getElementById("AttendClass").value;
-	var className = $("#AttendClass option:selected").text();
-	if(className == "请选择试卷") {
-		className = "";
-	}
-	var Name = document.getElementById("ClassName").value;
-	var info = $("#ClassroomSynopsis").val();
-	var hh = $("#time-hour").val();
-	var mm = $("#time-min").val();
-	var ymd = $("#test29").attr('placeholder');
-	var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
-	var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
-	var cc = {
-		"classId": classid,
-		"className": className,
-		"courseEndTime": 0,
-		"courseInfo": info,
-		"courseName": Name,
-		"courseStartTime": currentDateLong,
-		"createTime": 0,
-		"pageNum": 0,
-		"pageSize": 0,
-		"questions": questionNode,
-		"teacherId": "string",
-		"teacherName": "string",
-		"coursePic": cpic,
-		"subjectName": user.roles[0].primarySubject.subjectName
-	};
-	console.log(JSON.stringify(cc));
-	$.ajax({
-		url: local + "/COURSESERVICE/console/saveCourse",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: false,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			if(returndata.code == "0010") {
-				swal("新建成功!", "", "success");
-				sessionStorage.removeItem('lastname');
-				sessionStorage.removeItem('userIn');
-			} else {
-				swal("OMG", "操作失败了!", "error");
-			}
-
-		},
-		error: function(returndata) {
-			// alert(returndata);
+	if(flag == 3) {
+		questionNode = getQuestion();
+		var cpic = $("#icon").value;
+		var classid = document.getElementById("AttendClass").value;
+		var className = $("#AttendClass option:selected").text();
+		if(className == "请选择试卷") {
+			className = "";
 		}
-	});
-	creaClass();
+		var Name = document.getElementById("ClassName").value;
+		var info = $("#ClassroomSynopsis").val();
+		var hh = $("#time-hour").val();
+		var mm = $("#time-min").val();
+		var ymd = $("#test29").attr('placeholder');
+		var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
+		var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
+		var cc = {
+			"classId": classid,
+			"className": className,
+			"courseEndTime": 0,
+			"courseInfo": info,
+			"courseName": Name,
+			"courseStartTime": currentDateLong,
+			"createTime": 0,
+			"pageNum": 0,
+			"pageSize": 0,
+			"questions": questionNode,
+			"teacherId": "string",
+			"teacherName": "string",
+			"coursePic": cpic,
+			"subjectName": user.roles[0].primarySubject.subjectName
+		};
+		console.log(JSON.stringify(cc));
+		$.ajax({
+			url: local + "/COURSESERVICE/console/saveCourse",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: false,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				if(returndata.code == "0010") {
+					swal("新建成功!", "", "success");
+					sessionStorage.removeItem('lastname');
+					sessionStorage.removeItem('userIn');
+				} else {
+					swal("OMG", "操作失败了!", "error");
+				}
+			},
+			error: function(returndata) {}
+		});
+		creaClass();
+	} else if(flag == 2) {
+		swal("课堂名称长度在4~18", "", "warning");
+	} else {
+		swal("请输入课堂名称！", "", "warning");
+	}
 }
 //复制课堂点击事件
 function copyClassRoom(obj) {
@@ -322,17 +320,33 @@ function splitStrmin($timehour) {
 	}
 	return min;
 }
+var flag;
 
 function classname() {
 	var name = document.getElementById("ClassName").value;
-	if(name == null && name == "") {
-		swal("课堂名称不能为空!","","warning");
-		return false;
-	} else if(name.length < 3 || name.length > 18) {
-		swal("课题名称在4到18个字符之间!","","warning");
-		return false;
+	if(name == null || name == "") {
+		$("input[name='Name']").css('border-color', 'red');
+		return flag = 1;
+	} else if(name.length < 4 || name.length > 18) {
+		$("input[name='Name']").css('border-color', 'red');
+		return flag = 2;
 	} else {
-		return true;
+		$("input[name='Name']").css('border-color', '#3d72fe');
+		return flag = 3;
+	}
+}
+
+function onBlurName() {
+	var pname = $("#ClassName").attr('placeholder');
+	if(pname == null || pname == "") {
+		$("#ClassName").attr('placeholder', "请输入课堂名称");
+	}
+}
+
+function onFocusName() {
+	var pname = $("#ClassName").attr('placeholder');
+	if(pname == "请输入课堂名称") {
+		$("#ClassName").attr('placeholder', "");
 	}
 }
 
@@ -365,7 +379,7 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx">教学时长:</label><span id="" class="AttendClassVal-time">45分钟</span></div>';
 			conClass.innerHTML += '<div class="box-body-box">课堂简介	<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
 			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="' + id + '"  />删除课堂</div>';
-			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级' + datalist[i].courseForTeacher.students.length + '人 签到0人</span></div></div>';
+			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级一共' + datalist[i].courseForTeacher.students.length + '人</span></div></div>';
 			soure.appendChild(conClass);
 		} //each
 	}

@@ -20,12 +20,11 @@ function getLocation() {
 $(function() {
 	getLocation();
 	getgradename();
-	inintClassDate();
 	getNowFormatDate();
-	inintUPdate();
 	initAttendtimehour("");
 	initAttendtimemin("");
-	pageList();
+	inintUPdate();
+	inintClassDate();
 
 });
 
@@ -45,6 +44,7 @@ function pageList() {
 				if(!first) {
 					$("#main-list").empty();
 				}
+				$("#main-list").empty();
 				curr = obj.curr;
 				LookClass((obj.curr - 1) * pageSize, datalist);
 			}
@@ -66,7 +66,7 @@ function getNowFormatDate() {
 		strDate = "0" + strDate;
 	}
 	currentdate = year + seperator1 + month + seperator1 + strDate;
-	$("#test29").attr('placeholder', currentdate);
+	$("#test29").attr('placeholder', '请选择需要查找课堂的日期！');
 }
 
 function getgradename() {
@@ -87,22 +87,40 @@ function getgradename() {
 //lastpage 上一页
 //nextpage 下一页
 var stasus = 'NOTSTART';
-
+//
 function liall(obj) {
 	$(obj).addClass('xz').siblings().removeClass('xz');
 	if($(obj).text() == "已完成") {
-
+		stasus = 'FINISH';
+		inintClassDate();
 	} else if($(obj).text() == "未完成") {
 		stasus = 'NOTSTART';
+		inintClassDate();
+	} else if($(obj).text() == "正在上课") {
+		stasus = 'PROGRESS';
+		inintClassDate();
+	} else {
+		stasus = "NOTSTART";
+		inintClassDate();
 	}
 }
 
-function inintClassDate() {
-	var cname = $("#cname").val();
-	if(cname == null || name == '') {
+function inintClassDate(obj) {
+	if(obj == 1) {
+		var cname = $("#cname").val();
+		if(cname == null || cname == "") {
+			cname = "";
+		}
+		var ymd = $("#test29").val();
+		if(ymd == "" || ymd == null) {
+			ymd = "";
+		} else {
+			ymd = $("#test29").val();
+		}
+	} else {
 		cname = "";
+		ymd = "";
 	}
-	var ymd = $("test29").val();
 	var cs = {
 		"keyWord": cname,
 		"pageIndex": 1,
@@ -118,16 +136,15 @@ function inintClassDate() {
 		},
 		type: 'POST',
 		async: false,
-		cache: false,
+		cache: true,
 		contentType: 'application/json',
 		data: JSON.stringify(cs),
 		dataType: 'JSON',
 		retdate: {},
 		success: function(data) {
-			//pageIndex(data);
 			datalist = data.data.content;
 			count = datalist.length;
-			//console.log(data.dataList);
+			pageList();
 		},
 		error: function() {
 
@@ -153,9 +170,17 @@ function LookClass(start, datalist) {
 			var course = datalist[i].course;
 			var con = document.createElement('div');
 			var id = datalist[i].courseForTeacher.courseId;
+			var al = "";
+			if(datalist[i].courseForTeacher.courseStatus == "NOTSTART") {
+				al = "未完成教学";
+			} else if(datalist[i].courseForTeacher.courseStatus == "FINISH") {
+				al = "已完成教学";
+			} else if(datalist[i].courseForTeacher.courseStatus == "PROGRESS") {
+				al = "正在教学";
+			}
 			con.setAttribute('class', 'room-class');
 			con.innerHTML += '<div class="number">' + num + '</div>';
-			con.innerHTML += '<div class="class-static">' + "已完成教学 " + '</div>';
+			con.innerHTML += '<div class="class-static">' + al + '</div>';
 			con.innerHTML += '<div class="room-static"><label>教学内容：</label><span name="name">' + datalist[i].courseForTeacher.courseName + '</span></div>';
 			con.innerHTML += '<div class="room-class-two"><label>上课班级：</label><span name="className">' + datalist[i].courseForTeacher.className + '</span></div>';
 			con.innerHTML += '<div class="room-introduction">' + "课堂简介 " + '</div>';
@@ -163,7 +188,7 @@ function LookClass(start, datalist) {
 			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>45分钟</span></div>';
 			con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
 			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
-			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + "班级45人" + '</span><label>签到</label><span>45人</span><div class="class-xq">查看详情</div></div><div><div class="room-class-two"><label>课堂小测：</label><span>' + "牛顿小测 " + '</span></div>';
+			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="class-xq">查看详情</div></div><div><div class="room-class-two"> ';
 			sourceNode.appendChild(con);
 		}
 	}

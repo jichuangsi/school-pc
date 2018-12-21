@@ -395,11 +395,12 @@ function saveQuestionPack() {
 	var content = $("textarea[name='ChoicequestionPack']").val();
 	var knowledge = $("#packselect option:selected").text();
 	var parse = $("textarea[name='parsePack']").val();
+
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
 		var cc = {
 			"questionContent": content,
-			"options": [],
+			"options": ['A:正确', 'B:错误'],
 			"answer": answer,
 			"answerDetail": "",
 			"parse": parse,
@@ -505,23 +506,26 @@ function saveQuestionStone() {
 //填空题
 function saveCompletionQuestion() {
 	pack();
+	if(answer != null && answer != undefined) {
+		answer = answer.substring(0, answer.length - 1)
+	}
+	var arr = answer.split('|');
+	arr.sort();
 	var questionPic = $("input[name='questionPic']").val();
 	var content = $("textarea[name='ChoicequestionCompletion']").val();
 	var knowledge = $("#isselect option:selected").text();
 	var answerOptions = new Array();
 	for(i = 0; i < tknumber; i++) {
-		answerOptions.push($("input[name=completion" + i + "]").val());
+		answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
 	}
-	if(answer != null && answer != undefined) {
-		answer=answer.substring(0, answer.length - 1)
-	}
+	answer = answerOptions.join("<br />");
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
 		var cc = {
 			"questionContent": content,
-			"options": answerOptions,
-			"answer": answer,
+			"options": [],//填空题不需要选项
+			"answer": answer,//选项拼接在答案里面；
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
