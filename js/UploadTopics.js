@@ -400,7 +400,7 @@ function saveQuestionPack() {
 		knowledge = " ";
 		var cc = {
 			"questionContent": content,
-			"options": ['A:正确', 'B:错误'],
+			"options": ['正确', '错误'],
 			"answer": answer,
 			"answerDetail": "",
 			"parse": parse,
@@ -518,7 +518,7 @@ function saveCompletionQuestion() {
 	for(i = 0; i < tknumber; i++) {
 		answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
 	}
-	answer = answerOptions.join("<br />");
+	answer = answerOptions.join(";");
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";

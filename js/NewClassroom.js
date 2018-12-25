@@ -122,13 +122,17 @@ function toList() {
 			swal("并没有添加题目或选择小测试卷哦!");
 		}
 	} else {
-		getTransferExams(id);
 		var examsListone; //先获取一下有没有小测有没有题目
 		examsList = getExamsList();
+		if(examsList == null) {
+			getTransferExams(id);
+		}
 		for(var i = 0; i < examsList.length; i++) {
 			if(examsList[i].id == id) {
 				examsListone = examsList[i].data.data;
 				console.log(examsListone);
+			}else{
+				getTransferExams(id);
 			}
 		}
 		if(questionNode != null) {
@@ -211,14 +215,18 @@ function formSub() {
 			if(questionNode == null || questionNode == undefined || questionNode.length == 0) {
 				questionNode = [];
 			}
+			if(examsList == null) {
+				getTransferExams(id);
+			}
 			examsList = getExamsList();
 			var id = $("#ClassRoomSmallTest option:selected").val();
-			getTransferExams(id);
 			var examsListone; //先获取一下有没有小测有没有题目
 			for(var i = 0; i < examsList.length; i++) {
 				if(examsList[i].id == id) {
 					examsListone = examsList[i].data.data;
 					console.log(examsListone)
+				} else {
+					getTransferExams(id);
 				}
 			}
 			if(examsListone == undefined || examsListone == null) {
@@ -234,13 +242,13 @@ function formSub() {
 		var info = $("#ClassroomSynopsis").val();
 		var hh = $("#time-hour").val();
 		var mm = $("#time-min").val();
-		var rq=$("#test29").val()
-		if(rq==null){
+		var rq = $("#test29").val()
+		if(rq == null) {
 			var ymd = $("#test29").attr('placeholder');
-		}else{
-		var ymd = $("#test29").val();
+		} else {
+			var ymd = $("#test29").val();
 		}
-		
+
 		var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 		var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 		var cc = {
@@ -596,44 +604,55 @@ function getupload() {
 }
 //获取小测
 function getTransferExams(id) {
-	$.ajax({
-		url: local + "/EXAMSERVICE/exam/getQuestions/" + id,
-		headers: {
-			'accessToken': accessToken
-		},
-		type: "get",
-		async: false,
-		cache: true,
-		dataType: "JSON",
-		data: {},
-		success: function(data) { //需要修改data获取的数据类型
-			for(var i = 0; i < data.data.length; i++) {
-				data.data[i].questionId = "";
-			}
-			if(examsList == undefined) {
-				examsList = [];
-				examsList.push({
-					"id": id,
-					"data": data
-				});
-				sessionStorage.setItem('examsList', JSON.stringify(examsList));
-				console.log(examsList);
-			} else {
-				examsList = getExamsList();
-				for(var i = 0; i < examsList.length; i++) {
-					if(examsList[i].id == id) {
-						break;
-					} else {
-						examsList.push({
-							"id": id,
-							"data": data
-						});
-						sessionStorage.setItem('examsList', JSON.stringify(examsList));
-					}
+	if(id != 'undefined') {
+		$.ajax({
+			url: local + "/EXAMSERVICE/exam/getQuestions/" + id,
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "get",
+			async: false,
+			cache: true,
+			dataType: "JSON",
+			data: {},
+			success: function(data) { //需要修改data获取的数据类型
+				for(var i = 0; i < data.data.length; i++) {
+					data.data[i].questionId = "";
 				}
-				console.log(examsList);
+				examsList = getExamsList();
+				if(examsList == 'undefined' || examsList == null) {
+					examsList = [];
+					examsList.push({
+						"id": id,
+						"data": data
+					});
+					sessionStorage.setItem('examsList', JSON.stringify(examsList));
+					console.log(examsList);
+				} else {
+					for(var i = 0; i < examsList.length; i++) {
+						if(examsList[i].id == id) {
+
+						} else {
+							examsList.push({
+								"id": id,
+								"data": data
+							});
+						}
+					}
+					sessionStorage.setItem('examsList', JSON.stringify(examsList));
+					console.log(examsList);
+				}
 			}
-			sessionStorage.setItem('exams', JSON.stringify(data.data));
-		}
-	});
+		});
+	}
+
+}
+function showList(obj) {
+	var cc = {
+		type: "layer-spread",
+		title: "课堂简介",
+		content: "<div id='listTo' style='float: right;margin-right:-20px;'>",//class="btn btn8 class-xq" onclick="showList(this)"
+		area: ["200px", "300px"]
+	};
+	method.msg_layer(cc);
 }
