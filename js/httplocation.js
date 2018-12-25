@@ -3,9 +3,12 @@ var accessToken;
 var user;
 var question;
 var userInfo;
+var exams;
+var examsList;
 function httpLocation() {
 	onLocation = 'http://school.jichuangsi.com:81';
-	//onLocation='http://192.168.31.154'
+	//onLocation='http://192.168.31.108:8888'
+	//onLocation='http://192.168.31.154:8888'
 	return onLocation;
 }
 
@@ -24,4 +27,18 @@ function getQuestion(){
 function getUserInfo(){
 	userInfo=JSON.parse(sessionStorage.getItem("userIn"));
 	return userInfo;
+}
+//获取小测的题目
+function getExams(){
+	exams=JSON.parse(sessionStorage.getItem('exams'));
+	return exams;
+}
+//题目备份
+function getsubjectCache(){
+	subjectCache=JSON.parse(sessionStorage.getItem('subjectCache'));
+	return subjectCache;
+}
+function getExamsList(){
+	examsList=JSON.parse(sessionStorage.getItem('examsList'));
+	return examsList;
 }

@@ -189,22 +189,23 @@ body {
 .box-room-rn-span {
 	float: left;
 	margin-left: 127px;
-	margin-top: -5px;
+	margin-top: -46px;
 }
 
 .box-room-rn-text {
 	width: 821px;
-	height: 80px;
+	height: 110px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	resize: none;
 	border: solid 2px #3d72fe;
 	border-radius: 4px;
-	margin-left: -136px;
 	font-size: 18px;
 	font-weight: 300;
 	position: relative;
-	left: 62px;
+	left: -8px;
+	top: -13px;
+	
 }
 
 .box-sub {

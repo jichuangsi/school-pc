@@ -3,8 +3,11 @@ var local;
 var accessToken;
 var datalist;
 var pageSize = 3;
-var questionNode
+var questionNode;
 var roomInfo;
+var subjectCache; //题目备份
+var exams; //获取小测的题目
+var examsList; //多个题目小测
 
 function getLocation() {
 	local = httpLocation();
@@ -21,6 +24,7 @@ $(function() {
 	creaClass();
 	getQuestionNode();
 	getupload();
+	copyList();
 });
 var user;
 
@@ -32,13 +36,15 @@ function getgradename() {
 	$(".Subjectname").html(sname);
 }
 var sClass;
-var eaxms;
+var eaxms; //显示小测的
 var currentdate; //获取当前日期
 //加载页面获取数据获取保存的题目
 function getQuestionNode() {
 	if(roomInfo == undefined) {
 		initAttendtimehour('');
 		initAttendtimemin('');
+		initAttendClass('', sClass);
+		initAttendTest('', eaxms);
 	} else {
 		$("#AttendClass").val(roomInfo.classid);
 		$("#ClassName").val(roomInfo.Name);
@@ -46,7 +52,17 @@ function getQuestionNode() {
 		initAttendtimehour(roomInfo.hh);
 		initAttendtimemin(roomInfo.mm);
 		$("#test29").val(currentdate);
+		initAttendClass('', sClass);
+		initAttendTest(roomInfo.classEaxms, eaxms);
 		sessionStorage.removeItem('userIn');
+	}
+}
+
+function copyList() { //把备份的数据重新添加回去
+	if(subjectCache == null || subjectCache.length == 0) {
+
+	} else {
+		questionNode = subjectCache;
 	}
 }
 
@@ -58,6 +74,7 @@ function toQuestion() {
 function saveRoom() {
 	var classid = $("#AttendClass").val();
 	var className = $("#AttendClass option:selected").text();
+	var classEaxms = $("#ClassRoomSmallTest option:selected").text();
 	var Name = $("#ClassName").val();
 	var info = $("#ClassroomSynopsis").val();
 	var hh = $("#time-hour").val();
@@ -66,6 +83,7 @@ function saveRoom() {
 	var user = {
 		"classid": classid,
 		"className": className,
+		"classEaxms": classEaxms,
 		"Name": Name,
 		"info": info,
 		"hh": hh,
@@ -92,12 +110,51 @@ function getNowFormatDate() {
 }
 
 function toList() {
-	saveRoom();
-	if(questionNode == null || questionNode.length == 0) {
-		swal("并没有添加题目哦!");
+	var id = $("#ClassRoomSmallTest option:selected").val();
+	saveRoom(); //复制全部选择的信息
+	if(id == "请选择试卷" || id == -1) { //判断是否有选择小测
+		if(questionNode != null) {
+			subjectCache = questionNode;
+			sessionStorage.setItem('subjectCache', JSON.stringify(subjectCache)); //作为选择题目的一个备份
+			window.location.replace("../Front/BrowseTopics.html");
+		} else {
+			swal("并没有添加题目或选择小测试卷哦!");
+		}
 	} else {
-		window.location.replace("../Front/BrowseTopics.html");
+		getTransferExams(id);
+		var examsListone; //先获取一下有没有小测有没有题目
+		examsList = getExamsList();
+		for(var i = 0; i < examsList.length; i++) {
+			if(examsList[i].id == id) {
+				examsListone = examsList[i].data.data;
+				console.log(examsListone);
+			}
+		}
+		if(questionNode != null) {
+			subjectCache = questionNode;
+			sessionStorage.setItem('subjectCache', JSON.stringify(subjectCache)); //作为选择题目的一个备份
+			if(examsListone == null || examsListone.length == 0 || examsListone == undefined) {
+				window.location.replace("../Front/BrowseTopics.html");
+			} else {
+				for(var j = 0; j < examsListone.length; j++) {
+					questionNode.push(examsListone[j]);
+				}
+				window.location.replace("../Front/BrowseTopics.html");
+			}
+		} else {
+			if(examsListone == null || examsListone.length == 0 || examsListone == undefined) {
+				//之后在如果没有选择小测题目并且没有去选择题目浏览题目给个提示
+				if(questionNode == null || questionNode.length == 0) {
+					swal("并没有添加题目或选择小测试卷哦!");
+				}
+			} else {
+				questionNode = examsListone;
+				sessionStorage.setItem("lastname", JSON.stringify(questionNode));
+				window.location.replace("../Front/BrowseTopics.html");
+			}
+		}
 	}
+
 }
 
 function inintDate() {
@@ -113,8 +170,7 @@ function inintDate() {
 		success: function(data) {
 			sClass = data.data.transferClasses;
 			eaxms = data.data.transferExams;
-			initAttendClass('', sClass);
-			initAttendTest('', eaxms);
+
 		},
 		error: function() {}
 	});
@@ -141,7 +197,7 @@ function creaClass() {
 		}
 	});
 }
-
+//新建课堂
 function formSub() {
 	if(flag == 3) {
 		questionNode = getQuestion();
@@ -150,6 +206,28 @@ function formSub() {
 		var className = $("#AttendClass option:selected").text();
 		if(className == "请选择试卷") {
 			className = "";
+		} else {
+			if(questionNode == null || questionNode == undefined || questionNode.length == 0) {
+				questionNode = [];
+			}
+			examsList = getExamsList();
+			var id = $("#ClassRoomSmallTest option:selected").val();
+			getTransferExams(id);
+			var examsListone; //先获取一下有没有小测有没有题目
+			for(var i = 0; i < examsList.length; i++) {
+				if(examsList[i].id == id) {
+					examsListone = examsList[i].data.data;
+					console.log(examsListone)
+				}
+			}
+			if(examsListone == undefined || examsListone == null) {
+				questionNode = getQuestion();
+			} else {
+				for(var j = 0; j < examsListone.length; j++) {
+					questionNode.push(examsListone[j]);
+				}
+			}
+			//在新建课堂的时候把试卷题目添加进去;
 		}
 		var Name = document.getElementById("ClassName").value;
 		var info = $("#ClassroomSynopsis").val();
@@ -502,6 +580,50 @@ function getupload() {
 
 	var upload = tinyImgUpload('#upload', options);
 	document.getElementsByClassName('submit')[0].onclick = function(e) {
+
 		upload();
 	}
+}
+//获取小测
+function getTransferExams(id) {
+	$.ajax({
+		url: local + "/EXAMSERVICE/exam/getQuestions/" + id,
+		headers: {
+			'accessToken': accessToken
+		},
+		type: "get",
+		async: false,
+		cache: true,
+		dataType: "JSON",
+		data: {},
+		success: function(data) { //需要修改data获取的数据类型
+			for(var i = 0; i < data.data.length; i++) {
+				data.data[i].questionId = "";
+			}
+			if(examsList == undefined) {
+				examsList = [];
+				examsList.push({
+					"id": id,
+					"data": data
+				});
+				sessionStorage.setItem('examsList', JSON.stringify(examsList));
+				console.log(examsList);
+			} else {
+				examsList = getExamsList();
+				for(var i = 0; i < examsList.length; i++) {
+					if(examsList[i].id == id) {
+						break;
+					} else {
+						examsList.push({
+							"id": id,
+							"data": data
+						});
+						sessionStorage.setItem('examsList', JSON.stringify(examsList));
+					}
+				}
+				console.log(examsList);
+			}
+			sessionStorage.setItem('exams', JSON.stringify(data.data));
+		}
+	});
 }

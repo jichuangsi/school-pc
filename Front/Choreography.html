@@ -11,11 +11,13 @@
 	<script src="../js/jquery.js" type="text/javascript"></script>
 	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/method.js"></script>
 	<script type="text/javascript" src="../js/Choreography.js"></script>
 	<script type="text/javascript" src="../js/Tool.js"></script>
 	<script type="text/javascript" src="../js/httplocation.js"></script>
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
 	<link rel="stylesheet" href="../css/sweetalert.css" />
 	<link rel="stylesheet" type="text/css" href="../js/css/laydate.css" />
 	<link rel="stylesheet" href="../css/js.css" />
@@ -23,6 +25,9 @@
 	<link rel="stylesheet" href="../css/Choregraphy.css" />
 	<link rel="stylesheet" id="pageloader-css" href="../css/pageloader.css" type="text/css" media="all" />
 	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
+	<link rel="stylesheet" href="../css/layer-animate.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
 	<style>
 		.black_overlay {
 			display: none;
@@ -70,6 +75,69 @@
 				border-radius: 5px;
 			}
 		}
+		
+		.btn {
+			/*float: left;
+			font-size: 18px;
+			margin: 30px;*/
+			cursor: pointer;
+		}
+		
+		.sub-del {
+			color: white;
+			background-color: #b93535;
+			border-radius: 5px;
+			width: 80px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			float: right;
+			position: relative;
+			top: 5px;
+			right: 10px;
+		}
+		
+		.sub-del:hover {
+			cursor: pointer;
+		}
+		
+		.subjectList {
+			position: relative;
+			width: 850px;
+			height: 100%;
+			margin: 12px 20px;
+			border: 1px solid #F2F2F2;
+			font-size: 14px;
+			line-height: 27px;
+			cursor: pointer;
+		}
+		
+		.subjectList_top span {
+			width: 36px;
+			height: 36px;
+			background-color: #F2F2F2;
+			color: #FFFFFF;
+			float: left;
+			line-height: 36px;
+			text-align: center;
+			margin-right: 25px;
+		}
+		
+		.subjectList_top img {
+			float: left;
+			margin-right: 25px;
+		}
+		
+		.subjectinfo {
+			clear: both;
+			font-size: 14px;
+			width: 686px;
+			margin-left: 32px;
+		}
+		.subcontent{
+			float: left;
+		
+		}
 	</style>
 	<script>
 		layui.use('laydate', function() {
@@ -106,10 +174,24 @@
 			background-color: #fff;
 			border-radius: 2px;
 		}
+		.bar6 button {
+			background: #3D72FE;
+			border-radius: 0 5px 5px 0;
+			background-image: url(../img/searchBotton.png);
+			background-repeat: no-repeat;
+			background-position: 7px 5px;
+			height: 36px;
+			width: 42px;
+			cursor: pointer;
+			position: relative;
+			left: -7px;
+			top: 13px;
+			
+		}
 	</style>
 
 	<body>
-		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
+		<!--<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>-->
 		<div class="main">
 			<!--导航条-->
 			<div class="nav-top" style="min-width: 1520px;">
@@ -124,7 +206,7 @@
 				</div>
 				<div class="main-time">
 					<div class="layui-input-inline">
-						<input type="text" class="layui-input" id="test29" placeholder="" style="width: 250px;"onblur="inintClassDate(1)">
+						<input type="text" class="layui-input" id="test29" placeholder="" style="width: 250px;" onblur="inintClassDate(1)">
 					</div>
 				</div>
 				<div class="main-conter-ch">
@@ -165,6 +247,7 @@
 							<i class="fy-x">&gt;</i>
 						</div>
 					</div>
+					<!--<div class="btn btn8" onclick="showList()">查看详情临时按钮</div>-->
 					<div id="MyDiv" class="white_content" style="width: 600px;height:475px;margin-left:9%;background-color:#F2F2F2;">
 						<div style="text-align: right; cursor: default; height: 40px;">
 							<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:black;" onclick="CloseDiv('MyDiv','fade')">关闭</label>

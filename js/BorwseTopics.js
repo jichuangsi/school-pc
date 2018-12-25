@@ -82,8 +82,8 @@ function getDate(start) {
 			var num3 = (Math.round(Math.random() * 9999)) / 100;
 			node.setAttribute("class", "subjectList");
 			var a2 = "";
-			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
-			if(questionNode[i].options[0] != null&&questionNode[i].options[0]!="") {
+			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" style="position: relative;left: 250px;" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
+			if(questionNode[i].options[0] != null && questionNode[i].options[0] != "") {
 				a2 = "<div><table><tbody>";
 				for(var j = 0; j < questionNode[i].options.length; j++) {
 					a2 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + questionNode[i].options[j] + "</td></tr>";
@@ -143,6 +143,7 @@ function analysis_click(obj) {
 }
 
 function delObj(obj) {
+	var list = getsubjectCache();
 	var id = $(obj).parent().find("#delId").val();
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].questionIdMD52 == id) {
@@ -151,6 +152,12 @@ function delObj(obj) {
 			getType();
 			difficultyList();
 		}
+		if(list != undefined && list.length != 0) {
+			if(list[i].qquestionIdMD52 == id) {
+				list.splice(i, 1);
+			}
+		}
+	sessionStorage.setItem("subjectCache", JSON.stringify(list));
 	}
 	sessionStorage.setItem("lastname", JSON.stringify(questionNode));
 	$("#listTo").empty();
@@ -319,7 +326,7 @@ function isExistFavor(md52) {
 			isExistFavorResult = data.data.result;
 		},
 		error: function() {
-			alert("收藏失败");
+//			alert("收藏失败");
 		}
 	});
 }
@@ -355,7 +362,7 @@ function getType() {
 	}
 	var soure = $("#type");
 	soure.empty();
-	var tr =document.createElement("tr");
+	var tr = document.createElement("tr");
 	tr.innerHTML = '<th>题型</th><th>题量</th>';
 	soure.append(tr);
 	for(var i = 0; i < type.length; i++) {
