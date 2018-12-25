@@ -25,6 +25,7 @@ $(function() {
 	getQuestionNode();
 	getupload();
 	copyList();
+
 });
 var user;
 
@@ -233,7 +234,13 @@ function formSub() {
 		var info = $("#ClassroomSynopsis").val();
 		var hh = $("#time-hour").val();
 		var mm = $("#time-min").val();
-		var ymd = $("#test29").attr('placeholder');
+		var rq=$("#test29").val()
+		if(rq==null){
+			var ymd = $("#test29").attr('placeholder');
+		}else{
+		var ymd = $("#test29").val();
+		}
+		
 		var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 		var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 		var cc = {
@@ -268,6 +275,9 @@ function formSub() {
 					swal("新建成功!", "", "success");
 					sessionStorage.removeItem('lastname');
 					sessionStorage.removeItem('userIn');
+					setTimeout(function() {
+						window.location.reload();
+					}, 1000);
 				} else {
 					swal("OMG", "操作失败了!", "error");
 				}

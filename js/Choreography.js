@@ -25,6 +25,7 @@ $(function() {
 	initAttendtimemin("");
 	inintUPdate();
 	inintClassDate();
+	
 });
 
 function pageList() {
@@ -65,7 +66,7 @@ function getNowFormatDate() {
 		strDate = "0" + strDate;
 	}
 	currentdate = year + seperator1 + month + seperator1 + strDate;
-	$("#test29").attr('placeholder', '请选择需要查找课堂的日期！');
+	//$("#test29").attr('placeholder', '请选择需要查找课堂的日期！');
 }
 
 function getgradename() {
@@ -110,11 +111,11 @@ function inintClassDate(obj) {
 		if(cname == null || cname == "") {
 			cname = "";
 		}
-		var ymd = $("#test29").val();
+		var ymd = $("#ymd").val();
 		if(ymd == "" || ymd == null) {
 			ymd = "";
 		} else {
-			ymd = $("#test29").val();
+			ymd = $("#ymd").val();
 		}
 	} else {
 		cname = "";
@@ -196,8 +197,8 @@ function LookClass(start, datalist) {
 			con.innerHTML += '<div class="room-static but-kc"><label>上课时间：</label><span name="classTime">' + beginTime + '</span></div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>45分钟</span></div>';
 			con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
-			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="'+id+'"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
-			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">查看详情</div><input type="hidden" name="userId" value="'+id+'"  /></div><div><div class="room-class-two"> ';
+			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
+			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">查看详情</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);
 		}
 	}
@@ -451,9 +452,9 @@ function CloseDiv(MyDiv, fade) {
 function showList(obj) {
 	var cc = {
 		type: "layer-spread",
-		title: "弹框标题",
+		title: "题目详情",
 		content: "<div id='listTo' style='float: right;margin-right:-20px;'>",
-		area: ["1000px","900px"]
+		area: ["1000px", "900px"]
 	};
 	method.msg_layer(cc);
 	getDate(obj);
@@ -462,9 +463,9 @@ function showList(obj) {
 function getDate(obj) {
 	var id = $(obj).parent().find("input[name='userId']").val(); //获取id然后根据id查找题目
 	var questionNode;
-	for(var j=0;j<datalist.length;j++){
-		if(datalist[j].courseForTeacher.courseId==id){
-			questionNode=datalist[j].courseForTeacher.questions;
+	for(var j = 0; j < datalist.length; j++) {
+		if(datalist[j].courseForTeacher.courseId == id) {
+			questionNode = datalist[j].courseForTeacher.questions;
 		}
 	}
 	var source = document.getElementById('listTo');
@@ -504,7 +505,6 @@ function getDate(obj) {
 		source.appendChild(node);
 	}
 }
-
 
 function CollectionImg_click(obj) {
 	var id = $(obj).next("input[id='Mid']").value;
@@ -668,7 +668,7 @@ function isExistFavor(md52) {
 			isExistFavorResult = data.data.result;
 		},
 		error: function() {
-//			alert("收藏失败");
+			//			alert("收藏失败");
 		}
 	});
 }

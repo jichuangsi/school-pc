@@ -1357,6 +1357,7 @@
 }
 
 .msg-layer>h5 {
+	text-align: center;
 	font-size: 18px;
 	line-height: 38px;
 	border-bottom: 1px solid #ccc

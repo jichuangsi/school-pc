@@ -134,31 +134,26 @@
 			width: 686px;
 			margin-left: 32px;
 		}
-		.subcontent{
-			float: left;
 		
+		.subcontent {
+			float: left;
 		}
 	</style>
 	<script>
 		layui.use('laydate', function() {
 			var laydate = layui.laydate;
 			lay('#version').html('-v' + laydate.v);
-
 			//执行一个laydate实例
 			//常规用法
 			laydate.render({
-				elem: '#test1' //指定元素
-			});
-
-			//墨绿主题
-			laydate.render({
-				elem: '#test29',
-				theme: 'molv'
-			});
-			//自定义颜色
-			laydate.render({
-				elem: '#test30',
-				theme: '#393D49'
+				elem: '#test-n1',
+				position: 'static',
+				showBottom: false,
+				done: function(value, date) {
+					$("#ymd").val(value);
+					inintClassDate(1);
+					//layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+				}
 			});
 		});
 	</script>
@@ -174,6 +169,7 @@
 			background-color: #fff;
 			border-radius: 2px;
 		}
+		
 		.bar6 button {
 			background: #3D72FE;
 			border-radius: 0 5px 5px 0;
@@ -186,12 +182,11 @@
 			position: relative;
 			left: -7px;
 			top: 13px;
-			
 		}
 	</style>
 
 	<body>
-		<!--<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>-->
+		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
 		<div class="main">
 			<!--导航条-->
 			<div class="nav-top" style="min-width: 1520px;">
@@ -203,12 +198,18 @@
 			</div>
 			<div class="main-back">
 				<div id="fade" class="black_overlay">
+
 				</div>
-				<div class="main-time">
+				<div style="float: left;position: relative;left: 18.75%;top: 20px;">
+					<div class="layui-inline" id="test-n1"></div>
+				</div>
+				<input type="hidden" value="" id="ymd" />
+				<!--<div class="main-time">
 					<div class="layui-input-inline">
 						<input type="text" class="layui-input" id="test29" placeholder="" style="width: 250px;" onblur="inintClassDate(1)">
 					</div>
-				</div>
+				</div>-->
+
 				<div class="main-conter-ch">
 					<div class="nav-ul">
 						<ul>
@@ -297,7 +298,6 @@
 		</div>
 
 		<script src="../js/jquery.js" type="text/javascript"></script>
-
 	</body>
 
 	</html>
