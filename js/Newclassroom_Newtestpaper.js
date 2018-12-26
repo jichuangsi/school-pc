@@ -350,20 +350,20 @@ function Obtain_subject(obj, Chapterid) {
 			a1 += "</div>";
 			a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
 			if(subjectlist.content[i].addPapercount == null) {
-				a1 += 0;
+				a1 += getRandomNum();
 			} else {
 				a1 += subjectlist.content[i].addPapercount;
 			}
 			a1 += "</i>次</span>";
 			a1 += "<span class='s_span'>作答<i class='num2'>";
 			if(subjectlist.content[i].answerCount == null) {
-				a1 += 0;
+				a1 += getRandomNum();
 			} else {
 				a1 += subjectlist.content[i].answerCount;
 			}
 			a1 += "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>";
 			if(subjectlist.content[i].average == null) {
-				a1 += 0;
+				a1 += getRandomNum()/100;
 			} else {
 				a1 += subjectlist.content[i].average;
 			}
@@ -659,7 +659,7 @@ function CollectionImg_click(obj) {
 				"gradeId": "",
 				"knowledge": questionNode[i].knowledges,
 				"questionIdMD52": questionNode[i].qid,
-				"questionStatus": "NOTSTART",
+				//"questionStatus": "NOTSTART",
 				"questionPic": "",
 				"teacherName": "",
 				"createTime": "",
@@ -731,11 +731,11 @@ function PreviewPaper() //显示隐藏层和弹出层
 				var a1 = "<div class='subjectList'>";
 				a1 += "<div class='subjectList_top'>";
 				a1 += "<span>" + num + "</span>";
-				isExistFavor(getlist[i].questionIdMD52);
+				//isExistFavor(getlist[i].questionIdMD52);
 				if(isExistFavorResult == "none") {
-					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
+					a1 += "<img onclick='' src='../img/CollectionNo.png' />";
 				} else {
-					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
+					a1 += "<img onclick='' src='../img/CollectionYes.png' />";
 				}
 				a1 += "</div>";
 				a1 += "<div class='subjectinfo'>";
@@ -760,9 +760,9 @@ function PreviewPaper() //显示隐藏层和弹出层
 				}
 				a1 += "</div>";
 				a1 += "<div class='subjectDetails'>";
-				a1 += "<span class='s_span'>组卷<i class='num1'>1536</i>次</span>";
-				a1 += "<span class='s_span'>作答<i class='num2'>70541</i>人次</span>";
-				a1 += "<span class='s_span'>平均得分率<i class='num3'>78.97%</i></span>";
+				a1 += "<span class='s_span'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
+				a1 += "<span class='s_span'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
+				a1 += "<span class='s_span'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
 				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 				a1 += "<input type='hidden' name='id'value='" + getlist[i].questionIdMD52 + "' />";
@@ -819,7 +819,7 @@ function add_paper(obj, istype) {
 						"gradeId": itembaklist.content[i].gradeId,
 						"knowledge": itembaklist.content[i].knowledge,
 						"questionIdMD52": itembaklist.content[i].questionIdMD52,
-						"questionStatus": "NOTSTART",
+						//"questionStatus": "NOTSTART",
 						"questionPic": itembaklist.content[i].questionPic
 					})
 					namber = questionList.length
@@ -852,7 +852,7 @@ function add_paper(obj, istype) {
 							"gradeId": itembaklist.content[i].gradeId,
 							"knowledge": itembaklist.content[i].knowledge,
 							"questionIdMD52": itembaklist.content[i].questionIdMD52,
-							"questionStatus": "NOTSTART",
+							//"questionStatus": "NOTSTART",
 							"questionPic": itembaklist.content[i].questionPic
 						})
 						namber = questionList.length
@@ -880,7 +880,7 @@ function add_paper(obj, istype) {
 						"gradeId": "",
 						"knowledge": questionNode[i].knowledges,
 						"questionIdMD52": questionNode[i].qid,
-						"questionStatus": "NOTSTART",
+						//"questionStatus": "NOTSTART",
 						"questionPic": ""
 					})
 					var namber = questionList.length
@@ -912,7 +912,7 @@ function add_paper(obj, istype) {
 							"gradeId": "",
 							"knowledge": questionNode[i].knowledges,
 							"questionIdMD52": questionNode[i].qid,
-							"questionStatus": "NOTSTART",
+							//"questionStatus": "NOTSTART",
 							"questionPic": ""
 						})
 						var namber = questionList.length

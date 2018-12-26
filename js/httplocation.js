@@ -42,3 +42,6 @@ function getExamsList(){
 	examsList=JSON.parse(sessionStorage.getItem('examsList'));
 	return examsList;
 }
+function getRandomNum(){
+	return Math.round(Math.random() * 9999);
+}

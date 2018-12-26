@@ -125,9 +125,9 @@ function loopitem() {
 			}
 			a1 += "</div>";
 			a1 += "<div class='subjectDetails'>";
-			a1 += "<span class='s_span'>组卷<i class='num1'>0</i>次</span>";
-			a1 += "<span class='s_span'>作答<i class='num2'>0</i>人次</span>";
-			a1 += "<span class='s_span'>平均得分率<i class='num3'>0%</i></span>";
+			a1 += "<span class='s_span'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
+			a1 += "<span class='s_span'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
+			a1 += "<span class='s_span'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
 			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 			a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
@@ -213,7 +213,7 @@ function customCollectionImg_click(obj) {
 				"gradeId": itembaklist.content[i].gradeId,
 				"knowledge": itembaklist.content[i].knowledge,
 				"questionIdMD52": itembaklist.content[i].questionIdMD52,
-				"questionStatus": "NOTSTART",
+				//"questionStatus": "NOTSTART",
 				"questionPic": itembaklist.content[i].questionPic,
 				"teacherName": "",
 				"createTime": "",
