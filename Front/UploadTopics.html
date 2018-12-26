@@ -17,11 +17,13 @@
 	<script type="text/javascript" src="../js/httplocation.js" ></script>
 	<script type="text/javascript" src="../js/sweetalert-dev.js" ></script>
 	<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+	<script type="text/javascript" src="../js/methodNoUpdata.js"></script>
 	<link rel="stylesheet" href="../css/sweetalert.css" />
 	<link rel="stylesheet" href="../css/tinyImgUpload.css" />
 	<link rel="stylesheet" href="../css/UploadTopics.css" />
 	<link rel="stylesheet" href="../css/checkbox_radio.css" />
 	<link rel="stylesheet" href="../styles/chosen.css" />
+	<link rel="stylesheet" href="../css/layer-animate-one.css" />
 	<style>
 		.black_overlay {
 			display: none;
@@ -68,6 +70,20 @@
 				background-color: #3d72fe;
 				border-radius: 5px;
 			}
+			.btn {
+			cursor: pointer;
+			}
+			.lookimg{
+				max-width: 100%;
+   				 max-height: 100%
+			}
+			.divImg{
+				height: 580px;
+				display:flex;
+				text-align: center;
+    			align-items:center; 
+   				justify-content:center;
+			}
 		}
 	</style>
 
@@ -91,7 +107,8 @@
 				</div>
 					<div class="tab">
 						<label style="float: left;line-height: 50px;">选择添加题目类型：</label>
-						<div class="upImg" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
+						<div class="previewImg" onclick="Lookimg()">预览图片</div>
+						<div class="upImg btn btn8" onclick="ShowDiv('MyDiv','fade')">上传图片</div>
 						<div id="fade" class="black_overlay">
 						</div>
 						<div id="MyDiv" class="white_content" style="width: 785px;height:475px;margin-left:19%;">

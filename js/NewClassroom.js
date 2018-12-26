@@ -287,7 +287,7 @@ function formSub() {
 						window.location.reload();
 					}, 1000);
 				} else {
-					swal("OMG", "操作失败了!", "error");
+					swal("OMG", ""+returndata.msg+"", "error");
 				}
 			},
 			error: function(returndata) {}
@@ -592,7 +592,7 @@ function getupload() {
 			CloseDiv('MyDiv', 'fade');
 		},
 		onFailure: function(res) {
-			swal("上传失败!", "", "error");
+			swal("上传失败!", ""+res.msg+"", "error");
 		}
 	}
 
@@ -627,7 +627,6 @@ function getTransferExams(id) {
 						"data": data
 					});
 					sessionStorage.setItem('examsList', JSON.stringify(examsList));
-					console.log(examsList);
 				} else {
 					for(var i = 0; i < examsList.length; i++) {
 						if(examsList[i].id == id) {
@@ -640,7 +639,6 @@ function getTransferExams(id) {
 						}
 					}
 					sessionStorage.setItem('examsList', JSON.stringify(examsList));
-					console.log(examsList);
 				}
 			}
 		});

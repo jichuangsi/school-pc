@@ -75,12 +75,11 @@
 				border-radius: 5px;
 			}
 		}
+		
 		.btn {
-			/*float: left;
-			font-size: 18px;
-			margin: 30px;*/
 			cursor: pointer;
 		}
+		
 		.sub-del {
 			color: white;
 			background-color: #b93535;
@@ -230,13 +229,8 @@
 						<hr style="color: #a0a6ad;" />
 					</div>
 					<div class="comprehensive">
-						<div class="comprehensive-zh">综合排序</div>
-						<div class="class-time">
-							<ul>
-								<li>上课时间</li>
-								<li><img src="../img/0069-1-2.png" /></li>
-							</ul>
-						</div>
+						<div class="comprehensive-zh" onclick="time(this,1)">综合排序</div>
+						<div class="class-time" onclick="time(this,2)">上课时间 </div>
 						<div class="paging">
 							<label>共</label>
 							<i class="fy-zt" id="count"></i>

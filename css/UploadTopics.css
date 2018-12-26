@@ -135,6 +135,21 @@ body {
 .upImg:hover{
 	cursor: pointer;
 }
+.previewImg {
+	width: 80px;
+	height: 40px;
+	background-color: #3D72FE;
+	color: white;
+	float: right;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.previewImg:hover{
+	cursor: pointer;
+}
 table td {
 	margin-left: 10px;
 }

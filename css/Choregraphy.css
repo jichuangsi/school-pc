@@ -128,7 +128,7 @@ ul li:hover {
 .comprehensive-zh {
 	width: 100px;
 	text-align: center;
-	line-height: 39px;
+	line-height: 38px;
 	color: #7ea1fe;
 	border-right: solid 1px #a0a6ad;
 	float: left;
@@ -140,7 +140,7 @@ ul li:hover {
 }
 
 .class-time {
-	width: 120px;
+	width: 100px;
 	height: 38px;
 	text-align: center;
 	line-height: 38px;

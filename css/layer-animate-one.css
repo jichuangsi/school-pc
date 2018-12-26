@@ -1336,7 +1336,9 @@
 	padding: 0 10px 10px;
 	background: #fff;
 	border-radius: 5px;
-	max-width: 800px
+	max-width: 800px;
+	overflow-y: scroll;
+	overflow-x: scroll;
 }
 
 .msg-con {

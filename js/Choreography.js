@@ -6,6 +6,8 @@ var pageSize = 3;
 var curr; //第几页
 var user;
 var count; //多少堂课
+var sortNum = 2;
+
 function setCount() {
 	$("#count").text(count);
 	$("#index").text(curr);
@@ -25,7 +27,7 @@ $(function() {
 	initAttendtimemin("");
 	inintUPdate();
 	inintClassDate();
-	
+
 });
 
 function pageList() {
@@ -126,7 +128,7 @@ function inintClassDate(obj) {
 			"keyWord": cname, //根据课堂名称，简介查询
 			"pageIndex": 1,
 			"pageSize": 10,
-			"sortNum": 2,
+			"sortNum": sortNum,
 			"time": ymd //日期
 		};
 	} else {
@@ -685,13 +687,28 @@ function analysis_click(obj) {
 		$(obj).removeClass("Situation_click");
 	}
 }
+
 function showInfo(obj) {
-	var info =$(obj).find("input[name='info']").val();
+	var info = $(obj).find("input[name='info']").val();
 	var cc = {
 		type: "layer-spread",
 		title: "课堂简介",
-		content: "<div>"+info,//class="btn btn8 class-xq" onclick="showList(this)"
+		content: "<div>" + info, //class="btn btn8 class-xq" onclick="showList(this)"
 		area: ["400px", "300px"]
 	};
 	method.msg_layer(cc);
+}
+
+function time(obj, num) {
+	if(num == 1) {
+		sortNum = 1;
+		$(obj).addClass('class-time').removeClass('comprehensive-zh');
+		$(obj).next().addClass('comprehensive-zh').removeClass('class-time');
+		inintClassDate(1);
+	} else if(num == 2) {
+		sortNum = 2;
+		$(obj).addClass('class-time').removeClass('comprehensive-zh');
+		$(obj).parent().children().first().addClass('comprehensive-zh').removeClass('class-time');
+		inintClassDate(1);
+	}
 }

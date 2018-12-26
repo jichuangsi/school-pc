@@ -27,9 +27,14 @@ $(function() {
 		path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic?code=" + orcode,
 		res: {},
 		onSuccess: function(res) {
-			//var data = JSON.parse(res);
-			swal("上传成功！", "", "success");
+			var data = JSON.parse(res);
+			if(data.code=='0010'){
+				swal("上传成功！", "", "success");
 			CloseDiv('MyDiv', 'fade');
+			}else{
+			swal("上传失败!", "图片过大", "error");
+			}
+			
 		},
 		onFailure: function(res) {
 			swal("上传失败!", "", "error");
@@ -203,27 +208,27 @@ function CheckBox(obj) {
 		var str = $(obj).val();
 		if(answer == undefined) {
 			answer = "";
-			answer = answer + str +'|';
+			answer = answer + str + '|';
 		} else {
-			if(answer[answer.length-1]=="|"){
-				answer = answer + str +'|';
-			}else{
-				answer = answer +'|'+ str +'|';
+			if(answer[answer.length - 1] == "|") {
+				answer = answer + str + '|';
+			} else {
+				answer = answer + '|' + str + '|';
 			}
-			
+
 		}
 	} else {
-		var nade=$(obj).val();
-		if(answer[answer.length-1]=="|"){
-			answer=answer.substring(0, answer.length - 1);
+		var nade = $(obj).val();
+		if(answer[answer.length - 1] == "|") {
+			answer = answer.substring(0, answer.length - 1);
 		}
 		$(obj).parent().parent().find(".Answerone").text(" ");
-		answer=answer.split('|');
+		answer = answer.split('|');
 		console.log(answer)
-		var index=answer.indexOf(nade);
-		answer.splice(index,1);
+		var index = answer.indexOf(nade);
+		answer.splice(index, 1);
 		answer.sort();
-		answer=answer.join('|');
+		answer = answer.join('|');
 		console.log(answer);
 	}
 
@@ -568,10 +573,15 @@ function saveCompletionQuestion() {
 			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			success: function(returndata) {
+				if(returndata.code == "0010") {
 				swal("保存成功!", "", "success");
 				setTimeout(function() {
 					window.location.reload();
 				}, 1000);
+			} else {
+				swal("OMG", "删除操作失败了!", "error");
+			}
+				
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -635,4 +645,30 @@ function unique1(array) {
 		r.push(array[i]);
 	}
 	return r;
+}
+
+function Lookimg() {
+	var obj = {
+		type: "layer-spread",
+		title: "预览图片",
+		content: "<div class='divImg'><img id='lookimg' class='lookimg'/>",
+		area: ["800px", "800px"]
+	};
+	method.msg_layer(obj);
+	$.ajax({
+		url: local +'/QUESTIONSREPOSITORY/self/viewQuestionPic/'+orcode,
+		type: 'GET',
+		data: {},
+		headers: {
+			'accessToken': accessToken
+		},
+		async: false,
+		cache: false,
+		success: function(data) {
+			$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
+		},
+		error: function(data) {
+			swal("预览失败!", "", "error");
+		}
+	});
 }
