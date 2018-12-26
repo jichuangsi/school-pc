@@ -106,10 +106,12 @@ function loopitem() {
 			a1 += "<div>" + itembaklist.content[i].questionContent;
 			if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
 				console.log(itembaklist.content[i].questionPic);
-				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
-				if(getquestionpic.data != null) {
+				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, itembaklist.content[i].questionId); //调用下载文件的接口返回的数据
+				/*if(getquestionpic.data != null) {
 					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-				}
+				}*/
+				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='"+itembaklist.content[i].questionId+"' src=''/>";
+				
 			}
 	
 			a1 += "</div>";
@@ -338,7 +340,7 @@ function isExistFavor(md52) {
 	});
 }
 //根据老师id和文件名下载图片
-function getQuestionPic(pic) {
+function getQuestionPic(pic, pid) {
 	console.log("pic" + pic)
 	var retresult = null;
 	var cc = {
@@ -350,16 +352,17 @@ function getQuestionPic(pic) {
 			'accessToken': accessToken
 		},
 		type: 'post',
-		async: false,
+		async: true,
 		dataType: "json",
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			retresult = data;
+			//retresult = data;
+			if(data.data.content) $("#"+pid).attr('src',"data:image/jpeg;base64,"+data.data.content);
 		},
 		error: function() {
 			alert("失败");
 		}
 	});
-	return retresult;
+	//return retresult;
 }
