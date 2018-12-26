@@ -743,10 +743,11 @@ function PreviewPaper() //显示隐藏层和弹出层
 				a1 += "<div>" + getlist[i].questionContent;
 				if(getlist[i].questionPic != null && 　getlist[i].questionPic != "") {
 					console.log(getlist[i].questionPic);
-					var getquestionpic = getQuestionPic(getlist[i].questionPic); //调用下载文件的接口返回的数据
-					if(getquestionpic.data != null) {
+					var getquestionpic = getQuestionPic(getlist[i].questionPic, "preview-"+getlist[i].questionIdMD52); //调用下载文件的接口返回的数据
+					/*if(getquestionpic.data != null) {
 						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-					}
+					}*/
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+getlist[i].questionIdMD52+"' src=''/>";
 				}
 				a1 += "</div>";
 				//题目选项

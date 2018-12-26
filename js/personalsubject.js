@@ -106,11 +106,11 @@ function loopitem() {
 			a1 += "<div>" + itembaklist.content[i].questionContent;
 			if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
 				console.log(itembaklist.content[i].questionPic);
-				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, itembaklist.content[i].questionId); //调用下载文件的接口返回的数据
+				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-"+itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
 				/*if(getquestionpic.data != null) {
 					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
 				}*/
-				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='"+itembaklist.content[i].questionId+"' src=''/>";
+				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-"+itembaklist.content[i].questionIdMD52+"' src=''/>";
 				
 			}
 	
