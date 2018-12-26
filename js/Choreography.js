@@ -193,7 +193,7 @@ function LookClass(start, datalist) {
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
 			con.innerHTML += '<div class="room-static"><label>教学内容：</label><span name="name">' + datalist[i].courseForTeacher.courseName + '</span></div>';
 			con.innerHTML += '<div class="room-class-two"><label>上课班级：</label><span name="className">' + datalist[i].courseForTeacher.className + '</span></div>';
-			con.innerHTML += '<div class="room-introduction">' + "课堂简介 " + '</div>';
+			con.innerHTML += '<div class="room-introduction  btn btn8" onclick="showInfo(this)">课堂简介<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
 			con.innerHTML += '<div class="room-static but-kc"><label>上课时间：</label><span name="classTime">' + beginTime + '</span></div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>45分钟</span></div>';
 			con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
@@ -684,4 +684,14 @@ function analysis_click(obj) {
 		$(obj).parent().next().hide(500);
 		$(obj).removeClass("Situation_click");
 	}
+}
+function showInfo(obj) {
+	var info =$(obj).find("input[name='info']").val();
+	var cc = {
+		type: "layer-spread",
+		title: "课堂简介",
+		content: "<div>"+info,//class="btn btn8 class-xq" onclick="showList(this)"
+		area: ["400px", "300px"]
+	};
+	method.msg_layer(cc);
 }

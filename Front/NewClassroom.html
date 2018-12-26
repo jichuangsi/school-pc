@@ -19,10 +19,10 @@
 	<script type="text/javascript" src="../layui/layui.js"></script>
 	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
 	<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
-	<script type="text/javascript" src="../js/method.js"></script>
+	<script type="text/javascript" src="../js/methodNoUpdata.js"></script>
+	<link rel="stylesheet" href="../css/layer-animate-no.css" />
 	<link rel="stylesheet" href="../css/tinyImgUpload.css" />
 	<link rel="stylesheet" href="../css/sweetalert.css" />
-	<link rel="stylesheet" href="../css/layer-animate.css" />
 	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
 	<link rel="stylesheet" id="pageloader-css" href="../css/pageloader.css" type="text/css" media="all" />
 	<style>
@@ -71,6 +71,9 @@
 				background-color: #3d72fe;
 				border-radius: 5px;
 			}
+		}
+		.btn {
+			cursor: pointer;
 		}
 	</style>
 	<script>
@@ -183,9 +186,7 @@
 							</tr>
 						</table>
 					</div>
-
 					<!--<button class="box-sub" onclick="uploadIcon()">上传图标</button>-->
-
 					<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
 					<script>
 					</script>
@@ -227,11 +228,8 @@
 			 M188.482,131.649c14.352-8.286,19.266-26.633,10.982-40.982c-8.285-14.348-26.631-19.264-40.982-10.98
 			c-14.346,8.285-19.264,26.633-10.98,40.982C155.787,135.017,174.137,139.932,188.482,131.649z" />
 				</svg>
-
 			</div>
-
 		</div>
-
 		<div id="result">
 
 		</div>

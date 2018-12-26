@@ -20,14 +20,14 @@ var pardiff = null; //难度(传进后台的查询条件)
 var isWhichoneItem = 1; //判断当前选中的是哪个题库(个人收藏，校本题库，自定义题库)
 var keywordinput = null; //搜索输入的关键字
 var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
-var isItembank=0;   //用来判断知识点的题目还是个人题库、校本题库、自定义题库的题目
+var isItembank = 0; //用来判断知识点的题目还是个人题库、校本题库、自定义题库的题目
 //个人题库、校本题库、自定义题库点击事件
 function radioItembank(obj) {
 	total = 1;
 	pagecount = 1;
 	pagenum = 1;
 	pageIndex = 1;
-	isItembank=1;
+	isItembank = 1;
 	$("#keywordinput").val("");
 	keywordinput = null;
 	$("#newtestpaper_div2_01").css("display", "none");
@@ -36,8 +36,8 @@ function radioItembank(obj) {
 	$(".f7").children("a:first").addClass("d1");
 	$(".f8").find("a").removeClass("d1");
 	$(".f8").children("a:first").addClass("d1");
-	pardiff=null; //难度
-	partype=null; //类型
+	pardiff = null; //难度
+	partype = null; //类型
 	$("input[name='ther']").parent().parent().remove();
 	$("#f2").find("li").remove();
 	$(".tcdPageCode1").remove();
@@ -89,7 +89,8 @@ function loopitem() {
 	$(".tcdPageCode").remove();
 	$(".tcdPageCode1").remove();
 	$("#Missingdata").remove();
-	if(itembaklist.content.length>0){
+	if(itembaklist.content.length > 0) {
+		
 		for(var i = 0; i < itembaklist.content.length; i++, num++) {
 			var a1 = "<div class='subjectList'>";
 			a1 += "<div class='subjectList_top'>";
@@ -106,14 +107,12 @@ function loopitem() {
 			a1 += "<div>" + itembaklist.content[i].questionContent;
 			if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
 				console.log(itembaklist.content[i].questionPic);
-				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-"+itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
 				/*if(getquestionpic.data != null) {
 					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
 				}*/
-				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-"+itembaklist.content[i].questionIdMD52+"' src=''/>";
-				
+				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-" + itembaklist.content[i].questionIdMD52 + "' src=''/>";
 			}
-	
 			a1 += "</div>";
 			//题目选项
 			if(itembaklist.content[i].options[0] != null && itembaklist.content[i].options[0] != "") {
@@ -131,7 +130,7 @@ function loopitem() {
 			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 			a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
-			a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div>";
+			a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a><div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='"+itembaklist.content[i].questionId+"' /></div></div>";
 			a1 += "</div>";
 			a1 += "<div class='subject_info' style='display: none;'>";
 			a1 += "<div class='info_1'><span>【答案】</span><span>" + itembaklist.content[i].answer + "</span></div>";
@@ -149,23 +148,23 @@ function loopitem() {
 		}
 		$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
 		page1();
-	}else{
+	} else {
 		$("#newtestpaper_div2_02").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
 	}
 }
 
 //类型列表下面的上一页
 function page_upkeys(obj) {
-	if(pagenum>1){
-		pageIndex=pagenum-1;
+	if(pagenum > 1) {
+		pageIndex = pagenum - 1;
 		getItembankinfo(); //ajax调用后台获取题目的接口
 		loopitem(); //循环题目列表
 	}
 }
 //类型列表下面的下一页
 function page_nextkeys(obj) {
-	if(pagenum<pagecount){
-		pageIndex=pagenum+1;
+	if(pagenum < pagecount) {
+		pageIndex = pagenum + 1;
 		getItembankinfo(); //ajax调用后台获取题目的接口
 		loopitem(); //循环题目列表
 	}
@@ -187,8 +186,8 @@ function page1() {
 	});
 }
 //难度点击事件
-function difficultyType_a_click2(obj,diff) {
-	pardiff=diff;
+function difficultyType_a_click2(obj, diff) {
+	pardiff = diff;
 	getItembankinfo();
 	loopitem();
 	$(obj).addClass("d1");
@@ -260,10 +259,10 @@ function customCollectionImg_click(obj) {
 			success: function(data) {
 				swal("已取消收藏!", "", "success");
 				$(obj).attr("src", "../img/CollectionNo.png");
-				if(isWhichoneItem == 1){
-					getItembankinfo(); 
-					pageIndex=1;
-					loopitem(); 
+				if(isWhichoneItem == 1) {
+					getItembankinfo();
+					pageIndex = 1;
+					loopitem();
 				}
 			},
 			error: function() {
@@ -358,11 +357,48 @@ function getQuestionPic(pic, pid) {
 		contentType: 'application/json',
 		success: function(data) {
 			//retresult = data;
-			if(data.data.content) $("#"+pid).attr('src',"data:image/jpeg;base64,"+data.data.content);
+			if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
 		},
 		error: function() {
 			alert("失败");
 		}
 	});
 	//return retresult;
+}
+//删除自定义题目
+function delObj(obj) {
+	var id = $(obj).parent().find(".delId").val();
+	var cc = {
+		"ids":[id]
+	}
+	swal({
+		title: "您确定要删除这堂课吗？",
+		text: "您确定要删除这堂课？",
+		type: "warning",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		confirmButtonText: "是的，我要删除",
+		confirmButtonColor: "#ec6c62"
+	}, function() {
+		$.ajax({
+			type: 'DELETE',
+			url: local + "/QUESTIONSREPOSITORY/self/deleteQuestions",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'DELETE',
+			async: false,
+			contentType: 'application/json',
+			data: JSON.stringify(cc),
+		}).done(function(data) {
+			if(data.code == "0010") {
+				swal("操作成功!", "已成功删除课堂！", "success");
+				keywordserach();
+			} else {
+				swal("OMG", "删除操作失败了!", "error");
+			}
+		}).error(function(data) {
+
+		});
+	});
 }

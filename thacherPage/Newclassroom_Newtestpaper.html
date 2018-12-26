@@ -96,6 +96,24 @@
 			border-width: 0;
 			vertical-align: middle
 		}
+		
+		.sub-del {
+			color: white;
+			background-color: #b93535;
+			border-radius: 5px;
+			width: 80px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			float: right;
+			position: relative;
+			top: -45px;
+			right: 32px;
+		}
+		
+		.sub-del:hover {
+			cursor: pointer;
+		}
 	</style>
 
 	<body style="background-color: #F2F2F2;margin: 0;padding: 0;">
@@ -198,7 +216,7 @@
 										<div class="areas" style="display: contents;background-color: white;">
 											<input type="text" placeholder="请输入地区关键字" id="ads1">
 											<button onclick="search_areas(this)">搜索</button>
-											<button  onclick="areashide()" style="background-color: red; color:#FFFFFF ;margin-left: 20px;">关闭</button>
+											<button onclick="areashide()" style="background-color: red; color:#FFFFFF ;margin-left: 20px;">关闭</button>
 											<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
 											</div>
 										</div>
@@ -234,8 +252,8 @@
 						</div>
 					</div>
 					<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;">
-							<img src="../img/Missingdata.png" />
-							<h3 >请先选择相关的知识点！</h3>
+						<img src="../img/Missingdata.png" />
+						<h3>请先选择相关的知识点！</h3>
 					</div>
 				</div>
 

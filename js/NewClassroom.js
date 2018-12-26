@@ -473,8 +473,8 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body-bj"><label class="pos-lab">上课班级:</label><span id="" class="AttendClassVal">' + datalist[i].courseForTeacher.className + '</span></div>';
 			conClass.innerHTML += '<div class="box-body but-kc"><label>上课时间:</label><span id="" class="ClassTime">' + datenew[0] + ' <span class="hour">' + hour[0] + '</span>:<span class="min">' + hour[1] + '</span></span></div>';
 			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx">教学时长:</label><span id="" class="AttendClassVal-time">45分钟</span></div>';
-			conClass.innerHTML += '<div class="box-body-box">课堂简介	<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
-			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="' + id + '"  />删除课堂</div>';
+			conClass.innerHTML += '<div class="box-body-box btn btn8 " onclick="showList(this)">课堂简介<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
+			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="'+id+'"  />删除课堂</div>';
 			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级一共' + datalist[i].courseForTeacher.students.length + '人</span></div></div>';
 			soure.appendChild(conClass);
 		} //each
@@ -648,11 +648,12 @@ function getTransferExams(id) {
 
 }
 function showList(obj) {
+	var info =$(obj).find("input[name='info']").val();
 	var cc = {
 		type: "layer-spread",
 		title: "课堂简介",
-		content: "<div id='listTo' style='float: right;margin-right:-20px;'>",//class="btn btn8 class-xq" onclick="showList(this)"
-		area: ["200px", "300px"]
+		content: "<div>"+info,//class="btn btn8 class-xq" onclick="showList(this)"
+		area: ["400px", "300px"]
 	};
 	method.msg_layer(cc);
 }

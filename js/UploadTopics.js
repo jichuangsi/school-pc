@@ -200,15 +200,31 @@ function changeRad(obj) {
 function CheckBox(obj) {
 	if(obj.checked) {
 		$(obj).parent().parent().find(".Answerone").text("正确答案");
+		var str = $(obj).val();
+		if(answer == undefined) {
+			answer = "";
+			answer = answer + str +'|';
+		} else {
+			if(answer[answer.length-1]=="|"){
+				answer = answer + str +'|';
+			}else{
+				answer = answer +'|'+ str +'|';
+			}
+			
+		}
 	} else {
+		var nade=$(obj).val();
+		if(answer[answer.length-1]=="|"){
+			answer=answer.substring(0, answer.length - 1);
+		}
 		$(obj).parent().parent().find(".Answerone").text(" ");
-	}
-	var str = $(obj).val();
-	if(answer == undefined) {
-		answer = "";
-		answer = answer + str + '|';
-	} else {
-		answer = answer + str + '|';
+		answer=answer.split('|');
+		console.log(answer)
+		var index=answer.indexOf(nade);
+		answer.splice(index,1);
+		answer.sort();
+		answer=answer.join('|');
+		console.log(answer);
 	}
 
 }
@@ -524,8 +540,8 @@ function saveCompletionQuestion() {
 		knowledge = " ";
 		var cc = {
 			"questionContent": content,
-			"options": [],//填空题不需要选项
-			"answer": answer,//选项拼接在答案里面；
+			"options": [], //填空题不需要选项
+			"answer": answer, //选项拼接在答案里面；
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
