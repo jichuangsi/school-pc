@@ -64,6 +64,41 @@ function tabs(tabTit, on, tabCon) {
 	});
 };
 
+function transPic(){
+	$.ajax({
+		url: local + '/QUESTIONSREPOSITORY/self/transQuestionPic/' + orcode,
+		type: 'GET',
+		data: {},
+		headers: {
+			'accessToken': accessToken
+		},
+		success: function(data) {
+			if(data.code === "0010"){
+				//console.log(data.data.content);
+				var html = "";
+				for(var i = 0; i < data.data.content.length; i++) {
+					html += data.data.content[i] + "\n";
+				}
+				//console.log(html);
+				if(type == "选择题") {
+					$("textarea[name='Choicequestion']").val(html);
+				} else if(type == "多选题") {
+					$("textarea[name='ChoicequestionStone']").val(html);
+				} else if(type == "判断题") {
+					$("textarea[name='ChoicequestionPack']").val(html);
+				} else if(type == "填空题") {
+					$("textarea[name='ChoicequestionCompletion']").val(html);
+				}
+			}else{
+				swal(data.msg, "", "error");
+			}
+		},
+		error: function(data) {
+			swal("识别失败!", "", "error");
+		}
+	});
+}
+
 //获取知识点
 function con() {
 
@@ -647,14 +682,7 @@ function unique1(array) {
 	return r;
 }
 
-function Lookimg() {
-	var obj = {
-		type: "layer-spread",
-		title: "预览图片",
-		content: "<div class='divImg'><img id='lookimg' class='lookimg'/>",
-		area: ["800px", "800px"]
-	};
-	method.msg_layer(obj);
+function Lookimg() {	
 	$.ajax({
 		url: local +'/QUESTIONSREPOSITORY/self/viewQuestionPic/'+orcode,
 		type: 'GET',
@@ -662,10 +690,21 @@ function Lookimg() {
 		headers: {
 			'accessToken': accessToken
 		},
-		async: false,
+		async: true,
 		cache: false,
 		success: function(data) {
-			$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
+			if(data.code === "0010"){
+				var obj = {
+					type: "layer-spread",
+					title: "预览图片",
+					content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
+					area: ["800px", "800px"]
+				};
+				method.msg_layer(obj);
+				//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
+			}else{
+				swal(data.msg, "", "error");
+			}
 		},
 		error: function(data) {
 			swal("预览失败!", "", "error");

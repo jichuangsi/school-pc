@@ -150,6 +150,20 @@ body {
 .previewImg:hover{
 	cursor: pointer;
 }
+.transImg {
+	width: 100px;
+	height: 40px;
+	background-color: #3D72FE;
+	color: white;
+	float: right;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 5px;
+}
+.transImg:hover{
+	cursor: pointer;
+}
+
 table td {
 	margin-left: 10px;
 }
