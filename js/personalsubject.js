@@ -90,64 +90,124 @@ function loopitem() {
 	$(".tcdPageCode1").remove();
 	$("#Missingdata").remove();
 	if(itembaklist.content.length > 0) {
-		
-		for(var i = 0; i < itembaklist.content.length; i++, num++) {
-			var a1 = "<div class='subjectList'>";
-			a1 += "<div class='subjectList_top'>";
-			a1 += "<span>" + num + "</span>";
-			isExistFavor(itembaklist.content[i].questionIdMD52);
-			if(isExistFavorResult == "none") {
-				a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
-			} else {
-				a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
-			}
-			a1 += "</div>";
-			a1 += "<div class='subjectinfo'>";
-			//题目
-			a1 += "<div>" + itembaklist.content[i].questionContent;
-			if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
-				console.log(itembaklist.content[i].questionPic);
-				var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
-				/*if(getquestionpic.data != null) {
-					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-				}*/
-				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-" + itembaklist.content[i].questionIdMD52 + "' src=''/>";
-			}
-			a1 += "</div>";
-			//题目选项
-			if(itembaklist.content[i].options[0] != null && itembaklist.content[i].options[0] != "") {
-				a1 += "<div><table><tbody>";
-				for(var j = 0; j < itembaklist.content[i].options.length; j++) {
-					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + itembaklist.content[i].options[j] + "</td></tr>";
+		if(isWhichoneItem == 3) {
+			for(var i = 0; i < itembaklist.content.length; i++, num++) {
+				var a1 = "<div class='subjectList'>";
+				a1 += "<div class='subjectList_top'>";
+				a1 += "<span>" + num + "</span>";
+				isExistFavor(itembaklist.content[i].questionIdMD52);
+				if(isExistFavorResult == "none") {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
+				} else {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
 				}
-				a1 += "</tbody></table></div>";
+				a1 += "</div>";
+				a1 += "<div class='subjectinfo'>";
+				//题目
+				a1 += "<div>" + itembaklist.content[i].questionContent;
+				if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
+					console.log(itembaklist.content[i].questionPic);
+					var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+					/*if(getquestionpic.data != null) {
+						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+					}*/
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-" + itembaklist.content[i].questionIdMD52 + "' src=''/>";
+				}
+				a1 += "</div>";
+				//题目选项
+				if(itembaklist.content[i].options[0] != null && itembaklist.content[i].options[0] != "") {
+					a1 += "<div><table><tbody>";
+					for(var j = 0; j < itembaklist.content[i].options.length; j++) {
+						a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + itembaklist.content[i].options[j] + "</td></tr>";
+					}
+					a1 += "</tbody></table></div>";
+				}
+				a1 += "</div>";
+				a1 += "<div class='subjectDetails'>";
+				a1 += "<span class='s_span'>组卷<i class='num1'>" + getRandomNum() + "</i>次</span>";
+				a1 += "<span class='s_span'>作答<i class='num2'>" + getRandomNum() + "</i>人次</span>";
+				a1 += "<span class='s_span'>平均得分率<i class='num3'>" + getRandomNum() / 100 + "%</i></span>";
+				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
+				a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a><div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div></div>";
+				a1 += "</div>";
+				a1 += "<div class='subject_info' style='display: none;'>";
+				a1 += "<div class='info_1'><span>【答案】</span><span>" + itembaklist.content[i].answer + "</span></div>";
+				a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + itembaklist.content[i].parse + "</div></div>";
+				a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
+				a1 += "<p>";
+				if(itembaklist.content[i].knowledge != null && itembaklist.content[i].knowledge != "") {
+					a1 += "<span>" + itembaklist.content[i].knowledge + "</span>";
+				}
+				a1 += "</p></div></div>";
+				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + itembaklist.content[i].quesetionType + "</span></div>";
+				a1 += "</div>";
+				a1 += "</div>";
+				$("#newtestpaper_div2_02").append(a1);
 			}
-			a1 += "</div>";
-			a1 += "<div class='subjectDetails'>";
-			a1 += "<span class='s_span'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
-			a1 += "<span class='s_span'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
-			a1 += "<span class='s_span'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
-			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
-			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
-			a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
-			a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a><div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='"+itembaklist.content[i].questionId+"' /></div></div>";
-			a1 += "</div>";
-			a1 += "<div class='subject_info' style='display: none;'>";
-			a1 += "<div class='info_1'><span>【答案】</span><span>" + itembaklist.content[i].answer + "</span></div>";
-			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + itembaklist.content[i].parse + "</div></div>";
-			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
-			a1 += "<p>";
-			if(itembaklist.content[i].knowledge != null && itembaklist.content[i].knowledge != "") {
-				a1 += "<span>" + itembaklist.content[i].knowledge + "</span>";
+			$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
+			page1();
+		} else {
+			for(var i = 0; i < itembaklist.content.length; i++, num++) {
+				var a1 = "<div class='subjectList'>";
+				a1 += "<div class='subjectList_top'>";
+				a1 += "<span>" + num + "</span>";
+				isExistFavor(itembaklist.content[i].questionIdMD52);
+				if(isExistFavorResult == "none") {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionNo.png' />";
+				} else {
+					a1 += "<img onclick='customCollectionImg_click(this)' src='../img/CollectionYes.png' />";
+				}
+				a1 += "</div>";
+				a1 += "<div class='subjectinfo'>";
+				//题目
+				a1 += "<div>" + itembaklist.content[i].questionContent;
+				if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
+					console.log(itembaklist.content[i].questionPic);
+					var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+					/*if(getquestionpic.data != null) {
+						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+					}*/
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-" + itembaklist.content[i].questionIdMD52 + "' src=''/>";
+				}
+				a1 += "</div>";
+				//题目选项
+				if(itembaklist.content[i].options[0] != null && itembaklist.content[i].options[0] != "") {
+					a1 += "<div><table><tbody>";
+					for(var j = 0; j < itembaklist.content[i].options.length; j++) {
+						a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + itembaklist.content[i].options[j] + "</td></tr>";
+					}
+					a1 += "</tbody></table></div>";
+				}
+				a1 += "</div>";
+				a1 += "<div class='subjectDetails'>";
+				a1 += "<span class='s_span'>组卷<i class='num1'>" + getRandomNum() + "</i>次</span>";
+				a1 += "<span class='s_span'>作答<i class='num2'>" + getRandomNum() + "</i>人次</span>";
+				a1 += "<span class='s_span'>平均得分率<i class='num3'>" + getRandomNum() / 100 + "%</i></span>";
+				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
+				a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div>";
+				a1 += "</div>";
+				a1 += "<div class='subject_info' style='display: none;'>";
+				a1 += "<div class='info_1'><span>【答案】</span><span>" + itembaklist.content[i].answer + "</span></div>";
+				a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + itembaklist.content[i].parse + "</div></div>";
+				a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
+				a1 += "<p>";
+				if(itembaklist.content[i].knowledge != null && itembaklist.content[i].knowledge != "") {
+					a1 += "<span>" + itembaklist.content[i].knowledge + "</span>";
+				}
+				a1 += "</p></div></div>";
+				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + itembaklist.content[i].quesetionType + "</span></div>";
+				a1 += "</div>";
+				a1 += "</div>";
+				$("#newtestpaper_div2_02").append(a1);
 			}
-			a1 += "</p></div></div>";
-			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + itembaklist.content[i].quesetionType + "</span></div>";
-			a1 += "</div>";
-			a1 += "</div>";
-			$("#newtestpaper_div2_02").append(a1);
+			$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
+			page1();
 		}
-		$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
-		page1();
+
 	} else {
 		$("#newtestpaper_div2_02").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
 	}
@@ -369,7 +429,7 @@ function getQuestionPic(pic, pid) {
 function delObj(obj) {
 	var id = $(obj).parent().find(".delId").val();
 	var cc = {
-		"ids":[id]
+		"ids": [id]
 	}
 	swal({
 		title: "您确定要删除这堂课吗？",
