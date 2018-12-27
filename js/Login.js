@@ -8,30 +8,36 @@ $(function() {
 	getLocation();
 });
 
-function keyup(e){
-	if(event.keyCode==13){
-		 Login();
+function keyup(e) {
+	if(event.keyCode == 13) {
+		Login();
 	}
 }
+
 function Login() {
 	var UserName = $("#UserName").val();
-	var pwd =$("#pwd").val();
-	var cs={
-    "userAccount":UserName,
-    "userPwd":pwd
-}
+	var pwd = $("#pwd").val();
+	var cs = {
+		"userAccount": UserName,
+		"userPwd": pwd
+	}
 	$.ajax({
-		url:local+"/api/auth/login",
+		url: local + "/api/auth/login",
 		type: "post",
 		async: false,
 		contentType: 'application/json',
 		dataType: 'JSON',
 		data: JSON.stringify(cs),
 		success: function(data) {
-			sessionStorage.clear();
-			sessionStorage.setItem('accessToken',data.data.accessToken);
-			sessionStorage.setItem('userinfo',JSON.stringify(data.data.user));
-			window.location.replace("../Front/NewClassRoom.html");//NewClassRoom//UploadTopics//UserInfo
+			if(data.code == "0010") {
+				sessionStorage.clear();
+				sessionStorage.setItem('accessToken', data.data.accessToken);
+				sessionStorage.setItem('userinfo', JSON.stringify(data.data.user));
+				window.location.replace("../Front/NewClassRoom.html"); //NewClassRoom//UploadTopics//UserInfo
+			}else{
+				swal(""+data.msg+"", "", "warning");
+			}
+
 		}
 	})
 }
