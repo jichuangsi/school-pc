@@ -118,12 +118,12 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;
 			var a1;
-			if(j == 10 || j == 20) {
-				a1 = " <br/><a style='margin-left:10px;' onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
+			/*if(j == 10 || j == 20) {
+				a1 = "<a style='margin-left:10px;' onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
 			} else {
-				a1 = "<a   onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
-			}
-
+				a1 = "<a onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
+			}*/
+			a1 = "<a style='margin-left:10px;' onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
 			$(".f2").append(a1);
 		}
 	}
