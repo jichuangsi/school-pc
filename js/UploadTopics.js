@@ -396,6 +396,7 @@ function saveQuestion() {
 	var knowledge = $("#dept option:selected").text();
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
+	}
 		var answerOptions = new Array();
 		for(i = 0; i < number; i++) {
 			answerOptions.push($("input[name=potions" + i + "]").val());
@@ -442,7 +443,7 @@ function saveQuestion() {
 				swal("保存失败!", "", "error");
 			}
 		});
-	}
+	
 
 }
 //判断题目
@@ -454,6 +455,7 @@ function saveQuestionPack() {
 
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
+	}
 		var cc = {
 			"questionContent": content,
 			"options": ['正确', '错误'],
@@ -493,7 +495,6 @@ function saveQuestionPack() {
 				swal("保存失败!", "", "error");
 			}
 		});
-	}
 
 }
 //多选题
@@ -518,6 +519,7 @@ function saveQuestionStone() {
 	var parse = $("textarea[name='stone']").val();
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
+	}
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
@@ -557,7 +559,6 @@ function saveQuestionStone() {
 				swal("保存失败!", "", "error");
 			}
 		});
-	}
 }
 //填空题
 function saveCompletionQuestion() {
@@ -578,6 +579,7 @@ function saveCompletionQuestion() {
 	var parse = $("textarea[name='Completion']").val();
 	if(knowledge == "请选择知识点") {
 		knowledge = " ";
+	}
 		var cc = {
 			"questionContent": content,
 			"options": [], //填空题不需要选项
@@ -622,7 +624,6 @@ function saveCompletionQuestion() {
 				swal("保存失败!", "", "error");
 			}
 		});
-	}
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
