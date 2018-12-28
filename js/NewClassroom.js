@@ -130,7 +130,7 @@ function toList() {
 		for(var i = 0; i < examsList.length; i++) {
 			if(examsList[i].id == id) {
 				examsListone = examsList[i].data.data;
-				console.log(examsListone);
+				//console.log(examsListone);
 			}else{
 				getTransferExams(id);
 			}
@@ -204,7 +204,7 @@ function creaClass() {
 }
 //新建课堂
 function formSub() {
-	if(flag == 3) {
+	//if(flag == 3) {
 		questionNode = getQuestion();
 		var cpic = $("#icon").value;
 		var classid = document.getElementById("AttendClass").value;
@@ -224,7 +224,7 @@ function formSub() {
 			for(var i = 0; i < examsList.length; i++) {
 				if(examsList[i].id == id) {
 					examsListone = examsList[i].data.data;
-					console.log(examsListone)
+					//console.log(examsListone)
 				} else {
 					getTransferExams(id);
 				}
@@ -239,6 +239,13 @@ function formSub() {
 			//在新建课堂的时候把试卷题目添加进去;
 		}
 		var Name = document.getElementById("ClassName").value;
+		if(!Name) {
+			swal("请输入课堂名称！", "", "warning");
+			return;
+		} else if(Name.length < 4 || Name.length > 18) {
+			swal("课堂名称长度在4~18", "", "warning");
+			return;
+		}
 		var info = $("#ClassroomSynopsis").val();
 		var hh = $("#time-hour").val();
 		var mm = $("#time-min").val();
@@ -267,7 +274,7 @@ function formSub() {
 			"coursePic": cpic,
 			"subjectName": user.roles[0].primarySubject.subjectName
 		};
-		console.log(JSON.stringify(cc));
+		//console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/COURSESERVICE/console/saveCourse",
 			headers: {
@@ -293,11 +300,11 @@ function formSub() {
 			error: function(returndata) {}
 		});
 		creaClass();
-	} else if(flag == 2) {
+	/*} else if(flag == 2) {
 		swal("课堂名称长度在4~18", "", "warning");
 	} else {
 		swal("请输入课堂名称！", "", "warning");
-	}
+	}*/
 }
 //复制课堂点击事件
 function copyClassRoom(obj) {

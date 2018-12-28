@@ -18,9 +18,9 @@ $(function() {
 	tabs(".tab-hd", "active", ".tab-bd"); //选项卡
 	tabtext(".tab-hd", "active", ".tab-bd");
 	con();
-	selectChex(arr);
-	SelectPakc(arr);
-	selectStone(arr);
+	//selectChex(arr);
+	//SelectPakc(arr);
+	//selectStone(arr);
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
 
 	var options = {
@@ -113,9 +113,13 @@ function con() {
 		data: {},
 		success: function(data) {
 			arr = data;
+			selectKnowledge("dept", data);
+			selectKnowledge("deptselect", data);
+			selectKnowledge("packselect", data);
+			selectKnowledge("isselect", data);
 			//console.log(data);
 			//var dept=document.getElementsByName("dept");
-			var dept = document.getElementById("dept");
+			/*var dept = document.getElementById("dept");
 			for(var i = 0; i < data.data.length; i++) {
 				//console.log(data.data[i])//第一级别
 				var two = data.data[i];
@@ -136,7 +140,7 @@ function con() {
 
 					}
 				}
-			}
+			}*/
 		},
 		error: function() {
 			// alert(returndata);
@@ -145,7 +149,37 @@ function con() {
 	});
 }
 
-function selectChex(arr) {
+function iterateKnowledgeTree(node, selector, count){
+	var prefix = "";
+	for(var i = 0; i < count; i++){
+		prefix += "- ";
+	}
+	var option = document.createElement('option');
+	option.setAttribute('value', '' + node.kid + '');
+	option.setAttribute('data', '' + node.knowledgeName + '');
+	option.innerHTML = prefix + node.knowledgeName;
+	selector.append(option);	
+	if(node.data && node.data.length > 0){		
+		node.data.forEach(function(item, index){
+			iterateKnowledgeTree(item,selector, count+1);
+		});		
+	}
+}
+
+function selectKnowledge(id, data){
+	//console.log(data);	
+	var selector = document.getElementById(id);
+	var option = document.createElement('option');
+	option.setAttribute('value', '-1');
+	option.setAttribute('data', '');
+	option.innerHTML = "请选择知识点";
+	selector.append(option);
+	for(var i = 0; i < data.data.length; i++) {
+		iterateKnowledgeTree(data.data[i], selector, 1);
+	}
+}
+
+/*function selectChex(arr) {
 	var dept = document.getElementById("deptselect");
 	for(var i = 0; i < arr.data.length; i++) {
 		//console.log(data.data[i])//第一级别
@@ -218,11 +252,12 @@ function selectStone(arr) {
 			}
 		}
 	}
-}
+}*/
 
 function tabtext(tabTit, on, tabCon) {
 	$(tabTit).children().click(function() {
 		type = $(this).text();
+		difficultys = "";
 	});
 }
 
@@ -234,13 +269,13 @@ function changeRad(obj) {
 	} else {
 		$(obj).parent().parent().find(".Answerone").text(" ");
 	}
-	answer = $(obj).val();
+	//answer = $(obj).val();
 }
 //多选题
 function CheckBox(obj) {
 	if(obj.checked) {
 		$(obj).parent().parent().find(".Answerone").text("正确答案");
-		var str = $(obj).val();
+		/*var str = $(obj).val();
 		if(answer == undefined) {
 			answer = "";
 			answer = answer + str + '|';
@@ -251,49 +286,49 @@ function CheckBox(obj) {
 				answer = answer + '|' + str + '|';
 			}
 
-		}
+		}*/
 	} else {
-		var nade = $(obj).val();
+		$(obj).parent().parent().find(".Answerone").text(" ");
+		/*var nade = $(obj).val();
 		if(answer[answer.length - 1] == "|") {
 			answer = answer.substring(0, answer.length - 1);
-		}
-		$(obj).parent().parent().find(".Answerone").text(" ");
+		}		
 		answer = answer.split('|');
-		console.log(answer)
+		//console.log(answer)
 		var index = answer.indexOf(nade);
 		answer.splice(index, 1);
 		answer.sort();
-		answer = answer.join('|');
-		console.log(answer);
+		answer = answer.join('|');*/
+		//console.log(answer);
 	}
 
 }
 //判断
 function packanswer(obj) {
-	if(obj.checked) {
+	/*if(obj.checked) {
 		answer = $(obj).parent().text();
 		if(answer == "正确") {
 			answer = "A";
 		} else if(answer == "错误") {
 			answer = "B";
 		}
-	}
+	}*/
 }
 //困难程度
 function difficulty(obj) {
 	difficultys = $(obj).parent().text();
-	if(difficultys == "容易") {
+	if(difficultys == "简单") {
 		difficultys = 1.00;
-	} else if(difficultys == "较易") {
+	} else if(difficultys == "一般") {
 		difficulty = 2.00;
 	} else if(difficultys == "中等") {
 		difficultys = 3.00;
-	} else if(difficultys == "较难") {
-		difficultys = 4.00;
 	} else if(difficultys == "困难") {
+		difficultys = 4.00;
+	} else if(difficultys == "特难") {
 		difficultys = 5.00;
 	}
-	console.log(difficultys)
+	//console.log(difficultys)
 }
 
 function Choice() {
@@ -318,7 +353,7 @@ function optionNumber(obj) {
 	for(i = 0; i < number; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="group"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
+		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
 		nodetwo.innerHTML = '<td><input type="text" name="potions' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);
@@ -336,7 +371,7 @@ function optionNumberChe(obj) {
 	for(i = 0; i < potionsStoneNumber; i++) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
+		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
 		nodetwo.innerHTML = '<td><input type="text" name="potionsStone' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);
@@ -354,7 +389,7 @@ function optionAnswer(obj) {
 		var node = document.createElement('tr');
 		var nodetwo = document.createElement('tr');
 		node.innerHTML = '<td style="float: left; ">' + ansCha[i] + '</td>'
-		nodetwo.innerHTML = '<td><input type="text" name="completion' + i + '" style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
+		nodetwo.innerHTML = '<td><input type="text" name="tiankong" style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
 		node.append(nodetwo);
 		soure.next().append(node);
 	}
@@ -391,21 +426,40 @@ function pack() {
 }
 //保存上传题目
 function saveQuestion() {
-	var questionPic = $("input[name='questionPic']").val();
-	var content = $("textarea[name='Choicequestion']").val();
-	var knowledge = $("#dept option:selected").text();
-	if(knowledge == "请选择知识点") {
-		knowledge = " ";
-	}
+		var questionPic = $("input[name='questionPic']").val();
+		var content = $("textarea[name='Choicequestion']").val();
+		var knowledge = $("#dept option:selected").attr('data');
+		/*if(knowledge == "请选择知识点") {
+			knowledge = " ";
+		}*/
 		var answerOptions = new Array();
 		for(i = 0; i < number; i++) {
 			answerOptions.push($("input[name=potions" + i + "]").val());
 		}
+		var danxuans = $("input[name='danxuan']");
+		for(var i = 0; i < danxuans.length; i++){
+			if(danxuans[i].checked){
+				var danxuan = danxuans[i].value;
+				break;
+			}
+		}
+		if(!questionPic&&!content){
+			swal("请提供题目图片或者内容!", "", "warning");
+			return;
+		}
+		if(answerOptions.length==0){
+			swal("请提供题目选项!", "", "warning");
+			return;
+		}	
+		if(!danxuan){
+			swal("请提供题目答案!", "", "warning");
+			return;
+		}	
 		var parse = $("textarea[name='parse']").val();
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
-			"answer": answer,
+			"answer": danxuan,
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
@@ -421,7 +475,7 @@ function saveQuestion() {
 			"updateTime": "",
 			"code": orcode
 		}
-		console.log(JSON.stringify(cc));
+		//console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
 			headers: {
@@ -433,10 +487,14 @@ function saveQuestion() {
 			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			success: function(returndata) {
-				swal("保存成功!", "", "success");
-				setTimeout(function() {
-					window.location.reload();
-				}, 1000);
+				if(returndata.code==="0010"){				
+					swal("保存成功!", "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 2000);
+				}else{
+					swal(returndata.msg, "", "error");
+				}
 			},
 			error: function(returndata) {
 				// alert(returndata);
@@ -448,18 +506,33 @@ function saveQuestion() {
 }
 //判断题目
 function saveQuestionPack() {
-	var questionPic = $("input[name='questionPic']").val();
-	var content = $("textarea[name='ChoicequestionPack']").val();
-	var knowledge = $("#packselect option:selected").text();
-	var parse = $("textarea[name='parsePack']").val();
+		var questionPic = $("input[name='questionPic']").val();
+		var content = $("textarea[name='ChoicequestionPack']").val();
+		var knowledge = $("#packselect option:selected").attr('data');
+		var parse = $("textarea[name='parsePack']").val();
 
-	if(knowledge == "请选择知识点") {
-		knowledge = " ";
-	}
+		/*if(knowledge == "请选择知识点") {
+			knowledge = " ";
+		}*/
+		var panduans = $("input[name='panduan']");
+		for(var i = 0; i < panduans.length; i++){
+			if(panduans[i].checked){
+				var panduan = panduans[i].value;
+				break;
+			}
+		}
+		if(!questionPic&&!content){
+			swal("请提供题目图片或者内容!", "", "warning");
+			return;
+		}
+		if(!panduan){
+			swal("请提供题目答案!", "", "warning");
+			return;
+		}
 		var cc = {
 			"questionContent": content,
 			"options": ['正确', '错误'],
-			"answer": answer,
+			"answer": panduan,
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
@@ -486,10 +559,14 @@ function saveQuestionPack() {
 			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			success: function(returndata) {
-				swal("保存成功!", "", "success");
-				setTimeout(function() {
-					window.location.reload();
-				}, 1000);
+				if(returndata.code==="0010"){				
+					swal("保存成功!", "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 2000);
+				}else{
+					swal(returndata.msg, "", "error");
+				}
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -499,31 +576,51 @@ function saveQuestionPack() {
 }
 //多选题
 function saveQuestionStone() {
-	var questionPic = $("input[name='questionPic']").val();
-	var content = $("textarea[name='ChoicequestionStone']").val();
-	var knowledge = $("#deptselect option:selected").text();
-	if(answer == undefined || answer == null || answer == "") {
-		answer = "";
-	} else {
-		var an = answer.substring(0, answer.length - 1);
-		var arrAn = an.split("|");
-		arrAn.sort();
-		arrAn = unique1(arrAn);
-		answer = arrAn.join("|");
-	}
+		var questionPic = $("input[name='questionPic']").val();
+		var content = $("textarea[name='ChoicequestionStone']").val();
+		var knowledge = $("#deptselect option:selected").attr('data');
+		/*if(answer == undefined || answer == null || answer == "") {
+			answer = "";
+		} else {
+			var an = answer.substring(0, answer.length - 1);
+			var arrAn = an.split("|");
+			arrAn.sort();
+			arrAn = unique1(arrAn);
+			answer = arrAn.join("|");
+		}*/
 
-	var answerOptions = new Array();
-	for(i = 0; i < potionsStoneNumber; i++) {
-		answerOptions.push($("input[name=potionsStone" + i + "]").val());
-	}
-	var parse = $("textarea[name='stone']").val();
-	if(knowledge == "请选择知识点") {
-		knowledge = " ";
-	}
+		var duoxuans = $("input[name='duoxuan']");
+		var duoxuan = "";
+		for(var i = 0; i < duoxuans.length; i++){
+			if(duoxuans[i].checked){
+				duoxuan += duoxuans[i].value+"|";
+			}
+		}
+		
+		var answerOptions = new Array();
+		for(i = 0; i < potionsStoneNumber; i++) {
+			answerOptions.push($("input[name=potionsStone" + i + "]").val());
+		}
+		var parse = $("textarea[name='stone']").val();
+		/*if(knowledge == "请选择知识点") {
+			knowledge = " ";
+		}*/
+		if(!questionPic&&!content){
+			swal("请提供题目图片或者内容!", "", "warning");
+			return;
+		}
+		if(answerOptions.length==0){
+			swal("请提供题目选项!", "", "warning");
+			return;
+		}
+		if(!duoxuan){
+			swal("请提供题目答案!", "", "warning");
+			return;
+		}
 		var cc = {
 			"questionContent": content,
 			"options": answerOptions,
-			"answer": answer,
+			"answer": duoxuan.length>2?duoxuan.substring(0, duoxuan.length - 1):duoxuan,
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
@@ -550,10 +647,14 @@ function saveQuestionStone() {
 			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			success: function(returndata) {
-				swal("保存成功!", "", "success");
-				setTimeout(function() {
-					window.location.reload();
-				}, 1000);
+				if(returndata.code==="0010"){				
+					swal("保存成功!", "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 2000);
+				}else{
+					swal(returndata.msg, "", "error");
+				}
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
@@ -562,28 +663,43 @@ function saveQuestionStone() {
 }
 //填空题
 function saveCompletionQuestion() {
-	pack();
-	if(answer != null && answer != undefined) {
-		answer = answer.substring(0, answer.length - 1)
-	}
-	var arr = answer.split('|');
-	arr.sort();
-	var questionPic = $("input[name='questionPic']").val();
-	var content = $("textarea[name='ChoicequestionCompletion']").val();
-	var knowledge = $("#isselect option:selected").text();
-	var answerOptions = new Array();
-	for(i = 0; i < tknumber; i++) {
-		answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
-	}
-	answer = answerOptions.join(";");
-	var parse = $("textarea[name='Completion']").val();
-	if(knowledge == "请选择知识点") {
-		knowledge = " ";
-	}
+		/*pack();
+		if(answer != null && answer != undefined) {
+			answer = answer.substring(0, answer.length - 1)
+		}
+		var arr = answer.split('|');
+		arr.sort();*/
+		var questionPic = $("input[name='questionPic']").val();
+		var content = $("textarea[name='ChoicequestionCompletion']").val();
+		var knowledge = $("#isselect option:selected").attr('data');
+		/*var answerOptions = new Array();
+		for(i = 0; i < tknumber; i++) {
+			answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
+		}
+		answer = answerOptions.join(";");*/
+		var tiankongs = $("input[name=tiankong]");
+		var tiankong = "";
+		var tiankongTemp = "";
+		for(var i = 0; i < tiankongs.length; i++){
+			tiankongTemp += tiankongs[i].value;
+			tiankong += ansCha[i] + tiankongs[i].value+";";
+		}		
+		var parse = $("textarea[name='Completion']").val();
+		/*if(knowledge == "请选择知识点") {
+			knowledge = " ";
+		}*/
+		if(!questionPic&&!content){
+			swal("请提供题目图片或者内容!", "", "warning");
+			return;
+		}
+		if(!tiankongTemp){
+			swal("请提供题目答案!", "", "warning");
+			return;
+		}
 		var cc = {
 			"questionContent": content,
 			"options": [], //填空题不需要选项
-			"answer": answer, //选项拼接在答案里面；
+			"answer": tiankong, //选项拼接在答案里面；
 			"answerDetail": "",
 			"parse": parse,
 			"quesetionType": type,
@@ -611,14 +727,13 @@ function saveCompletionQuestion() {
 			contentType: 'application/json',
 			success: function(returndata) {
 				if(returndata.code == "0010") {
-				swal("保存成功!", "", "success");
-				setTimeout(function() {
-					window.location.reload();
-				}, 1000);
-			} else {
-				swal("OMG", "删除操作失败了!", "error");
-			}
-				
+					swal("保存成功!", "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 1000);
+				} else {
+					swal(returndata.msg, "", "error");
+				}				
 			},
 			error: function(returndata) {
 				swal("保存失败!", "", "error");
