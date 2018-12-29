@@ -275,7 +275,9 @@ body {
 	line-height: 40px;
 	text-align: center;
 	border-radius: 5px;
-	margin-left: 570px
+	margin-left: 570px;
+	position: relative;
+	top: 10px
 }
 
 .box-bq-copy:hover {

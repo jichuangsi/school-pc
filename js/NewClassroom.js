@@ -472,6 +472,11 @@ function LookRoomClass(datalist) {
 			var hour = splitStr(datenew);
 			var conClass = document.createElement('div');
 			var id = datalist[i].courseForTeacher.courseId;
+			var last = '-';
+			if(datalist[i].courseForTeacher.courseStartTime>0&&datalist[i].courseForTeacher.courseEndTime>0&&datalist[i].courseForTeacher.courseEndTime>datalist[i].courseForTeacher.courseStartTime){
+				last = Math.round((datalist[i].courseForTeacher.courseEndTime-datalist[i].courseForTeacher.courseStartTime)/60000);
+				//console.log(last);
+			}
 			conClass.setAttribute('class', 'box-room-anp');
 			conClass.innerHTML = '<div class="box-bq" id="sz">' + num + '</div>';
 			conClass.innerHTML += '<div class="box-bq-copy" onclick="copyClassRoom(this)">复制课堂</div>';
@@ -479,10 +484,10 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body"><label>课堂名称:</label><span id="" class="ClassNameVal">' + datalist[i].courseForTeacher.courseName + '</span></div>';
 			conClass.innerHTML += '<div class="box-body-bj"><label class="pos-lab">上课班级:</label><span id="" class="AttendClassVal">' + datalist[i].courseForTeacher.className + '</span></div>';
 			conClass.innerHTML += '<div class="box-body but-kc"><label>上课时间:</label><span id="" class="ClassTime">' + datenew[0] + ' <span class="hour">' + hour[0] + '</span>:<span class="min">' + hour[1] + '</span></span></div>';
-			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx">教学时长:</label><span id="" class="AttendClassVal-time">45分钟</span></div>';
+			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx">教学时长:</label><span id="" class="AttendClassVal-time">'+last+'分钟</span></div>';
 			conClass.innerHTML += '<div class="box-body-box btn btn8 " onclick="showList(this)">课堂简介<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
 			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="'+id+'"  />删除课堂</div>';
-			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">班级一共' + datalist[i].courseForTeacher.students.length + '人</span></div></div>';
+			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">' + datalist[i].courseForTeacher.students.length + '人</span></div></div>';
 			soure.appendChild(conClass);
 		} //each
 	}
@@ -657,7 +662,7 @@ function showList(obj) {
 	var cc = {
 		type: "layer-spread",
 		title: "课堂简介",
-		content: "<div>"+info,//class="btn btn8 class-xq" onclick="showList(this)"
+		content: "<div style='float: left;margin-right:-20px;'>"+info,//class="btn btn8 class-xq" onclick="showList(this)"
 		area: ["400px", "300px"]
 	};
 	method.msg_layer(cc);

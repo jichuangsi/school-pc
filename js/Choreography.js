@@ -190,6 +190,11 @@ function LookClass(start, datalist) {
 			} else if(datalist[i].courseForTeacher.courseStatus == "PROGRESS") {
 				al = "正在教学";
 			}
+			var last = '-';
+			if(datalist[i].courseForTeacher.courseStartTime>0&&datalist[i].courseForTeacher.courseEndTime>0&&datalist[i].courseForTeacher.courseEndTime>datalist[i].courseForTeacher.courseStartTime){
+				last = Math.round((datalist[i].courseForTeacher.courseEndTime-datalist[i].courseForTeacher.courseStartTime)/60000);
+				//console.log(last);
+			}
 			con.setAttribute('class', 'room-class');
 			con.innerHTML += '<div class="number">' + num + '</div>';
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
@@ -197,8 +202,10 @@ function LookClass(start, datalist) {
 			con.innerHTML += '<div class="room-class-two"><label>上课班级：</label><span name="className">' + datalist[i].courseForTeacher.className + '</span></div>';
 			con.innerHTML += '<div class="room-introduction  btn btn8" onclick="showInfo(this)">课堂简介<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
 			con.innerHTML += '<div class="room-static but-kc"><label>上课时间：</label><span name="classTime">' + beginTime + '</span></div>';
-			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>45分钟</span></div>';
-			con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
+			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>'+last+'分钟</span></div>';
+			if(datalist[i].courseForTeacher.courseStatus == "NOTSTART") {
+				con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
+			}
 			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">查看详情</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);
@@ -271,8 +278,8 @@ function updateSub() {
 		"courseId": id,
 		"courseInfo": info,
 		"courseName": name,
-		"courseStartTime": currentDateLong,
-		"courseStatus": "NOTSTART",
+		"courseStartTime": currentDateLong//,
+		/*"courseStatus": "NOTSTART",
 		"createTime": 0,
 		"pageNum": 1,
 		"pageSize": 1,
@@ -307,7 +314,7 @@ function updateSub() {
 			"subjectId": "string"
 		}],
 		"teacherId": "string",
-		"teacherName": "string"
+		"teacherName": "string"*/
 	};
 	$.ajax({
 		url: local + "/COURSESERVICE/console/updateCourse",
@@ -320,8 +327,15 @@ function updateSub() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			swal("修改完成!", "", "success");
-			CloseDiv("MyDiv", "fade");
+			if(returndata.code==="0010"){
+				swal("修改完成!", "", "success");
+				CloseDiv("MyDiv", "fade");
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);			
+			}else{
+				swal(returndata.msg, "", "success");
+			}
 		},
 		error: function(returndata) {
 			// alert(returndata);
@@ -437,13 +451,16 @@ function ShowDiv(MyDiv, fade, obj) {
 	ymd = ymd.replace(/[^\d]/g, '-');
 	ymd = ymd.substring(0, 10);
 	$("#test30").val(ymd);
+	var hm = str.split(" ")[1].split(":");
+	$("#time-hour").val(hm[0]);
+	$("#time-min").val(hm[1]);
 	var info = $(obj).parent().find("input[name='info']").val();
 	$("#ClassroomSynopsis").val(info);
 	document.getElementById("MyDiv").style.display = 'block';
 	document.getElementById("fade").style.display = 'block';
-	var bgdiv = document.getElementById(fade);
+	var bgdiv = document.getElementById(fade.id);
 	bgdiv.style.width = document.body.scrollWidth;
-	$("#" + fade).height($(document).height());
+	$("#" + fade.id).height($(document).height());
 };
 
 function CloseDiv(MyDiv, fade) {
@@ -502,10 +519,16 @@ function getDate(obj) {
 			a2 += "</tbody></table></div>";
 		}
 		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + '</div>' + a2 + '</div>';
-		node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
-		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' + questionNode[i].quesetionType + '</span></div></div>';
+		node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
+		//<div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
+		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
+		+ (!questionNode[i].questionTypeInCN?'':questionNode[i].questionTypeInCN) + '</span></div></div>';
 		source.appendChild(node);
 	}
+}
+
+function Situation_click(obj){
+
 }
 
 function CollectionImg_click(obj) {
