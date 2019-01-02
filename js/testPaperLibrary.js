@@ -260,7 +260,7 @@ function getsubjectlist() {
 		//"examName": "string",
 		//"examSecondName": "string",
 		"pageIndex": pageindexs1,
-		"pageSize": 3//,
+		"pageSize": 5//,
 		/*"questionModels": [{
 			"answer": "string",
 			"answerDetail": "string",
@@ -345,11 +345,11 @@ function loopquestions() {
 			}
 			a1 += "</div>";
 			a1 += "<div class='subjectDetails'>";
-			a1 += "<span class='s_span'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
-			a1 += "<span class='s_span'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
-			a1 += "<span class='s_span'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
-			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
-			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+			a1 += "<span class='s_span' style='position: absolute;left: 1%;'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
+			a1 += "<span class='s_span' style='position: absolute;margin-left: 13%;'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
+			a1 += "<span class='s_span' style='position: absolute;left: 26%;'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
+			a1 += "<a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+			a1 += "<a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 			a1 += "<input type='hidden' name='id'value='" + previewitembaklist.content[i].questionIdMD52 + "' />";
 			a1 += "</div>";
 			a1 += "<div class='subject_info' style='display: none;'>";
@@ -465,3 +465,5 @@ function page3() {
 		}
 	});
 }
+
+function Situation_click(){}

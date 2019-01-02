@@ -134,15 +134,15 @@ function loopitem() {
 				}
 				a1 += "</div>";
 				a1 += "<div class='subjectDetails'>";
-				a1 += "<span class='s_span'>组卷<i class='num1'>" + getRandomNum() + "</i>次</span>";
-				a1 += "<span class='s_span'>作答<i class='num2'>" + getRandomNum() + "</i>人次</span>";
-				a1 += "<span class='s_span'>平均得分率<i class='num3'>" + getRandomNum() / 100 + "%</i></span>";
-				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
-				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
+				a1 += "<span class='s_span' style='position: absolute;left: 1%;'>组卷<i class='num1'>" + getRandomNum() + "</i>次</span>";
+				a1 += "<span class='s_span' style='position: absolute;margin-left: 13%;'>作答<i class='num2'>" + getRandomNum() + "</i>人次</span>";
+				a1 += "<span class='s_span' style='position: absolute;left: 26%;'>平均得分率<i class='num3'>" + getRandomNum() / 100 + "%</i></span>";
+				a1 += "<a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
+				a1 += "<a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
-				a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add' "+(!added?"":"style='display: none;'")+">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a>";
+				a1 += "<div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='add_paper(this,2)' class='subjectOperation_add' "+(!added?"":"style='display: none;'")+">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a>";
 				if(isWhichoneItem == 3) {
-					a1 += "<div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
+					a1 += "<div class='del' style='position: absolute;bottom: -7px;margin-left: 120px;'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
 				}				
 				a1 += "</div></div>";
 				a1 += "<div class='subject_info' style='display: none;'>";

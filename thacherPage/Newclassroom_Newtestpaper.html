@@ -105,10 +105,10 @@
 			height: 40px;
 			line-height: 40px;
 			text-align: center;
-			float: right;
-			position: relative;
-			top: -45px;
-			right: 6px;
+			#float: right;
+			#position: relative;
+			#top: -45px;
+			#right: 6px;
 		}
 		
 		.sub-del:hover {
@@ -183,7 +183,9 @@
 							<dd>
 								<div style="float: left;">题型:</div>
 								<div class="f2" style="display: table;">
-									<a class="d1" onclick="questionType_a_click(this,null)">全部</a>
+									<div style="position:relative;vertical-align:top;display:inline-block;width:7%">
+										<a class="d1" onclick="questionType_a_click(this,null)">全部</a>
+									</div>
 								</div>
 							</dd>
 						</dl>

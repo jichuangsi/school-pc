@@ -530,7 +530,7 @@ function getDate(obj) {
 			imgurl += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+questionNode[i].questionIdMD52+"' src=''/>";
 		}
 		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + imgurl + '</div>' + a2 + '</div>';
-		node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
+		node.innerHTML += '<div class="subjectDetails"><span class="s_span" style="position: absolute;left: 1%;">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span" style="position: absolute;margin-left: 13%;">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span" style="position: absolute;left: 26%;">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="position: absolute;left: 50%;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)" style="position: absolute;left: 60%;"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
 		//<div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
 		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail?'':"<br/><span>"+questionNode[i].answerDetail+"</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
 		+ (!questionNode[i].questionTypeInCN?'':questionNode[i].questionTypeInCN) + '</span></div></div>';
@@ -543,7 +543,7 @@ function Situation_click(obj){
 }
 
 function CollectionImg_click(obj) {
-	var id = $(obj).next("input[id='Mid']").value;
+	/*var id = $(obj).next("input[id='Mid']").value;
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].questionIdMD52 == id) {
 			var Collectiond = {
@@ -608,82 +608,9 @@ function CollectionImg_click(obj) {
 
 			}
 		});
-	}
+	}*/
 }
 
-function CollectionImg_click(obj) {
-	var Collectiond = null;
-	var id = $(obj).parent().find("input[name='Mid']").val();
-	for(var i = 0; i < questionNode.length; i++) {
-		if(questionNode[i].questionIdMD52 == id) {
-			Collectiond = {
-				"questionId": "",
-				"questionContent": questionNode[i].title,
-				"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
-				"answer": questionNode[i].answer1,
-				"answerDetail": questionNode[i].answer2,
-				"parse": questionNode[i].parse,
-				"quesetionType": questionNode[i].qtpye,
-				"difficulty": questionNode[i].diff,
-				"subjectId": questionNode[i].subjectId,
-				"gradeId": "",
-				"knowledge": questionNode[i].knowledges,
-				"questionIdMD52": questionNode[i].qid,
-				"questionStatus": "NOTSTART",
-				"questionPic": "",
-				"teacherName": "",
-				"createTime": "",
-				"updateTime": "",
-			}
-		}
-	}
-	if($(obj).attr("src") == "../img/CollectionNo.png") {
-		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/favor/saveQuestion",
-			headers: {
-				'accessToken': accessToken
-			},
-			type: "POST",
-			async: true,
-			data: JSON.stringify(Collectiond),
-			contentType: 'application/json',
-			dataType: 'JSON',
-			success: function(data) {
-				swal("收藏成功!", "", "success");
-				$(obj).attr("src", "../img/CollectionYes.png");
-			},
-			error: function() {
-				swal("收藏失败!", "", "success");
-				$(obj).attr("src", "../img/CollectionYes.png");
-			}
-		});
-	} else if($(obj).attr("src") == "../img/CollectionYes.png") {
-		var cs = [];
-		cs.push(id);
-		cc = {
-			"ids": cs
-		};
-		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/favor/deleteQuestions",
-			headers: {
-				'accessToken': accessToken
-			},
-			type: "DELETE",
-			async: true,
-			data: JSON.stringify(cc),
-			contentType: 'application/json',
-			dataType: 'JSON',
-			success: function(data) {
-				swal("已取消收藏!", "", "success");
-				$(obj).attr("src", "../img/CollectionNo.png");
-			},
-			error: function() {
-				swal("取消收藏失败!", "", "success");
-				$(obj).attr("src", "../img/CollectionYes.png");
-			}
-		});
-	}
-}
 var isExistFavorResult = "none";
 
 function isExistFavor(md52) {

@@ -51,18 +51,22 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 	}
 	
 	var j = 0;
+	var html = "<div style='position:relative;vertical-align:top;display:inline-block;width:93%'>";
 	for(var i = 0; i < questionType.length; i++) {
 		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;
 			var a1;
-			if(j == 10 || j == 20) {
+			/*if(j == 10 || j == 20) {
 				a1 = " <br/><a style='margin-left:10px;' onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
 			} else {
 				a1 = "<a   onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a>";
-			}
-			$(".f2").append(a1);
+			}*/
+			html += "<div style='float:left'><a style='margin-left:10px;' onclick='questionType_a_click(this," + questionType[i].id + ")'>" + questionType[i].typeName + "</a></div>";
+			
 		}
 	}
+	html += "</div>";
+	$(".f2").append(html);
 	for(var i = 0; i < difficultyType.length; i++) {
 		var a1 = "<a  onclick='difficultyType_a_click(this," + difficultyType[i].id + ")'>" + difficultyType[i].difficulty + "</a>";
 		$(".f3").append(a1);
@@ -188,7 +192,7 @@ function Knowledge_click(obj){
 	$(".f1").find("a").removeClass("d1");
 	$(".f1").children("a:first").addClass("d1");
 	$(".f2").find("a").removeClass("d1");
-	$(".f2").children("a:first").addClass("d1");
+	$(".f2").find("div").children("a:first").addClass("d1");
 	$(".f3").find("a").removeClass("d1");
 	$(".f3").children("a:first").addClass("d1");
 	$(".f4").find("a").removeClass("d1");
@@ -237,7 +241,7 @@ function Obtain_subject() {
 			} else {
 				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionYes.png' />";
 			}
-			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li onmouseover='showFullSource(this)' onmouseout='hideFullSource(this)'>"+subjectlist.content[i].questionNode.source+"</li></ul></div></div>";
+			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion' style='position: absolute;right: 0.5%;'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;position: absolute;right: 1%;'><ul><li onmouseover='showFullSource(this)' onmouseout='hideFullSource(this)'>"+subjectlist.content[i].questionNode.source+"</li></ul></div></div>";
 			a1 += "<div class='subjectinfo'><div>";
 			a1 += subjectlist.content[i].questionNode.title;
 			a1 += "</div>";
@@ -274,25 +278,25 @@ function Obtain_subject() {
 				a1 += "</tbody></table></div>";
 			}*/
 			a1 += "</div>";
-			a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
+			a1 += "<div class='subjectDetails'><span class='s_span' style='position: absolute;left: 1%;'>组卷<i class='num1'>";
 			if(subjectlist.content[i].addPapercount == null) {
 				a1 += getRandomNum();
 			} else {
 				a1 += subjectlist.content[i].addPapercount;
 			}
-			a1 += "</i>次</span><span class='s_span'>作答<i class='num2'>";
+			a1 += "</i>次</span><span class='s_span' style='position: absolute;margin-left: 13%;'>作答<i class='num2'>";
 			if(subjectlist.content[i].answerCount == null) {
 				a1 += getRandomNum();
 			} else {
 				a1 += subjectlist.content[i].answerCount
 			}
-			a1 += "</i>人次</span><span class='s_span'>平均得分率<i class='num3'>";
+			a1 += "</i>人次</span><span class='s_span' style='position: absolute;left: 26%;'>平均得分率<i class='num3'>";
 			if(subjectlist.content[i].average == null) {
 				a1 += getRandomNum()/100;
 			} else {
 				a1 += subjectlist.content[i].average;
 			}
-			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>";
 			a1 += subjectlist.content[i].questionNode.parse;
@@ -528,10 +532,22 @@ function add_paper(obj, istype) {
 	} else {
 		for(var i = 0; i < questionNode.length; i++) {
 			if(questionNode[i].qid == id) {
+				var options = Object.keys(questionNode[i]).filter(function (element, index, self) {
+					if(element.includes('option')&&questionNode[i][element])
+						return element;
+				});
+				//console.log(options);
+				var storedOptions = [];
+				if(options.length>0){
+					for(var j = 0; j < options.length; j++){
+						storedOptions.push(questionNode[i][options[j]]);
+					}
+				}				
+				
 				questionList.push({
 					"questionId": "",
 					"questionContent": questionNode[i].title,
-					"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
+					"options": storedOptions,
 					"answer": questionNode[i].answer1,
 					"answerDetail": questionNode[i].answer2,
 					"parse": questionNode[i].parse,
@@ -596,10 +612,22 @@ function CollectionImg_click(obj) {
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	for(var i = 0; i < questionNode.length; i++) {
 		if(questionNode[i].qid == id) {
+			
+			var options = Object.keys(questionNode[i]).filter(function (element, index, self) {
+			if(element.includes('option')&&questionNode[i][element])
+				return element;
+			});
+			//console.log(options);
+			var storedOptions = [];
+			if(options.length>0){
+				for(var j = 0; j < options.length; j++){
+					storedOptions.push(questionNode[i][options[j]]);
+				}
+			}
 			Collectiond = {
 				"questionId": "",
 				"questionContent": questionNode[i].title,
-				"options": [questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d],
+				"options": storedOptions,
 				"answer": questionNode[i].answer1,
 				"answerDetail": questionNode[i].answer2,
 				"parse": questionNode[i].parse,
@@ -759,8 +787,9 @@ function questionType_a_click(obj, questionTypeid) {
 	}else{
 		paquestionTypeid =$(obj).text();
 	}
+	$(obj).parent().parent().parent().find('a').removeClass("d1");
 	$(obj).addClass("d1");
-	$(obj).siblings().removeClass("d1");
+	//$(obj).siblings().removeClass("d1");
 	Obtain_subject();
 }
 //难度点击事件
