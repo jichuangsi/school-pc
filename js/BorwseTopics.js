@@ -8,6 +8,17 @@ function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
 	questionNode = getQuestion();
+	/*if(!questionNode) questionNode = [];
+	var classInfo = getUserInfo();
+	var examsInSession = getExamsList();
+	for(var i = 0; i < examsInSession.length; i++){
+		if(examsInSession[i].id===classInfo.classEaxmsId){
+			examsInSession[i].data.forEach(v=>{  
+				questionNode.push(v);  
+			});
+		}
+	}*/
+	
 }
 var pageSize = 4;
 var curr;
@@ -66,12 +77,12 @@ function getDate(start) {
 			var a1;
 			isExistFavor(questionNode[i].questionIdMD52);
 			if(isExistFavorResult == "none") {
-				a1 = "CollectionYes";
-			} else {
 				a1 = "CollectionNo";
+			} else {
+				a1 = "CollectionYes";
 			}
 			var knowledge;
-			if(questionNode[i].knowledge == undefined) {
+			if(!questionNode[i].knowledge) {
 				knowledge = "本题暂未归纳！"
 			} else {
 				knowledge = questionNode[i].knowledge;
@@ -84,7 +95,7 @@ function getDate(start) {
 			node.setAttribute("class", "subjectList");
 			var a2 = "";
 			var imgurl="";
-			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" style="position: relative;left:0px;" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
+			node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" style="position: relative;left:0px;" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/></div>';//<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
 			if(questionNode[i].options[0] != null && questionNode[i].options[0] != "") {
 				a2 = "<div><table><tbody>";
 				for(var j = 0; j < questionNode[i].options.length; j++) {
@@ -93,15 +104,17 @@ function getDate(start) {
 				a2 += "</tbody></table></div>";
 			}
 			if(questionNode[i].questionPic != null && 　questionNode[i].questionPic != "") {
-				console.log(questionNode[i].questionPic);
-				var getquestionpic = getQuestionPic(questionNode[i].questionPic); //调用下载文件的接口返回的数据
+				//console.log(questionNode[i].questionPic);
+				/*var getquestionpic = getQuestionPic(questionNode[i].questionPic); //调用下载文件的接口返回的数据
 				if(getquestionpic.data != null) {
 					imgurl = "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-				}
+				}*/
+				var getquestionpic = getQuestionPic(questionNode[i].questionPic, "preview-"+questionNode[i].questionIdMD52); //调用下载文件的接口返回的数据
+				imgurl += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+questionNode[i].questionIdMD52+"' src=''/>";
 			}
-			node.innerHTML += '<div class="subjectinfo"><div>' + questionNode[i].questionContent + '</div>' +a2+imgurl+ '</div>';
+			node.innerHTML += '<div class="subjectinfo"><div>' + questionNode[i].questionContent+imgurl+ '</div>' +a2+ '</div>';
 			node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a><div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
-			node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' + questionNode[i].quesetionType + '</span></div></div>';
+			node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' + questionNode[i].quesetionType + '</span></div></div>';
 			source.append(node);
 		}
 	} else {
@@ -410,8 +423,8 @@ function difficultyList() {
 	$("#five").html(five);
 }
 //根据老师id和文件名下载图片
-function getQuestionPic(pic) {
-	console.log("pic" + pic)
+function getQuestionPic(pic, pid) {
+	//console.log("pic" + pic)
 	var retresult = null;
 	var cc = {
 		"questionPic": pic,
@@ -422,12 +435,13 @@ function getQuestionPic(pic) {
 			'accessToken': accessToken
 		},
 		type: 'post',
-		async: false,
+		async: true,
 		dataType: "json",
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			retresult = data;
+			//retresult = data;
+			if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
 		},
 		error: function() {
 			alert("失败");

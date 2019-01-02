@@ -90,7 +90,8 @@ function loopitem() {
 	$(".tcdPageCode1").remove();
 	$("#Missingdata").remove();
 	if(itembaklist.content.length > 0) {
-		if(isWhichoneItem == 3) {
+		var questionInSession = getQuestion();
+		//if(isWhichoneItem == 3) {
 			for(var i = 0; i < itembaklist.content.length; i++, num++) {
 				var a1 = "<div class='subjectList'>";
 				a1 += "<div class='subjectList_top'>";
@@ -106,7 +107,7 @@ function loopitem() {
 				//题目
 				a1 += "<div>" + itembaklist.content[i].questionContent;
 				if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
-					console.log(itembaklist.content[i].questionPic);
+					//console.log(itembaklist.content[i].questionPic);
 					var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
 					/*if(getquestionpic.data != null) {
 						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
@@ -122,6 +123,15 @@ function loopitem() {
 					}
 					a1 += "</tbody></table></div>";
 				}
+				var added = false;
+				if(questionInSession){
+					for(var j = 0; j < questionInSession.length; j++){
+						if(questionInSession[j].questionIdMD52===itembaklist.content[i].questionIdMD52){
+							added = true;
+							break;
+						}
+					}
+				}
 				a1 += "</div>";
 				a1 += "<div class='subjectDetails'>";
 				a1 += "<span class='s_span'>组卷<i class='num1'>" + getRandomNum() + "</i>次</span>";
@@ -130,8 +140,11 @@ function loopitem() {
 				a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 				a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
-				a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a><div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div></div>";
-				a1 += "</div>";
+				a1 += "<div class='subjectOperation'><a onclick='add_paper(this,2)' class='subjectOperation_add' "+(!added?"":"style='display: none;'")+">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a>";
+				if(isWhichoneItem == 3) {
+					a1 += "<div class='del'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
+				}				
+				a1 += "</div></div>";
 				a1 += "<div class='subject_info' style='display: none;'>";
 				a1 += "<div class='info_1'><span>【答案】</span><span>" + itembaklist.content[i].answer + "</span></div>";
 				a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + itembaklist.content[i].parse + "</div></div>";
@@ -148,7 +161,7 @@ function loopitem() {
 			}
 			$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
 			page1();
-		} else {
+		/*} else {
 			for(var i = 0; i < itembaklist.content.length; i++, num++) {
 				var a1 = "<div class='subjectList'>";
 				a1 += "<div class='subjectList_top'>";
@@ -164,11 +177,8 @@ function loopitem() {
 				//题目
 				a1 += "<div>" + itembaklist.content[i].questionContent;
 				if(itembaklist.content[i].questionPic != null && 　itembaklist.content[i].questionPic != "") {
-					console.log(itembaklist.content[i].questionPic);
-					var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
-					/*if(getquestionpic.data != null) {
-						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-					}*/
+					//console.log(itembaklist.content[i].questionPic);
+					var getquestionpic = getQuestionPic(itembaklist.content[i].questionPic, "list-" + itembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据					
 					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='list-" + itembaklist.content[i].questionIdMD52 + "' src=''/>";
 				}
 				a1 += "</div>";
@@ -206,7 +216,7 @@ function loopitem() {
 			}
 			$("#newtestpaper_div2_02").append("<div class='tcdPageCode1'></div>");
 			page1();
-		}
+		}*/
 
 	} else {
 		$("#newtestpaper_div2_02").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
@@ -238,7 +248,7 @@ function page1() {
 		current: pagenum,
 		//默认显示哪一页
 		backFn: function(p) {
-			console.log(p); //当前页
+			//console.log(p); //当前页
 			pageIndex = p;
 			getItembankinfo();
 			loopitem();
@@ -400,7 +410,7 @@ function isExistFavor(md52) {
 }
 //根据老师id和文件名下载图片
 function getQuestionPic(pic, pid) {
-	console.log("pic" + pic)
+	//console.log("pic" + pic)
 	var retresult = null;
 	var cc = {
 		"questionPic": pic,

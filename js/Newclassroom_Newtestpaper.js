@@ -317,6 +317,7 @@ function Obtain_subject(obj, Chapterid) {
 		$("#page_lefts").text(pagenum1);
 		$("#page_rights").text(pagecount1);
 		var num = 1;
+		var questionInSession = getQuestion();
 		for(var i = 0; i < subjectlist.content.length; i++, num++) {
 
 			var a1 = "<div class='subjectList'><div class='subjectList_top'><span>" + num + "</span>";
@@ -326,12 +327,27 @@ function Obtain_subject(obj, Chapterid) {
 			} else {
 				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionYes.png' />";
 			}
-			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li>2018-2019年度第一学期高二年级开学考试qwertyuioasd（文科）</li><li>2018-2019年度第一学期高二年级开学考试mnkbjcusgwopjdafojowe（文科）</li></ul></div></div>";
+			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;'><ul><li onmouseover='showFullSource(this)' onmouseout='hideFullSource(this)'>"+subjectlist.content[i].questionNode.source+"</li></ul></div></div>";
 			a1 += "<div class='subjectinfo'><div>";
 			a1 += subjectlist.content[i].questionNode.title;
 			a1 += "</div>";
-			//判断是否有选项
-			if(subjectlist.content[i].questionNode.option_a.length > 0 || subjectlist.content[i].questionNode.option_b.length > 0 || subjectlist.content[i].questionNode.option_c.length > 0 || subjectlist.content[i].questionNode.option_d.length > 0) {
+			//判断是否有选项			
+			
+			var options = Object.keys(subjectlist.content[i].questionNode).filter(function (element, index, self) {
+				if(element.includes('option')&&subjectlist.content[i].questionNode[element])
+				 return element;
+			 });
+			//console.log(options);
+			
+			if(options.length>0){
+				a1 += "<div><table><tbody>";
+				for(var j = 0; j < options.length; j++){
+					a1 += "<tr><td>"+String.fromCharCode(65 + j)+":&nbsp&nbsp" + subjectlist.content[i].questionNode[options[j]] + "</td></tr>";
+				}
+				a1 += "</tbody></table></div>";
+			}
+			
+			/*if(subjectlist.content[i].questionNode.option_a.length > 0 || subjectlist.content[i].questionNode.option_b.length > 0 || subjectlist.content[i].questionNode.option_c.length > 0 || subjectlist.content[i].questionNode.option_d.length > 0) {
 				a1 += "<div><table><tbody>";
 				if(subjectlist.content[i].questionNode.option_a.length > 0) {
 					a1 += "<tr><td>A:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_a + "</td></tr>";
@@ -346,7 +362,7 @@ function Obtain_subject(obj, Chapterid) {
 					a1 += "<tr><td>D:&nbsp&nbsp" + subjectlist.content[i].questionNode.option_d + "</td></tr>";
 				}
 				a1 += "</tbody></table></div>";
-			}
+			}*/
 			a1 += "</div>";
 			a1 += "<div class='subjectDetails'><span class='s_span'>组卷<i class='num1'>";
 			if(subjectlist.content[i].addPapercount == null) {
@@ -367,9 +383,18 @@ function Obtain_subject(obj, Chapterid) {
 			} else {
 				a1 += subjectlist.content[i].average;
 			}
-			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
-			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span></div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
-			if(subjectlist.content[i].questionNode.knowledges != null && subjectlist.content[i].questionNode.knowledges) {
+			var added = false;
+			if(questionInSession){
+				for(var j = 0; j < questionInSession.length; j++){
+					if(questionInSession[j].questionIdMD52===subjectlist.content[i].questionNode.qid){
+						added = true;
+						break;
+					}
+				}
+			}
+			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation'><a onclick='add_paper(this)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a></div></div>"
+			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 +"</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
+			if(!!subjectlist.content[i].questionNode.knowledges) {
 				a1 += "<span>" + subjectlist.content[i].questionNode.knowledges + "</span>";
 			}
 			a1 += "</p></div></div><div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>"
@@ -382,6 +407,14 @@ function Obtain_subject(obj, Chapterid) {
 	} else {
 		$("#newtestpaper_div2_01").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
 	}
+}
+
+function showFullSource(obj){
+	obj.style.overflow = 'initial';
+}
+
+function hideFullSource(obj){
+	obj.style.overflow = 'hidden';
 }
 
 //分页
@@ -721,7 +754,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 	if(getlist == null) {
 		swal("请先选择题目!");
 	} else {
-		console.log(getlist.length)
+		//console.log(getlist.length)
 		$(".pres").remove();
 		$("#presH2").remove();
 		$("#Previewinfo").find(".subjectList").remove();
@@ -742,7 +775,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 				//题目
 				a1 += "<div>" + getlist[i].questionContent;
 				if(getlist[i].questionPic != null && 　getlist[i].questionPic != "") {
-					console.log(getlist[i].questionPic);
+					//console.log(getlist[i].questionPic);
 					var getquestionpic = getQuestionPic(getlist[i].questionPic, "preview-"+getlist[i].questionIdMD52); //调用下载文件的接口返回的数据
 					/*if(getquestionpic.data != null) {
 						a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
@@ -768,7 +801,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 				a1 += "<input type='hidden' name='id'value='" + getlist[i].questionIdMD52 + "' />";
 				a1 += "</div>";
 				a1 += "<div class='subject_info' style='display: none;'>";
-				a1 += "<div class='info_1'><span>【答案】</span><span>" + getlist[i].answer + "</span></div>";
+				a1 += "<div class='info_1'><span>【答案】</span><span>" + getlist[i].answer + "</span>" + (!getlist[i].answerDetail?'':"<br/><span>"+getlist[i].answerDetail+"</span>") + "</div>";
 				a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + getlist[i].parse + "</div></div>";
 				a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
 				a1 += "<p>";
@@ -802,8 +835,40 @@ function add_paper(obj, istype) {
 	$(obj).siblings().show();
 	var Identification = true;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
+	var questionInSession = getQuestion();
+	if(!questionInSession) questionInSession = [];
+	for(var j = 0; j < questionInSession.length; j++) {
+		if(id == questionInSession[j].questionIdMD52) {
+			swal("你已经添加了该题目哦!");
+			return;
+		}
+	}
 	if(istype == 2) {
-		if(getlist == null) {
+			for(var i = 0; i < itembaklist.content.length; i++) {
+				if(itembaklist.content[i].questionIdMD52 == id) {
+					questionInSession.push({
+						"questionId": "",
+						"questionContent": itembaklist.content[i].questionContent,
+						"options": itembaklist.content[i].options,
+						"answer": itembaklist.content[i].answer,
+						"answerDetail": itembaklist.content[i].answerDetail,
+						"parse": itembaklist.content[i].parse,
+						"quesetionType": itembaklist.content[i].quesetionType,
+						"difficulty": itembaklist.content[i].difficulty,
+						"subjectId": itembaklist.content[i].subjectId,
+						"gradeId": itembaklist.content[i].gradeId,
+						"knowledge": itembaklist.content[i].knowledge,
+						"questionIdMD52": itembaklist.content[i].questionIdMD52,
+						//"questionStatus": "NOTSTART",
+						"questionPic": itembaklist.content[i].questionPic,
+						"from": "new-"+itembaklist.content[i].questionIdMD52
+					})
+					namber = questionInSession.length
+					$("#paper_number").text(namber);					
+					sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+				}
+			}
+		/*if(getlist == null) {
 			for(var i = 0; i < itembaklist.content.length; i++) {
 				if(itembaklist.content[i].questionIdMD52 == id) {
 					questionList.push({
@@ -862,9 +927,47 @@ function add_paper(obj, istype) {
 					}
 				}
 			}
-		}
+		}*/
 	} else {
-		if(getlist == null) {
+			for(var i = 0; i < questionNode.length; i++) {
+				if(questionNode[i].qid == id) {
+					
+					var options = Object.keys(questionNode[i]).filter(function (element, index, self) {
+						if(element.includes('option')&&questionNode[i][element])
+						 return element;
+					 });
+					//console.log(options);
+					var storedOptions = [];
+					if(options.length>0){
+						for(var j = 0; j < options.length; j++){
+							storedOptions.push(questionNode[i][options[j]]);
+						}
+					}
+					questionInSession.push({
+						"questionId": "",
+						"questionContent": questionNode[i].title,
+						"options": storedOptions,
+						"answer": questionNode[i].answer1,
+						"answerDetail": questionNode[i].answer2,
+						"parse": questionNode[i].parse,
+						"quesetionType": questionNode[i].qtpye,
+						"difficulty": questionNode[i].diff,
+						"subjectId": questionNode[i].subjectId,
+						"gradeId": "",
+						"knowledge": questionNode[i].knowledges,
+						"questionIdMD52": questionNode[i].qid,
+						//"questionStatus": "NOTSTART",
+						"questionPic": "",
+						"from": "new-"+questionNode[i].qid
+					})
+					var namber = questionInSession.length
+					$("#paper_number").text(namber);
+					//console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
+					sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+				}
+			}
+		
+		/*if(getlist == null) {
 			for(var i = 0; i < questionNode.length; i++) {
 				if(questionNode[i].qid == id) {
 					questionList.push({
@@ -885,7 +988,7 @@ function add_paper(obj, istype) {
 					})
 					var namber = questionList.length
 					$("#paper_number").text(namber);
-					console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
+					//console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
 					sessionStorage.setItem("lastname", JSON.stringify(questionList));
 				}
 			}
@@ -918,13 +1021,13 @@ function add_paper(obj, istype) {
 						var namber = questionList.length
 						num = getlist.length;
 						$("#paper_number").text(namber);
-						console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
+						//console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
 						sessionStorage.setItem("lastname", JSON.stringify(questionList));
 					}
 				}
 			}
 
-		}
+		}*/
 
 	}
 }
@@ -933,7 +1036,17 @@ function remove_paper(obj) {
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	if(getlist == null) {
+	var questionInSession = getQuestion();
+	if(!questionInSession) return;
+	for(var i = 0; i < questionInSession.length; i++) {
+		if(questionInSession[i].questionIdMD52 == id) {
+			questionInSession.splice(i, 1);
+			var namber = questionInSession.length
+			$("#paper_number").text(namber);
+			sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+		}
+	}	
+	/*if(getlist == null) {
 		for(var i = 0; i < questionList.length; i++) {
 			if(questionList[i].questionIdMD52 == id) {
 				questionList.splice(i, 1);
@@ -952,7 +1065,7 @@ function remove_paper(obj) {
 				sessionStorage.setItem("lastname", JSON.stringify(questionList));
 			}
 		}
-	}
+	}*/
 }
 
 //类型列表下面的上一页
@@ -994,7 +1107,7 @@ function analysis_click(obj) {
 }
 //点击考情的点击事件
 function Situation_click(obj) {
-	$(obj).parent().next().css("display", "none");
+	/*$(obj).parent().next().css("display", "none");
 	if($(obj).parent().next().next().css("display") == "none") {
 		$(obj).parent().next().next().stop();
 		$(obj).parent().next().next().slideDown();
@@ -1004,5 +1117,5 @@ function Situation_click(obj) {
 		$(obj).parent().next().next().stop();
 		$(obj).parent().next().next().hide(500);
 		$(obj).removeClass("Situation_click");
-	}
+	}*/
 }

@@ -137,12 +137,12 @@ function deltestpaper_click(obj) {
 //获取试卷信息列表
 function gettestpaperlist() {
 	var cc = {
-		"createTime": 0,
-		"examId": "string",
+		//"createTime": 0,
+		//"examId": "string",
 		"examName": examName,
 		"pageIndex": pageindexs,
-		"pageSize": "3",
-		"questionModels": [{
+		"pageSize": "3"//,
+		/*"questionModels": [{
 			"answer": "string",
 			"answerDetail": "string",
 			"createTime": 0,
@@ -162,7 +162,7 @@ function gettestpaperlist() {
 			"subjectId": "string",
 			"updateTime": 0
 		}],
-		"updateTime": 0
+		"updateTime": 0*/
 	}
 	$.ajax({
 		url: local + "/EXAMSERVICE/exam/findExams",
@@ -255,13 +255,13 @@ function getDiffAndQtype() {
 //获取试卷的试题集合
 function getsubjectlist() {
 	var cc = {
-		"createTime": 0,
+		//"createTime": 0,
 		"examId": previewexamId,
-		"examName": "string",
-		"examSecondName": "string",
+		//"examName": "string",
+		//"examSecondName": "string",
 		"pageIndex": pageindexs1,
-		"pageSize": 3,
-		"questionModels": [{
+		"pageSize": 3//,
+		/*"questionModels": [{
 			"answer": "string",
 			"answerDetail": "string",
 			"createTime": 0,
@@ -281,7 +281,7 @@ function getsubjectlist() {
 			"subjectId": "string",
 			"updateTime": 0
 		}],
-		"updateTime": 0
+		"updateTime": 0*/
 	}
 	$.ajax({
 		url: local + "/EXAMSERVICE/exam/getExamInfoForExamId",
@@ -327,10 +327,12 @@ function loopquestions() {
 			a1 += "<div class='subjectinfo'>";
 			a1 += "<div>" + previewitembaklist.content[i].questionContent;
 			if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
-				var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
+				/*var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
 				if(getquestionpic.data != null) {
 					a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-				}
+				}*/
+				var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic, "preview-"+previewitembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+previewitembaklist.content[i].questionIdMD52+"' src=''/>";
 			}
 			a1 += "</div>";
 			//题目选项
@@ -343,15 +345,15 @@ function loopquestions() {
 			}
 			a1 += "</div>";
 			a1 += "<div class='subjectDetails'>";
-			a1 += "<span class='s_span'>组卷<i class='num1'>0</i>次</span>";
-			a1 += "<span class='s_span'>作答<i class='num2'>0</i>人次</span>";
-			a1 += "<span class='s_span'>平均得分率<i class='num3'>0%</i></span>";
+			a1 += "<span class='s_span'>组卷<i class='num1'>"+getRandomNum()+"</i>次</span>";
+			a1 += "<span class='s_span'>作答<i class='num2'>"+getRandomNum()+"</i>人次</span>";
+			a1 += "<span class='s_span'>平均得分率<i class='num3'>"+getRandomNum()/100+"%</i></span>";
 			a1 += "<a class='analysis' onclick='analysis_click(this)' style='margin-left: 90px;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 			a1 += "<a class='Situation' onclick='Situation_click(this)'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 			a1 += "<input type='hidden' name='id'value='" + previewitembaklist.content[i].questionIdMD52 + "' />";
 			a1 += "</div>";
 			a1 += "<div class='subject_info' style='display: none;'>";
-			a1 += "<div class='info_1'><span>【答案】</span><span>" + previewitembaklist.content[i].answer + "</span></div>";
+			a1 += "<div class='info_1'><span>【答案】</span><span>" + previewitembaklist.content[i].answer + "</span>"+ (!previewitembaklist.content[i].answerDetail?'':"</br><span>"+previewitembaklist.content[i].answerDetail+"</span>")  +"</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + previewitembaklist.content[i].parse + "</div></div>";
 			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
 			a1 += "<p>";

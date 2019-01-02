@@ -1,7 +1,7 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
-var datalist;
+var newCoursesList = [];
 var pageSize = 3;
 var questionNode;
 var roomInfo;
@@ -24,7 +24,7 @@ $(function() {
 	creaClass();
 	getQuestionNode();
 	getupload();
-	copyList();
+	//copyList();
 
 });
 var user;
@@ -52,8 +52,8 @@ function getQuestionNode() {
 		$("#ClassroomSynopsis").val(roomInfo.info);
 		initAttendtimehour(roomInfo.hh);
 		initAttendtimemin(roomInfo.mm);
-		$("#test29").val(currentdate);
-		initAttendClass('', sClass);
+		$("#test29").val(roomInfo.ymd);
+		initAttendClass(roomInfo.className, sClass);
 		initAttendTest(roomInfo.classEaxms, eaxms);
 		sessionStorage.removeItem('userIn');
 	}
@@ -75,15 +75,18 @@ function toQuestion() {
 function saveRoom() {
 	var classid = $("#AttendClass").val();
 	var className = $("#AttendClass option:selected").text();
+	var classEaxmsId = $("#ClassRoomSmallTest option:selected").val();
 	var classEaxms = $("#ClassRoomSmallTest option:selected").text();
 	var Name = $("#ClassName").val();
 	var info = $("#ClassroomSynopsis").val();
 	var hh = $("#time-hour").val();
 	var mm = $("#time-min").val();
 	var ymd = $("#test29").val();
+	if(!ymd) ymd = $("#test29").attr('placeholder');
 	var user = {
 		"classid": classid,
 		"className": className,
+		"classEaxmsId": classEaxmsId,
 		"classEaxms": classEaxms,
 		"Name": Name,
 		"info": info,
@@ -113,18 +116,22 @@ function getNowFormatDate() {
 function toList() {
 	var id = $("#ClassRoomSmallTest option:selected").val();
 	saveRoom(); //复制全部选择的信息
-	if(id == "请选择试卷" || id == -1) { //判断是否有选择小测
-		if(questionNode != null) {
-			subjectCache = questionNode;
-			sessionStorage.setItem('subjectCache', JSON.stringify(subjectCache)); //作为选择题目的一个备份
+	var questionInSession = getQuestion();
+	if(!questionInSession) questionInSession = [];
+	if(id == -1) { //判断是否有选择小测
+		if(questionInSession != null && questionInSession.length > 0) {
+			/*subjectCache = questionNode;
+			sessionStorage.setItem('subjectCache', JSON.stringify(subjectCache));*/ //作为选择题目的一个备份
 			window.location.replace("../Front/BrowseTopics.html");
 		} else {
 			swal("并没有添加题目或选择小测试卷哦!");
 		}
 	} else {
-		var examsListone; //先获取一下有没有小测有没有题目
+		window.location.replace("../Front/BrowseTopics.html");		
+		
+		/*var examsListone; //先获取一下有没有小测有没有题目
 		examsList = getExamsList();
-		if(examsList == null) {
+		if(examsList == null || examsList.length == 0) {
 			getTransferExams(id);
 		}
 		for(var i = 0; i < examsList.length; i++) {
@@ -157,7 +164,7 @@ function toList() {
 				sessionStorage.setItem("lastname", JSON.stringify(questionNode));
 				window.location.replace("../Front/BrowseTopics.html");
 			}
-		}
+		}*/
 	}
 
 }
@@ -194,8 +201,9 @@ function creaClass() {
 		dataType: 'JSON',
 		data: {},
 		success: function(data) {
-			datalist = data.data;
-			LookRoomClass(datalist);
+			if(data.code==="0010"){
+				LookRoomClass(data.data);
+			}			
 		},
 		error: function() {
 
@@ -205,11 +213,12 @@ function creaClass() {
 //新建课堂
 function formSub() {
 	//if(flag == 3) {
-		questionNode = getQuestion();
+		//questionNode = getQuestion();
 		var cpic = $("#icon").value;
 		var classid = document.getElementById("AttendClass").value;
 		var className = $("#AttendClass option:selected").text();
-		if(className == "请选择试卷") {
+		var questionInSession = getQuestion();	
+		/*if(className == "请选择试卷") {
 			className = "";
 		} else {
 			if(questionNode == null || questionNode == undefined || questionNode.length == 0) {
@@ -237,7 +246,7 @@ function formSub() {
 				}
 			}
 			//在新建课堂的时候把试卷题目添加进去;
-		}
+		}*/
 		var Name = document.getElementById("ClassName").value;
 		if(!Name) {
 			swal("请输入课堂名称！", "", "warning");
@@ -250,7 +259,7 @@ function formSub() {
 		var hh = $("#time-hour").val();
 		var mm = $("#time-min").val();
 		var rq = $("#test29").val()
-		if(rq == null) {
+		if(!rq) {
 			var ymd = $("#test29").attr('placeholder');
 		} else {
 			var ymd = $("#test29").val();
@@ -268,9 +277,9 @@ function formSub() {
 			"createTime": 0,
 			"pageNum": 0,
 			"pageSize": 0,
-			"questions": questionNode,
-			"teacherId": "string",
-			"teacherName": "string",
+			"questions": questionInSession,
+			//"teacherId": "string",
+			//"teacherName": "string",
 			"coursePic": cpic,
 			"subjectName": user.roles[0].primarySubject.subjectName
 		};
@@ -330,6 +339,14 @@ function copyClassRoom(obj) {
 	initAttendTest($ClassRoomSmallTestVal, eaxms);
 	initAttendtimehour($ClassTimehour);
 	initAttendtimemin($ClassTimemin);
+	var $ClassNum = $(obj).parent().find("#sz").text(); //课堂序号
+	var questionsInCopy = newCoursesList[$ClassNum - 1].courseForTeacher.questions;
+	if(!questionsInCopy) questionsInCopy = [];
+	questionsInCopy.forEach(v=>{
+		v.questionId = "";
+		v.from = 'copy-' + v.questionIdMD52;  
+	});
+	sessionStorage.setItem("lastname", JSON.stringify(questionsInCopy));
 	swal("复制完成!");
 }
 //初始化上课班级
@@ -354,16 +371,47 @@ function initAttendTest(ClassRoomSmallTestVal, eaxms) {
 	var $AttendClassTest = $("#ClassRoomSmallTest");
 	$AttendClassTest.find("option").remove();
 	var node = document.createElement("option");
-	node.innerHTML = '<option value="-1">请选择试卷</option>';
+	node.text = '请选择试卷';
+	node.value = "-1";
 	$AttendClassTest.append(node);
 	for(var i = 0; i < array.length; i++) {
 		if(array[i].examName == ClassRoomSmallTestVal) {
-			$option = "<option selected='selected' value='" + array[i].eaxmId + "'>" + array[i].examName + "</option>";
+			$option = "<option selected='selected' value='" + array[i].examId + "'>" + array[i].examName + "</option>";
 		} else {
 			$option = "<option value='" + array[i].examId + "'>" + array[i].examName + "</option>";
 		}
 		$AttendClassTest.append($option)
 	}
+	$AttendClassTest.change(
+		function(){			
+			getTransferExams($(this).val());
+	});
+}
+function removeExamQuestionsInSession(){
+	var questionInSession = getQuestion();
+	if(!questionInSession) questionInSession = [];
+	questionInSession = questionInSession.filter(v => (v.from&&v.from.indexOf('exam')!==0));
+			
+	sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+}
+function addExamQuestions2Session(id){
+	var questionIdExam = [];
+	var questionInSession = getQuestion();	
+	if(!questionInSession) questionInSession = [];
+	var examsInSession = getExamsList();
+	if(!examsInSession) examsInSession = [];
+	for(var j = 0; j < examsInSession.length; j++){
+		if(examsInSession[j].id === id){
+			questionIdExam = examsInSession[j].data;
+		}
+	}
+	if(questionIdExam.length == 0) return false;
+	for(var j = 0; j < questionIdExam.length; j++) {
+		questionIdExam[j].from = "exam-"+id;
+		questionInSession.push(questionIdExam[j]);
+	}
+	sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+	return true;
 }
 //加载小时
 function initAttendtimehour(ClassTimehour) {
@@ -489,6 +537,7 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="'+id+'"  />删除课堂</div>';
 			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>考勤人数:</span><span id="">' + datalist[i].courseForTeacher.students.length + '人</span></div></div>';
 			soure.appendChild(conClass);
+			newCoursesList.push(datalist[i]);
 		} //each
 	}
 }
@@ -563,7 +612,7 @@ function showLoad() {
 		display: "block"
 	});
 	$("#bonfire-pageloader").show();
-	window.location.reload();
+	//window.location.reload();
 }
 
 function showmes(code) {
@@ -614,24 +663,52 @@ function getupload() {
 		upload();
 	}
 }
+function showLoading(){
+	$('#bonfire-pageloader').removeClass('bonfire-pageloader-fade');
+	$('#bonfire-pageloader').removeClass('bonfire-pageloader-hide');
+	$(".bonfire-pageloader-icon").removeClass('bonfire-pageloader-icon-hide');
+}
+function hideLoading(){
+	$('#bonfire-pageloader').addClass('bonfire-pageloader-fade');
+	$('#bonfire-pageloader').addClass('bonfire-pageloader-hide');
+	$(".bonfire-pageloader-icon").addClass('bonfire-pageloader-icon-hide');
+}
 //获取小测
-function getTransferExams(id) {
-	if(id != 'undefined') {
+function getTransferExams(id) {		
+	removeExamQuestionsInSession();
+	if(id==-1) return;
+	if(addExamQuestions2Session(id)) return;
+	
+	if(id) {
+		showLoading();
 		$.ajax({
 			url: local + "/EXAMSERVICE/exam/getQuestions/" + id,
 			headers: {
 				'accessToken': accessToken
 			},
 			type: "get",
-			async: false,
+			async: true,
 			cache: true,
 			dataType: "JSON",
 			data: {},
 			success: function(data) { //需要修改data获取的数据类型
-				for(var i = 0; i < data.data.length; i++) {
-					data.data[i].questionId = "";
+				if(data.code==="0010"){
+					for(var i = 0; i < data.data.length; i++) {
+						data.data[i].questionId = "";
+					}
+					var examsInSession = getExamsList();
+					if(!examsInSession) examsInSession = [];
+					examsInSession.push({
+							"id": id,
+							"data": data.data
+						});
+					sessionStorage.setItem('examsList', JSON.stringify(examsInSession));
+					addExamQuestions2Session(id);
+				}else{
+					
 				}
-				examsList = getExamsList();
+				hideLoading();
+				/*examsList = getExamsList();
 				if(examsList == 'undefined' || examsList == null) {
 					examsList = [];
 					examsList.push({
@@ -651,9 +728,12 @@ function getTransferExams(id) {
 						}
 					}
 					sessionStorage.setItem('examsList', JSON.stringify(examsList));
-				}
-			}
+				}*/
+			},
+			error: function() {hideLoading();}
 		});
+	}else{
+		return;
 	}
 
 }

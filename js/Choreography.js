@@ -7,6 +7,7 @@ var curr; //第几页
 var user;
 var count; //多少堂课
 var sortNum = 2;
+var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
 
 function setCount() {
 	$("#count").text(count);
@@ -510,7 +511,8 @@ function getDate(obj) {
 		var num3 = (Math.round(Math.random() * 9999)) / 100;
 		node.setAttribute("class", "subjectList");
 		var a2 = "";
-		node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/><i onclick="Truequestion_click(this)" class="Truequestion">真题</i></div>'
+		var imgurl="";
+		node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/></div>';//<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
 		if(questionNode[i].options[0] != null && questionNode[i].options[0] != "") {
 			a2 = "<div style='clear:both;'><table><tbody>";
 			for(var j = 0; j < questionNode[i].options.length; j++) {
@@ -518,10 +520,19 @@ function getDate(obj) {
 			}
 			a2 += "</tbody></table></div>";
 		}
-		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + '</div>' + a2 + '</div>';
+		if(questionNode[i].questionPic) {
+			//console.log(questionNode[i].questionPic);
+			/*var getquestionpic = getQuestionPic(questionNode[i].questionPic); //调用下载文件的接口返回的数据
+			if(getquestionpic.data != null) {
+				imgurl = "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+			}*/
+			var getquestionpic = getQuestionPic(questionNode[i].questionPic, "preview-"+questionNode[i].questionIdMD52); //调用下载文件的接口返回的数据
+			imgurl += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+questionNode[i].questionIdMD52+"' src=''/>";
+		}
+		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + imgurl + '</div>' + a2 + '</div>';
 		node.innerHTML += '<div class="subjectDetails"><span class="s_span">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="margin-left: 90px;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
 		//<div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
-		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span>' + questionNode[i].answer + '</span></div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
+		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail?'':"<br/><span>"+questionNode[i].answerDetail+"</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
 		+ (!questionNode[i].questionTypeInCN?'':questionNode[i].questionTypeInCN) + '</span></div></div>';
 		source.appendChild(node);
 	}
@@ -734,4 +745,34 @@ function time(obj, num) {
 		$(obj).parent().children().first().addClass('comprehensive-zh').removeClass('class-time');
 		inintClassDate(1);
 	}
+}
+
+//根据老师id和文件名下载图片
+function getQuestionPic(pic, pid) {
+	//console.log("pic" + pic)
+	var retresult = null;
+	var cc = {
+		"questionPic": pic,
+	};
+	$.ajax({
+		url: local + "/QUESTIONSREPOSITORY/" + getQuestionPicUrl,
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'post',
+		async: true,
+		dataType: "json",
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
+		success: function(data) {
+			//retresult = data;
+			if(data.code==="0010"){
+				if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
+			}
+		},
+		error: function() {
+			alert("失败");
+		}
+	});
+	return retresult;
 }
