@@ -429,6 +429,9 @@ function saveQuestion() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='Choicequestion']").val();
 		var knowledge = $("#dept option:selected").attr('data');
+		var knowledgeId = $("#dept option:selected").val();
+		var capability = $("input:radio[name='capability1']:checked").attr('data');
+		var capabilityId = $("input:radio[name='capability1']:checked").val();
 		/*if(knowledge == "请选择知识点") {
 			knowledge = " ";
 		}*/
@@ -467,6 +470,9 @@ function saveQuestion() {
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
+			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"capability": capability,
+			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
 			"questionPic": "",
@@ -509,7 +515,10 @@ function saveQuestionPack() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionPack']").val();
 		var knowledge = $("#packselect option:selected").attr('data');
+		var knowledgeId = $("#packselect option:selected").val();
 		var parse = $("textarea[name='parsePack']").val();
+		var capability = $("input:radio[name='capability3']:checked").attr('data');
+		var capabilityId = $("input:radio[name='capability3']:checked").val();
 
 		/*if(knowledge == "请选择知识点") {
 			knowledge = " ";
@@ -540,6 +549,9 @@ function saveQuestionPack() {
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
+			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"capability": capability,
+			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
 			"questionPic": "",
@@ -579,6 +591,9 @@ function saveQuestionStone() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionStone']").val();
 		var knowledge = $("#deptselect option:selected").attr('data');
+		var knowledgeId = $("#deptselect option:selected").val();
+		var capability = $("input:radio[name='capability2']:checked").attr('data');
+		var capabilityId = $("input:radio[name='capability2']:checked").val();
 		/*if(answer == undefined || answer == null || answer == "") {
 			answer = "";
 		} else {
@@ -628,6 +643,9 @@ function saveQuestionStone() {
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
+			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"capability": capability,
+			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
 			"questionPic": "",
@@ -672,6 +690,9 @@ function saveCompletionQuestion() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionCompletion']").val();
 		var knowledge = $("#isselect option:selected").attr('data');
+		var knowledgeId = $("#isselect option:selected").val();
+		var capability = $("input:radio[name='capability4']:checked").attr('data');
+		var capabilityId = $("input:radio[name='capability4']:checked").val();
 		/*var answerOptions = new Array();
 		for(i = 0; i < tknumber; i++) {
 			answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
@@ -707,6 +728,9 @@ function saveCompletionQuestion() {
 			"subjectId": "",
 			"gradeId": "",
 			"knowledge": knowledge,
+			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"capability": capability,
+			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
 			"questionPic": "",

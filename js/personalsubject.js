@@ -140,7 +140,7 @@ function loopitem() {
 				a1 += "<a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a>";
 				a1 += "<a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a>";
 				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
-				a1 += "<div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='add_paper(this,2)' class='subjectOperation_add' "+(!added?"":"style='display: none;'")+">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a>";
+				a1 += "<div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='capabilitySelection(this,2)' class='subjectOperation_add' "+(!added?"":"style='display: none;'")+">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a>";
 				if(isWhichoneItem == 3) {
 					a1 += "<div class='del' style='position: absolute;bottom: -7px;margin-left: 120px;'><div class='sub-del' onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
 				}				
@@ -281,6 +281,9 @@ function customCollectionImg_click(obj) {
 				"subjectId": itembaklist.content[i].subjectId,
 				"gradeId": itembaklist.content[i].gradeId,
 				"knowledge": itembaklist.content[i].knowledge,
+				"knowledgeId": itembaklist.content[i].knowledgeId,
+				"capability": itembaklist.content[i].capability,
+				"capabilityId": itembaklist.content[i].capabilityId,
 				"questionIdMD52": itembaklist.content[i].questionIdMD52,
 				//"questionStatus": "NOTSTART",
 				"questionPic": itembaklist.content[i].questionPic,

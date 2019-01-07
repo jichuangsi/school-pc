@@ -296,7 +296,7 @@ function Obtain_subject() {
 			} else {
 				a1 += subjectlist.content[i].average;
 			}
-			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='add_paper(this)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
+			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add'>加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' style='display: none;'>移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>";
 			a1 += subjectlist.content[i].questionNode.parse;
@@ -502,6 +502,57 @@ function emptypaper(){
 			swal("当前试卷没有试题","","warning");
 		}
 }
+
+var capability = "";
+var capabilityId = "";
+function capabilitySelection(obj, istype){
+	capability = "";
+	capabilityId = "";
+	var checked = "";
+	var id = $(obj).parent().parent().find("input[name='id']").val();
+	if(istype == 2){
+		for(var i = 0; i < itembaklist.content.length; i++) {
+			if(itembaklist.content[i].questionIdMD52 == id) {
+				if(itembaklist.content[i].capability){
+					checked = itembaklist.content[i].capabilityId;
+				}
+			}
+		}		
+	}else{
+		for(var i = 0; i < questionNode.length; i++) {
+			if(questionNode[i].qid == id) {
+				if(questionNode[i].capability){
+					checked = questionNode[i].capabilityId;
+				}	
+			}
+		}		
+	}
+	
+	var cc = {
+		type: "layerFadeIn",
+		title: "认&nbsp;知&nbsp;能&nbsp;力",
+		content: "<div style='display:inline-block'><input type='radio' name='capability' value='1'"+(checked==1?"checked":"")+" data='记忆' id='memory'><label for='memory'>记忆</label></div>&nbsp;&nbsp;"+
+				"<div style='display:inline-block'><input type='radio'  name='capability' value='2'"+(checked==2?"checked":"")+" data='理解' id='understand'/><label for='understand'>理解</label></div>&nbsp;&nbsp;"+
+				"<div style='display:inline-block'><input type='radio'  name='capability' value='3'"+(checked==3?"checked":"")+" data='分析' id='analyse'/><label for='analyse'>分析</label></div>&nbsp;&nbsp;"+
+				"<div style='display:inline-block'><input type='radio'  name='capability' value='4'"+(checked==4?"checked":"")+" data='应用' id='usage'/><label for='usage'>应用</label></div>&nbsp;&nbsp;"+
+				"<div style='display:inline-block'><input type='radio'  name='capability' value='5'"+(checked==5?"checked":"")+" data='综合' id='comprehensive'/><label for='comprehensive'>综合</label></div>",
+		area: ["400px", "150px"],
+		btn:["跳过","确认"] 
+	};
+	
+	method.msg_layer(cc);
+	$(".layer-commit").on("click",function(){
+		capability = $("input:radio[name='capability']:checked").attr('data');
+		capabilityId = $("input:radio[name='capability']:checked").val();
+		add_paper(obj, istype);
+        method.msg_close();
+    });
+	$(".layer-cancel").on("click",function(){
+		add_paper(obj, -1);
+		method.msg_close();
+	})
+}
+
 //加入试卷
 function add_paper(obj, istype) {
 	$(obj).css("display", "none");
@@ -522,6 +573,9 @@ function add_paper(obj, istype) {
 					"subjectId": itembaklist.content[i].subjectId,
 					"gradeId": itembaklist.content[i].gradeId,
 					"knowledge": itembaklist.content[i].knowledge,
+					"knowledgeId": itembaklist.content[i].knowledgeId,
+					"capability": capability,
+					"capabilityId": capabilityId,
 					"questionIdMD52": itembaklist.content[i].questionIdMD52,
 					"questionPic": itembaklist.content[i].questionPic
 				})
@@ -556,6 +610,9 @@ function add_paper(obj, istype) {
 					"subjectId": questionNode[i].subjectId,
 					"gradeId": "",
 					"knowledge": questionNode[i].knowledges,
+					"knowledgeId": questionNode[i].knowledgeId,
+					"capability": capability,
+					"capabilityId": capabilityId,
 					"questionIdMD52": questionNode[i].qid,
 					"questionPic": ""
 				})
@@ -636,8 +693,11 @@ function CollectionImg_click(obj) {
 				"subjectId": questionNode[i].subjectId,
 				"gradeId": "",
 				"knowledge":questionNode[i].knowledges,
+				"knowledgeId":questionNode[i].knowledgesId,
+				"capability": questionNode[i].capability,
+				"capabilityId": questionNode[i].capabilityId,
 				"questionIdMD52": questionNode[i].qid,
-				"questionStatus": "NOTSTART",
+				//"questionStatus": "NOTSTART",
 				"questionPic": "",
 				"teacherName": "",
 				"createTime": "",
