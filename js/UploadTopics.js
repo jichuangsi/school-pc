@@ -320,7 +320,7 @@ function difficulty(obj) {
 	if(difficultys == "简单") {
 		difficultys = 1.00;
 	} else if(difficultys == "一般") {
-		difficulty = 2.00;
+		difficultys = 2.00;
 	} else if(difficultys == "中等") {
 		difficultys = 3.00;
 	} else if(difficultys == "困难") {
