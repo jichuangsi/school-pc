@@ -114,7 +114,7 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 		$(".f1").append(a1);
 	}
 	var j = 0;
-	var html = "<div style='position:relative;vertical-align:top;display:inline-block;width:93%'>";
+	var html = "<div style='position:relative;vertical-align:top;display:inline-block;width:90%'>";
 	for(var i = 0; i < questionType.length; i++) {
 		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;

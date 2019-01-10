@@ -8,6 +8,7 @@ var roomInfo;
 var subjectCache; //题目备份
 var exams; //获取小测的题目
 var examsList; //多个题目小测
+var attachmentList = [];//课堂附件
 
 function getLocation() {
 	local = httpLocation();
@@ -23,9 +24,8 @@ $(function() {
 	copyClass();
 	creaClass();
 	getQuestionNode();
-	getupload();
+	//getupload();
 	//copyList();
-
 });
 var user;
 
@@ -46,6 +46,7 @@ function getQuestionNode() {
 		initAttendtimemin('');
 		initAttendClass('', sClass);
 		initAttendTest('', eaxms);
+		attachmentList = [];
 	} else {
 		$("#AttendClass").val(roomInfo.classid);
 		$("#ClassName").val(roomInfo.Name);
@@ -54,7 +55,8 @@ function getQuestionNode() {
 		initAttendtimemin(roomInfo.mm);
 		$("#test29").val(roomInfo.ymd);
 		initAttendClass(roomInfo.className, sClass);
-		initAttendTest(roomInfo.classEaxms, eaxms);
+		initAttendTest(roomInfo.classEaxms, eaxms);		
+		attachmentList = roomInfo.attachments;
 		sessionStorage.removeItem('userIn');
 	}
 }
@@ -83,11 +85,15 @@ function saveRoom() {
 	var mm = $("#time-min").val();
 	var ymd = $("#test29").val();
 	if(!ymd) ymd = $("#test29").attr('placeholder');
+	attachmentList.forEach(function(obj, index){
+		obj.status = "P";
+	});
 	var user = {
 		"classid": classid,
 		"className": className,
 		"classEaxmsId": classEaxmsId,
 		"classEaxms": classEaxms,
+		"attachments": attachmentList,
 		"Name": Name,
 		"info": info,
 		"hh": hh,
@@ -217,7 +223,7 @@ function formSub() {
 		var cpic = $("#icon").value;
 		var classid = document.getElementById("AttendClass").value;
 		var className = $("#AttendClass option:selected").text();
-		var questionInSession = getQuestion();	
+		var questionInSession = getQuestion();			
 		/*if(className == "请选择试卷") {
 			className = "";
 		} else {
@@ -281,7 +287,8 @@ function formSub() {
 			//"teacherId": "string",
 			//"teacherName": "string",
 			"coursePic": cpic,
-			"subjectName": user.roles[0].primarySubject.subjectName
+			"subjectName": user.roles[0].primarySubject.subjectName,
+			"attachments": attachmentList
 		};
 		//console.log(JSON.stringify(cc));
 		$.ajax({
@@ -344,9 +351,15 @@ function copyClassRoom(obj) {
 	if(!questionsInCopy) questionsInCopy = [];
 	questionsInCopy.forEach(v=>{
 		v.questionId = "";
+		v.quesetionType = v.questionTypeInCN;
 		v.from = 'copy-' + v.questionIdMD52;  
 	});
 	sessionStorage.setItem("lastname", JSON.stringify(questionsInCopy));
+	attachmentList = newCoursesList[$ClassNum - 1].courseForTeacher.attachments;
+	attachmentList.forEach(v=>{
+		v.status = "P";
+	});
+	
 	swal("复制完成!");
 }
 //初始化上课班级
@@ -629,7 +642,105 @@ function ShowDiv(show_div, bg_div) {
 	var bgdiv = document.getElementById(bg_div);
 	bgdiv.style.width = document.body.scrollWidth;
 	$("#" + bg_div).height($(document).height());
+	uploadAttachments();
 };
+
+function uploadAttachments(){
+	
+	var uploadObj = $("#fileuploader").uploadFile({
+		url:local + "/COURSESERVICE/console/saveCourseAttachment",
+		fileName:"file",
+		showDelete: true,
+		//showDownload:true,
+		showFileSize:false,
+		statusBarWidth:550,
+		dragdropWidth:550,
+		maxFileSize:5000*1024,
+		//showPreview:true,
+		//previewHeight: "100px",
+		//previewWidth: "100px",
+		headers:{
+			'accessToken': accessToken
+		},		
+		onLoad:function(obj)
+		{	
+		},
+		deleteCallback: function (data, pd) {
+			if(!data.data&&data&&data.length>0){
+				for(var i=0;i<attachmentList.length;i++){
+					for(var j=0;j<data.length;j++){
+						if(attachmentList[i].name===data[j]){
+							attachmentList.splice(i, 1);
+						}
+					}
+					
+				}
+				return;
+			}
+			var deleteIds = {"ids":[data.data]};			
+			$.ajax({
+				url: local + "/COURSESERVICE/console/removeCourseAttachment",
+				headers: {
+					'accessToken': accessToken
+				},
+				type: 'DELETE',
+				async: false,
+				dataType: "json",
+				contentType: 'application/json',
+				data: JSON.stringify(deleteIds),
+				success: function(res) {
+					if(res.code==="0010"){
+						pd.statusbar.hide();
+						for(var i=0;i<attachmentList.length;i++){
+							if(attachmentList[i].sub===data.data){
+								attachmentList.splice(i, 1);
+							}
+						}
+					}
+				},
+				error: function() {}
+			});
+
+		},
+		downloadCallback:function(filename,pd)
+		{
+			console.log(filename);
+			console.log(pd);
+			//location.href="download.php?filename="+filename;
+		},
+		onSubmit:function(files)
+		{
+			console.log(files);			
+			//return false;
+		},		
+		onSuccess:function(files,data,xhr,pd)
+		{
+			if(data.code==="0010"){
+				attachmentList.push({"name":files[0],"sub":data.data,"status":"I"});
+			}else{
+				swal("上传失败!", ""+data.msg+"", "error");
+				pd.statusbar.hide();
+			}
+			//files: list of files
+			//data: response from server
+			//xhr : jquer xhr object
+			//console.log(data);
+		},
+		onError: function(files,status,errMsg,pd)
+		{
+			//files: list of files
+			//status: error status
+			//errMsg: error message
+			console.log(errMsg);
+		}
+	});
+	for(var i=0;i<attachmentList.length;i++){
+		if(attachmentList[i].status==="P"){
+			uploadObj.createProgress(attachmentList[i].name);
+			attachmentList[i].status="I";
+		}
+	}
+}
 
 function CloseDiv(show_div, bg_div) {
 	document.getElementById(show_div).style.display = 'none';

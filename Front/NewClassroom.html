@@ -9,10 +9,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>新建课堂</title>
-	</head>
-	<link rel="stylesheet" href="../css/NewClassRoom.css" />
+	</head>	
 	<script src="../js/jquery.js" type="text/javascript"></script>
-	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<!-- <script type="text/javascript" src="../js/jquery-1.8.3.js"></script> -->
 	<script type="text/javascript" src="../js/NewClassroom.js"></script>
 	<script type="text/javascript" src="../js/laydate.js"></script>
 	<script type="text/javascript" src="../js/httplocation.js"></script>
@@ -20,6 +19,9 @@
 	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
 	<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
 	<script type="text/javascript" src="../js/methodNoUpdata.js"></script>
+	<script type="text/javascript" src="../js/jquery.uploadfile.min.js"></script>
+	<link rel="stylesheet" href="../css/uploadfile.css" />
+	<link rel="stylesheet" href="../css/NewClassRoom.css" />
 	<link rel="stylesheet" href="../css/layer-animate-no.css" />
 	<link rel="stylesheet" href="../css/tinyImgUpload.css" />
 	<link rel="stylesheet" href="../css/sweetalert.css" />
@@ -170,24 +172,27 @@
 							<tr>
 								<td>
 									<div class="box-sub" id="sub" type="submit" style="font-size: 18px;" onclick="formSub()">新建课堂</div>
-									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传课堂图标</div>
+									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传课堂附件</div>
 									<div id="fade" class="black_overlay">
 									</div>
-									<div id="MyDiv" class="white_content" style="width: 390px;height:420px;margin-left: 16%;margin-top: 81px;">
+									<div id="MyDiv" class="white_content" style="width: 600px;height:600px;margin-left: 10%;margin-top: 5%">
+										
 										<div style="text-align: right; cursor: default; height: 40px;">
-											<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:black;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
-											<div id="upload">
+											<span style="font-size: 20px;float:left">上传文件限制为5M</span>
+											<label style="font-size: 25px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:red;" onclick="CloseDiv('MyDiv','fade')">X</label>											
+											<div id="fileuploader">上传</div>
+											<!-- <div id="upload">
 
 											</div>
-											<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 149px;top: 340px ;cursor: pointer;" class="submit">本地上传</button>
+											<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 149px;top: 340px ;cursor: pointer;" class="submit">本地上传</button> -->
 										</div>
 									</div>
 								</td>
 							</tr>
 						</table>
 					</div>
-					<!--<button class="box-sub" onclick="uploadIcon()">上传图标</button>-->
-					<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+					<!-- <button class="box-sub" onclick="uploadIcon()">上传图标</button> -->
+					<!-- <script type="text/javascript" src="../js/tinyImgUpload.js"></script> -->
 					<script>
 					</script>
 					<!--	</form>-->
