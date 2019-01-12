@@ -677,7 +677,7 @@ function uploadAttachments(){
 				}
 				return;
 			}
-			var deleteIds = {"ids":[data.data]};			
+			var deleteIds = {"ids":[data.data.sub]};			
 			$.ajax({
 				url: local + "/COURSESERVICE/console/removeCourseAttachment",
 				headers: {
@@ -692,7 +692,7 @@ function uploadAttachments(){
 					if(res.code==="0010"){
 						pd.statusbar.hide();
 						for(var i=0;i<attachmentList.length;i++){
-							if(attachmentList[i].sub===data.data){
+							if(attachmentList[i].sub===data.data.sub){
 								attachmentList.splice(i, 1);
 							}
 						}
@@ -704,19 +704,19 @@ function uploadAttachments(){
 		},
 		downloadCallback:function(filename,pd)
 		{
-			console.log(filename);
-			console.log(pd);
+			//console.log(filename);
+			//console.log(pd);
 			//location.href="download.php?filename="+filename;
 		},
 		onSubmit:function(files)
 		{
-			console.log(files);			
+			//console.log(files);			
 			//return false;
 		},		
 		onSuccess:function(files,data,xhr,pd)
 		{
 			if(data.code==="0010"){
-				attachmentList.push({"name":files[0],"sub":data.data,"status":"I"});
+				attachmentList.push({"name":files[0],"sub":data.data.sub,"contentType":data.data.contentType,"status":"I"});
 			}else{
 				swal("上传失败!", ""+data.msg+"", "error");
 				pd.statusbar.hide();
