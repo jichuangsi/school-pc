@@ -187,6 +187,8 @@ function find(str, cha, num) {
 
 //知识点点击事件
 function Knowledge_click(obj){
+	//console.log($(obj).attr('data'))
+	//sessionStorage.setItem('clicknumber',$(obj).attr('data'))
 	$(".Knowledges").removeClass("Knowledgesbackground");
 	$(obj).addClass("Knowledgesbackground");
 	knowledgeId=$(obj).attr("data");
@@ -411,7 +413,12 @@ function PreviewPaper() //显示隐藏层和弹出层
 				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
 			} else {
 				questionList[i].knowledges.forEach(function(item, index){
-					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+					if(item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+					else if(item.knowledge&&!item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+					else if(!item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 				});
 			}
 			a1 += knowledge;
@@ -566,6 +573,7 @@ function capabilitySelection(obj, istype){
 
 //加入试卷
 function add_paper(obj, istype) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
@@ -639,6 +647,7 @@ function add_paper(obj, istype) {
 }
 /*移除试卷*/
 function remove_paper(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
@@ -653,6 +662,10 @@ function remove_paper(obj) {
 
 //获取知识点
 function edition_click(obj, editionid,gradeId) {
+	//console.log(editionid,gradeId)
+	//sessionStorage.setItem('one',editionid)
+	//sessionStorage.setItem('two',gradeId)
+	//sessionStorage.removeItem('Selection')
 	var cc = {
 		"pharseId": pharseId,
 		"subjectId": subjectId,
@@ -680,6 +693,7 @@ function edition_click(obj, editionid,gradeId) {
 }
 //收藏图标的点击事件
 function CollectionImg_click(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	var Collectiond = null;
 	var id = $(obj).parent().parent().find("input[name='id']").val();	
 	if($(obj).attr("src") == "../img/CollectionNo.png") {
@@ -777,6 +791,7 @@ function CollectionImg_click(obj) {
 }
 //点击解析事件
 function analysis_click(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).parent().next().next().css("display", "none");
 	if($(obj).parent().next().css("display") == "none") {
 		$(obj).parent().next().stop();

@@ -588,3 +588,45 @@
 		position: absolute;
 		clip: rect(0, 0, 0, 0);
 	}
+	
+	.nav-top {
+		width: 100%;
+		height: 40px;
+		background-color: #3d72fe;
+	}
+
+	.nav-top-manin {
+		margin-left: 18.75%;
+	}
+
+	.nav-top-manin-content {
+		color: white;
+		text-align: center;
+		line-height: 40px;
+		float: left;
+		width: 120px;
+	}
+
+	.nav-top-manin-content:hover {
+		cursor: pointer;
+	}
+
+	.nav-top-manin-content.pr {
+		background-color: #59e8e3;
+	}
+
+	.nav-top-manin-but {
+		margin-top: 5px;
+		width: 100px;
+		height: 30px;
+		border-radius: 5px;
+		line-height: 30px;
+		float: right;
+		margin-right: 24.75%;
+		background-color: #59e8e3;
+		text-align: center;
+	}
+
+	.nav-top-manin-but:hover {
+		cursor: pointer;
+	}

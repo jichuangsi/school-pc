@@ -362,7 +362,12 @@ function loopquestions() {
 				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
 			} else {
 				previewitembaklist.content[i].knowledges.forEach(function(item, index){
-					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+					if(item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+					else if(item.knowledge&&!item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+					else if(!item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 				});
 			}
 			a1 += knowledge;
@@ -473,3 +478,26 @@ function page3() {
 }
 
 function Situation_click(){}
+
+function isExistFavor(md52) {
+	var cc = {
+		"MD52": md52,
+	};
+	$.ajax({
+		url: local + "/QUESTIONSREPOSITORY/favor/isExistFavor",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'get',
+		async: false,
+		dataType: "json",
+		data: cc,
+		contentType: 'application/json',
+		success: function(data) {
+			isExistFavorResult = data.data.result;
+		},
+		error: function() {
+			alert("收藏失败");
+		}
+	});
+}

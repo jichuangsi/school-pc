@@ -3,7 +3,7 @@
 		color: #FFFFFF;
 	}
 	
-	.nav-top {
+	/*.nav-top {
 		width: 100%;
 		height: 40px;
 		background-color: #3d72fe;
@@ -35,7 +35,7 @@
 		margin-right: 24.75%;
 		background-color: #59e8e3;
 		text-align: center;
-	}
+	}*/
 	
 	input[name="capability"] + label::before {
 		content: "\a0"; /*不换行空格*/

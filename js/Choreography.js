@@ -503,7 +503,12 @@ function getDate(obj) {
 				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
 			} else {
 				questionNode[i].knowledges.forEach(function(item, index){
-					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+					if(item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+					else if(item.knowledge&&!item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+					else if(!item.knowledge&&item.capability)
+						knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 				});
 			}
 		var j = 0;

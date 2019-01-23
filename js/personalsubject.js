@@ -9,6 +9,18 @@ function getLocation() {
 $(function() {
 	getLocation();
 });
+window.onload = function () {
+	if(sessionStorage.getItem('Selection')){
+		radioItembank($("input[name='ther']").parent()[Number(sessionStorage.getItem('Selection'))-1]);
+		dropSwifts($('.d-firstNav').eq(0), '.d-firstDrop');
+		sessionStorage.removeItem('Selection');
+	}
+	/*if(sessionStorage.getItem('one')&&sessionStorage.getItem('two')){
+		edition_click(this,sessionStorage.getItem('one'),sessionStorage.getItem('two'))
+		console.log($('#f2').find(".d-secondNavs[data="+sessionStorage.getItem('clicknumber')+"]"))
+		Knowledge_click($('#f2').find(".d-secondNavs[data="+sessionStorage.getItem('clicknumber')+"]")[0])
+	}*/
+};
 var itembaklist = null; //题目列表
 var total = 1; //题目总条数(总共有多少题)
 var pagecount = 1; //题目总页数(总共有多少页)
@@ -23,6 +35,10 @@ var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
 var isItembank = 0; //用来判断知识点的题目还是个人题库、校本题库、自定义题库的题目
 //个人题库、校本题库、自定义题库点击事件
 function radioItembank(obj) {
+	sessionStorage.setItem('Selection',$(obj).children().val())
+	//sessionStorage.removeItem('one')
+	//sessionStorage.removeItem('two')
+	//sessionStorage.removeItem('clicknumber')
 	total = 1;
 	pagecount = 1;
 	pagenum = 1;
@@ -93,7 +109,7 @@ function loopitem() {
 		var questionInSession = getQuestion();
 		//if(isWhichoneItem == 3) {
 			for(var i = 0; i < itembaklist.content.length; i++, num++) {
-				var a1 = "<div class='subjectList'>";
+				var a1 = "<div data="+itembaklist.content[i].questionId+" class='subjectList'>";
 				a1 += "<div class='subjectList_top'>";
 				a1 += "<span>" + num + "</span>";
 				isExistFavor(itembaklist.content[i].questionIdMD52);
@@ -155,7 +171,12 @@ function loopitem() {
 					knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
 				} else {
 					itembaklist.content[i].knowledges.forEach(function(item, index){
-						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+						if(item.knowledge&&item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+						else if(item.knowledge&&!item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+						else if(!item.knowledge&&item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 					});
 				}
 				a1 += knowledge;				
@@ -170,6 +191,10 @@ function loopitem() {
 	} else {
 		$("#newtestpaper_div2_02").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >没有找到相关试题，换个条件试试吧！</h3></div>');
 	}
+	$('.subjectList').click(function(){
+		var link = '../Front/UploadTopics.html'+'?questionId='+$(this).attr('data')
+		window.location.href = link
+	})
 }
 
 //类型列表下面的上一页
@@ -214,6 +239,7 @@ function difficultyType_a_click2(obj, diff) {
 }
 //自定义和校本题库的收藏事件
 function customCollectionImg_click(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	var Collectiond = null;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	
@@ -401,6 +427,7 @@ function getQuestionPic(pic, pid) {
 }
 //删除自定义题目
 function delObj(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	var id = $(obj).parent().find(".delId").val();
 	var cc = {
 		"ids": [id]
@@ -413,7 +440,8 @@ function delObj(obj) {
 		closeOnConfirm: false,
 		confirmButtonText: "是的，我要删除",
 		confirmButtonColor: "#ec6c62"
-	}, function() {
+	}, 
+	function() {
 		$.ajax({
 			type: 'DELETE',
 			url: local + "/QUESTIONSREPOSITORY/self/deleteQuestions",

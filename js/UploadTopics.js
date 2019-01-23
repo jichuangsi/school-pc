@@ -1,7 +1,7 @@
 document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
-var accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg';
-
+//var accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg';
+//var token = sessionStorage.getItem('accessToken')
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
@@ -11,9 +11,17 @@ var answer;
 var difficultys;
 var arr;
 var orcode
+var radioall
+var questionid = ''
 $(function() {
-	orcode = Math.round(Math.random() * 9999);
 	getLocation();
+	modify();
+	orcode = Math.round(Math.random() * 9999);
+	selectchange($('#dept'),$('#deptbox'))
+	selectchange($('#deptselect'),$('#deptselectbox'))
+	selectchange($('#packselect'),$('#packselectbox'))
+	selectchange($('#isselect'),$('#isselectbox'))
+	selectchange($('#zgselect'),$('#zgselectbox'))
 	getgradename();
 	tabs(".tab-hd", "active", ".tab-bd"); //选项卡
 	tabtext(".tab-hd", "active", ".tab-bd");
@@ -43,8 +51,10 @@ $(function() {
 
 	var upload = tinyImgUpload('#upload', options);
 	document.getElementsByClassName('submit')[0].onclick = function(e) {
+		$("input[name='questionPic']").val('');
 		upload();
 	}
+	$('.div').find('option').css('color','black')
 });
 var user;
 
@@ -65,10 +75,12 @@ function tabs(tabTit, on, tabCon) {
 };
 
 function transPic(){
+	var cc = {'code':orcode,'sub':$("input[name='questionPic']").val()};
 	$.ajax({
-		url: local + '/QUESTIONSREPOSITORY/self/transQuestionPic/' + orcode,
-		type: 'GET',
-		data: {},
+		url: local + '/QUESTIONSREPOSITORY/self/transQuestionPic',
+		type: 'POST',
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
 		headers: {
 			'accessToken': accessToken
 		},
@@ -81,13 +93,25 @@ function transPic(){
 				}
 				//console.log(html);
 				if(type == "选择题") {
-					$("textarea[name='Choicequestion']").val(html);
+					var old = $("textarea[name='Choicequestion']").val()
+					if(old) old+="\n";
+					$("textarea[name='Choicequestion']").val(old + html);
 				} else if(type == "多选题") {
-					$("textarea[name='ChoicequestionStone']").val(html);
+					var old = $("textarea[name='ChoicequestionStone']").val()
+					if(old) old+="\n";
+					$("textarea[name='ChoicequestionStone']").val(old + html);
 				} else if(type == "判断题") {
-					$("textarea[name='ChoicequestionPack']").val(html);
+					var old = $("textarea[name='ChoicequestionPack']").val()
+					if(old) old+="\n";
+					$("textarea[name='ChoicequestionPack']").val(old + html);
 				} else if(type == "填空题") {
-					$("textarea[name='ChoicequestionCompletion']").val(html);
+					var old = $("textarea[name='ChoicequestionCompletion']").val()
+					if(old) old+="\n";
+					$("textarea[name='ChoicequestionCompletion']").val(old + html);
+				} else if(type == "主观题") {
+					var old = $("textarea[name='SubjectiveQuestionstone']").val()
+					if(old) old+="\n";
+					$("textarea[name='SubjectiveQuestionstone']").val(old + html);
 				}
 			}else{
 				swal(data.msg, "", "error");
@@ -95,6 +119,272 @@ function transPic(){
 		},
 		error: function(data) {
 			swal("识别失败!", "", "error");
+		}
+	});
+}
+function cognitive(obj,namebox){
+	var data = $(obj).attr("data");
+	radioall = $(obj).attr("data") + '&&' + $(obj).val()
+	if($(namebox).find('span').length>0){
+		var text = $(namebox).find('span')[$(namebox).find('span').length-1]
+		text.innerText = text.innerText +'--'+data
+		text.innerText = text.innerText.split('-')[0]+'--'+data
+		$(namebox).find('span').eq($(namebox).find('span').length-1).attr('capabilityId',$(obj).val())
+	}
+}
+//获取修改的数据
+function modify (){
+	if(window.location.search){
+		questionid = window.location.search.split('=')[1]
+		//console.log(id)
+		//console.log(accessToken)
+		$.ajax({
+			url: local + '/QUESTIONSREPOSITORY/self/getQuestion/'+questionid,
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "get",
+			async: false,
+			dataType: "json",
+			data: {},
+			success: function(res) {
+				console.log(res)
+				type = res.data.quesetionType;
+				if(res.data.questionPic) $("input[name='questionPic']").val(res.data.questionPic);
+				if(res.data.quesetionType=='选择题'){					
+					//题目问题
+					$("textarea[name='Choicequestion']").val(res.data.questionContent)
+					//选择题目类型
+					$('.tab-hd').find('li').eq(0).addClass('active').siblings().removeClass('active')
+					$('.tab-bd').children().eq(0).show().siblings().hide();
+					//选择项
+					console.log(res.data.options.length)
+					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1).addClass('checkedcolor')
+					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1).siblings().removeClass('checkedcolor')
+					optionNumber($('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1))
+					var arr = res.data.answer.split('|')
+					for (var i = 0;i <arr.length;i++){
+						var number = arr[i].charCodeAt()-65
+						$('.but-xzt').parent().parent().next().find("label").find("input").eq(number).attr('checked','checked')
+						CheckBox($('.but-xzt').parent().parent().next().find("label").find("input")[number])
+					}
+					for (var j = 0; j<res.data.options.length;j++){
+						$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
+					}
+					//解析
+					$("textarea[name='parse']").val(res.data.parse)
+					//难度
+					$("input[name='group-radio']").eq(5-Number(res.data.difficulty)).attr('checked','checked')
+					difficultys = res.data.difficulty;
+					//知识点&&认知能力
+					res.data.knowledges.forEach(function(item, index){
+						if(!item.knowledgeId&&item.capabilityId){
+							radioall = item.capability + '&&' + item.capabilityId;
+							$("input:radio[name='capability1']").eq(Number(item.capabilityId)-1).attr('checked','checked');
+						}else{							
+							drawKnowledge(item, $('#deptbox'));
+						}
+					});
+					
+				}
+				if(res.data.quesetionType=='多选题'){
+					//题目问题
+					$("textarea[name='ChoicequestionStone']").val(res.data.questionContent)
+					//选择题目类型
+					$('.tab-hd').find('li').eq(1).addClass('active').siblings().removeClass('active')
+					$('.tab-bd').children().eq(1).show().siblings().hide();
+					//选择项
+					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length+4).addClass('checkedcolor')
+					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length+4).siblings().removeClass('checkedcolor')
+					optionNumberChe($('.but-xzt').find('.but-xzt-an').eq(res.data.options.length+4))
+					var arr = res.data.answer.split('|')
+					for (var i = 0;i <arr.length;i++){
+						var number = arr[i].charCodeAt()-65
+						$('.but-xzt').parent().parent().next().find("label").find("input").eq(number).attr('checked','checked')
+						CheckBox($('.but-xzt').parent().parent().next().find("label").find("input")[number])
+					}
+					for (var j = 0; j<res.data.options.length;j++){
+						$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
+					}
+					//解析
+					$("textarea[name='stone']").val(res.data.parse)
+					//难度
+					$("input[name='group-radio']").eq(10-Number(res.data.difficulty)).attr('checked','checked')
+					difficultys = res.data.difficulty;
+					//知识点&&认知能力
+					res.data.knowledges.forEach(function(item, index){
+						if(!item.knowledgeId&&item.capabilityId){
+							radioall = item.capability + '&&' + item.capabilityId;
+							$("input:radio[name='capability1']").eq(Number(item.capabilityId)+4).attr('checked','checked');
+						}else{							
+							drawKnowledge(item, $('#deptselectbox'));
+						}
+					});
+				}
+				if(res.data.quesetionType=='判断题'){
+					//题目问题
+					$("textarea[name='ChoicequestionPack']").val(res.data.questionContent)
+					//选择题目类型
+					$('.tab-hd').find('li').eq(2).addClass('active').siblings().removeClass('active')
+					$('.tab-bd').children().eq(2).show().siblings().hide();
+					//选择项
+					if(res.data.answer == 'A'){
+						$('.but-xzt').find("input[name=panduan]").eq(0).attr('checked','checked')
+					}
+					if(res.data.answer == 'B'){
+						$('.but-xzt').find("input[name=panduan]").eq(1).attr('checked','checked')
+					}
+					console.log($('.but-xzt').find("input[name=panduan]"))
+					//解析
+					$("textarea[name='parsePack']").val(res.data.parse)
+					//难度
+					$("input[name='group-radio']").eq(15-Number(res.data.difficulty)).attr('checked','checked')
+					difficultys = res.data.difficulty;
+					//知识点&&认知能力
+					res.data.knowledges.forEach(function(item, index){
+						if(!item.knowledgeId&&item.capabilityId){
+							radioall = item.capability + '&&' + item.capabilityId;
+							$("input:radio[name='capability1']").eq(Number(item.capabilityId)+9).attr('checked','checked');
+						}else{							
+							drawKnowledge(item, $('#packselectbox'));
+						}
+					});
+				}
+				if(res.data.quesetionType=='填空题'){
+					//题目问题
+					$("textarea[name='ChoicequestionCompletion']").val(res.data.questionContent)
+					//选择题目类型
+					$('.tab-hd').find('li').eq(3).addClass('active').siblings().removeClass('active')
+					$('.tab-bd').children().eq(3).show().siblings().hide();
+					//选择项
+					var arr = res.data.answer.split(';')
+					optionAnswer($('.but-xzt').find('.but-xzt-an').eq(arr.length+9-1))
+					for (var i = 0;i <arr.length-1;i++){
+						$('.but-xzt').parent().parent().next().find("input[name='tiankong']").eq(i).val(arr[i].split(':')[1])
+					}
+					// for (var j = 0; j<res.data.options.length;j++){
+					// 	$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
+					// }
+					//解析
+					$("textarea[name='Completion']").val(res.data.parse)
+					//难度
+					$("input[name='group-radio']").eq(20-Number(res.data.difficulty)).attr('checked','checked')
+					difficultys = res.data.difficulty;
+					//知识点&&认知能力
+					res.data.knowledges.forEach(function(item, index){
+						if(!item.knowledgeId&&item.capabilityId){
+							radioall = item.capability + '&&' + item.capabilityId;
+							$("input:radio[name='capability1']").eq(Number(item.capabilityId)+14).attr('checked','checked');
+						}else{							
+							drawKnowledge(item, $('#isselectbox'));
+						}
+					});
+				}
+				if(res.data.quesetionType=='主观题'){
+					$('.tab-hd').find('li').eq(4).addClass('active').siblings().removeClass('active')
+					$('.tab-bd').children().eq(4).show().siblings().hide();
+					//题目问题
+					$("textarea[name='SubjectiveQuestionstone']").val(res.data.questionContent);
+					//题目答案
+					$("textarea[name='SubjectiveQuestionAnswer']").val(res.data.answer);
+					//题目解析
+					$("textarea[name='SubjectiveQuestion']").val(res.data.parse);
+					//难度
+					$("input[name='group-radio']").eq(25-Number(res.data.difficulty)).attr('checked','checked')
+					difficultys = res.data.difficulty;
+					//知识点&&认知能力
+					res.data.knowledges.forEach(function(item, index){
+						if(!item.knowledgeId&&item.capabilityId){
+							radioall = item.capability + '&&' + item.capabilityId;
+							$("input:radio[name='capability1']").eq(Number(item.capabilityId)+19).attr('checked','checked');
+						}else{							
+							drawKnowledge(item, $('#zgselectbox'));
+						}
+					});
+				}
+			}
+		})
+	}
+}
+
+function drawKnowledge(item, namebox){
+		if(namebox[0].children.length<5){
+			var div = document.createElement('div')
+			var span = document.createElement('span')
+			var i = document.createElement('i')
+			div.style.display = 'inline-block'
+			div.style.border = '1px solid #b5b5b5'
+			div.style.borderRadius = '10px'
+			div.style.marginBottom = '5px'
+			div.style.marginRight = '5px'
+			span.style.display = 'inline-block'
+			span.style.padding = '3px 10px 3px 10px'
+			span.style.backgroundColor= '#fff'
+			span.style.textAlign='left'
+			span.style.marginLeft = '5px'
+			span.style.zIndex = '1000'			
+			span.innerText = item.knowledge+(item.capability?'--'+item.capability:'');
+			i.innerText = 'x'
+			i.style.color= 'red'
+			i.style.marginRight = '10px'
+			i.style.pointerEvents = 'auto'
+			i.style.cursor = 'pointer'
+			i.style.fontStyle='normal'
+			i.className = 'del'
+			i.style.position = 'relative'
+			i.style.zIndex = '1000'
+			namebox.append(div)
+			div.append(span)
+			div.append(i)
+			$('.del').siblings().eq($('.del').siblings().length-1).attr('knowledgeId',item.knowledgeId)
+			if(item.capabilityId)$('.del').siblings().eq($('.del').siblings().length-1).attr('capabilityId',item.capabilityId)
+			$('.del').click(function(){
+					var del = $(this)[0].parentNode
+					$(this)[0].parentNode.parentNode.removeChild(del)
+			})
+		}
+}
+
+//选择知识点
+function selectchange(name,namebox){
+	name.change(function(){
+		if(namebox[0].children.length<5){
+			var div = document.createElement('div')
+			var span = document.createElement('span')
+			var i = document.createElement('i')
+			div.style.display = 'inline-block'
+			div.style.border = '1px solid #b5b5b5'
+			div.style.borderRadius = '10px'
+			div.style.marginBottom = '5px'
+			div.style.marginRight = '5px'
+			span.style.display = 'inline-block'
+			span.style.padding = '3px 10px 3px 10px'
+			span.style.backgroundColor= '#fff'
+			span.style.textAlign='left'
+			span.style.marginLeft = '5px'
+			span.style.zIndex = '1000'
+			// console.log($(this).children('option:selected').text().split('-'))
+			let arr = $(this).children('option:selected').text().split('-')
+			span.innerText = arr[arr.length-1]
+			// span.data = $(this).children('option:selected').val()
+			// console.log(span)
+			i.innerText = 'x'
+			i.style.color= 'red'
+			i.style.marginRight = '10px'
+			i.style.pointerEvents = 'auto'
+			i.style.cursor = 'pointer'
+			i.style.fontStyle='normal'
+			i.className = 'del'
+			i.style.position = 'relative'
+			i.style.zIndex = '1000'
+			namebox.append(div)
+			div.append(span)
+			div.append(i)
+			$('.del').siblings().eq($('.del').siblings().length-1).attr('knowledgeId',$(this).children('option:selected').val())
+			$('.del').click(function(){
+					var del = $(this)[0].parentNode
+					$(this)[0].parentNode.parentNode.removeChild(del)
+			})
 		}
 	});
 }
@@ -113,10 +403,12 @@ function con() {
 		data: {},
 		success: function(data) {
 			arr = data;
+			//console.log(data)
 			selectKnowledge("dept", data);
 			selectKnowledge("deptselect", data);
 			selectKnowledge("packselect", data);
 			selectKnowledge("isselect", data);
+			selectKnowledge("zgselect", data);
 			//console.log(data);
 			//var dept=document.getElementsByName("dept");
 			/*var dept = document.getElementById("dept");
@@ -316,6 +608,7 @@ function packanswer(obj) {
 }
 //困难程度
 function difficulty(obj) {
+	//console.log(obj)
 	difficultys = $(obj).parent().text();
 	if(difficultys == "简单") {
 		difficultys = 1.00;
@@ -340,12 +633,16 @@ function Choice() {
 		saveQuestionPack();
 	} else if(type == "填空题") {
 		saveCompletionQuestion();
+	} else if(type == "主观题") {
+		saveSubjectiveQuestions()
 	}
 }
 //选择题
 var number;
 
 function optionNumber(obj) {
+	$(obj).addClass('checkedcolor')
+	$(obj).siblings().removeClass('checkedcolor')
 	number = $(obj).text();
 	var charater = new Array("A", "B", "C", "D", "E");
 	var soure = $(obj).parent().parent().parent();
@@ -365,8 +662,10 @@ var charater = new Array("A", "B", "C", "D", "E");
 var potionsStoneNumber;
 
 function optionNumberChe(obj) {
+	// console.log(obj)
 	potionsStoneNumber = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
+	// console.log($(obj).parent().parent().parent().next().empty())
 	soure.next().empty();
 	for(i = 0; i < potionsStoneNumber; i++) {
 		var node = document.createElement('tr');
@@ -382,6 +681,7 @@ var ansCha = new Array("1:", "2:", "3:", "4:", "5:");
 var tknumber;
 
 function optionAnswer(obj) {
+	//console.log(obj)
 	tknumber = $(obj).text();
 	var soure = $(obj).parent().parent().parent();
 	soure.next().empty();
@@ -428,13 +728,29 @@ function pack() {
 function saveQuestion() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='Choicequestion']").val();
-		var knowledge = $("#dept option:selected").attr('data');
-		var knowledgeId = $("#dept option:selected").val();
-		var capability = $("input:radio[name='capability1']:checked").attr('data');
-		var capabilityId = $("input:radio[name='capability1']:checked").val();
-		/*if(knowledge == "请选择知识点") {
-			knowledge = " ";
-		}*/
+		// var knowledge = $("#dept option:selected").attr('data');
+		// var knowledgeId = $("#dept option:selected").val();
+		var knowledges = []
+		var knowledge;
+		var knowledgeId;
+		var capabilityId;
+		var capability
+		if($("#deptbox").find("span").length>0) {
+			for(var i = 0; i <$("#deptbox").find("span").length;i++){
+				knowledge = $("#deptbox").find("span").eq(i)[0].innerText.split('--')[0]
+				knowledgeId = $("#deptbox").find("span").eq(i).attr('knowledgeId')
+				capabilityId = $("#deptbox").find("span").eq(i).attr('capabilityId')
+				capability = $("#deptbox").find("span").eq(i)[0].innerText.split('--')[1]
+				knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+			}
+		}else {
+			knowledge = ''
+			knowledgeId = ''
+			capabilityId = radioall?radioall.split('&&')[1]:'';
+			capability = radioall?radioall.split('&&')[0]:'';
+			if(knowledge||knowledgeId||capabilityId||capability)
+			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+		}
 		var answerOptions = new Array();
 		for(i = 0; i < number; i++) {
 			answerOptions.push($("input[name=potions" + i + "]").val());
@@ -460,6 +776,7 @@ function saveQuestion() {
 		}	
 		var parse = $("textarea[name='parse']").val();
 		var cc = {
+			"questionId":questionid,
 			"questionContent": content,
 			"options": answerOptions,
 			"answer": danxuan,
@@ -469,18 +786,19 @@ function saveQuestion() {
 			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
-			"knowledge": knowledge,
-			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"knowledges": knowledges,
+			// "knowledgeId": knowledgeId==-1?'':knowledgeId,
 			"capability": capability,
 			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
-			"questionPic": "",
+			"questionPic": questionPic,
 			"teacherName": "",
 			"createTime": "",
 			"updateTime": "",
 			"code": orcode
 		}
+		console.log(cc)
 		//console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
@@ -514,15 +832,31 @@ function saveQuestion() {
 function saveQuestionPack() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionPack']").val();
-		var knowledge = $("#packselect option:selected").attr('data');
-		var knowledgeId = $("#packselect option:selected").val();
+		// var knowledge = $("#packselect option:selected").attr('data');
+		// var knowledgeId = $("#packselect option:selected").val();
+		var knowledges = []
+		var knowledge;
+		var knowledgeId;
+		var capabilityId;
+		var capability
+		if($("#packselectbox").find("span").length>0) {
+			for(var i = 0; i <$("#packselectbox").find("span").length;i++){
+				knowledge = $("#packselectbox").find("span").eq(i)[0].innerText.split('--')[0]
+				knowledgeId = $("#packselectbox").find("span").eq(i).attr('knowledgeId')
+				capabilityId = $("#packselectbox").find("span").eq(i).attr('capabilityId')
+				capability = $("#packselectbox").find("span").eq(i)[0].innerText.split('--')[1]
+				knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+			}
+		}else {
+			knowledge = ''
+			knowledgeId = ''
+			capabilityId = radioall?radioall.split('&&')[1]:'';
+			capability = radioall?radioall.split('&&')[0]:'';
+			if(knowledge||knowledgeId||capabilityId||capability)
+			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+		}
 		var parse = $("textarea[name='parsePack']").val();
-		var capability = $("input:radio[name='capability3']:checked").attr('data');
-		var capabilityId = $("input:radio[name='capability3']:checked").val();
-
-		/*if(knowledge == "请选择知识点") {
-			knowledge = " ";
-		}*/
+		
 		var panduans = $("input[name='panduan']");
 		for(var i = 0; i < panduans.length; i++){
 			if(panduans[i].checked){
@@ -539,6 +873,7 @@ function saveQuestionPack() {
 			return;
 		}
 		var cc = {
+			"questionId":questionid,
 			"questionContent": content,
 			"options": ['正确', '错误'],
 			"answer": panduan,
@@ -548,13 +883,13 @@ function saveQuestionPack() {
 			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
-			"knowledge": knowledge,
-			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"knowledges": knowledges,
+			// "knowledgeId": knowledgeId==-1?'':knowledgeId,
 			"capability": capability,
 			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
-			"questionPic": "",
+			"questionPic": questionPic,
 			"teacherName": "",
 			"createTime": "",
 			"updateTime": "",
@@ -590,19 +925,29 @@ function saveQuestionPack() {
 function saveQuestionStone() {
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionStone']").val();
-		var knowledge = $("#deptselect option:selected").attr('data');
-		var knowledgeId = $("#deptselect option:selected").val();
-		var capability = $("input:radio[name='capability2']:checked").attr('data');
-		var capabilityId = $("input:radio[name='capability2']:checked").val();
-		/*if(answer == undefined || answer == null || answer == "") {
-			answer = "";
-		} else {
-			var an = answer.substring(0, answer.length - 1);
-			var arrAn = an.split("|");
-			arrAn.sort();
-			arrAn = unique1(arrAn);
-			answer = arrAn.join("|");
-		}*/
+		// var knowledge = $("#deptselect option:selected").attr('data');
+		// var knowledgeId = $("#deptselect option:selected").val();
+		var knowledges = []
+		var knowledge;
+		var knowledgeId;
+		var capabilityId;
+		var capability
+		if($("#deptselectbox").find("span").length>0) {
+			for(var i = 0; i <$("#deptselectbox").find("span").length;i++){
+				knowledge = $("#deptselectbox").find("span").eq(i)[0].innerText.split('--')[0]
+				knowledgeId = $("#deptselectbox").find("span").eq(i).attr('knowledgeId')
+				capabilityId = $("#deptselectbox").find("span").eq(i).attr('capabilityId')
+				capability = $("#deptselectbox").find("span").eq(i)[0].innerText.split('--')[1]
+				knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+			}
+		}else {
+			knowledge = ''
+			knowledgeId = ''
+			capabilityId = radioall?radioall.split('&&')[1]:'';
+			capability = radioall?radioall.split('&&')[0]:'';
+			if(knowledge||knowledgeId||capabilityId||capability)
+			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+		}	
 
 		var duoxuans = $("input[name='duoxuan']");
 		var duoxuan = "";
@@ -633,6 +978,7 @@ function saveQuestionStone() {
 			return;
 		}
 		var cc = {
+			"questionId":questionid,
 			"questionContent": content,
 			"options": answerOptions,
 			"answer": duoxuan.length>2?duoxuan.substring(0, duoxuan.length - 1):duoxuan,
@@ -642,13 +988,13 @@ function saveQuestionStone() {
 			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
-			"knowledge": knowledge,
-			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"knowledges": knowledges,
+			// "knowledgeId": knowledgeId==-1?'':knowledgeId,
 			"capability": capability,
 			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
-			"questionPic": "",
+			"questionPic": questionPic,
 			"teacherName": "",
 			"createTime": "",
 			"updateTime": "",
@@ -689,15 +1035,29 @@ function saveCompletionQuestion() {
 		arr.sort();*/
 		var questionPic = $("input[name='questionPic']").val();
 		var content = $("textarea[name='ChoicequestionCompletion']").val();
-		var knowledge = $("#isselect option:selected").attr('data');
-		var knowledgeId = $("#isselect option:selected").val();
-		var capability = $("input:radio[name='capability4']:checked").attr('data');
-		var capabilityId = $("input:radio[name='capability4']:checked").val();
-		/*var answerOptions = new Array();
-		for(i = 0; i < tknumber; i++) {
-			answerOptions.push(arr[i] + $("input[name=completion" + i + "]").val());
+		// var knowledge = $("#isselect option:selected").attr('data');
+		// var knowledgeId = $("#isselect option:selected").val();
+		var knowledges = []
+		var knowledge;
+		var knowledgeId;
+		var capabilityId;
+		var capability
+		if($("#isselectbox").find("span").length>0) {
+			for(var i = 0; i <$("#isselectbox").find("span").length;i++){
+				knowledge = $("#isselectbox").find("span").eq(i)[0].innerText.split('--')[0]
+				knowledgeId = $("#isselectbox").find("span").eq(i).attr('knowledgeId')
+				capabilityId = $("#isselectbox").find("span").eq(i).attr('capabilityId')
+				capability = $("#isselectbox").find("span").eq(i)[0].innerText.split('--')[1]
+				knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+			}
+		}else {
+			knowledge = ''
+			knowledgeId = ''
+			capabilityId = radioall?radioall.split('&&')[1]:'';
+			capability = radioall?radioall.split('&&')[0]:'';
+			if(knowledge||knowledgeId||capabilityId||capability)
+			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
 		}
-		answer = answerOptions.join(";");*/
 		var tiankongs = $("input[name=tiankong]");
 		var tiankong = "";
 		var tiankongTemp = "";
@@ -718,6 +1078,7 @@ function saveCompletionQuestion() {
 			return;
 		}
 		var cc = {
+			"questionId":questionid,
 			"questionContent": content,
 			"options": [], //填空题不需要选项
 			"answer": tiankong, //选项拼接在答案里面；
@@ -727,13 +1088,13 @@ function saveCompletionQuestion() {
 			"difficulty": difficultys,
 			"subjectId": "",
 			"gradeId": "",
-			"knowledge": knowledge,
-			"knowledgeId": knowledgeId==-1?'':knowledgeId,
+			"knowledges": knowledges,
+			// "knowledgeId": knowledgeId==-1?'':knowledgeId,
 			"capability": capability,
 			"capabilityId": capabilityId,
 			"questionIdMD52": "",
 			"teacherId": "",
-			"questionPic": "",
+			"questionPic": questionPic,
 			"teacherName": "",
 			"createTime": "",
 			"updateTime": "",
@@ -763,6 +1124,89 @@ function saveCompletionQuestion() {
 				swal("保存失败!", "", "error");
 			}
 		});
+}
+
+//主观题
+function saveSubjectiveQuestions() {
+	var questionPic = $("input[name='questionPic']").val();
+	var content = $("textarea[name='SubjectiveQuestionstone']").val();
+	var answer = $("textarea[name='SubjectiveQuestionAnswer']").val();
+	// var knowledge = $("#zgselect option:selected").attr('data');
+	// var knowledgeId = $("#zgselect option:selected").val();
+		var knowledges = []
+		var knowledge;
+		var knowledgeId;
+		var capabilityId;
+		var capability
+		if($("#zgselectbox").find("span").length>0) {
+			for(var i = 0; i <$("#zgselectbox").find("span").length;i++){
+				knowledge = $("#zgselectbox").find("span").eq(i)[0].innerText.split('--')[0]
+				knowledgeId = $("#zgselectbox").find("span").eq(i).attr('knowledgeId')
+				capabilityId = $("#zgselectbox").find("span").eq(i).attr('capabilityId')
+				capability = $("#zgselectbox").find("span").eq(i)[0].innerText.split('--')[1]
+				knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+			}
+		}else {
+			knowledge = ''
+			knowledgeId = ''
+			capabilityId = radioall?radioall.split('&&')[1]:'';
+			capability = radioall?radioall.split('&&')[0]:'';
+			if(knowledge||knowledgeId||capabilityId||capability)
+			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
+		}	
+	var parse = $("textarea[name='SubjectiveQuestion']").val();
+	/*if(knowledge == "请选择知识点") {
+		knowledge = " ";
+	}*/
+	if(!questionPic&&!content){
+		swal("请提供题目图片或者内容!", "", "warning");
+		return;
+	}
+	var cc = {
+		"questionId":questionid,
+		"questionContent": content,
+		"options": [],
+		"answer": answer,
+		"answerDetail": "",
+		"parse": parse,
+		"quesetionType": type,
+		"difficulty": difficultys,
+		"subjectId": "",
+		"gradeId": "",
+		"knowledges": knowledges,
+		"questionIdMD52": "",
+		"teacherId": "",
+		"questionPic": questionPic,
+		"teacherName": "",
+		"createTime": "",
+		"updateTime": "",
+		"code": orcode
+	}
+	console.log(cc)
+	$.ajax({
+		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'POST',
+		async: false,
+		cache: false,
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
+		success: function(returndata) {
+			if(returndata.code==="0010"){				
+				swal("保存成功!", "", "success");
+				setTimeout(function() {
+					window.location.reload();
+				}, 2000);
+			}else{
+				swal(returndata.msg, "", "error");
+			}
+		},
+		error: function(returndata) {
+			swal("保存失败!", "", "error");
+		}
+	});
 }
 //弹出隐藏层
 function ShowDiv(show_div, bg_div) {
@@ -823,31 +1267,67 @@ function unique1(array) {
 }
 
 function Lookimg() {	
-	$.ajax({
-		url: local +'/QUESTIONSREPOSITORY/self/viewQuestionPic/'+orcode,
-		type: 'GET',
-		data: {},
-		headers: {
-			'accessToken': accessToken
-		},
-		async: true,
-		cache: false,
-		success: function(data) {
-			if(data.code === "0010"){
-				var obj = {
-					type: "layer-spread",
-					title: "预览图片",
-					content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
-					area: ["800px", "800px"]
-				};
-				method.msg_layer(obj);
-				//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
-			}else{
-				swal(data.msg, "", "error");
+
+	var questionPic = $("input[name='questionPic']").val();
+	if(questionPic){
+		var cc = {
+		"questionPic": questionPic,
+		};
+		$.ajax({
+			url: local + "/QUESTIONSREPOSITORY/self/getQuestionPic",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'post',
+			async: true,
+			dataType: "json",
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(data) {
+				if(data.code === "0010"){
+					var obj = {
+						type: "layer-spread",
+						title: "预览图片",
+						content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
+						area: ["800px", "800px"]
+					};
+					method.msg_layer(obj);
+					//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
+				}else{
+					swal(data.msg, "", "error");
+				}
+			},
+			error: function() {
+				alert("失败");
 			}
-		},
-		error: function(data) {
-			swal("预览失败!", "", "error");
-		}
-	});
+		});
+	}else{
+		$.ajax({
+			url: local +'/QUESTIONSREPOSITORY/self/viewQuestionPic/'+orcode,
+			type: 'GET',
+			data: {},
+			headers: {
+				'accessToken': accessToken
+			},
+			async: true,
+			cache: false,
+			success: function(data) {
+				if(data.code === "0010"){
+					var obj = {
+						type: "layer-spread",
+						title: "预览图片",
+						content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
+						area: ["800px", "800px"]
+					};
+					method.msg_layer(obj);
+					//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
+				}else{
+					swal(data.msg, "", "error");
+				}
+			},
+			error: function(data) {
+				swal("预览失败!", "", "error");
+			}
+		});
+	}	
 }

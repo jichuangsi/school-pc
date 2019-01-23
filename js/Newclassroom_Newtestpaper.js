@@ -27,6 +27,10 @@ function getgradename() {
 	user = getUser()
 	pharseId = user.roles[0].phrase.phraseId;
 	subjectId = user.roles[0].primarySubject.subjectId;
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
+	$(".Gradename").html(gname);
+	$(".Subjectname").html(sname);
 }
 
 function getlistto() {
@@ -840,9 +844,14 @@ function PreviewPaper() //显示隐藏层和弹出层
 					knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
 				} else {
 					questionList[i].knowledges.forEach(function(item, index){
-						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+						if(item.knowledge&&item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+						else if(item.knowledge&&!item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+						else if(!item.knowledge&&item.capability)
+							knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 					});
-				}
+				}					
 				a1 += knowledge;
 				a1 += "</div>";
 				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].quesetionType + "</span></div>";
@@ -918,6 +927,7 @@ function capabilitySelection(obj, istype){
 
 /*加入试卷*/
 function add_paper(obj, istype) {	
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var Identification = true;
@@ -1008,6 +1018,7 @@ function add_paper(obj, istype) {
 }
 /*移除试卷*/
 function remove_paper(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
@@ -1049,6 +1060,7 @@ function page_nextkey(obj) {
 }
 //点击解析事件
 function analysis_click(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).parent().next().next().css("display", "none");
 	if($(obj).parent().next().css("display") == "none") {
 		$(obj).parent().next().stop();
@@ -1063,6 +1075,7 @@ function analysis_click(obj) {
 }
 //点击考情的点击事件
 function Situation_click(obj) {
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	/*$(obj).parent().next().css("display", "none");
 	if($(obj).parent().next().next().css("display") == "none") {
 		$(obj).parent().next().next().stop();

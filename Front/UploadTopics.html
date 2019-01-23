@@ -25,6 +25,10 @@
 	<link rel="stylesheet" href="../styles/chosen.css" />
 	<link rel="stylesheet" href="../css/layer-animate-one.css" />
 	<style>
+		.checkedcolor {
+			background-color: #3d72fe !important;
+			color: #fff !important;
+		}
 		.black_overlay {
 			display: none;
 			position: absolute;
@@ -91,8 +95,8 @@
 		<iframe name="content_frame" width=100% height=80 scrolling="no" frameborder="0" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
 		<div class="nav-top" style="min-width: 1520px;">
 			<div class="nav-top-manin">
-				<div class="nav-top-manin-content">组题组卷</div>
-				<div class="nav-top-manin-content pr">试卷库</div>
+				<!-- <div class="nav-top-manin-content">组题组卷</div>
+				<div class="nav-top-manin-content pr">试卷库</div> -->
 				<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
 			</div>
 		</div>
@@ -101,7 +105,7 @@
 				<div class="conterh4">
 					<label>上传试题</label>
 					<div style="float: right;">
-						<label>返回组题组卷  <a href="../thacherPage/Newclassroom_Newtestpaper.html" style="text-decoration: none; color: #3d72fe;">&gt;</a></label>
+						<label>返回上一页  <a href="javascript:history.go(-1)" style="text-decoration: none; color: #3d72fe;">&gt;</a></label>
 					</div>
 				
 				</div>
@@ -132,6 +136,7 @@
 							<li>多选题</li>
 							<li>判断题</li>
 							<li>填空题</li>
+							<li>主观题</li>
 						</ul>
 						<ul class="tab-bd">
 							<li class="thisclass">
@@ -164,10 +169,29 @@
 									</tr>
 									<tr>
 										<td>
-											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px;">
-												<select name="dept" data-placeholder="选择知识点" style="width: 958px;height: 40px;" id="dept">
+											<div class="div" style="width: 958px;margin-left: 10px;padding:10px 0;font-size: 16px;position: relative;background-color: #fff;border:1px solid black;">
+												<div id="deptbox" style="width:100%;pointer-events:none;text-align: left;
+												margin-left: 5px"></div>
+												<select name="dept" data-placeholder="选择知识点" style="border:none;width: 958px;height:100%;pointer-events:auto;position: absolute;top: 0px;
+												left: 0px;background-color: transparent;color: transparent;" id="dept">
 												</select>
+												<em style="border:5px solid black;border-color: black transparent transparent transparent; position: absolute;top:50%;
+												right:10px"></em>
 												<!--<iframe style="width: 958px;height: 40px;" src="select.html"></iframe>-->
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">认知能力</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptbox')" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptbox')" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptbox')" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptbox')" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptbox')" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -195,20 +219,6 @@
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>中等</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>一般</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>简单</label></div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="float: left; ">认知能力</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="but-xzt but-xzt-bot">
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -244,8 +254,28 @@
 									</tr>
 									<tr>
 										<td>
-											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px;">
-												<select id="deptselect" name="select" style="width: 958px;height: 40px;"></select>
+											<div class="div" style="width: 958px;margin-left: 10px;padding:10px 0;font-size: 16px;position: relative;background-color: #fff;border:1px solid black;">
+												<div id="deptselectbox" style="width:100%;pointer-events:none;text-align: left;
+												margin-left: 5px"></div>
+												<select name="dept" data-placeholder="选择知识点" style="border:none;width: 958px;height:100%;pointer-events:auto;position: absolute;top: 0px;
+												left: 0px;background-color: transparent;color: transparent;" id="deptselect">
+												</select>
+												<em style="border:5px solid black;border-color: black transparent transparent transparent; position: absolute;top:50%;
+												right:10px"></em>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">认知能力</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptselectbox')" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptselectbox')" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptselectbox')" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptselectbox')" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#deptselectbox')" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -268,20 +298,6 @@
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>中等</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>一般</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this)"><i class="icon-radio"></i>简单</label></div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="float: left; ">认知能力</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="but-xzt but-xzt-bot">
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability2" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability2" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability2" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability2" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability2" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -313,8 +329,28 @@
 									</tr>
 									<tr>
 										<td>
-											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px; ">
-												<select id="packselect" name="select "style="width: 958px;height: 40px; "></select>
+											<div class="div" style="width: 958px;margin-left: 10px;padding:10px 0;font-size: 16px;position: relative;background-color: #fff;border:1px solid black;">
+												<div id="packselectbox" style="width:100%;pointer-events:none;text-align: left;
+												margin-left: 5px"></div>
+												<select name="dept" data-placeholder="选择知识点" style="border:none;width: 958px;height:100%;pointer-events:auto;position: absolute;top: 0px;
+												left: 0px;background-color: transparent;color: transparent;" id="packselect">
+												</select>
+												<em style="border:5px solid black;border-color: black transparent transparent transparent; position: absolute;top:50%;
+												right:10px"></em>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">认知能力</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#packselectbox')" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#packselectbox')" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#packselectbox')" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#packselectbox')" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#packselectbox')" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -335,20 +371,6 @@
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>中等</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>一般</label></div>
 												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>简单</label></div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="float: left; ">认知能力</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="but-xzt but-xzt-bot">
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability3" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability3" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability3" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability3" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability3" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -384,8 +406,28 @@
 									</tr>
 									<tr>
 										<td>
-											<div class="div" style="width: 958px;height: 40px;margin-left: 10px;font-size: 16px; ">
-												<select id="isselect" name="select "style="width: 958px;height: 40px; "></select>
+											<div class="div" style="width: 958px;margin-left: 10px;padding:10px 0;font-size: 16px;position: relative;background-color: #fff;border:1px solid black;">
+												<div id="isselectbox" style="width:100%;pointer-events:none;text-align: left;
+												margin-left: 5px"></div>
+												<select name="dept" data-placeholder="选择知识点" style="border:none;width: 958px;height:100%;pointer-events:auto;position: absolute;top: 0px;
+												left: 0px;background-color: transparent;color: transparent;" id="isselect">
+												</select>
+												<em style="border:5px solid black;border-color: black transparent transparent transparent; position: absolute;top:50%;
+												right:10px"></em>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">认知能力</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#isselectbox')" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#isselectbox')" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#isselectbox')" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#isselectbox')" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#isselectbox')" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
 											</div>
 										</td>
 									</tr>
@@ -409,25 +451,82 @@
 											</div>
 										</td>
 									</tr>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td style="float: left; ">题目</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea class="text-tm" maxlength="400" name="SubjectiveQuestionstone"></textarea>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">答案</td>
+									</tr>
+									<tr>
+										<td>
+											<textarea class="text-tm" maxlength="400" name="SubjectiveQuestionAnswer"></textarea>
+										</td>
+									</tr>
+									<tr></tr>
+									<tr>
+										<td style="float: left; ">知识点</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="div" style="width: 958px;margin-left: 10px;padding:10px 0;font-size: 16px;position: relative;background-color: #fff;border:1px solid black;">
+												<div id="zgselectbox" style="width:100%;pointer-events:none;text-align: left;
+												margin-left: 5px"></div>
+												<select name="dept" data-placeholder="选择知识点" style="border:none;width: 958px;height:100%;pointer-events:auto;position: absolute;top: 0px;
+												left: 0px;background-color: transparent;color: transparent;" id="zgselect">
+												</select>
+												<em style="border:5px solid black;border-color: black transparent transparent transparent; position: absolute;top:50%;
+												right:10px"></em>
+											</div>
+										</td>
+									</tr>
 									<tr>
 										<td style="float: left; ">认知能力</td>
 									</tr>
 									<tr>
 										<td>
 											<div class="but-xzt but-xzt-bot">
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability4" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability4" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability4" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability4" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
-												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability4" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#zgselectbox')" value='1' data='记忆' ><i class="icon-radio"></i>记忆</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#zgselectbox')" value='2' data='理解' ><i class="icon-radio"></i>理解</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#zgselectbox')" value='3' data='分析' ><i class="icon-radio"></i>分析</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#zgselectbox')" value='4' data='应用' ><i class="icon-radio"></i>应用</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="capability1"  onclick="cognitive(this,'#zgselectbox')" value='5' data='综合' ><i class="icon-radio"></i>综合</label></div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="float: left; ">解析</td>
+									</tr>
+									<tr>
+										<td><textarea maxlength="600 " name="SubjectiveQuestion" class="text-tm" style="height: 230px; "></textarea></td>
+									</tr>
+									<tr>
+										<td style="float: left; ">难易度</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="but-xzt but-xzt-bot ">
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>特难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>困难</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>中等</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>一般</label></div>
+												<div class="btu-xzt-A"> <label class="radio"><input type="radio" name="group-radio"  onclick="difficulty(this) "><i class="icon-radio"></i>简单</label></div>
 											</div>
 										</td>
 									</tr>
 								</table>
 							</li>
 						</ul>
-						<div class="update " onclick="Choice() ">
-							新建题目
+						<div class="update" onclick="Choice() ">
+							保存题目
 						</div>
 					</div>
 			</div>
