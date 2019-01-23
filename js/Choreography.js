@@ -498,12 +498,14 @@ function getDate(obj) {
 		} else {
 			a1 = "CollectionNo";
 		}
-		var knowledge;
-		if(questionNode[i].knowledge == undefined) {
-			knowledge = "本题暂未归纳！"
-		} else {
-			knowledge = questionNode[i].knowledge;
-		}
+		var knowledge = "";
+			if(!questionNode[i].knowledges||questionNode[i].knowledges.length===0) {
+				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
+			} else {
+				questionNode[i].knowledges.forEach(function(item, index){
+					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+				});
+			}
 		var j = 0;
 		var node = document.createElement("div");
 		var num1 = Math.round(Math.random() * 9999);
@@ -532,7 +534,7 @@ function getDate(obj) {
 		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + imgurl + '</div>' + a2 + '</div>';
 		node.innerHTML += '<div class="subjectDetails"><span class="s_span" style="position: absolute;left: 1%;">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span" style="position: absolute;margin-left: 13%;">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span" style="position: absolute;left: 26%;">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="position: absolute;left: 50%;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)" style="position: absolute;left: 60%;"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
 		//<div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
-		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail?'':"<br/><span>"+questionNode[i].answerDetail+"</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点】</span><div class="info_3_div"><p><span>' + knowledge + '</span></p></div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
+		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail?'':"<br/><span>"+questionNode[i].answerDetail+"</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点-认知能力】</span>' + knowledge + '</div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
 		+ (!questionNode[i].questionTypeInCN?'':questionNode[i].questionTypeInCN) + '</span></div></div>';
 		source.appendChild(node);
 	}

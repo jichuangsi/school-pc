@@ -114,6 +114,7 @@ function subjectinfo(subjectinfo) {
 		e.stopPropagation();
 	});
 	$('.d-secondNav').click(function(e) {
+		$("input:radio[name='ther']:checked").removeAttr("checked");
 		dropSwifts($(this), '.d-secondDrop');
 		e.stopPropagation();
 		
@@ -403,12 +404,18 @@ function PreviewPaper() //显示隐藏层和弹出层
 			a1 += "<div class='subject_info' style='display: none;'>";
 			a1 += "<div class='info_1'><span>【答案】</span><span>" + questionList[i].answer + "</span>"+ (!questionList[i].answerDetail?'':"<br/><span>"+questionList[i].answerDetail+"</span>") + "</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + questionList[i].parse + "</div></div>";
-			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
-			a1 += "<p>";
-			if(questionList[i].knowledge != null && questionList[i].knowledge != "") {
-				a1 += "<span>" + questionList[i].knowledge + "</span>";
+			a1 += "<div class='info_3'><span> 【知识点-认知能力】</span>";			
+			
+			var knowledge = "";
+			if(!questionList[i].knowledges||questionList[i].knowledges.length===0) {
+				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
+			} else {
+				questionList[i].knowledges.forEach(function(item, index){
+					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+				});
 			}
-			a1 += "</p></div></div>";
+			a1 += knowledge;
+			a1 += "</div>";
 			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + questionList[i].quesetionType + "</span></div>";
 			a1 += "</div>";
 			a1 += "</div>";
@@ -474,7 +481,11 @@ function savetestpaper() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(data) {
-			swal("保存成功!", "", "success");
+			if(data.code==="0010"){
+				swal("保存成功!", "", "success");
+			}else{
+				swal(data.msg, "", "error");
+			}			
 		},
 		error: function() {
 			swal("保存失败!", "", "success");
@@ -572,15 +583,17 @@ function add_paper(obj, istype) {
 					"difficulty": itembaklist.content[i].difficulty,
 					"subjectId": itembaklist.content[i].subjectId,
 					"gradeId": itembaklist.content[i].gradeId,
-					"knowledge": itembaklist.content[i].knowledge,
-					"knowledgeId": itembaklist.content[i].knowledgeId,
-					"capability": capability,
-					"capabilityId": capabilityId,
+					//"knowledge": itembaklist.content[i].knowledge,
+					//"knowledgeId": itembaklist.content[i].knowledgeId,
+					//"capability": capability,
+					//"capabilityId": capabilityId,
+					"knowledges": itembaklist.content[i].knowledges,
 					"questionIdMD52": itembaklist.content[i].questionIdMD52,
 					"questionPic": itembaklist.content[i].questionPic
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
+				break;
 			}
 		}
 	} else {
@@ -597,7 +610,11 @@ function add_paper(obj, istype) {
 						storedOptions.push(questionNode[i][options[j]]);
 					}
 				}				
-				
+				var knowledges = [{
+						"knowledgeId": questionNode[i].knowledgeId,
+						"knowledge": questionNode[i].knowledges,
+						"capabilityId": capabilityId,
+						"capability": capability}];
 				questionList.push({
 					"questionId": "",
 					"questionContent": questionNode[i].title,
@@ -609,15 +626,13 @@ function add_paper(obj, istype) {
 					"difficulty": questionNode[i].diff,
 					"subjectId": questionNode[i].subjectId,
 					"gradeId": "",
-					"knowledge": questionNode[i].knowledges,
-					"knowledgeId": questionNode[i].knowledgeId,
-					"capability": capability,
-					"capabilityId": capabilityId,
+					"knowledges": knowledges,
 					"questionIdMD52": questionNode[i].qid,
 					"questionPic": ""
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
+				break;
 			}
 		}
 	}
@@ -666,46 +681,48 @@ function edition_click(obj, editionid,gradeId) {
 //收藏图标的点击事件
 function CollectionImg_click(obj) {
 	var Collectiond = null;
-	var id = $(obj).parent().parent().find("input[name='id']").val();
-	for(var i = 0; i < questionNode.length; i++) {
-		if(questionNode[i].qid == id) {
-			
-			var options = Object.keys(questionNode[i]).filter(function (element, index, self) {
-			if(element.includes('option')&&questionNode[i][element])
-				return element;
-			});
-			//console.log(options);
-			var storedOptions = [];
-			if(options.length>0){
-				for(var j = 0; j < options.length; j++){
-					storedOptions.push(questionNode[i][options[j]]);
+	var id = $(obj).parent().parent().find("input[name='id']").val();	
+	if($(obj).attr("src") == "../img/CollectionNo.png") {
+		for(var i = 0; i < questionNode.length; i++) {
+			if(questionNode[i].qid == id) {				
+				var options = Object.keys(questionNode[i]).filter(function (element, index, self) {
+				if(element.includes('option')&&questionNode[i][element])
+					return element;
+				});
+				//console.log(options);
+				var storedOptions = [];
+				if(options.length>0){
+					for(var j = 0; j < options.length; j++){
+						storedOptions.push(questionNode[i][options[j]]);
+					}
 				}
-			}
-			Collectiond = {
-				"questionId": "",
-				"questionContent": questionNode[i].title,
-				"options": storedOptions,
-				"answer": questionNode[i].answer1,
-				"answerDetail": questionNode[i].answer2,
-				"parse": questionNode[i].parse,
-				"quesetionType": questionNode[i].qtpye,
-				"difficulty": questionNode[i].diff,
-				"subjectId": questionNode[i].subjectId,
-				"gradeId": "",
-				"knowledge":questionNode[i].knowledges,
-				"knowledgeId":questionNode[i].knowledgesId,
-				"capability": questionNode[i].capability,
-				"capabilityId": questionNode[i].capabilityId,
-				"questionIdMD52": questionNode[i].qid,
-				//"questionStatus": "NOTSTART",
-				"questionPic": "",
-				"teacherName": "",
-				"createTime": "",
-				"updateTime": "",
+				var knowledges = [{
+								"knowledgeId": questionNode[i].knowledgeId,
+								"knowledge": questionNode[i].knowledge,
+								"capabilityId": questionNode[i].capabilityId,
+								"capability": questionNode[i].capability}];
+				Collectiond = {
+					"questionId": "",
+					"questionContent": questionNode[i].title,
+					"options": storedOptions,
+					"answer": questionNode[i].answer1,
+					"answerDetail": questionNode[i].answer2,
+					"parse": questionNode[i].parse,
+					"quesetionType": questionNode[i].qtpye,
+					"difficulty": questionNode[i].diff,
+					"subjectId": questionNode[i].subjectId,
+					"gradeId": "",
+					"knowledges": knowledges,
+					"questionIdMD52": questionNode[i].qid,
+					//"questionStatus": "NOTSTART",
+					"questionPic": "",
+					"teacherName": "",
+					"createTime": "",
+					"updateTime": "",
+				}
+				break;
 			}
 		}
-	}
-	if($(obj).attr("src") == "../img/CollectionNo.png") {
 		$.ajax({
 			url:local+"/QUESTIONSREPOSITORY/favor/saveQuestion",
 			headers: {
@@ -717,8 +734,12 @@ function CollectionImg_click(obj) {
 			contentType: 'application/json',
 			dataType: 'JSON',
 			success: function(data) {
-				swal("收藏成功!", "", "success");
-				$(obj).attr("src", "../img/CollectionYes.png");
+				if(data.code==="0010"){
+					swal("收藏成功!", "", "success");
+					$(obj).attr("src", "../img/CollectionYes.png");
+				}else{
+					swal(data.msg, "", "error");
+				}
 			},
 			error: function() {
 				swal("收藏失败!", "", "success");
@@ -740,8 +761,12 @@ function CollectionImg_click(obj) {
 			contentType: 'application/json',
 			dataType: 'JSON',
 			success: function(data) {
-				swal("已取消收藏!", "", "success");
-				$(obj).attr("src", "../img/CollectionNo.png");
+				if(data.code==="0010"){					
+					swal("已取消收藏!", "", "success");
+					$(obj).attr("src", "../img/CollectionNo.png");
+				}else{
+					swal(data.msg, "", "error");
+				}
 			},
 			error: function() {
 				swal("取消收藏失败!", "", "success");

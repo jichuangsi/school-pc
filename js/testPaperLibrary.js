@@ -355,12 +355,18 @@ function loopquestions() {
 			a1 += "<div class='subject_info' style='display: none;'>";
 			a1 += "<div class='info_1'><span>【答案】</span><span>" + previewitembaklist.content[i].answer + "</span>"+ (!previewitembaklist.content[i].answerDetail?'':"</br><span>"+previewitembaklist.content[i].answerDetail+"</span>")  +"</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>" + previewitembaklist.content[i].parse + "</div></div>";
-			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'>";
-			a1 += "<p>";
-			if(previewitembaklist.content[i].knowledge != null && previewitembaklist.content[i].knowledge != "") {
-				a1 += "<span>" + previewitembaklist.content[i].knowledge + "</span>";
+			a1 += "<div class='info_3'><span> 【知识点-认知能力】</span>";
+			
+			var knowledge = "";
+			if(!previewitembaklist.content[i].knowledges||previewitembaklist.content[i].knowledges.length===0) {
+				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
+			} else {
+				previewitembaklist.content[i].knowledges.forEach(function(item, index){
+					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " - " + item.capability + "</span></p></div>";
+				});
 			}
-			a1 += "</p></div></div>";
+			a1 += knowledge;
+			a1 += "</div>";
 			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + previewitembaklist.content[i].quesetionType + "</span></div>";
 			a1 += "</div>";
 			a1 += "</div>";
@@ -374,7 +380,7 @@ function loopquestions() {
 }
 //收藏题目的事件
 function CollectionImg_click(obj) {
-	var Collectiond = null;
+	/*var Collectiond = null;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	for(var i = 0; i < previewitembaklist.content.length; i++) {
 		if(previewitembaklist.content[i].questionIdMD52 == id) {
@@ -444,7 +450,7 @@ function CollectionImg_click(obj) {
 				$(obj).attr("src", "../img/CollectionYes.png");
 			}
 		});
-	}
+	}*/
 }
 
 var pagecounts1 = 1;

@@ -416,6 +416,7 @@ function addExamQuestions2Session(id){
 	for(var j = 0; j < examsInSession.length; j++){
 		if(examsInSession[j].id === id){
 			questionIdExam = examsInSession[j].data;
+			break;
 		}
 	}
 	if(questionIdExam.length == 0) return false;
@@ -656,6 +657,7 @@ function uploadAttachments(){
 		statusBarWidth:550,
 		dragdropWidth:550,
 		maxFileSize:5000*1024,
+		maxFileCount:5,
 		//showPreview:true,
 		//previewHeight: "100px",
 		//previewWidth: "100px",
