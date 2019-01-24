@@ -26,8 +26,27 @@ $(function() {
 	getLocation();
 	$(".areas").hide();
 	getgradename();
+	getlistto()
+	getAllList();
 	inits();
 });
+
+function getlistto() {
+	getlist = gettestQuestion();
+	if(getlist == null || getlist.length == 0) {
+
+	} else {
+		num = getlist.length;
+		$("#paper_number").text(num);
+	}
+}
+function getAllList() {
+	getlist = gettestQuestion();
+	if(getlist == null) {} else {
+		questionList = gettestQuestion();
+	}
+}
+
 var user;
 var pharseId=null;
 var subjectId=null;
@@ -361,11 +380,15 @@ function nextkeys(obj){
 //点击预览事件
 function PreviewPaper() //显示隐藏层和弹出层 
 {
-
+	getAllList();
+	if(getlist == null) {
+		swal("请先选择题目!");
+	} else {
 	$(".pres").remove();
 	$("#presH2").remove();
 	$("#Previewinfo").find(".subjectList").remove();
 	var num=1;
+	if(getlist != null) {
 	if(questionList.length>0){
 		for(var i = 0; i < questionList.length; i++, num++) {
 			var a1 = "<div class='subjectList'>";
@@ -433,9 +456,10 @@ function PreviewPaper() //显示隐藏层和弹出层
 		hidebg.style.minWidth="1520px";
 		hidebg.style.height=$(document).height()+"px";  //设置隐藏层的高度为当前页面高度 
 		document.getElementById("previews").style.display = "block"; //显示弹出层 
-	} else {
+	}} else {
 		swal("请先选择题目!");
 	}
+}
 	
 }
 
@@ -573,10 +597,19 @@ function capabilitySelection(obj, istype){
 
 //加入试卷
 function add_paper(obj, istype) {
+	console.log(123)
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
+	var questionList = gettestQuestion()
+	if(!questionList) questionList = [];
+	for(var j = 0; j < questionList.length; j++) {
+		if(id == questionList[j].questionIdMD52) {
+			swal("你已经添加了该题目哦!");
+			return;
+		}
+	}
 	if(istype == 2) {
 		for(var i = 0; i < itembaklist.content.length; i++) {
 			if(itembaklist.content[i].questionIdMD52 == id) {
@@ -601,6 +634,7 @@ function add_paper(obj, istype) {
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
+				sessionStorage.setItem("testlast", JSON.stringify(questionList));
 				break;
 			}
 		}
@@ -640,6 +674,7 @@ function add_paper(obj, istype) {
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
+				sessionStorage.setItem("testlast", JSON.stringify(questionList));
 				break;
 			}
 		}
@@ -651,11 +686,16 @@ function remove_paper(obj) {
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var id = $(obj).parent().parent().find("input[name='id']").val();
+	var questionList = gettestQuestion()
+	if(!questionList) return;
 	for(var i = 0; i < questionList.length; i++) {
 		if(questionList[i].questionIdMD52 == id) {
 			questionList.splice(i, 1);
 			var namber = questionList.length
 			$("#paper_number").text(namber);
+			console.log(questionList)
+			sessionStorage.setItem("testlast", JSON.stringify(questionList));
+			break;
 		}
 	}
 }

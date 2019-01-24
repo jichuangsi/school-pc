@@ -927,6 +927,7 @@ function capabilitySelection(obj, istype){
 
 /*加入试卷*/
 function add_paper(obj, istype) {	
+	console.log(321)
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();

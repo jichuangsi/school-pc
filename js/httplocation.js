@@ -24,6 +24,10 @@ function getQuestion(){
 	question=JSON.parse(sessionStorage.getItem("lastname"));
 	return question;
 }
+function gettestQuestion(){
+	testquestion=JSON.parse(sessionStorage.getItem("testlast"));
+	return testquestion;
+}
 function getUserInfo(){
 	userInfo=JSON.parse(sessionStorage.getItem("userIn"));
 	return userInfo;

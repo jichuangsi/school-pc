@@ -337,6 +337,7 @@
 	.subjectDetails {
 		height: 50px;
 		width: 100%;
+		padding-top: 10px;
 		background-color: #F2F2F2;
 		margin-top: 11px;
 		clear: both;
