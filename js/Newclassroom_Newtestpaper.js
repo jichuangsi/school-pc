@@ -927,10 +927,10 @@ function capabilitySelection(obj, istype){
 
 /*加入试卷*/
 function add_paper(obj, istype) {	
-	console.log(321)
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
+	$(obj).siblings().css("display", "inline-block");
 	var Identification = true;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	var questionInSession = getQuestion();
@@ -1022,6 +1022,7 @@ function remove_paper(obj) {
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
+	$(obj).siblings().css("display", "inline-block");
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	var questionInSession = getQuestion();
 	if(!questionInSession) return;
