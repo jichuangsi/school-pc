@@ -16,6 +16,7 @@ $(function() {
 	$("#showTime").text(new Date().toLocaleString());
 	inits();
 	$(".areas").hide();
+	sessionStorage.removeItem('testlast')
 });
 var user;
 var pharseId = null;
@@ -930,8 +931,8 @@ function add_paper(obj, istype) {
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
-	$(obj).siblings().css("display", "inline-block");
 	var Identification = true;
+	$(obj).siblings().css({"display":"inline-block"});
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	var questionInSession = getQuestion();
 	if(!questionInSession) questionInSession = [];
