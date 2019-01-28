@@ -17,7 +17,7 @@ $(function() {
 	inits();
 	$(".areas").hide();
 	sessionStorage.removeItem('testlast')
-	sessionStorage.removeItem('tasklast')
+	sessionStorage.removeItem('lastname')
 });
 var user;
 var pharseId = null;
@@ -36,7 +36,7 @@ function getgradename() {
 }
 
 function getlistto() {
-	getlist = getQuestion();
+	getlist = gettaskQuestion();
 	if(getlist == null || getlist.length == 0) {
 
 	} else {
@@ -66,9 +66,9 @@ var pagenum1 = 1; //当前显示的题目是多少页
 var pageIndex1 = 1; //传进数据库的页数(需要向后台那第几页的数据)
 //添加这个方法在有数据的时候把数据填充到questionList，然后在这个数组进行操作，并且放到sessionStorage里面
 function getAllList() {
-	getlist = getQuestion();
+	getlist = gettaskQuestion();
 	if(getlist == null) {} else {
-		questionList = getQuestion();
+		questionList = gettaskQuestion();
 	}
 }
 
@@ -327,9 +327,8 @@ function Obtain_subject(obj, Chapterid) {
 		$("#page_lefts").text(pagenum1);
 		$("#page_rights").text(pagecount1);
 		var num = 1;
-		var questionInSession = getQuestion();
+		var questiontask = gettaskQuestion();
 		for(var i = 0; i < subjectlist.content.length; i++, num++) {
-
 			var a1 = "<div class='subjectList'><div class='subjectList_top'><span>" + num + "</span>";
 			isExistFavor(subjectlist.content[i].questionNode.qid); //调用判断是否已经收藏该题目
 			if(isExistFavorResult == "none") {
@@ -394,14 +393,14 @@ function Obtain_subject(obj, Chapterid) {
 				a1 += subjectlist.content[i].average;
 			}
 			var added = false;
-			if(questionInSession){
-				for(var j = 0; j < questionInSession.length; j++){
-					if(questionInSession[j].questionIdMD52===subjectlist.content[i].questionNode.qid){
+			if(questiontask){
+				for(var j = 0; j < questiontask.length; j++){
+					if(questiontask[j].questionIdMD52===subjectlist.content[i].questionNode.qid){
 						added = true;
 						break;
 					}
-				}
-			}
+                }
+            }
 			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 +"</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
 			if(!!subjectlist.content[i].questionNode.knowledges) {
@@ -935,10 +934,10 @@ function add_paper(obj, istype) {
 	var Identification = true;
 	$(obj).siblings().css({"display":"inline-block"});
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	var questionInSession = getQuestion();
-	if(!questionInSession) questionInSession = [];
-	for(var j = 0; j < questionInSession.length; j++) {
-		if(id == questionInSession[j].questionIdMD52) {
+	var questiontask = gettaskQuestion();
+	if(!questiontask) questiontask = [];
+	for(var j = 0; j < questiontask.length; j++) {
+		if(id == questiontask[j].questionIdMD52) {
 			swal("你已经添加了该题目哦!");
 			return;
 		}
@@ -946,7 +945,7 @@ function add_paper(obj, istype) {
 	if(istype == 2) {
 			for(var i = 0; i < itembaklist.content.length; i++) {
 				if(itembaklist.content[i].questionIdMD52 == id) {
-					questionInSession.push({
+					questiontask.push({
 						"questionId": "",
 						"questionContent": itembaklist.content[i].questionContent,
 						"options": itembaklist.content[i].options,
@@ -967,9 +966,9 @@ function add_paper(obj, istype) {
 						"questionPic": itembaklist.content[i].questionPic,
 						"from": "new-"+itembaklist.content[i].questionIdMD52
 					})
-					namber = questionInSession.length
+					namber = questiontask.length
 					$("#paper_number").text(namber);					
-					sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+					sessionStorage.setItem("tasklast", JSON.stringify(questiontask));
 					break;
 				}
 			}
@@ -993,7 +992,7 @@ function add_paper(obj, istype) {
 						"knowledge": questionNode[i].knowledges,
 						"capabilityId": capabilityId,
 						"capability": capability}];
-					questionInSession.push({
+					questiontask.push({
 						"questionId": "",
 						"questionContent": questionNode[i].title,
 						"options": storedOptions,
@@ -1010,10 +1009,10 @@ function add_paper(obj, istype) {
 						"questionPic": "",
 						"from": "new-"+questionNode[i].qid
 					})
-					var namber = questionInSession.length
+					var namber = questiontask.length
 					$("#paper_number").text(namber);
 					//console.log(questionNode[i].option_a, questionNode[i].option_b, questionNode[i].option_c, questionNode[i].option_d);
-					sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+					sessionStorage.setItem("tasklast", JSON.stringify(questiontask));
 					break;
 				}
 			}
@@ -1026,14 +1025,14 @@ function remove_paper(obj) {
 	$(obj).siblings().show();
 	$(obj).siblings().css("display", "inline-block");
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	var questionInSession = getQuestion();
-	if(!questionInSession) return;
-	for(var i = 0; i < questionInSession.length; i++) {
-		if(questionInSession[i].questionIdMD52 == id) {
-			questionInSession.splice(i, 1);
-			var namber = questionInSession.length
+	var questiontask = gettaskQuestion();
+	if(!questiontask) return;
+	for(var i = 0; i < questiontask.length; i++) {
+		if(questiontask[i].questionIdMD52 == id) {
+			questiontask.splice(i, 1);
+			var namber = questiontask.length
 			$("#paper_number").text(namber);
-			sessionStorage.setItem("lastname", JSON.stringify(questionInSession));
+			sessionStorage.setItem("tasklast", JSON.stringify(questiontask));
 			break;
 		}
 	}	

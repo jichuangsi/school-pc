@@ -28,6 +28,10 @@ function gettestQuestion(){
 	testquestion=JSON.parse(sessionStorage.getItem("testlast"));
 	return testquestion;
 }
+function gettaskQuestion(){
+	testquestion=JSON.parse(sessionStorage.getItem("tasklast"));
+	return testquestion;
+}
 function getUserInfo(){
 	userInfo=JSON.parse(sessionStorage.getItem("userIn"));
 	return userInfo;

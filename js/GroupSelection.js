@@ -30,6 +30,7 @@ $(function() {
 	getAllList();
 	inits();
 	sessionStorage.removeItem('lastname')
+	sessionStorage.removeItem('tasklast')
 });
 
 function getlistto() {

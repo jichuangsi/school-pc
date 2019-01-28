@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC“-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+	<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+		<title>作业发布</title>
+	</head>
+	<script src="../js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/method.js"></script>
+	<script type="text/javascript" src="../js/TaskRelease.js"></script>
+	<script type="text/javascript" src="../js/Tool.js"></script>
+	<script type="text/javascript" src="../js/httplocation.js"></script>
+	<script type="text/javascript" src="../layui/layui.js"></script>
+	<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
+	<link rel="stylesheet" href="../css/sweetalert.css" />
+	<link rel="stylesheet" type="text/css" href="../js/css/laydate.css" />
+	<link rel="stylesheet" href="../css/js.css" />
+	<link rel="stylesheet" href="../css/header.css" />
+	<link rel="stylesheet" href="../css/Choregraphy.css" />
+	<link rel="stylesheet" id="pageloader-css" href="../css/pageloader.css" type="text/css" media="all" />
+	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+	<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
+	<link rel="stylesheet" href="../css/layer-animate.css" />
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+	<style>
+		.MathJye table {
+			border-collapse: collapse;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			vertical-align: middle;
+			line-height: normal;
+			font-size: inherit;
+			_font-size: 100%;
+			font-style: normal;
+			font-weight: normal;
+			border: 0;
+			float: none;
+			display: inline-block;
+			zoom: 0;
+		}
+		
+		.mathjye-underpoint2 {
+			border-bottom: 2px dotted #000;
+			padding-bottom: 3px;
+		}
+		
+		#q_answer {
+			display: none;
+		}
+		
+		table.edittable {
+			border-collapse: collapse;
+			text-align: center;
+			margin: 2px
+		}
+		
+		table.edittable td,
+		table.edittable th {
+			line-height: 30px;
+			padding: 5px;
+			white-space: normal;
+			word-break: break-all;
+			border: 1px solid #000;
+			vertical-align: middle
+		}
+		
+		table.composition {
+			border-collapse: collapse;
+			text-align: left;
+			margin: 2px;
+			width: 98%
+		}
+		
+		table.composition td,
+		table.composition th {
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		table.composition2 {
+			border-collapse: collapse;
+			width: auto
+		}
+		
+		table.composition2 td,
+		table.composition2 th {
+			text-align: left;
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border: none;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		.black_overlay {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.8;
+			opacity: .80;
+			filter: alpha(opacity=80);
+		}
+		
+		.white_content {
+			display: none;
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			width: 80%;
+			height: 80%;
+			border: 1px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+		}
+		
+		.white_content_small {
+			display: none;
+			position: absolute;
+			top: 20%;
+			left: 30%;
+			width: 40%;
+			height: 50%;
+			border: 16px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+			#onsubmit {
+				width: 80px;
+				height: 40px;
+				color: white;
+				background-color: #3d72fe;
+				border-radius: 5px;
+			}
+		}
+		
+		.btn {
+			cursor: pointer;
+		}
+		
+		.sub-del {
+			color: white;
+			background-color: #b93535;
+			border-radius: 5px;
+			width: 80px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			float: right;
+			position: relative;
+			top: 5px;
+			right: 10px;
+		}
+		
+		.sub-del:hover {
+			cursor: pointer;
+		}
+		
+		.subjectList {
+			position: relative;
+			width: 850px;
+			height: 100%;
+			margin: 12px 20px;
+			border: 1px solid #F2F2F2;
+			font-size: 14px;
+			line-height: 27px;
+			cursor: pointer;
+		}
+		
+		.subjectList_top span {
+			width: 36px;
+			height: 36px;
+			background-color: #bebdbd;
+			color: #FFFFFF;
+			float: left;
+			line-height: 36px;
+			text-align: center;
+			margin-right: 25px;
+		}
+		
+		.subjectList_top img {
+			float: left;
+			margin-right: 25px;
+		}
+		
+		.subjectinfo {
+			clear: both;
+			font-size: 14px;
+			width: 686px;
+			margin-left: 32px;
+		}
+		
+		.subcontent {
+			float: left;
+		}
+	</style>
+	<script>
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+			lay('#version').html('-v' + laydate.v);
+			//执行一个laydate实例
+			//常规用法
+			laydate.render({
+				elem: '#test-n1',
+				position: 'static',
+				showBottom: false,
+				done: function(value, date) {
+					$("#ymd").val(value);
+					inintClassDate(1);
+					//layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+				}
+			});
+		});
+	</script>
+	<style>
+		body {}
+		
+		.demo-input {
+			padding-left: 10px;
+			height: 38px;
+			min-width: 262px;
+			line-height: 38px;
+			border: 1px solid #e6e6e6;
+			background-color: #fff;
+			border-radius: 2px;
+		}
+		
+		.bar6 button {
+			background: #3D72FE;
+			border-radius: 0 5px 5px 0;
+			background-image: url(../img/searchBotton.png);
+			background-repeat: no-repeat;
+			background-position: 7px 5px;
+			height: 36px;
+			width: 42px;
+			cursor: pointer;
+			position: relative;
+			left: -7px;
+			top: 13px;
+		}
+	</style>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
+		<div class="main">
+			<!--导航条-->
+			<div class="nav-top" style="min-width: 1520px;">
+				<div class="nav-top-manin">
+					<div class="nav-top-manin-content pr">作业发布</div>
+					<div class="nav-top-manin-content" onclick="window.location.href='../Front/TaskEstablish.html'">创建作业</div>
+					<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
+				</div>
+			</div>
+			<div class="main-back">
+				<div id="fade" class="black_overlay">
+
+				</div>
+				<div style="float: left;position: relative;left: 18.75%;top: 20px;">
+					<div class="layui-inline" id="test-n1"></div>
+				</div>
+				<input type="hidden" value="" id="ymd" />
+				<!--<div class="main-time">
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="test29" placeholder="" style="width: 250px;" onblur="inintClassDate(1)">
+					</div>
+				</div>-->
+
+				<div class="main-conter-ch">
+					<div class="nav-ul">
+						<ul>
+							<li>教学：</li>
+							<li onclick="liall(this)" class="xz" id="li-all">全部</li>
+							<li onclick="liall(this)">已发布</li>
+							<li onclick="liall(this)">未发布</li>
+						</ul>
+					</div>
+					<div id="container">
+						<div class="search bar6">
+							<form>
+								<input type="text" placeholder="请输入作业名称" id="cname">
+								<button type="button" onclick="inintClassDate(1)"></button>
+							</form>
+						</div>
+					</div>
+					<div class="hr-he">
+						<hr style="color: #a0a6ad;" />
+					</div>
+					<div class="comprehensive">
+						<div class="comprehensive-zh" onclick="time(this,1)">综合排序</div>
+						<div class="class-time" onclick="time(this,2)">作答时间 </div>
+						<div class="paging">
+							<label>共</label>
+							<i class="fy-zt" id="count"></i>
+							<label>题</label>
+							<i class="fy-x">&lt; </i>
+							<label>第<span id="index"></span>/<span id="Size"></span>页</label>
+							<i class="fy-x">&gt;</i>
+						</div>
+					</div>
+					<!--<div class="btn btn8" onclick="showList()">查看详情临时按钮</div>-->
+					<div id="MyDiv" class="white_content" style="width: 600px;height:475px;margin-left:9%;background-color:#F2F2F2;">
+						<div style="text-align: right; cursor: default; height: 40px;">
+							<label style="font-size: 16px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:black;" onclick="CloseDiv('MyDiv','fade')">关闭</label>
+
+							<table class="uptable">
+								<tr>
+									<input type="hidden" name="courseId" value="" />
+									<td class="box-td">作业内容：</td>
+									<td><input type="text" value="" id="name" class="class-box" /></td>
+								</tr>
+								<tr>
+									<td class="box-td">接收班级：</td>
+									<td>
+										<select class="set-className" id="AttendClass" name="className">
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="box-td">作答时间：</td>
+									<td>
+										<div>
+											<select class="time-select" id="time-hour" name="hh">
+											</select>
+											<span>:</span>
+											<select class="time-select" id="time-min" name="mm">
+											</select>
+											<span>日期：</span>
+											<input type="text" class="time-select-y" placeholder="选择时间" id="test30" lay-key="12" name="ymd">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="js-rn">作业范畴：</td>
+									<td><textarea cols="15" rows="3" class="box-room-rn-text" id="ClassroomSynopsis" name="info"></textarea></td>
+								</tr>
+							</table>
+							<div class="but-up">
+								<button type="submit" class="SeaveUpdate" style="margin-right: 111px;margin-top: 5px;" onclick="updateSub()">保存修改</button>
+							</div>
+						</div>
+					</div>
+					<div id="main-list"></div>
+
+				</div>
+				<div id="pagelist" style="width: 700px;height: 10px;position: relative;top: 20px;left:970px;"></div>
+			</div>
+		</div>
+
+		<script src="../js/jquery.js" type="text/javascript"></script>
+	</body>
+
+	</html>

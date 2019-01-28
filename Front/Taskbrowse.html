@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC“-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+	<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+		<title>浏览题目</title>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="../js/Taskbrowse.js"></script>
+		<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
+		<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
+		<link rel="stylesheet" href="../css/sweetalert.css" />
+		<link rel="stylesheet" href="../css/BrowseTopics.css" />
+		<link rel="stylesheet" href="../css/js.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/Newclassroom_Newtestpaper.css" />
+		<script type="text/javascript" src="../layui/layui.js"></script>
+	</head>
+	<style>
+		.MathJye table {
+			border-collapse: collapse;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			vertical-align: middle;
+			line-height: normal;
+			font-size: inherit;
+			_font-size: 100%;
+			font-style: normal;
+			font-weight: normal;
+			border: 0;
+			float: none;
+			display: inline-block;
+			zoom: 0;
+		}
+		
+		.mathjye-underpoint2 {
+			border-bottom: 2px dotted #000;
+			padding-bottom: 3px;
+		}
+		
+		#q_answer {
+			display: none;
+		}
+		
+		table.edittable {
+			border-collapse: collapse;
+			text-align: center;
+			margin: 2px
+		}
+		
+		table.edittable td,
+		table.edittable th {
+			line-height: 30px;
+			padding: 5px;
+			white-space: normal;
+			word-break: break-all;
+			border: 1px solid #000;
+			vertical-align: middle
+		}
+		
+		table.composition {
+			border-collapse: collapse;
+			text-align: left;
+			margin: 2px;
+			width: 98%
+		}
+		
+		table.composition td,
+		table.composition th {
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		table.composition2 {
+			border-collapse: collapse;
+			width: auto
+		}
+		
+		table.composition2 td,
+		table.composition2 th {
+			text-align: left;
+			line-height: 30px;
+			white-space: normal;
+			word-break: break-all;
+			border: none;
+			border-width: 0;
+			vertical-align: middle
+		}
+		
+		.bar6 button {
+			background: #3D72FE;
+			border-radius: 0 5px 5px 0;
+			background-image: url(../img/searchBotton.png);
+			background-repeat: no-repeat;
+			background-position: 7px 5px;
+			height: 36px;
+			width: 42px;
+			cursor: pointer;
+			position: relative;
+			left: -3px;
+			top: 13px;
+			
+		}
+			.btn {
+			/*float: left;
+			font-size: 18px;
+			margin: 30px;*/
+			cursor: pointer;
+		}
+	</style>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
+		<div class="Mian">
+			<div class="nav-top" style="">
+				<div class="nav-top-manin">
+					<div class="nav-top-manin-content" onclick="window.location.href='../Front/TaskRelease.html'">作业发布</div>
+					<div class="nav-top-manin-content  pr">创建作业</div>
+					<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
+				</div>
+			</div>
+			<div class="Mian-conter" id="main-conter">
+				<div style="float: left;position: relative;left: 250px;top: 50px;">
+					<a href="../Front/TaskEstablish.html" style="text-decoration: none; color: #3d72fe;">&lt;返回创建作业</a>
+				</div>
+				<div class="title">
+					牛顿小测试1
+				</div>
+				<div class="souCla">
+					<div class="search bar6">
+						<form>
+							<input type="text" placeholder="请输入题目关键字" id="cname"><button type="submit"></button>
+						</form>
+					</div>
+				</div>
+				<div class="List">
+					<div style="color: #3d72fe;font-weight: 800;margin-bottom: 5px;">题型分析</div>
+					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style" id="type">
+						<tr>
+							<th>题型</th>
+							<th>题量</th>
+						</tr>
+					</table>
+					<div style="color: #3d72fe;font-weight: 800;margin-top: 5px;margin-bottom: 5px;">题量分析</div>
+					<table border="1" bordercolor="#a0c6e5" style="border-collapse:collapse;" class="table-style-two">
+						<tr>
+							<th>难度</th>
+							<th>题量</th>
+						</tr>
+						<tr>
+							<td>简单</td>
+							<td id="one"></td>
+						</tr>
+						<tr>
+							<td>一般</td>
+							<td id="two"></td>
+						</tr>
+						<tr>
+							<td>中等</td>
+							<td id="three"></td>
+						</tr>
+						<tr>
+							<td>困难</td>
+							<td id="four"></td>
+						</tr>
+						<tr>
+							<td>特难</td>
+							<td id="five"></td>
+						</tr>
+					</table>
+				</div>
+				<div id="listTo" style="float: right;margin-right: 40px;">
+				</div>
+
+			</div>
+			<div style="width:500px;height: 50px;">
+				<div id="pagelist" style="width: 100%;height:60px;margin-top: 20px;margin-left:830px;"></div>
+			</div>
+
+		</div>
+		</div>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<script>
+		</script>
+		<script type="text/javascript">
+			$(".img").click(function() {
+
+				if(this.src.search("../img/00025.png") != -1) {
+
+					this.src = "../img/e60eb6b8370b1910d42f3ecba911e25.png";
+
+				} else {
+
+					this.src = "../img/00025.png"
+				}
+			})
+		</script>
+	</body>
+
+	</html>
