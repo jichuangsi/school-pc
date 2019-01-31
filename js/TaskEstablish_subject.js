@@ -855,7 +855,7 @@ function PreviewPaper() //显示隐藏层和弹出层
 				}					
 				a1 += knowledge;
 				a1 += "</div>";
-				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].quesetionType + "</span></div>";
+				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + getlist[i].questionType + "</span></div>";
 				a1 += "</div>";
 				a1 += "</div>";
 				$("#Previewinfo").append(a1);
@@ -952,7 +952,7 @@ function add_paper(obj, istype) {
 						"answer": itembaklist.content[i].answer,
 						"answerDetail": itembaklist.content[i].answerDetail,
 						"parse": itembaklist.content[i].parse,
-						"quesetionType": itembaklist.content[i].quesetionType,
+						"questionType": itembaklist.content[i].quesetionType,
 						"difficulty": itembaklist.content[i].difficulty,
 						"subjectId": itembaklist.content[i].subjectId,
 						"gradeId": itembaklist.content[i].gradeId,
@@ -999,7 +999,7 @@ function add_paper(obj, istype) {
 						"answer": questionNode[i].answer1,
 						"answerDetail": questionNode[i].answer2,
 						"parse": questionNode[i].parse,
-						"quesetionType": questionNode[i].qtpye,
+						"questionType": questionNode[i].qtpye,
 						"difficulty": questionNode[i].diff,
 						"subjectId": questionNode[i].subjectId,
 						"gradeId": "",
