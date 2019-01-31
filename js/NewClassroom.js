@@ -1,4 +1,4 @@
-document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
+//document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
 var newCoursesList = [];

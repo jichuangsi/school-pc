@@ -1,19 +1,24 @@
-document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
+//document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
-var datalist;
-var pageSize = 3;
+var crLlistInPage;
+var pageSize = 4;
 var curr; //第几页
 var user;
 var count; //多少堂课
 var sortNum = 2;
 var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
-
-function setCount() {
+var crstatus = 'EMPTY';
+function setCount(count, currentPage, size) {
 	$("#count").text(count);
-	$("#index").text(curr);
-	var size = Math.ceil(count / pageSize);
-	$("#Size").text(size);
+	if(count>0){			
+		$("#index").text(currentPage);
+		var size1 = Math.ceil(count / size);
+		$("#Size").text(size1);
+	}else{
+		$("#index").text('');
+		$("#Size").text('');
+	}
 }
 
 function getLocation() {
@@ -27,11 +32,56 @@ $(function() {
 	initAttendtimehour("");
 	initAttendtimemin("");
 	inintUPdate();
-	inintClassDate();
-
+	//inintClassDate();
+	showCourseList(true);
 });
 
-function pageList() {
+function checkPageElement(pageIndex){
+	var cname = $("#cname").val();
+	var ymd = $("#ymd").val();	
+	if(!pageIndex){
+		pageIndex = 1;
+	}
+	var cs = {
+		"keyWord": cname, //课堂名称，简介查询
+		"pageIndex": pageIndex,//页码
+		"pageSize": pageSize,//每页记录数
+		"sortNum": sortNum,//排序
+		"status": crstatus, //状态
+		"time": ymd //日期
+	};
+	return cs;
+}
+
+function showCourseList(first, pageIndex){
+	var cs = checkPageElement(pageIndex);
+	$.ajax({
+		url: local + "/COURSESERVICE/console/getSortList",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'POST',
+		async: false,
+		cache: true,
+		contentType: 'application/json',
+		data: JSON.stringify(cs),
+		dataType: 'JSON',
+		retdate: {},
+		success: function(data) {
+			if(first) $("#main-list").empty();
+			pageList(data.data.total, data.data.pageNum, data.data.pageSize);
+			setCount(data.data.total, data.data.pageNum, data.data.pageSize);
+			LookClass(data.data.content, (data.data.pageNum-1)*data.data.pageSize);
+			crLlistInPage = data.data.content;
+			//count = data.data.total;			
+		},
+		error: function() {
+
+		}
+	});
+}
+
+function pageList(count, currentPage, size) {
 	layui.use(['laypage', 'layer'], function() {
 		var laypage = layui.laypage,
 			layer = layui.layer;
@@ -39,17 +89,19 @@ function pageList() {
 		//自定义每页条数的选择项
 		laypage.render({
 			elem: 'pagelist',
-			count: datalist.length,
+			count: count,
 			layout: ['prev', 'page', 'next'],
-			limit: pageSize,
+			curr: currentPage,
+			limit: size,
 			limits: false,
 			jump: function(obj, first) {
 				if(!first) {
 					$("#main-list").empty();
+					showCourseList(!first, obj.curr);
 				}
-				$("#main-list").empty();
-				curr = obj.curr;
-				LookClass((obj.curr - 1) * pageSize, datalist);
+				//$("#main-list").empty();
+				//curr = obj.curr;
+				//LookClass((obj.curr - 1) * pageSize, datalist);
 			}
 		});
 	});
@@ -79,36 +131,25 @@ function getgradename() {
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
-//function liall(){
-//	var obj =document.getElementsByClassName('li-all');
-//	obj.setAttribute("background","#3d72fe");
-//	Element.setAttribute('style','background-color:#3d72fe ;','color: white;')
-//	background-color: #3d72fe;
-//	color: white;
-//	border-radius: 5px;
-//}
-//lastpage 上一页
-//nextpage 下一页
-var stasus = '';
-//
+
 function liall(obj) {
 	$(obj).addClass('xz').siblings().removeClass('xz'); //FINISH----NOTSTART----PROGRESS已经有的几个 参数
 	if($(obj).text() == "已完成") {
-		stasus = 'FINISH';
-		inintClassDate();
+		crstatus = 'FINISH';
+		showCourseList(true);
 	} else if($(obj).text() == "未完成") {
-		stasus = 'NOTSTART';
-		inintClassDate();
+		crstatus = 'NOTSTART';
+		showCourseList(true);
 	} else if($(obj).text() == "正在上课") {
-		stasus = 'PROGRESS';
-		inintClassDate();
+		crstatus = 'PROGRESS';
+		showCourseList(true);
 	} else {
-		stasus = "";
-		inintClassDate();
+		crstatus = "EMPTY";
+		showCourseList(true);
 	}
 }
 
-function inintClassDate(obj) {
+/*function inintClassDate(obj) {
 	if(obj == 1) {
 		var cname = $("#cname").val();
 		if(cname == null || cname == "") {
@@ -163,22 +204,13 @@ function inintClassDate(obj) {
 
 		}
 	});
-}
-//在哪里调用的
-function LookClass(start, datalist) {
-	if(datalist == null || datalist.length == 0) {
+}*/
 
-	} else {
+function LookClass(datalist, num) {
+	if(datalist&&datalist.length > 0) {
 		var sourceNode = document.getElementById("main-list");
-		//$(sourceNode).remove("#main-ch .room-class");
-		var num = 1;
-		var len
-		if((curr * pageSize - datalist.length) < 0) {
-			len = start + pageSize;
-		} else {
-			len = datalist.length;
-		}
-		for(i = start; i < len; i++, num++) {
+		for(i = 0; i < datalist.length; i++) {
+			++num;
 			var beginTime = datalist[i].beginTime;
 			var course = datalist[i].course;
 			var con = document.createElement('div');
@@ -212,8 +244,6 @@ function LookClass(start, datalist) {
 			sourceNode.append(con);
 		}
 	}
-	setCount();
-
 }
 
 function showBg(obj) {
@@ -279,43 +309,7 @@ function updateSub() {
 		"courseId": id,
 		"courseInfo": info,
 		"courseName": name,
-		"courseStartTime": currentDateLong//,
-		/*"courseStatus": "NOTSTART",
-		"createTime": 0,
-		"pageNum": 1,
-		"pageSize": 1,
-		"questions": [{
-			"answer": "string",
-			"answerDetail": "string",
-			"answerForStudent": [{
-				"answerForObjective": "string",
-				"answerId": "string",
-				"picForSubjective": "string",
-				"result": "CORRECT",
-				"stubForSubjective": "string",
-				"studentId": "string",
-				"studentName": "string",
-				"subjectiveScore": 0
-			}],
-			"difficulty": "string",
-			"gradeId": "string",
-			"knowledge": "string",
-			"options": [
-				"string"
-			],
-			"pageNum": 0,
-			"pageSize": 0,
-			"parse": "string",
-			"quesetionType": "string",
-			"questionContent": "string",
-			"questionId": "string",
-			"questionIdMD52": "string",
-			"questionStatus": "NOTSTART",
-			"statistics": {},
-			"subjectId": "string"
-		}],
-		"teacherId": "string",
-		"teacherName": "string"*/
+		"courseStartTime": currentDateLong
 	};
 	$.ajax({
 		url: local + "/COURSESERVICE/console/updateCourse",
@@ -482,10 +476,10 @@ function showList(obj) {
 //从课堂里面查询出来的数据
 function getDate(obj) {
 	var id = $(obj).parent().find("input[name='userId']").val(); //获取id然后根据id查找题目
-	var questionNode;
-	for(var j = 0; j < datalist.length; j++) {
-		if(datalist[j].courseForTeacher.courseId == id) {
-			questionNode = datalist[j].courseForTeacher.questions;
+	var questionNode = [];
+	for(var j = 0; j < crLlistInPage.length; j++) {
+		if(crLlistInPage[j].courseForTeacher.courseId == id) {
+			questionNode = crLlistInPage[j].courseForTeacher.questions;
 		}
 	}
 	var source = document.getElementById('listTo');
@@ -672,12 +666,12 @@ function time(obj, num) {
 		sortNum = 1;
 		$(obj).addClass('class-time').removeClass('comprehensive-zh');
 		$(obj).next().addClass('comprehensive-zh').removeClass('class-time');
-		inintClassDate(1);
+		showCourseList(true);
 	} else if(num == 2) {
 		sortNum = 2;
 		$(obj).addClass('class-time').removeClass('comprehensive-zh');
 		$(obj).parent().children().first().addClass('comprehensive-zh').removeClass('class-time');
-		inintClassDate(1);
+		showCourseList(true);
 	}
 }
 

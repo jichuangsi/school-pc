@@ -1,25 +1,31 @@
-document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
+//document.write("<script type='text/javascript' src='../js/httplocation.js' ></script>");
 var local;
 var accessToken;
-var datalist;
-var pageSize = 3;
+var hwLlistInPage;
+var pageSize = 4;
 var curr; //第几页
 var user;
 var count; //多少堂课
 var sortNum = 2;
 var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
-
-function setCount() {
+var hwstatus = 'EMPTY';
+function setCount(count, currentPage, size) {
 	$("#count").text(count);
-	$("#index").text(curr);
-	var size = Math.ceil(count / pageSize);
-	$("#Size").text(size);
+	if(count>0){			
+		$("#index").text(currentPage);
+		var size1 = Math.ceil(count / size);
+		$("#Size").text(size1);
+	}else{
+		$("#index").text('');
+		$("#Size").text('');
+	}
 }
 
 function getLocation() {
 	local = httpLocation();
 	accessToken = getAccessToken();
 }
+
 $(function() {
 	getLocation();
 	getgradename();
@@ -27,34 +33,8 @@ $(function() {
 	initAttendtimehour("");
 	initAttendtimemin("");
 	inintUPdate();
-	inintClassDate();
-
+	showHomeworkList(true);
 });
-
-function pageList() {
-	layui.use(['laypage', 'layer'], function() {
-		var laypage = layui.laypage,
-			layer = layui.layer;
-
-		//自定义每页条数的选择项
-		laypage.render({
-			elem: 'pagelist',
-			count: datalist.length,
-			layout: ['prev', 'page', 'next'],
-			limit: pageSize,
-			limits: false,
-			jump: function(obj, first) {
-				if(!first) {
-					$("#main-list").empty();
-				}
-				$("#main-list").empty();
-				curr = obj.curr;
-				LookClass((obj.curr - 1) * pageSize, datalist);
-			}
-		});
-	});
-
-}
 
 function getNowFormatDate() {
 	var date = new Date();
@@ -79,71 +59,49 @@ function getgradename() {
 	$(".Gradename").html(gname);
 	$(".Subjectname").html(sname);
 }
-//function liall(){
-//	var obj =document.getElementsByClassName('li-all');
-//	obj.setAttribute("background","#3d72fe");
-//	Element.setAttribute('style','background-color:#3d72fe ;','color: white;')
-//	background-color: #3d72fe;
-//	color: white;
-//	border-radius: 5px;
-//}
-//lastpage 上一页
-//nextpage 下一页
-var stasus = '';
-//
+
 function liall(obj) {
 	$(obj).addClass('xz').siblings().removeClass('xz'); //FINISH----NOTSTART----PROGRESS已经有的几个 参数
-	if($(obj).text() == "已完成") {
-		stasus = 'FINISH';
-		inintClassDate();
-	} else if($(obj).text() == "未完成") {
-		stasus = 'NOTSTART';
-		inintClassDate();
-	} else if($(obj).text() == "正在上课") {
-		stasus = 'PROGRESS';
-		inintClassDate();
+	if($(obj).text() == "已结束") {
+		hwstatus = 'FINISH';
+		showHomeworkList(true);
+	} else if($(obj).text() == "未发布") {
+		hwstatus = 'NOTSTART';
+		showHomeworkList(true);
+	} else if($(obj).text() == "已发布") {
+		hwstatus = 'PROGRESS';
+		showHomeworkList(true);
 	} else {
-		stasus = "";
-		inintClassDate();
+		hwstatus = "EMPTY";
+		showHomeworkList(true);
 	}
 }
 
-function inintClassDate(obj) {
-	if(obj == 1) {
-		var cname = $("#cname").val();
-		if(cname == null || cname == "") {
-			cname = "";
-		}
-		var ymd = $("#ymd").val();
-		if(ymd == "" || ymd == null) {
-			ymd = "";
-		} else {
-			ymd = $("#ymd").val();
-		}
-	} else {
-		cname = "";
-		ymd = "";
+function checkPageElement(pageIndex){
+	var cname = $("#cname").val();
+	var ymd = $("#ymd").val();
+	if(ymd){
+		var startTime = ymd + " 00:00:00";
+		ymd = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 	}
-	if(stasus == "") {
-		var cs = {
-			"keyWord": cname, //根据课堂名称，简介查询
-			"pageIndex": 1,
-			"pageSize": 10,
-			"sortNum": sortNum,
-			"time": ymd //日期
-		};
-	} else {
-		var cs = {
-			"keyWord": cname, //根据课堂名称，简介查询
-			"pageIndex": 1,
-			"pageSize": 10,
-			"sortNum": 2,
-			"status": stasus, //状态，上课没上课，全部
-			"time": ymd //日期
-		};
+	if(!pageIndex){
+		pageIndex = 1;
 	}
+	var cs = {
+		"keyWord": cname, //名称，简介查询
+		"pageIndex": pageIndex,//页码
+		"pageSize": pageSize,//每页记录数
+		"sortNum": sortNum,//排序
+		"status": hwstatus, //状态
+		"time": ymd //日期
+	};
+	return cs;
+}
+
+function showHomeworkList(first, pageIndex){
+	var cs = checkPageElement(pageIndex);
 	$.ajax({
-		url: local + "/COURSESERVICE/console/getSortList",
+		url: local + "/HOMEWORKSERVICE/console/getSortedList",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -155,65 +113,119 @@ function inintClassDate(obj) {
 		dataType: 'JSON',
 		retdate: {},
 		success: function(data) {
-			datalist = data.data.content;
-			count = datalist.length;
-			pageList();
+			if(first) $("#main-list").empty();
+			pageList(data.data.total, data.data.pageNum, data.data.pageSize);
+			setCount(data.data.total, data.data.pageNum, data.data.pageSize);
+			LookClass(data.data.content, (data.data.pageNum-1)*data.data.pageSize);
+			hwLlistInPage = data.data.content;
+			//count = data.data.total;
+			
 		},
 		error: function() {
 
 		}
 	});
 }
-//在哪里调用的
-function LookClass(start, datalist) {
-	if(datalist == null || datalist.length == 0) {
 
-	} else {
-		var sourceNode = document.getElementById("main-list");
-		//$(sourceNode).remove("#main-ch .room-class");
-		var num = 1;
-		var len
-		if((curr * pageSize - datalist.length) < 0) {
-			len = start + pageSize;
-		} else {
-			len = datalist.length;
-		}
-		for(i = start; i < len; i++, num++) {
-			var beginTime = datalist[i].beginTime;
-			var course = datalist[i].course;
-			var con = document.createElement('div');
-			var id = datalist[i].courseForTeacher.courseId;
-			var al = "";
-			if(datalist[i].courseForTeacher.courseStatus == "NOTSTART") {
-				al = "未开始教学";
-			} else if(datalist[i].courseForTeacher.courseStatus == "FINISH") {
-				al = "已完成教学";
-			} else if(datalist[i].courseForTeacher.courseStatus == "PROGRESS") {
-				al = "正在教学";
+function pageList(count, currentPage, size) {
+	layui.use(['laypage', 'layer'], function() {
+		var laypage = layui.laypage,
+			layer = layui.layer;
+
+		//自定义每页条数的选择项
+		laypage.render({
+			elem: 'pagelist',
+			count: count,
+			layout: ['prev', 'page', 'next'],
+			curr: currentPage,
+			limit: size,
+			limits: false,
+			jump: function(obj, first) {
+				if(!first) {
+					$("#main-list").empty();
+					showHomeworkList(!first, obj.curr);
+					//inintClassDate(sortNum, obj.curr);
+				}
+				//$("#main-list").empty();
+				//curr = obj.curr;
+				//LookClass((obj.curr - 1) * pageSize, datalist);
 			}
-			var last = '-';
-			if(datalist[i].courseForTeacher.courseStartTime>0&&datalist[i].courseForTeacher.courseEndTime>0&&datalist[i].courseForTeacher.courseEndTime>datalist[i].courseForTeacher.courseStartTime){
-				last = Math.round((datalist[i].courseForTeacher.courseEndTime-datalist[i].courseForTeacher.courseStartTime)/60000);
-				//console.log(last);
+		});
+	});
+
+}
+
+/*function inintClassDate(obj, pageIndex) {
+	
+	$.ajax({
+		url: local + "/HOMEWORKSERVICE/console/getSortedList",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'POST',
+		async: false,
+		cache: true,
+		contentType: 'application/json',
+		data: JSON.stringify(cs),
+		dataType: 'JSON',
+		retdate: {},
+		success: function(data) {
+			LookClass(data.data.content);
+			datalist = data.data.content;
+			count = data.data.total;
+			//pageList();
+		},
+		error: function() {
+
+		}
+	});
+}*/
+
+function LookClass(datalist, num) {
+	if(datalist&&datalist.length > 0) {
+		var sourceNode = document.getElementById("main-list");
+		for(i = 0; i < datalist.length; i++) {
+			++num;
+			var con = document.createElement('div');
+			var id = datalist[i].homeworkId;
+			var al = "";
+			if(datalist[i].homeworkStatus === "NOTSTART") {
+				al = "未发布";
+			} else if(datalist[i].homeworkStatus === "FINISH") {
+				al = "已结束";
+			} else if(datalist[i].homeworkStatus === "PROGRESS") {
+				al = "已发布";
+			}
+			var dateStr = '-';	
+			if(datalist[i].homeworkEndTime&&datalist[i].homeworkEndTime>0){
+				var formatDate = formatTimestamp(datalist[i].homeworkEndTime);
+				var date = formatDate.split(' ')
+				var time = date[1].split(':');
+				dateStr = '<span id="" class="ClassTime">' + date[0] + ' <span class="hour">' + time[0] + '</span>:<span class="min">' + time[1] + '</span></span>';
 			}
 			con.setAttribute('class', 'room-class');
 			con.innerHTML += '<div class="number">' + num + '</div>';
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
-			con.innerHTML += '<div class="room-static"><label>作业内容：</label><span name="name">' + datalist[i].courseForTeacher.courseName + '</span></div>';
-			con.innerHTML += '<div class="room-class-two"><label>接受班级：</label><span name="className">' + datalist[i].courseForTeacher.className + '</span></div>';
-			con.innerHTML += '<div class="room-introduction  btn btn8" onclick="showInfo(this)">作业范畴<input type="hidden" name="info" value="' + datalist[i].courseForTeacher.courseInfo + '"/></div>';
-			con.innerHTML += '<div class="room-static but-kc"><label>作答时间：</label><span name="classTime">' + beginTime + '</span></div>';
-			con.innerHTML += '<div class="room-class-two but-kc"><label></label></div>';
-			if(datalist[i].courseForTeacher.courseStatus == "NOTSTART") {
-				con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改作业</div>';
+			con.innerHTML += '<div class="room-static"><label>习题名称：</label><span name="name">' + datalist[i].homeworkName + '</span></div>';
+			con.innerHTML += '<div class="room-class-two"><label>对应班级：</label><span name="className">' + datalist[i].className + '</span></div>';
+			con.innerHTML += '<div class="room-introduction  btn btn8" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
+			if(datalist[i].homeworkStatus === "NOTSTART") {			
+				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>发布习题</div>';
+			}else if(datalist[i].homeworkStatus === "PROGRESS"){
+				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"/>终止作答</div>';
+			}else if(datalist[i].homeworkStatus === "FINISH"){
+				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'NOTSTART\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 			}
-			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该作业</div>';
-			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>绑定题目：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">查看详情</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
+			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>'+dateStr+'</div>';
+			con.innerHTML += '<div class="room-class-two but-kc"><label></label></div>';
+			if(datalist[i].homeworkStatus === "NOTSTART") {
+				con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改习题</div>';
+			}
+			con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
+			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>班级人数：</label><span>' + datalist[i].students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">题目列表</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);
 		}
 	}
-	setCount();
-
 }
 
 function showBg(obj) {
@@ -231,7 +243,7 @@ function showBg(obj) {
 
 function inintUPdate() {
 	$.ajax({
-		url: local + "/COURSESERVICE/console/getClass",
+		url: local + "/HOMEWORKSERVICE/console/getElements",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -261,10 +273,49 @@ function initAttendClass(AttendClassText, sClass) {
 	}
 }
 
+function updateHomeworkStatus(newStatus, obj){
+	var id = $(obj).find("input").val();
+	var cc = {
+		"homeworkId": id,
+		"homeworkStatus": newStatus
+	};
+	$.ajax({
+		url: local + "/HOMEWORKSERVICE/console/updateHomeWorkStatus",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'POST',
+		async: true,
+		cache: false,
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
+		success: function(returndata) {
+			if(returndata.code==="0010"){
+				swal("发布完成!", "", "success");
+				setTimeout(function() {
+					window.location.reload();
+				}, 1000);			
+			}else{
+				swal("出错啦", returndata.msg, "error");
+			}
+		},
+		error: function(returndata) {
+			swal("发布失败!", "", "error");
+		}
+	});
+}
+
 function updateSub() {
 	var classid = document.getElementById("AttendClass").value;
 	var ClassName = $("#AttendClass option:selected").text();
 	var name = document.getElementById("name").value;
+	if(!name) {
+		swal("请输入习题名称！", "", "warning");
+		return;
+	} else if(name.length < 4 || name.length > 18) {
+		swal("习题名称长度在4~18", "", "warning");
+		return;
+	}
 	var info = document.getElementById("ClassroomSynopsis").value;
 	var hh = document.getElementById("time-hour").value;
 	var mm = document.getElementById("time-min").value;
@@ -275,55 +326,18 @@ function updateSub() {
 	var cc = {
 		"classId": classid,
 		"className": ClassName,
-		"courseEndTime": 0,
-		"courseId": id,
-		"courseInfo": info,
-		"courseName": name,
-		"courseStartTime": currentDateLong//,
-		/*"courseStatus": "NOTSTART",
-		"createTime": 0,
-		"pageNum": 1,
-		"pageSize": 1,
-		"questions": [{
-			"answer": "string",
-			"answerDetail": "string",
-			"answerForStudent": [{
-				"answerForObjective": "string",
-				"answerId": "string",
-				"picForSubjective": "string",
-				"result": "CORRECT",
-				"stubForSubjective": "string",
-				"studentId": "string",
-				"studentName": "string",
-				"subjectiveScore": 0
-			}],
-			"difficulty": "string",
-			"gradeId": "string",
-			"knowledge": "string",
-			"options": [
-				"string"
-			],
-			"pageNum": 0,
-			"pageSize": 0,
-			"parse": "string",
-			"quesetionType": "string",
-			"questionContent": "string",
-			"questionId": "string",
-			"questionIdMD52": "string",
-			"questionStatus": "NOTSTART",
-			"statistics": {},
-			"subjectId": "string"
-		}],
-		"teacherId": "string",
-		"teacherName": "string"*/
+		"homeworkEndTime": currentDateLong,
+		"homeworkId": id,
+		"homeworkInfo": info,
+		"homeworkName": name
 	};
 	$.ajax({
-		url: local + "/COURSESERVICE/console/updateCourse",
+		url: local + "/HOMEWORKSERVICE/console/updateHomeWorkContent",
 		headers: {
 			'accessToken': accessToken
 		},
 		type: 'POST',
-		async: false,
+		async: true,
 		cache: false,
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
@@ -335,7 +349,7 @@ function updateSub() {
 					window.location.reload();
 				}, 1000);			
 			}else{
-				swal(returndata.msg, "", "success");
+				swal("出错啦", returndata.msg, "error");
 			}
 		},
 		error: function(returndata) {
@@ -392,8 +406,10 @@ function initAttendtimemin(ClassTimemin) {
 
 function DelDate(obj) {
 	var id = $(obj).find("input").val();
+	var ids = [];
+	ids.push(id);
 	var cc = {
-		"courseId": id
+		"ids": ids
 	}
 	swal({
 		title: "您确定要删除吗？",
@@ -406,12 +422,12 @@ function DelDate(obj) {
 	}, function() {
 
 		$.ajax({
-			url: local + "/COURSESERVICE/console/deleteNewCourse",
+			url: local + "/HOMEWORKSERVICE/console/deleteHomeWork",
 			headers: {
 				'accessToken': accessToken
 			},
 			type: 'DELETE',
-			async: false,
+			async: true,
 			contentType: 'application/json',
 			data: JSON.stringify(cc),
 		}).done(function(data) {
@@ -419,7 +435,7 @@ function DelDate(obj) {
 				swal("操作成功!", "已成功删除数据！", "success");
 				showLoad();
 			} else {
-				swal("OMG", "删除操作失败了!", "error");
+				swal("出错啦", "删除操作失败了!", "error");
 			}
 		}).error(function(data) {
 
@@ -447,14 +463,16 @@ function ShowDiv(MyDiv, fade, obj) {
 	$("[name='courseId']").val(id);
 	var name = $(obj).parent().find("span[name='name']").text();
 	$("#name").val(name);
-	var str = $(obj).parent().find("span[name='classTime']").text();
-	var ymd = str.split(" ")[0];
-	ymd = ymd.replace(/[^\d]/g, '-');
-	ymd = ymd.substring(0, 10);
-	$("#test30").val(ymd);
-	var hm = str.split(" ")[1].split(":");
-	$("#time-hour").val(hm[0]);
-	$("#time-min").val(hm[1]);
+	var str = $(obj).parent().find(".ClassTime").text();
+	if(str){
+		var ymd = str.split(" ")[0];
+		ymd = ymd.replace(/[^\d]/g, '-');
+		ymd = ymd.substring(0, 10);
+		$("#test30").val(ymd);
+		var hm = str.split(" ")[1].split(":");
+		$("#time-hour").val(hm[0]);
+		$("#time-min").val(hm[1]);
+	}	
 	var info = $(obj).parent().find("input[name='info']").val();
 	$("#ClassroomSynopsis").val(info);
 	document.getElementById("MyDiv").style.display = 'block';
@@ -482,10 +500,11 @@ function showList(obj) {
 //从课堂里面查询出来的数据
 function getDate(obj) {
 	var id = $(obj).parent().find("input[name='userId']").val(); //获取id然后根据id查找题目
-	var questionNode;
-	for(var j = 0; j < datalist.length; j++) {
-		if(datalist[j].courseForTeacher.courseId == id) {
-			questionNode = datalist[j].courseForTeacher.questions;
+	var questionNode = [];
+	for(var j = 0; j < hwLlistInPage.length; j++) {
+		if(hwLlistInPage[j].homeworkId == id) {
+			questionNode = hwLlistInPage[j].questions;
+			break;
 		}
 	}
 	var source = document.getElementById('listTo');
@@ -660,7 +679,7 @@ function showInfo(obj) {
 	var info = $(obj).find("input[name='info']").val();
 	var cc = {
 		type: "layer-spread",
-		title: "作业简介",
+		title: "习题范畴",
 		content: "<div>" + info, //class="btn btn8 class-xq" onclick="showList(this)"
 		area: ["400px", "300px"]
 	};
@@ -672,12 +691,12 @@ function time(obj, num) {
 		sortNum = 1;
 		$(obj).addClass('class-time').removeClass('comprehensive-zh');
 		$(obj).next().addClass('comprehensive-zh').removeClass('class-time');
-		inintClassDate(1);
+		showHomeworkList(true);
 	} else if(num == 2) {
 		sortNum = 2;
 		$(obj).addClass('class-time').removeClass('comprehensive-zh');
 		$(obj).parent().children().first().addClass('comprehensive-zh').removeClass('class-time');
-		inintClassDate(1);
+		showHomeworkList(true);
 	}
 }
 

@@ -36,7 +36,7 @@
 	height: 30px;
 	border-radius: 5px;
 	line-height: 30px;
-		float: left;
+	float: left;
 	position: relative;
 	left: 55%;
 	background-color: #59e8e3;
@@ -87,9 +87,8 @@ ul li:hover {
 
 .main-conter-ch {
 	width: 880px;
-	height: 616px;
-	float: left;
-	
+	height: 800px;
+	float: left;	
 	position: relative;
 	left: 20.8%;
 	top: 20px;
@@ -279,6 +278,41 @@ ul li {
 	cursor: pointer;
 }
 
+.class-but-ph-hk {
+	width: 80px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	background-color: #0e74eb;
+	border-radius: 5px;
+	float: right;
+	margin-right: 20px;
+	position: relative;
+}
+
+.class-but-ph-hk:hover {
+	cursor: pointer;
+}
+
+.class-but-del-hk {
+	width: 80px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	background-color: #e3153e;
+	border-radius: 5px;
+	float: right;
+	margin-right: 20px;
+	position: relative;
+	top: 10px;
+}
+
+.class-but-del-hk:hover {
+	cursor: pointer;
+}
+
 .class-bottom {
 	width: 100%;
 	height: 36px;
@@ -374,7 +408,7 @@ ul li {
 }
 
 .time-select {
-	width: 48px;
+	width: 50px;
 	height: 40px;
 	border-radius: 4px;
 	font-size: 20px;
