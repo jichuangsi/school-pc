@@ -291,7 +291,7 @@ function updateHomeworkStatus(newStatus, obj){
 		contentType: 'application/json',
 		success: function(returndata) {
 			if(returndata.code==="0010"){
-				swal("发布完成!", "", "success");
+				swal("操作完成!", "", "success");
 				setTimeout(function() {
 					window.location.reload();
 				}, 1000);			
