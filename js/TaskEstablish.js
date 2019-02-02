@@ -133,7 +133,7 @@ function toList() {
 			swal("并没有添加题目或选择小测试卷哦!");
 		}
 	} else {
-		window.location.replace("../Front/BrowseTopics.html");	
+		window.location.replace("../Front/Taskbrowse.html");	
 	}
 
 }
