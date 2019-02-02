@@ -376,7 +376,7 @@ function getQuestionPic(pic, pid) {
 		contentType: 'application/json',
 		success: function(data) {
 			//retresult = data;
-			if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
+			if(data.code==="0010"&&data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
 		},
 		error: function() {
 			alert("失败");
