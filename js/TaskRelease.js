@@ -214,7 +214,7 @@ function LookClass(datalist, num) {
 			}else if(datalist[i].homeworkStatus === "PROGRESS"){
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"/>终止作答</div>';
 			}else if(datalist[i].homeworkStatus === "FINISH"){
-				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'NOTSTART\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
+				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 			}
 			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>'+dateStr+'</div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label></label></div>';
