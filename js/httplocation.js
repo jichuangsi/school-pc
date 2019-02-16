@@ -6,7 +6,7 @@ var userInfo;
 var exams;
 var examsList;
 function httpLocation() {
-	onLocation = 'http://school.jichuangsi.com:81';
+	onLocation = 'http://api.jichuangsi.com';
 	//onLocation='http://192.168.31.108:8888'
 	//onLocation='http://192.168.31.154:8888'
 	return onLocation;
