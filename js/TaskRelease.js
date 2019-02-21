@@ -208,7 +208,7 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
 			con.innerHTML += '<div class="room-static"><label>习题名称：</label><span name="name">' + datalist[i].homeworkName + '</span></div>';
 			con.innerHTML += '<div class="room-class-two"><label>对应班级：</label><span name="className">' + datalist[i].className + '</span></div>';
-			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:75px;top:84px;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
+			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:75px;top:84px;background-color:#59e8e3;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
 			if(datalist[i].homeworkStatus === "NOTSTART") {			
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>发布习题</div>';
 			}else if(datalist[i].homeworkStatus === "PROGRESS"){

@@ -72,7 +72,7 @@ function Loadlist(years, questionType, difficultyType, paperType, areas) {
 	}
 	
 	var j = 0;
-	var html = "<div style='position:relative;vertical-align:top;display:inline-block;width:93%'>";
+	var html = "<div style='position:relative;vertical-align:top;display:inline-block;width:92%'>";
 	for(var i = 0; i < questionType.length; i++) {
 		if(questionType[i].subjectId == subjectId && questionType[i].pharseId == pharseId) {
 			j++;
@@ -329,7 +329,7 @@ function Obtain_subject() {
 					}
 				}
 			}
-			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;bottom: 12px'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this,-1)' class='subjectOperation_remove' "+(added?"":"style='display: none;'")+">移除试卷</a></div></div>"
+			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;margin-top: 9px;'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this,-1)' class='subjectOperation_remove' style='background-color:#B93535;color:#fff;' "+(added?"":"style='display: none;'")+">移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 + "</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div>";
 			a1 += "<div class='info_2'><span>【解析】</span><div class='info_2_div'>";
 			if(!!subjectlist.content[i].questionNode.knowledges) {

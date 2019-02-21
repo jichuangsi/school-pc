@@ -72,7 +72,7 @@ body {
 .main-time {}
 
 .box-room-name-one {
-	width: 500px;
+	/* width: 500px; */
 	height: 70px;
 	text-align: center;
 	line-height: 70px;
@@ -80,7 +80,7 @@ body {
 	font-size: 23px;
 	float: left;
 	margin-top: 50px;
-	margin-left: 120px;
+	margin-left: 56px;
 }
 
 .box-room-name {
@@ -90,9 +90,10 @@ body {
 	line-height: 70px;
 	font-weight: 400;
 	font-size: 23px;
-	float: left;
-	padding-right: 10px;
+	float: right;
+	/* padding-right: 10px; */
 	margin-top: 50px;
+	margin-right: -32px;
 }
 
 .input-box {
@@ -102,6 +103,7 @@ body {
 	border-radius: 4px;
 	color: black;
 	font-size: 20px;
+	margin-left:10px;
 }
 
 .box-room-selet {
@@ -117,6 +119,7 @@ body {
 	width: 200px;
 	height: 40px;
 	font-size: 20px;
+	margin-left: 10px;
 }
 
 .box-room-selet-cs-but {
@@ -134,7 +137,7 @@ body {
 }
 
 .box-room-name-one1 {
-	width: 500px;
+	/* width: 500px; */
 	height: 70px;
 	text-align: center;
 	line-height: 70px;
@@ -142,7 +145,7 @@ body {
 	font-size: 23px;
 	float: left;
 	/*margin-top: 20px;*/
-	margin-left: 116px;
+	margin-left: 56px;
 }
 
 .box-room-name1 {
@@ -152,9 +155,9 @@ body {
 	line-height: 70px;
 	font-weight: 400;
 	font-size: 23px;
-	float: left;
-	padding-right: 10px;
-	margin-left: 7px;
+	float: right;
+	/* padding-right: 10px; */
+	margin-right: -29px;
 /*	margin-top: 20px;*/
 }
 
@@ -188,12 +191,12 @@ body {
 
 .box-room-rn-span {
 	float: left;
-	margin-left: 127px;
+	margin-left: 56px;
 	margin-top: -46px;
 }
 
 .box-room-rn-text {
-	width: 821px;
+	width: 849px;
 	height: 110px;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -203,7 +206,7 @@ body {
 	font-size: 18px;
 	font-weight: 300;
 	position: relative;
-	left: -8px;
+	left: 19px;
 	top: -13px;
 	
 }
@@ -251,8 +254,11 @@ body {
 	height: 159px;
 	border: solid 1px #a0a6ad;
 	position: relative;
-	left: 226px;
+	left: 50%;
+	margin-left: -424.5px;
+	/* left: 226px;
 	top: 4px;
+	margin-top: 20px; */
 	margin-top: 20px;
 }
 
@@ -402,7 +408,7 @@ body {
 	width: 84px;
 	height: 40px;
 	color: white;
-	background-color: #59e8e3;
+	background-color: #b93535;
 	border-radius: 5px;
 	text-align: center;
 	line-height: 40px;

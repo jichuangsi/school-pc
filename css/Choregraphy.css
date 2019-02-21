@@ -230,7 +230,7 @@ ul li {
 	width: 84px;
 	height: 40px;
 	color: white;
-	background-color: #a0a6ad;
+	background-color: #59e8e3;
 	line-height: 40px;
 	text-align: center;
 	border-radius: 5px;
@@ -248,7 +248,7 @@ ul li {
 .room-introduction {
 	width: 84px;
 	color: white;
-	background-color: #59E8E3;
+	background-color: #3d72fe;
 	border-radius: 5px;
 	text-align: center;
 	line-height: 40px;
@@ -274,7 +274,7 @@ ul li {
 	text-align: center;
 	line-height: 40px;
 	color: white;
-	background-color: #a0a6ad;
+	background-color: #b93535;
 	border-radius: 5px;
 	float: right;
 	/* margin-right: 20px; */
