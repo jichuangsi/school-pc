@@ -475,7 +475,7 @@ function LookRoomClass(datalist) {
 			conClass.innerHTML += '<div class="box-body-bj"><label class="pos-lab">目标班级:</label><span id="" class="AttendClassVal">' + datalist[i].className + '</span></div>';
 			conClass.innerHTML += '<div class="box-body but-kc"><label>提交时间:</label>'+dateStr+'</div>';
 			conClass.innerHTML += '<div class="box-body-bj but-kc"><label class="pos-lab-jx"></label><span id="" class="AttendClassVal-time"></span></div>';
-			conClass.innerHTML += '<div class="box-body-box btn btn8 " onclick="showList(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';
+			conClass.innerHTML += '<div class="box-body-box btn btn8 " style="left:95px;top:84px;" onclick="showList(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';
 			conClass.innerHTML += '<div class="box-body-del" onclick="DelDate(this)"><input type="hidden" value="'+id+'"  />删除习题</div>';
 			conClass.innerHTML += '<div class="box-body-bottom"><div class="box-body-bt"><span>班级人数:</span><span id="">' + datalist[i].students.length + '人</span></div></div>';
 			soure.appendChild(conClass);

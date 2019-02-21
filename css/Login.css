@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 * {
 	margin: 0; //外边距为0
 	padding: 0; //内边距为0
@@ -8,9 +9,36 @@ body {
 	/*background-color: #59e8e3;*/
 }
 
+@media(min-width: 1920px) {
+	.Logding-main {
+		height: 900px !important;
+	}
+	.Logding-main>img {
+		transform: scale(1.2);
+		margin-top: 67px;
+	}
+	.Landing-box {
+		transform: scale(1.4);
+		margin-top: 257px !important;
+	}
+}
+
+@media(max-width:1920px) {
+	.Logding-main>img {
+		transform: scale(1)
+	}
+	.Landing-box {
+		transform: scale(1)
+	}
+}
+
 #Whole {
 	width: 100%;
 	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	overflow: hidden;
 }
 
 .Navigation {
@@ -35,31 +63,35 @@ body {
 	height: 100%;
 	float: left;
 	padding-left: 30px;
-		font-size: 22px;
+	font-size: 22px;
 	color: #59e8e3;
-	
+
 }
 
 .Logding-main {
 	width: 100%;
 	height: 850px;
 	float: left;
-	clear:both;
-	background: url(../img/_20181116103602.png);
+	clear: both;
+	background: url(../img/微信图片_20190220173040.png);
 	background-repeat: repeat-x;
 }
-.Logding-main>img{
+
+.Logding-main>img {
 	float: left;
+	/* transform: scale(0.5) */
+	width: 50%;
 }
+
 .Landing-box {
 	float: left;
-	margin-top: 200px;
+	margin-top: 117px;
 	margin-left: 64.58%;
 	width: 320px;
 	height: 320px;
-	box-shadow: 2px 0px 7px #ccc;//设置边框阴影
+	box-shadow: 2px 0px 7px #ccc; //设置边框阴影
 	background-color: white;
-	border-radius: 5px;//div圆角
+	border-radius: 5px; //div圆角
 }
 
 .Landing-box {
@@ -99,6 +131,7 @@ body {
 	padding: 0 40px;
 	margin-bottom: 30px;
 }
+
 .login-center2 {
 	width: 100%;
 	box-sizing: border-box;
@@ -116,16 +149,19 @@ body {
 .login-center-img>img {
 	width: 100%;
 }
-.login-center-img-pwd{
+
+.login-center-img-pwd {
 	width: 20px;
 	height: 20px;
 	float: left;
-	margin-top:5px;
-	margin-left:1px;
+	margin-top: 5px;
+	margin-left: 1px;
 }
+
 .login-center-img-pwd>img {
 	width: 100%;
 }
+
 .login-center-input {
 	float: right;
 	width: 200px;
@@ -190,6 +226,7 @@ body {
 	animation-fill-mode: forwards;
 	-webkit-animation-fill-mode: forwards
 }
+
 .clearfix:after {
 	visibility: hidden;
 	display: block;
@@ -198,38 +235,40 @@ body {
 	clear: both;
 	height: 0;
 }
-.login-conter-bottom{
-	
-}
-.login-conter-bottom-ts1{
+
+.login-conter-bottom {}
+
+.login-conter-bottom-ts1 {
 	float: left;
-	margin-left:43px;
+	margin-left: 43px;
 }
-.login-conter-bottom-ts1>a
-{
-	color:#4a7bfe;
+
+.login-conter-bottom-ts1>a {
+	color: #4a7bfe;
 	font-size: 12px;
-	text-decoration: none;//无下划线
+	text-decoration: none; //无下划线
 	float: left;
 }
-.login-conter-bottom-ts2{
+
+.login-conter-bottom-ts2 {
 	float: right;
 	margin-right: 40px;
 	margin-bottom: 8px;
 }
-.login-conter-bottom-ts2>a
-{
-	color:#8b8b8b;
+
+.login-conter-bottom-ts2>a {
+	color: #8b8b8b;
 	font-size: 12px;
-	text-decoration: none;//无下划线
-	
+	text-decoration: none; //无下划线
+
 }
-.login-conter-bottom-ts2>a:hover{
+
+.login-conter-bottom-ts2>a:hover {
 	color: #4a7bfe;
 	text-decoration: none;
 }
-.login-center-but
-{
+
+.login-center-but {
 	width: 240px;
 	background-color: #3d72fe;
 	height: 40px;
@@ -238,8 +277,9 @@ body {
 	border-radius: 5px;
 	padding-bottom: 5px;
 	margin-left: 42px;
-	clear:both;//清除浮动
+	clear: both; //清除浮动
 }
-.login-center-but:hover{
-	cursor:pointer;//设置小手
+
+.login-center-but:hover {
+	cursor: pointer; //设置小手
 }
