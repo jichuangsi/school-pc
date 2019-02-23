@@ -402,7 +402,7 @@ function Obtain_subject(obj, Chapterid) {
 					}
 				}
 			}
-			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;margin-top: 9px;'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this,-1)' class='subjectOperation_remove' style='background-color:#B93535;color:#fff;' "+(added?"":"style='display: none;'")+">移除试卷</a></div></div>"
+			a1 += "%</i></span><a class='analysis' onclick='analysis_click(this)' style='position: absolute;left: 50%;'><i><img src='../img/analysis.png' /> </i> 解析</a><a class='Situation' onclick='Situation_click(this)' style='position: absolute;left: 60%;'><i><img src='../img/Situation.png' /> </i> 考情</a><input type='hidden' name='id'value='" + subjectlist.content[i].questionNode.qid + "' /><div class='subjectOperation' style='position: absolute;left: 70%;margin-top: 9px;'><a onclick='capabilitySelection(this,-1)' class='subjectOperation_add' "+ (!added?"":"style='display: none;'") +">加入试卷</a><a onclick='remove_paper(this,-1)' class='subjectOperation_remove' "+(added?"style='background-color:#B93535 !important;color:#fff !important;'":"style='display: none;'")+">移除试卷</a></div></div>"
 			a1 += "<div class='subject_info' style='display: none;'><div class='info_1'><span>【答案】</span><span>" + subjectlist.content[i].questionNode.answer1 +"</span>"+ (!subjectlist.content[i].questionNode.answer2?'':"<br/><span>"+subjectlist.content[i].questionNode.answer2+"</span>") + "</div><div class='info_2'><span>【解析】</span><div class='info_2_div'>" + subjectlist.content[i].questionNode.parse + "</div></div><div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>"
 			if(!!subjectlist.content[i].questionNode.knowledges) {
 				a1 += "<span>" + subjectlist.content[i].questionNode.knowledges + "</span>";
@@ -929,14 +929,15 @@ function capabilitySelection(obj, istype){
 
 /*加入试卷*/
 function add_paper(obj, istype) {	
+	console.log(123)
 	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	$(obj).css("display", "none");
 	$(obj).siblings().show();
 	var Identification = true;
 	if(istype===2){
-		$(obj).siblings().css({"display":"inline-block"});
+		$(obj).siblings().css({"display":"inline-block","backgroundColor":"#B93535","color":"#fff"});
 	}else{
-		$(obj).siblings().css({"display":"inline"});
+		$(obj).siblings().css({"display":"inline","backgroundColor":"#B93535","color":"#fff"});
 	}
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	var questionInSession = getQuestion();

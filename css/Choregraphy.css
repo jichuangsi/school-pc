@@ -90,12 +90,13 @@ ul li:hover {
 
 .main-conter-ch {
 	width: 880px;
-	height: 800px;
+	/* height: 800px; */
 	float: left;	
 	position: relative;
 	left: 20.8%;
 	top: 20px;
 	background-color: white;
+	padding-bottom: 20px;
 }
 
 
