@@ -63,9 +63,10 @@ body {
 	text-align: center;
 	font-weight: 800;
 	font-size: 20px;
-	margin-top: 5px;
-	position: relative;
-	top: 30px;
+	/* position: relative;
+	top: 30px; */
+	margin: 30px auto;
+	margin-bottom: 0px;
 }
 
 .souCla {

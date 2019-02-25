@@ -265,7 +265,7 @@ function Obtain_subject() {
 			} else {
 				a1 += "<img onclick='CollectionImg_click(this)' src='../img/CollectionYes.png' />";
 			}
-			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion' style='position: absolute;right: 0.5%;'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;position: absolute;right: 1%;'><ul><li onmouseover='showFullSource(this)' onmouseout='hideFullSource(this)'>"+subjectlist.content[i].questionNode.source+"</li></ul></div></div>";
+			a1 += "<i onclick='Truequestion_click(this)' class='Truequestion' style='position: absolute;right: 0.5%;'>真题</i><div id='speech' class='speech-bubble speech-bubble-top' style='display: none;position: absolute;right: 5%;'><ul><li onmouseover='showFullSource(this)' onmouseout='hideFullSource(this)'>"+subjectlist.content[i].questionNode.source+"</li></ul></div></div>";
 			a1 += "<div class='subjectinfo'><div>";
 			a1 += subjectlist.content[i].questionNode.title;
 			a1 += "</div>";

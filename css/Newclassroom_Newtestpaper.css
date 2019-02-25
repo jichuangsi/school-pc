@@ -312,7 +312,6 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 290px;
 	}
 	
 	.speech-bubble:after {
@@ -321,11 +320,12 @@
 		width: 0;
 		height: 0;
 		border: 9px solid;
+		border-color: transparent transparent #efe9e2 transparent;
 	}
 	
 	.speech-bubble-top:after {
 		border-bottom-color: #efe9e2;
-		left: 88%;
+		right: 0%;
 		bottom: 100%;
 	}
 	

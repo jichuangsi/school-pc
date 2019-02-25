@@ -815,6 +815,7 @@ function saveQuestion() {
 					swal("保存成功!", "", "success");
 					setTimeout(function() {
 						window.location.reload();
+						window.history.go(-1)
 					}, 2000);
 				}else{
 					swal(returndata.msg, "", "error");
@@ -910,6 +911,7 @@ function saveQuestionPack() {
 					swal("保存成功!", "", "success");
 					setTimeout(function() {
 						window.location.reload();
+						window.history.go(-1)
 					}, 2000);
 				}else{
 					swal(returndata.msg, "", "error");
@@ -1015,6 +1017,7 @@ function saveQuestionStone() {
 					swal("保存成功!", "", "success");
 					setTimeout(function() {
 						window.location.reload();
+						window.history.go(-1)
 					}, 2000);
 				}else{
 					swal(returndata.msg, "", "error");
@@ -1115,6 +1118,7 @@ function saveCompletionQuestion() {
 					swal("保存成功!", "", "success");
 					setTimeout(function() {
 						window.location.reload();
+						window.history.go(-1)
 					}, 1000);
 				} else {
 					swal(returndata.msg, "", "error");
@@ -1198,6 +1202,7 @@ function saveSubjectiveQuestions() {
 				swal("保存成功!", "", "success");
 				setTimeout(function() {
 					window.location.reload();
+					window.history.go(-1)
 				}, 2000);
 			}else{
 				swal(returndata.msg, "", "error");

@@ -62,7 +62,7 @@ function getgradename() {
 
 function liall(obj) {
 	$(obj).addClass('xz').siblings().removeClass('xz'); //FINISH----NOTSTART----PROGRESS已经有的几个 参数
-	if($(obj).text() == "已结束") {
+	if($(obj).text() == "已停止") {
 		hwstatus = 'FINISH';
 		showHomeworkList(true);
 	} else if($(obj).text() == "未发布") {
@@ -71,7 +71,10 @@ function liall(obj) {
 	} else if($(obj).text() == "已发布") {
 		hwstatus = 'PROGRESS';
 		showHomeworkList(true);
-	} else {
+	} else if($(obj).text() == "已结束") {
+		hwstatus = 'COMPLETED';
+		showHomeworkList(true);
+	}else {
 		hwstatus = "EMPTY";
 		showHomeworkList(true);
 	}
@@ -192,11 +195,11 @@ function LookClass(datalist, num) {
 			if(datalist[i].homeworkStatus === "NOTSTART") {
 				al = "未发布";
 			} else if(datalist[i].homeworkStatus === "FINISH") {
-				al = "已结束";
+				al = "已停止";
 			} else if(datalist[i].homeworkStatus === "PROGRESS") {
 				al = "已发布";
 			} else if(datalist[i].homeworkStatus === "COMPLETED") {
-				al = "已停止";
+				al = "已结束";
 			}
 			var dateStr = '-';	
 			if(datalist[i].homeworkEndTime&&datalist[i].homeworkEndTime>0){
@@ -231,7 +234,7 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
 			}
 			if(datalist[i].homeworkStatus === "FINISH") {
-				con.innerHTML += '<div class="class-but-del-hk" style="background-color:#3D72FE" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"  />结束习题</div>';
+				con.innerHTML += '<div class="class-but-del-hk" style="background-color:#3D72FE" onclick="updateHomeworkStatus(\'COMPLETED\',this)"><input type="hidden"  value="' + id + '"  />结束习题</div>';
 				}
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>班级人数：</label><span>' + datalist[i].students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">题目列表</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);

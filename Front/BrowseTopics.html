@@ -191,6 +191,7 @@
 		<script>
 		</script>
 		<script type="text/javascript">
+		$(".title").text(JSON.parse(sessionStorage.getItem('userIn')).classEaxms)
 			$(".img").click(function() {
 
 				if(this.src.search("../img/00025.png") != -1) {
