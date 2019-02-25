@@ -215,11 +215,11 @@ function LookClass(datalist, num) {
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>发布习题</div>';
 			}else if(datalist[i].homeworkStatus === "PROGRESS"){
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"/>终止作答</div>';
-			}else if(datalist[i].homeworkStatus === "FINISH"){
+			}else if(datalist[i].homeworkStatus === "COMPLETED"){
 				// con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 				con.innerHTML += '<div class="class-but-ph-hk" style="background-color:#999"><input type="hidden"  value="' + id + '"/>习题已结束</div>';
 			}
-			else if(datalist[i].homeworkStatus === "COMPLETED"){
+			else if(datalist[i].homeworkStatus === "FINISH"){
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 			}
 			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>'+dateStr+'</div>';
@@ -230,7 +230,7 @@ function LookClass(datalist, num) {
 			if(datalist[i].homeworkStatus === "NOTSTART") {
 			con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
 			}
-			if(datalist[i].homeworkStatus === "COMPLETED") {
+			if(datalist[i].homeworkStatus === "FINISH") {
 				con.innerHTML += '<div class="class-but-del-hk" style="background-color:#3D72FE" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"  />结束习题</div>';
 				}
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>班级人数：</label><span>' + datalist[i].students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">题目列表</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
