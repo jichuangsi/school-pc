@@ -504,6 +504,8 @@ function savetestpaper_click() {
 }
 //保存试卷
 function savetestpaper() {
+	var questionList = gettestQuestion()
+	if(!questionList) questionList = [];
 	var cc = {
 		"createTime": 0,
 		"examId": "",
@@ -526,6 +528,7 @@ function savetestpaper() {
 		contentType: 'application/json',
 		success: function(data) {
 			if(data.code==="0010"){
+				sessionStorage.removeItem('testlast');
 				swal("保存成功!", "", "success");
 			}else{
 				swal(data.msg, "", "error");
@@ -538,6 +541,8 @@ function savetestpaper() {
 }
 //清空试题
 function emptypaper(){
+	var questionList = gettestQuestion()
+	if(!questionList) questionList = [];
 	if(questionList.length>0){
 		swal({
 			title: "您确定要清空吗？",
@@ -550,6 +555,7 @@ function emptypaper(){
 		}, function() {
 				questionList=[];
 				$("#paper_number").text(questionList.length);
+				sessionStorage.removeItem('testlast')
 				swal("试题已清空","","success");
 				Obtain_subject();
 		});

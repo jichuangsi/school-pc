@@ -501,3 +501,33 @@ function isExistFavor(md52) {
 		}
 	});
 }
+
+//根据老师id和文件名下载图片
+function getQuestionPic(pic, pid) {
+	//console.log("pic" + pic)
+	var retresult = null;
+	var cc = {
+		"questionPic": pic,
+	};
+	$.ajax({
+		url: local + "/QUESTIONSREPOSITORY/self/getQuestionPic",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'post',
+		async: true,
+		dataType: "json",
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
+		success: function(data) {
+			//retresult = data;
+			if(data.code==="0010"){
+				if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
+			}
+		},
+		error: function() {
+			alert("失败");
+		}
+	});
+	return retresult;
+}
