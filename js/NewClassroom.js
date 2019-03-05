@@ -351,6 +351,7 @@ function copyClassRoom(obj) {
 	if(!questionsInCopy) questionsInCopy = [];
 	questionsInCopy.forEach(v=>{
 		v.questionId = "";
+		v.questionStatus = null;
 		v.quesetionType = v.questionTypeInCN;
 		v.from = 'copy-' + v.questionIdMD52;  
 	});

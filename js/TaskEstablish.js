@@ -279,7 +279,8 @@ function copyClassRoom(obj) {
 	if(!questionsInCopy) questionsInCopy = [];
 	questionsInCopy.forEach(v=>{
 		v.questionId = "";
-		v.quesetionType = v.questionTypeInCN;
+		v.questionStatus = null;
+		v.questionType = v.questionTypeInCN;
 		v.from = 'copy-' + v.questionIdMD52;  
 	});
 	sessionStorage.setItem("tasklast", JSON.stringify(questionsInCopy));
@@ -350,6 +351,7 @@ function addExamQuestions2Session(id){
 	if(questionIdExam.length == 0) return false;
 	for(var j = 0; j < questionIdExam.length; j++) {
 		questionIdExam[j].from = "exam-"+id;
+		questionIdExam[j].questionType = questionIdExam[j].quesetionType;
 		questionInSession.push(questionIdExam[j]);
 	}
 	sessionStorage.setItem("tasklast", JSON.stringify(questionInSession));
