@@ -36,8 +36,11 @@
 	height: 31px;
 	border: 0px solid;
 	border-radius: 5px;
-	background-color: blue;
+	background-color: #3d72fe;
 	color: #FFFFFF;
+}
+.tpl_div1_btn:first-child{
+	background-color: #b93535;
 }
 
 .tpl_div1_btn:hover {

@@ -34,6 +34,7 @@ $(function() {
 	inintUPdate();
 	//inintClassDate();
 	showCourseList(true);
+	sessionStorage.setItem('position','课堂')
 });
 
 function checkPageElement(pageIndex){
@@ -391,7 +392,7 @@ function DelDate(obj) {
 	}
 	swal({
 		title: "您确定要删除吗？",
-		text: "您确定要删除这条数据？",
+		text: "您确定要删除这堂课？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,
@@ -410,7 +411,7 @@ function DelDate(obj) {
 			data: JSON.stringify(cc),
 		}).done(function(data) {
 			if(data.code == "0010") {
-				swal("操作成功!", "已成功删除数据！", "success");
+				swal("操作成功!", "已成功删除！", "success");
 				showLoad();
 			} else {
 				swal("OMG", "删除操作失败了!", "error");

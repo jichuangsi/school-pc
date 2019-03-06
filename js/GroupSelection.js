@@ -31,6 +31,7 @@ $(function() {
 	inits();
 	sessionStorage.removeItem('lastname')
 	sessionStorage.removeItem('tasklast')
+	sessionStorage.setItem('position','组卷')
 });
 
 function getlistto() {

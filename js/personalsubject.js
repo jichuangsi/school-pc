@@ -433,8 +433,8 @@ function delObj(obj) {
 		"ids": [id]
 	}
 	swal({
-		title: "您确定要删除这堂课吗？",
-		text: "您确定要删除这堂课？",
+		title: "您确定要删除这题目吗？",
+		text: "您确定要删除这题目？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,
@@ -454,7 +454,7 @@ function delObj(obj) {
 			data: JSON.stringify(cc),
 		}).done(function(data) {
 			if(data.code == "0010") {
-				swal("操作成功!", "已成功删除课堂！", "success");
+				swal("操作成功!", "已成功删除题目！", "success");
 				keywordserach();
 			} else {
 				swal("OMG", "删除操作失败了!", "error");

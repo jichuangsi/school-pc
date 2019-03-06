@@ -16,6 +16,11 @@
 			text-decoration: none;
 			color: black;
 		}
+		.str {
+			font-weight: 700;
+    		font-size: 22px;
+			text-decoration:underline;
+		}
 	</style>
 
 	<body>
@@ -48,5 +53,21 @@
 
 		</div>
 	</body>
-
+	<script>
+	var a = sessionStorage.getItem('position')
+	if(a == '首页') {
+		$('#publicheaderNav').find('a').eq(0).addClass('str')
+		$('#publicheaderNav').find('a').eq(0).siblings().removeclass('str')
+	} else if(a == '习题') {
+		$('#publicheaderNav').find('a').eq(3).addClass('str')
+		$('#publicheaderNav').find('a').eq(3).siblings().removeclass('str')
+		
+	} else if(a == '组卷') {
+		$('#publicheaderNav').find('a').eq(4).addClass('str')
+		$('#publicheaderNav').find('a').eq(4).siblings().removeclass('str')
+	} else if(a == '课堂') {
+		$('#publicheaderNav').find('a').eq(5).addClass('str')
+		$('#publicheaderNav').find('a').eq(5).siblings().removeclass('str')
+	}
+	</script>
 </html>
