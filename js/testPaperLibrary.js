@@ -222,6 +222,8 @@ function loopDiffAndQtype() {
 				a1 += '<td>较难</td>';
 			} else if(DiffAndQtypelist.dt[i].difficulty == 5) {
 				a1 += '<td>困难</td>';
+			} else if(!DiffAndQtypelist.dt[i].difficulty) {
+				a1 += '<td>待定</td>';
 			}
 			a1 += '<td>' + DiffAndQtypelist.dt[i].num + '</td></tr>';
 			$("#diff").append(a1);
