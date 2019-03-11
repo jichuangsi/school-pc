@@ -38,7 +38,7 @@
 	line-height: 30px;
 	float: left;
 	position: relative;
-	left: 55%;
+	left: 56%;
 	background-color: #59e8e3;
 	text-align: center;
 }
@@ -88,7 +88,7 @@ ul li:hover {
 }
 
 .main-conter-ch {
-	width: 880px;
+	width: 911px;
 	/* height: 800px; */
 	float: left;	
 	position: relative;
@@ -108,7 +108,7 @@ ul li:hover {
 	vertical-align: middle;
 	display: inline-block;
 	padding-top: 10px;
-	margin-left: 280px;
+	margin-left: 373px.bar6 button;
 }
 
 .hr-he {
@@ -122,7 +122,7 @@ ul li:hover {
 }
 
 .comprehensive {
-	width: 849px;
+	width: 880px;
 	height: 40px;
 	border: solid 1px #a0a6ad;
 	position: relative;
@@ -174,7 +174,7 @@ ul li {
 }
 
 .room-class {
-	width: 849px;
+	width: 880px;
 	height: 166px;
 	background-color: white;
 	border: solid 1px #a0a6ad;
@@ -236,7 +236,7 @@ ul li {
 	border-radius: 5px;
 	float: left;
 	position: relative;
-	left: 76px;
+	left: 107px;
     /* top: 10px; */
     top: 44px;
 }
@@ -255,7 +255,7 @@ ul li {
 	float: left;
 	position: relative;
 	/* left: 74px; */
-	left: 195px;
+	left: 226px;
     top: 20px;
 }
 
@@ -342,7 +342,7 @@ ul li {
 	line-height: 40px;
 	float: right;
 	/* margin-right: 45px; */
-	margin-right: -375px;
+	margin-right: -406px;
 	margin-top: 4px;
 }
 

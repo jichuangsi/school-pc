@@ -28,9 +28,9 @@
 			padding-left: 25px;
 		}
 		#PublicHeaderUserDiv{
-			width: 130px;
+			/* width: 130px; */
 			float: right;
-			margin-right: 18.75%;
+			margin-right: 16.75%;
 			margin-top: 24px;
 		}
 		#PublicHeaderUserDiv figure{

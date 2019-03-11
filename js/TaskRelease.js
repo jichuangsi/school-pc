@@ -34,6 +34,8 @@ $(function() {
 	initAttendtimemin("");
 	inintUPdate();
 	showHomeworkList(true);
+	sessionStorage.setItem('position','习题')
+	
 });
 
 function getNowFormatDate() {
@@ -213,7 +215,7 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
 			con.innerHTML += '<div class="room-static"><label>习题名称：</label><span name="name">' + datalist[i].homeworkName + '</span></div>';
 			con.innerHTML += '<div class="room-class-two"><label>对应班级：</label><span name="className">' + datalist[i].className + '</span></div>';
-			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:75px;top:84px;background-color:#59e8e3;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
+			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:106px;top:84px;background-color:#59e8e3;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
 			if(datalist[i].homeworkStatus === "NOTSTART") {			
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>发布习题</div>';
 			}else if(datalist[i].homeworkStatus === "PROGRESS"){
@@ -228,7 +230,7 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>'+dateStr+'</div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label></label></div>';
 			if(datalist[i].homeworkStatus === "NOTSTART") {
-				con.innerHTML += '<div class="but-update" style="left:-49px"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改习题</div>';
+				con.innerHTML += '<div class="but-update" style="left:-18px"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改习题</div>';
 			}
 			if(datalist[i].homeworkStatus === "NOTSTART") {
 			con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
@@ -427,7 +429,7 @@ function DelDate(obj) {
 	}
 	swal({
 		title: "您确定要删除吗？",
-		text: "您确定要删除这条数据？",
+		text: "您确定要删除这条习题？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,
@@ -446,7 +448,7 @@ function DelDate(obj) {
 			data: JSON.stringify(cc),
 		}).done(function(data) {
 			if(data.code == "0010") {
-				swal("操作成功!", "已成功删除数据！", "success");
+				swal("操作成功!", "已成功删除习题！", "success");
 				showLoad();
 			} else {
 				swal("出错啦", "删除操作失败了!", "error");

@@ -101,7 +101,7 @@ Date.prototype.toLocaleString = function() {
 function deltestpaper_click(obj) {
 	swal({
 		title: "您确定要删除吗？",
-		text: "您确定要删除这条数据？",
+		text: "您确定要删除这考卷？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,

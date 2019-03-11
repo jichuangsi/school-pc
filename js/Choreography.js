@@ -34,6 +34,7 @@ $(function() {
 	inintUPdate();
 	//inintClassDate();
 	showCourseList(true);
+	sessionStorage.setItem('position','课堂')
 });
 
 function checkPageElement(pageIndex){
@@ -238,8 +239,8 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="room-class-two but-kc"><label>教学时长：</label><span>'+last+'分钟</span></div>';
 			if(datalist[i].courseForTeacher.courseStatus == "NOTSTART") {
 				con.innerHTML += '<div class="but-update"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改课堂</div>';
+				con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
 			}
-			con.innerHTML += '<div class="class-but-del" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  /><input type="hidden" name="info"  value="' + datalist[i].courseForTeacher.courseInfo + '"  />删除该堂课</div>';
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>考勤人数：</label><span>' + datalist[i].courseForTeacher.students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">查看详情</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);
 		}
@@ -391,7 +392,7 @@ function DelDate(obj) {
 	}
 	swal({
 		title: "您确定要删除吗？",
-		text: "您确定要删除这条数据？",
+		text: "您确定要删除这堂课？",
 		type: "warning",
 		showCancelButton: true,
 		closeOnConfirm: false,
@@ -410,7 +411,7 @@ function DelDate(obj) {
 			data: JSON.stringify(cc),
 		}).done(function(data) {
 			if(data.code == "0010") {
-				swal("操作成功!", "已成功删除数据！", "success");
+				swal("操作成功!", "已成功删除！", "success");
 				showLoad();
 			} else {
 				swal("OMG", "删除操作失败了!", "error");

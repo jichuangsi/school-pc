@@ -36,6 +36,7 @@ function Login() {
 					sessionStorage.clear();
 					sessionStorage.setItem('accessToken', data.data.accessToken);
 					sessionStorage.setItem('userinfo', JSON.stringify(data.data.user));
+					sessionStorage.setItem('position','课堂')
 					window.location.replace("../Front/NewClassRoom.html"); //NewClassRoom//UploadTopics//UserInfo
 				} else {
 					swal("" + data.msg + "", "", "warning");
