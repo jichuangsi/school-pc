@@ -611,15 +611,15 @@ function difficulty(obj) {
 	//console.log(obj)
 	difficultys = $(obj).parent().text();
 	if(difficultys == "简单") {
-		difficultys = 1.00;
+		difficultys = "1.00";
 	} else if(difficultys == "一般") {
-		difficultys = 2.00;
+		difficultys = "2.00";
 	} else if(difficultys == "中等") {
-		difficultys = 3.00;
+		difficultys = "3.00";
 	} else if(difficultys == "困难") {
-		difficultys = 4.00;
+		difficultys = "4.00";
 	} else if(difficultys == "特难") {
-		difficultys = 5.00;
+		difficultys = "5.00";
 	}
 	//console.log(difficultys)
 }
