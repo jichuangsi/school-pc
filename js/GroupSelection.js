@@ -597,7 +597,7 @@ function capabilitySelection(obj, istype){
 				"<div style='display:inline-block'><input type='radio'  name='capability' value='3'"+(checked==3?"checked":"")+" data='分析' id='analyse'/><label for='analyse'>分析</label></div>&nbsp;&nbsp;"+
 				"<div style='display:inline-block'><input type='radio'  name='capability' value='4'"+(checked==4?"checked":"")+" data='应用' id='usage'/><label for='usage'>应用</label></div>&nbsp;&nbsp;"+
 				"<div style='display:inline-block'><input type='radio'  name='capability' value='5'"+(checked==5?"checked":"")+" data='综合' id='comprehensive'/><label for='comprehensive'>综合</label></div>",
-		area: ["400px", "150px"],
+		area: ["", "150px"],
 		btn:["跳过","确认"] 
 	};
 	
