@@ -567,51 +567,61 @@ function emptypaper(){
 var capability = "";
 var capabilityId = "";
 function capabilitySelection(obj, istype){
+	window.event? window.event.cancelBubble = true : e.stopPropagation();
 	capability = "";
 	capabilityId = "";
-	var checked = "";
+	var showPopup = false;
 	var id = $(obj).parent().parent().find("input[name='id']").val();
 	if(istype == 2){
 		for(var i = 0; i < itembaklist.content.length; i++) {
 			if(itembaklist.content[i].questionIdMD52 == id) {
-				if(itembaklist.content[i].capability){
-					checked = itembaklist.content[i].capabilityId;
+				if(itembaklist.content[i].knowledges
+					&&itembaklist.content[i].knowledges.length>0
+					&&!itembaklist.content[i].knowledges[0].capabilityId
+					){
+					showPopup = true;
+				}else if(!itembaklist.content[i].knowledges||itembaklist.content[i].knowledges.length===0){
+					showPopup = true;
 				}
 			}
 		}		
 	}else{
 		for(var i = 0; i < questionNode.length; i++) {
 			if(questionNode[i].qid == id) {
-				if(questionNode[i].capability){
-					checked = questionNode[i].capabilityId;
+				if(!(questionNode[i].knowledges instanceof Array)){
+					showPopup = true;
 				}	
 			}
 		}		
 	}
 	
-	var cc = {
-		type: "layerFadeIn",
-		title: "认&nbsp;知&nbsp;能&nbsp;力",
-		content: "<div style='display:inline-block'><input type='radio' name='capability' value='1'"+(checked==1?"checked":"")+" data='记忆' id='memory'><label for='memory'>记忆</label></div>&nbsp;&nbsp;"+
-				"<div style='display:inline-block'><input type='radio'  name='capability' value='2'"+(checked==2?"checked":"")+" data='理解' id='understand'/><label for='understand'>理解</label></div>&nbsp;&nbsp;"+
-				"<div style='display:inline-block'><input type='radio'  name='capability' value='3'"+(checked==3?"checked":"")+" data='分析' id='analyse'/><label for='analyse'>分析</label></div>&nbsp;&nbsp;"+
-				"<div style='display:inline-block'><input type='radio'  name='capability' value='4'"+(checked==4?"checked":"")+" data='应用' id='usage'/><label for='usage'>应用</label></div>&nbsp;&nbsp;"+
-				"<div style='display:inline-block'><input type='radio'  name='capability' value='5'"+(checked==5?"checked":"")+" data='综合' id='comprehensive'/><label for='comprehensive'>综合</label></div>",
-		area: ["", "150px"],
-		btn:["跳过","确认"] 
-	};
-	
-	method.msg_layer(cc);
-	$(".layer-commit").on("click",function(){
-		capability = $("input:radio[name='capability']:checked").attr('data');
-		capabilityId = $("input:radio[name='capability']:checked").val();
+	if(showPopup){
+		var cc = {
+			type: "layerFadeIn",
+			title: "认&nbsp;知&nbsp;能&nbsp;力",
+			content: "<div style='display:inline-block'><input type='radio' name='capability' value='1' data='记忆' id='memory'><label for='memory'>记忆</label></div>&nbsp;&nbsp;"+
+					"<div style='display:inline-block'><input type='radio'  name='capability' value='2' data='理解' id='understand'/><label for='understand'>理解</label></div>&nbsp;&nbsp;"+
+					"<div style='display:inline-block'><input type='radio'  name='capability' value='3' data='分析' id='analyse'/><label for='analyse'>分析</label></div>&nbsp;&nbsp;"+
+					"<div style='display:inline-block'><input type='radio'  name='capability' value='4' data='应用' id='usage'/><label for='usage'>应用</label></div>&nbsp;&nbsp;"+
+					"<div style='display:inline-block'><input type='radio'  name='capability' value='5' data='综合' id='comprehensive'/><label for='comprehensive'>综合</label></div>",
+			area: ["", "150px"],
+			btn:["跳过","确认"] 
+		};
+		
+		method.msg_layer(cc);
+		$(".layer-commit").on("click",function(){
+			capability = $("input:radio[name='capability']:checked").attr('data');
+			capabilityId = $("input:radio[name='capability']:checked").val();
+			add_paper(obj, istype);
+			method.msg_close();
+		});
+		$(".layer-cancel").on("click",function(){
+			add_paper(obj, istype);
+			method.msg_close();
+		})
+	}else{
 		add_paper(obj, istype);
-        method.msg_close();
-    });
-	$(".layer-cancel").on("click",function(){
-		add_paper(obj, -1);
-		method.msg_close();
-	})
+	}
 }
 
 //加入试卷
@@ -636,6 +646,20 @@ function add_paper(obj, istype) {
 	if(istype == 2) {
 		for(var i = 0; i < itembaklist.content.length; i++) {
 			if(itembaklist.content[i].questionIdMD52 == id) {
+					var knowledges = [];
+					itembaklist.content[i].knowledges.forEach((item, index)=>{
+						var copy = JSON.parse(JSON.stringify(item));
+						knowledges.push(copy);
+					});
+					if(capability&&capabilityId){
+						if(knowledges&&knowledges.length>0){
+							knowledges[0].capability = capability;
+							knowledges[0].capabilityId = capabilityId;
+						}else if(!knowledges||knowledges.length===0){
+							knowledges.push({"capability":capability,"capabilityId":capabilityId})
+						}
+					}
+					
 				questionList.push({
 					"questionId": "",
 					"questionContent": itembaklist.content[i].questionContent,
@@ -651,13 +675,14 @@ function add_paper(obj, istype) {
 					//"knowledgeId": itembaklist.content[i].knowledgeId,
 					//"capability": capability,
 					//"capabilityId": capabilityId,
-					"knowledges": itembaklist.content[i].knowledges,
+					"knowledges": knowledges,
 					"questionIdMD52": itembaklist.content[i].questionIdMD52,
 					"questionPic": itembaklist.content[i].questionPic
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
 				sessionStorage.setItem("testlast", JSON.stringify(questionList));
+				knowledges = [];
 				break;
 			}
 		}
@@ -698,6 +723,7 @@ function add_paper(obj, istype) {
 				var namber = questionList.length
 				$("#paper_number").text(namber);
 				sessionStorage.setItem("testlast", JSON.stringify(questionList));
+				knowledges = [];
 				break;
 			}
 		}
@@ -780,7 +806,7 @@ function CollectionImg_click(obj) {
 				}
 				var knowledges = [{
 								"knowledgeId": questionNode[i].knowledgeId,
-								"knowledge": questionNode[i].knowledge,
+								"knowledge": questionNode[i].knowledges,
 								"capabilityId": questionNode[i].capabilityId,
 								"capability": questionNode[i].capability}];
 				Collectiond = {
