@@ -21,6 +21,15 @@
     		font-size: 22px;
 			text-decoration:underline;
 		}
+		.tbdiv {
+			width: 100px !important;
+			height: 24px;
+			overflow: hidden;
+		}
+		#loginout {
+			height: 24px;
+			white-space: nowrap;
+		}
 	</style>
 
 	<body>
@@ -37,17 +46,22 @@
 					<a href="../thacherPage/GroupSelection.html"  target="_parent" >组题选卷</a>
 					<a href="../Front/Choreography.html" target="_parent">课堂管理</a>
 				</nav>
-				<div id="PublicHeaderUserDiv" style="cursor: pointer;">
+				<div id="PublicHeaderUserDiv" style="cursor: pointer;position: relative;">
 					<figure><img src="../img/headeruser.png" /></figure>
 					<div id="headerUserSelect">
 						<label style="margin-left: 14px;cursor: pointer;" name="user_name"></label>
-						<i id="tb" class="glyphicon glyphicon-chevron-down" style="color:#c86666; font-size:18px; margin-left: 5px;"></i>
+						<i id="tb" class="glyphicon glyphicon-chevron-down" style="color:#c86666; font-size:18px; margin-left: 5px;transform: rotate(-90deg)"></i>
+						<div id="tbdiv" style="width: 0px;overflow: hidden;background-color: #fff;float: right;margin-left: 10px;transition: width .5s linear;">
+							<!-- <div>个人中心</div>
+							<div>系统信息</div> -->
+							<div id="loginout">退出登陆</div>
+						</div>
 					</div>
-					<div style="display: none;">
+					<!-- <div style="display: inline-block;">position: absolute;z-index: 10000;
 						<a>个人中心</a>
 						<a>系统信息</a>
 						<a>退出登陆</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 
@@ -65,5 +79,10 @@
 	} else if(a == '课堂') {
 		$('#publicheaderNav').find('a').eq(5).addClass('str')
 	}
+	$('#loginout').click(function(){
+		sessionStorage.removeItem('accessToken')
+		sessionStorage.removeItem('userinfo')
+		parent.window.location.href="../Front/Login.html";
+	})
 	</script>
 </html>
