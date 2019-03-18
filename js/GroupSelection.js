@@ -335,11 +335,11 @@ function Obtain_subject() {
 			if(!!subjectlist.content[i].questionNode.knowledges) {
 				a1 += "<span>" + subjectlist.content[i].questionNode.knowledges + "</span>";
 			}
-			a1 += "</div></div>";
+			/*a1 += "</div></div>";
 			a1 += "<div class='info_3'><span> 【知识点】</span><div class='info_3_div'><p>";
 			if(!!subjectlist.content[i].questionNode.knowledges) {
 				a1 += "<span>" + subjectlist.content[i].questionNode.knowledges + "</span>";
-			}
+			}*/
 			a1 += "</p></div></div>";
 			a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + subjectlist.content[i].questionNode.qtpye + "</span></div></div>";
 			a1 += "</div></div>";
