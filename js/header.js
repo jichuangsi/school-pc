@@ -15,9 +15,11 @@ function setInit(){
 }
 function  getmove(){
 	$("#headerUserSelect").mouseover(function (){
-		$("#tb").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
+		$("#tbdiv").addClass('tbdiv')
+		// $("#tb").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
 	});
 	$("#headerUserSelect").mouseout(function (){
-		$("#tb").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+		$("#tbdiv").removeClass('tbdiv')
+		// $("#tb").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
 	});
 }
