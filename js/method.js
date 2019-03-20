@@ -23,17 +23,18 @@ var method={
             _close.css("display","none");
         }
         if(obj.area){
+            console.log(obj.area)
             //宽高
             if(obj.area[0] != "auto" && obj.area[1] != "auto"){
-                _layer.css({"width":obj.area[0],"height":obj.area[1],"left":winW/2-parseFloat(obj.area[0])/2,"top":winH/2-parseFloat(obj.area[1])/2});
+                _layer.css({"width":obj.area[0],"height":obj.area[1],"left":"50%","top":winH/2-parseFloat(obj.area[1])/2,"transform": "translateX(-"+obj.area[0].split("px")[0]/2+"px)"});
             }else if(obj.area[0] != "auto" && obj.area[1] === "auto"){
-                _layer.css({"width":obj.area[0],"height":obj.area[1],"left":winW/2-parseFloat(obj.area[0])/2,"top":winH/2-(_layer.height()+20)/2});
+                _layer.css({"width":obj.area[0],"height":obj.area[1],"left":"50%","top":winH/2-(_layer.height()+20)/2,"transform": "translateX(-"+obj.area[0].split("px")[0]/2+"px)"});
             }else if(obj.area[0] === "auto" && obj.area[1] != "auto"){
-                _layer.css({"width":_layer.width()+20,"height":obj.area[1],"left":winW/2-(_layer.width()+20)/2,"top":winH/2-parseFloat(obj.area[1])/2});
+                _layer.css({"width":_layer.width()+20,"height":obj.area[1],"left":"50%","top":winH/2-(_layer.height()+20)/2,"transform": "translateX(-"+(_layer.width()+20).split("px")[0]/2+"px)"});
             }
 
         }else{
-            _layer.css({"width":_layer.width()+20,"height":_layer.height()+30,"left":winW/2-(_layer.width()+20)/2,"top":winH/2-(_layer.height()+30)/2});
+            _layer.css({"width":_layer.width()+20,"height":_layer.height()+30,"left":"50%","top":winH/2-(_layer.height()+30)/2,"transform": "translateX(-"+(_layer.width()+20).split("px")[0]/2+"px)"});
         }
         if(obj.btn){
             //按钮

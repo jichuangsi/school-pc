@@ -1294,7 +1294,7 @@ function Lookimg() {
 						type: "layer-spread",
 						title: "预览图片",
 						content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
-						area: ["800px", "800px"]
+						area: ["800px", "600px"]
 					};
 					method.msg_layer(obj);
 					//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);
@@ -1322,7 +1322,7 @@ function Lookimg() {
 						type: "layer-spread",
 						title: "预览图片",
 						content: "<div class='divImg'><img id='lookimg' class='lookimg' width='100%' height='100%' src='data:image/jpeg;base64,"+data.data.content+"'/>",
-						area: ["800px", "800px"]
+						area: ["800px", "600px"]
 					};
 					method.msg_layer(obj);
 					//$('#lookimg').attr("src", "data:image/jpeg;base64," + data.data.content);

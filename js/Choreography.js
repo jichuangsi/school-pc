@@ -469,7 +469,7 @@ function showList(obj) {
 		type: "layer-spread",
 		title: "题目详情",
 		content: "<div id='listTo' style='float: right;margin-right:-20px;'>",
-		area: ["1000px", "900px"]
+		area: ["1000px", "600px"]
 	};
 	method.msg_layer(cc);
 	getDate(obj);

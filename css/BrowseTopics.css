@@ -52,7 +52,7 @@ body {
 }
 
 .Mian-conter {
-	width: 61.5%;
+	/* width: 61.5%; */
 	height: 100%;
 	background-color: white;
 	margin-left: 18.75%;
@@ -71,6 +71,7 @@ body {
 
 .souCla {
 	margin-left: 897px;
+	margin-right: 40px;
 }
 
 .List {
