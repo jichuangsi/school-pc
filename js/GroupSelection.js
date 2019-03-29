@@ -35,7 +35,7 @@ $(function() {
 });
 
 function getlistto() {
-	getlist = gettestQuestion();
+	getlist = getgroupQuestion();
 	if(getlist == null || getlist.length == 0) {
 
 	} else {
@@ -44,9 +44,9 @@ function getlistto() {
 	}
 }
 function getAllList() {
-	getlist = gettestQuestion();
+	getlist = getgroupQuestion();
 	if(getlist == null) {} else {
-		questionList = gettestQuestion();
+		questionList = getgroupQuestion();
 	}
 }
 
@@ -504,7 +504,7 @@ function savetestpaper_click() {
 }
 //保存试卷
 function savetestpaper() {
-	var questionList = gettestQuestion()
+	var questionList = getgroupQuestion()
 	if(!questionList) questionList = [];
 	var cc = {
 		"createTime": 0,
@@ -528,7 +528,7 @@ function savetestpaper() {
 		contentType: 'application/json',
 		success: function(data) {
 			if(data.code==="0010"){
-				sessionStorage.removeItem('testlast');
+				sessionStorage.removeItem('grouplast');
 				swal("保存成功!", "", "success");
 			}else{
 				swal(data.msg, "", "error");
@@ -541,7 +541,7 @@ function savetestpaper() {
 }
 //清空试题
 function emptypaper(){
-	var questionList = gettestQuestion()
+	var questionList = getgroupQuestion()
 	if(!questionList) questionList = [];
 	if(questionList.length>0){
 		swal({
@@ -555,7 +555,7 @@ function emptypaper(){
 		}, function() {
 				questionList=[];
 				$("#paper_number").text(questionList.length);
-				sessionStorage.removeItem('testlast')
+				sessionStorage.removeItem('grouplast')
 				swal("试题已清空","","success");
 				Obtain_subject();
 		});
@@ -635,7 +635,7 @@ function add_paper(obj, istype) {
 		$(obj).siblings().css({"display":"inline","backgroundColor":"#B93535","color":"#fff"});
 	}
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	var questionList = gettestQuestion()
+	var questionList = getgroupQuestion()
 	if(!questionList) questionList = [];
 	for(var j = 0; j < questionList.length; j++) {
 		if(id == questionList[j].questionIdMD52) {
@@ -681,7 +681,7 @@ function add_paper(obj, istype) {
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
-				sessionStorage.setItem("testlast", JSON.stringify(questionList));
+				sessionStorage.setItem("grouplast", JSON.stringify(questionList));
 				knowledges = [];
 				break;
 			}
@@ -722,7 +722,7 @@ function add_paper(obj, istype) {
 				})
 				var namber = questionList.length
 				$("#paper_number").text(namber);
-				sessionStorage.setItem("testlast", JSON.stringify(questionList));
+				sessionStorage.setItem("grouplast", JSON.stringify(questionList));
 				knowledges = [];
 				break;
 			}
@@ -740,7 +740,7 @@ function remove_paper(obj, istype) {
 		$(obj).siblings().css({"display":"inline"});
 	}
 	var id = $(obj).parent().parent().find("input[name='id']").val();
-	var questionList = gettestQuestion()
+	var questionList = getgroupQuestion()
 	if(!questionList) return;
 	for(var i = 0; i < questionList.length; i++) {
 		if(questionList[i].questionIdMD52 == id) {
@@ -748,7 +748,7 @@ function remove_paper(obj, istype) {
 			var namber = questionList.length
 			$("#paper_number").text(namber);
 			console.log(questionList)
-			sessionStorage.setItem("testlast", JSON.stringify(questionList));
+			sessionStorage.setItem("grouplast", JSON.stringify(questionList));
 			break;
 		}
 	}

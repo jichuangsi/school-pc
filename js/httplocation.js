@@ -24,12 +24,16 @@ function getQuestion(){
 	question=JSON.parse(sessionStorage.getItem("lastname"));
 	return question;
 }
-function gettestQuestion(){
-	testquestion=JSON.parse(sessionStorage.getItem("testlast"));
+function getgroupQuestion(){
+	testquestion=JSON.parse(sessionStorage.getItem("grouplast"));
 	return testquestion;
 }
 function gettaskQuestion(){
 	testquestion=JSON.parse(sessionStorage.getItem("tasklast"));
+	return testquestion;
+}
+function gettestQuestion(){
+	testquestion=JSON.parse(sessionStorage.getItem("testlast"));
 	return testquestion;
 }
 function getUserInfo(){

@@ -16,8 +16,9 @@ $(function() {
 	$("#showTime").text(new Date().toLocaleString());
 	inits();
 	$(".areas").hide();
-	sessionStorage.removeItem('testlast')
+	sessionStorage.removeItem('grouplast')
 	sessionStorage.removeItem('lastname')
+	sessionStorage.removeItem('testlast')
 });
 var user;
 var pharseId = null;

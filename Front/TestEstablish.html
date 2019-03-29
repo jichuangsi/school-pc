@@ -8,11 +8,11 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>创建习题</title>
+		<title>创建考试</title>
 	</head>	
 	<script src="../js/jquery.js" type="text/javascript"></script>
 	<!-- <script type="text/javascript" src="../js/jquery-1.8.3.js"></script> -->
-	<script type="text/javascript" src="../js/TaskEstablish.js"></script>
+	<script type="text/javascript" src="../js/TestEstablish.js"></script>
 	<script type="text/javascript" src="../js/laydate.js"></script>
 	<script type="text/javascript" src="../js/httplocation.js"></script>
 	<script type="text/javascript" src="../layui/layui.js"></script>
@@ -111,8 +111,8 @@
 			<!--导航条-->
 			<div class="nav-top" style="min-width: 1520px;">
 				<div class="nav-top-manin">
-					<div class="nav-top-manin-content" onclick="window.location.href='../Front/TaskRelease.html'">习题发布</div>
-					<div class="nav-top-manin-content pr">创建习题</div>
+					<div class="nav-top-manin-content" onclick="window.location.href='../Front/TestRelease.html'">考试发布</div>
+					<div class="nav-top-manin-content pr">创建考试</div>
 					<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
 				</div>
 			</div>
@@ -125,8 +125,8 @@
 								<td>
 									<div class="box-room-name-one">
 										<input type="hidden" id="icon" value="" />
-										<span>习题名称:</span>
-										<input id="ClassName" type="text" name="Name" placeholder="请输入习题名称" onfocus="onFocusName()" onblur="onBlurName(),classname()" class="input-box" />
+										<span>考试名称:</span>
+										<input id="ClassName" type="text" name="Name" placeholder="请输入考试名称" onfocus="onFocusName()" onblur="onBlurName(),classname()" class="input-box" />
 									</div>
 								</td>
 								<td>
@@ -164,15 +164,15 @@
 							<tr style="height: 150px;">
 								<td colspan="2">
 									<div class="box-room-rn">
-										<div class="box-room-rn-span">习题范畴:</div>
+										<div class="box-room-rn-span">考试范畴:</div>
 										<textarea cols="15" rows="3" class="box-room-rn-text" id="ClassroomSynopsis" name="info"></textarea>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<div class="box-sub" id="sub" type="submit" style="font-size: 18px;" onclick="formSub()">新建习题</div>
-									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传习题附件</div>
+									<div class="box-sub" id="sub" type="submit" style="font-size: 18px;" onclick="formSub()">新建考试</div>
+									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传考试附件</div>
 									<div id="fade" class="black_overlay">
 									</div>
 									<div id="MyDiv" class="white_content" style="width: 600px;height:600px;margin-left: 10%;margin-top: 5%">
@@ -200,7 +200,7 @@
 				<!--第二部分-->
 				<div class="box-room-show">
 					<div class="box-room-show-nav">
-						<div class="box-room-show-nav-span">当前新建的习题:<label style="color: #e6edf1;font-size:16px ;">最近5个习题</label></div>
+						<div class="box-room-show-nav-span">当前新建的考试:<label style="color: #e6edf1;font-size:16px ;">最近5个考试</label></div>
 						<div class="hr">
 							<hr/>
 						</div>

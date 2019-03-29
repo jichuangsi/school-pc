@@ -40,11 +40,11 @@
 				<nav id="publicheaderNav" style="display: inline-block;" style="cursor: pointer;">
 					<a href="../Front/index.html" target="_parent" >首页</a>
 					<a>测试报告</b>
-					<a>考试阅卷</a>
-					<a href="../Front/TaskRelease.html" target="_parent">习题中心</a>
-					<!--<a href="javascript:void(0)"  target="_parent" onclick="location.href='../thacherPage/Newclassroom_Newtestpaper.html'">组题选卷</a>-->
 					<a href="../thacherPage/GroupSelection.html"  target="_parent" >组题选卷</a>
 					<a href="../Front/Choreography.html" target="_parent">课堂管理</a>
+					<a href="../Front/TaskRelease.html" target="_parent">习题中心</a>
+					<a href="../Front/TestRelease.html" target="_parent">考试中心</a>
+					<!--<a href="javascript:void(0)"  target="_parent" onclick="location.href='../thacherPage/Newclassroom_Newtestpaper.html'">组题选卷</a>-->
 				</nav>
 				<div id="PublicHeaderUserDiv" style="cursor: pointer;position: relative;">
 					<figure><img src="../img/headeruser.png" /></figure>
@@ -72,11 +72,13 @@
 	if(a == '首页') {
 		$('#publicheaderNav').find('a').eq(0).addClass('str')
 	} else if(a == '习题') {
-		$('#publicheaderNav').find('a').eq(3).addClass('str')
+		$('#publicheaderNav').find('a').eq(4).addClass('str')
 		
 	} else if(a == '组卷') {
-		$('#publicheaderNav').find('a').eq(4).addClass('str')
+		$('#publicheaderNav').find('a').eq(2).addClass('str')
 	} else if(a == '课堂') {
+		$('#publicheaderNav').find('a').eq(3).addClass('str')
+	} else if(a == '考试') {
 		$('#publicheaderNav').find('a').eq(5).addClass('str')
 	}
 	$('#loginout').click(function(){

@@ -3,20 +3,23 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>组题组卷</title>
-		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="../css/page.css" />
-		<link rel="stylesheet" href="../css/Newclassroom_Newtestpaper.css" />
-		<link rel="stylesheet" href="../css/GroupSelection.css" />
+		<title></title>
+
 		<script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+		<!--<script type="text/javascript" src="../js/jquery-1.8.3.min.js" ></script>-->
+		<script type="text/javascript" src="../js/TestEstablish_subject.js"></script>
+		<!-- <script type="text/javascript" src="../js/jquery.min.js"></script> -->
 		<script type="text/javascript" src="../js/method.js"></script>
-		<script type="text/javascript" src="../js/personalsubjectgroup.js"></script>
-		<script type="text/javascript" src="../js/GroupSelection.js"></script>
 		<!--<script type="text/javascript" src="../js/index.js"></script>-->
-		<link rel="stylesheet" href="../css/index.css" />
+		<script type="text/javascript" src="../js/personalsubjecttest.js"></script>
 		<script type="text/javascript" src="../js/MLCore-2016.08.15.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.page.js"></script>
 		<script type="text/javascript" src="../js/httplocation.js"></script>
-		<script src="../js/jquery.page.js"></script>
+		<link rel="stylesheet" href="../css/page.css" />
+		<script type="text/javascript" src="../js/template.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" type="text/css" href="../css/Newclassroom_Newtestpaper.css" />
 		<script type="text/javascript" src="../js/sweetalert-dev.js"></script>
 		<link rel="stylesheet" href="../css/sweetalert.css" />
 		<link rel="stylesheet" href="../css/layer-animate-no.css" />
@@ -104,16 +107,15 @@
 			height: 40px;
 			line-height: 40px;
 			text-align: center;
-			float: right;
-			position: relative;
-			top: -45px;
-			right: 6px;
+			#float: right;
+			#position: relative;
+			#top: -45px;
+			#right: 6px;
 		}
 		
 		.sub-del:hover {
 			cursor: pointer;
-		}
-			
+		}	
 		.bar6 form {
 			width: 200px;
 			float: right;
@@ -122,18 +124,19 @@
 		.bar6 button {
 			right: 0px;
 		}
+		
 	</style>
 
-	<body style="background-color: #F2F2F2;margin: 0;padding: 0;width: 100%;">
-		<iframe id="content_frame" name="content_frame" scrolling="no" width=100% height=80 frameborder="0"  SRC="../public/header.html" style="min-width: 1520px;"></iframe>
-		<div class="nav-top" id="nav-top" style="min-width: 1520px;margin-top:-3px;">
+	<body style="background-color: #F2F2F2;margin: 0;padding: 0;">
+		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html" style="min-width: 1520px;"></iframe>
+		<div class="nav-top" style="min-width: 1520px;">
 			<div class="nav-top-manin">
-				<div class="nav-top-manin-content pr" style="background: #59e8e3;">选题组卷</div>
-				<div class="nav-top-manin-content " onclick="window.location.href='../thacherPage/testPaperLibrary.html'">试卷库</div>
+				<!-- <div class="nav-top-manin-content">组题组卷</div>
+				<div class="nav-top-manin-content pr">试卷库</div> -->
 				<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
 			</div>
 		</div>
-		<div class="newtestpaper" >
+		<div class="newtestpaper">
 			<!--左边树状图-->
 			<div class="s-side" style="white-space: nowrap;">
 				<ul>
@@ -149,7 +152,7 @@
 					<li class="first">
 						<div class="d-firstNav s-firstNav clearfix textbookEdition" id="KnowledgeCatalog">
 							<span class="fa fa-bars" style="color: #0000FF;margin-left: 0px;"></span>
-							<span  style="color: #003EFF;">章节目录</span>
+							<span style="color: #003EFF;">章节目录</span>
 							<span class="fa fa-caret-right fr " style="color:#0000Ff;font-size: 23px;"></span>
 						</div>
 						<ul id="f2" class="d-firstDrop s-firstDrop">
@@ -157,28 +160,29 @@
 					</li>
 				</ul>
 			</div>
-			<div class="newtestpaper_right" >
+			<div class="newtestpaper_right">
 				<div class="newtestpaper_div1">
 					<div class="div1">
-						<div onclick="ss()">已选试题: <i id="paper_number">0</i></div>
-						<div><input type="text" id="examName" placeholder="请输入试卷标题" /></div>
-						<div><input type="text" id="examSecondName" placeholder="请输入试卷副标题" /></div>
+						<div>已选试题: <i id="paper_number">0</i></div>
+						<div>课堂练习</div>
+						<!-- <div id="showTime" style="width:195px"></div> -->
+						<!--<div><label>总分数: <i id="paper_Fraction">2</i> </label></div>-->
+						<!--<div><input type="text" placeholder="请输入试卷标题" /></div>
+						<div><input type="text" placeholder="请输入试卷副标题" /></div>-->
 					</div>
 					<div style="clear: both;" class="div2">
-						<button onclick="savetestpaper_click()">保存试卷</button>
-						<button onclick="window.location.href='../Front/UploadTopics.html'">自定义题目</button>
-						<button onclick="emptypaper()">清空试题</button>
+						<!-- <button onclick="getClass()" style="float:left">保存返回新建课堂</button> -->
+						<button onclick="window.location.href='../Front/TestEstablish.html'">返回创建考试</button>
+						<button onclick="window.location.href='../Front/UploadTopics.html'" >自定义题目</button>
 						<!--<button>预览试卷</button>-->
-					</div>
-					<div id="content" onClick="PreviewPaper()" class="preview">
-						预览试卷
-					</div>
+						<div id="content" onClick="PreviewPaper()" class="preview">预览试卷</div>
+					</div>					
 				</div>
 				<div id="newtestpaper_div2_01" class="newtestpaper_div2" style="display: block;">
 					<div id="container">
 						<div class="search bar6" style="display: none;">
 							<form action="">
-								<input type="text" placeholder="请输入考试、作业名称">
+								<input type="text" placeholder="请输入考试名称">
 								<button type="button"></button>
 							</form>
 						</div>
@@ -197,7 +201,7 @@
 							<dd>
 								<div style="float: left;">题型:</div>
 								<div class="f2" style="display: table;">
-									<div style="position:relative;vertical-align:top;display:inline-block;">
+									<div style="position:relative;vertical-align:top;display:inline-block;width:8%">
 										<a class="d1" onclick="questionType_a_click(this,null)">全部</a>
 									</div>
 								</div>
@@ -226,11 +230,13 @@
 									<a class="d1" onclick="d1_click(this)">全国</a>
 									<a onclick="d1_click(this)">本省</a>
 									<a id="address" onclick="d1_click(this),focus_click(this);">其他区域 <span style="color: #59E8E3;">▼</span> </a>
-									<div class="areas" style="display:contents ;background-color: white;">
-										<input type="text" placeholder="请输入地区关键字" id="ads1">
-										<button onclick="search_areas(this)">搜索</button>
-										<button  onclick="areashide()" style="background-color: red; color:#FFFFFF ;margin-left: 20px;">关闭</button>
-										<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
+									<div>
+										<div class="areas" style="display: contents;background-color: white;">
+											<input type="text" placeholder="请输入地区关键字" id="ads1">
+											<button onclick="search_areas(this)">搜索</button>
+											<button onclick="areashide()" style="background-color: red; color:#FFFFFF ;margin-left: 20px;">关闭</button>
+											<div class="areas_1" style="margin:10px 0px;height: 100px;overflow:scroll;">
+											</div>
 										</div>
 									</div>
 								</div>
@@ -246,6 +252,14 @@
 							共
 							<i id="totals" style="color: #0088CC;">0</i> 题
 						</div>
+						<!--<div class="page1" style="display: inline;">
+							<a onclick="page_upkey(this)" id="page_up">
+								< </a>
+									第
+									<i class="page_left"> 1 </i> /
+									<i class="page_right">1</i> 页
+									<a onclick="page_nextkey(this)" id="page_next">></a>
+						</div>-->
 						<div class="page1" style="display: inline;">
 							<a onclick="upkeys(this)" id="page_ups">
 								< </a>
@@ -256,11 +270,11 @@
 						</div>
 					</div>
 					<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;">
-							<img src="../img/Missingdata.png" />
-							<h3 >请先选择相关的知识点！</h3>
+						<img src="../img/Missingdata.png" />
+						<h3>请先选择相关的知识点！</h3>
 					</div>
 				</div>
-				
+
 				<div id="newtestpaper_div2_02" class="newtestpaper_div2" style="display: none;">
 					<div id="container">
 						<div class="search bar6 clearfix">
@@ -282,6 +296,7 @@
 									<a onclick="year_a_click2(this)">2016</a>
 									<a onclick="year_a_click2(this)">2015</a>
 									<a onclick="year_a_click2(this)">更早</a>
+
 								</div>
 							</dd>
 						</dl>
@@ -334,6 +349,8 @@
 									<a onclick="page_nextkeys(this)" id="page_next">></a>
 						</div>
 					</div>
+					<!--题目内容-->
+
 				</div>
 				<!--<div class="tcdPageCode"></div>-->
 			</div>
@@ -345,9 +362,11 @@
 				<div class="pre_exit" onClick="hide();">X</div>
 				<div id="Previewinfo" style="margin: 20px;">
 					<h1 style="text-align: center;">课堂小测</h1>
+					<!--<div class=" pres">
+						<p>选择题 一共<span>1</span>题 </p>
+					</div>-->
 				</div>
 			</div>
-
 		</div>
 	</body>
 
