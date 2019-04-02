@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加教师</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+	</head>
+	<style>
+		.widths {
+			width: 300px;
+		}
+	</style>
+
+	<body>
+		<div class="x-body">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">学校名称：</label>
+					<div class="layui-input-block widths">
+						<select name="schoolId" id="status" lay-filter="school">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">教师姓名：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="name" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="sex" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">账号：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">密码：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="pwd" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">主要科目：</label>
+					<div class="layui-input-block widths">
+						<select name="subjectId" id="subject" lay-filter="subject">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">次要科目：</label>
+					<div class="layui-input-block widths" id="subjects">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">年段级：</label>
+					<div class="layui-input-block widths">
+						<select name="phrase" id="phrase" lay-filter="phrase">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">年级名称：</label>
+					<div class="layui-input-block widths">
+						<select name="gradeId" id="grade" lay-filter="grade">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">所属班级：</label>
+					<div class="layui-input-block widths">
+						<select name="classId" id="class" lay-filter="class">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">教学班级：</label>
+					<div class="layui-input-block" style="width: 450px;" id="classList">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit lay-filter="add" type="submit">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script>
+			layui.use('form', function() {
+				var subjectsarr = []
+				var form = layui.form;
+				getSchool();
+				getSubject();
+				getSubjects();
+				form.on('submit(add)', function(data) {
+					var param = data.field;
+					if(param.sex == '男') {
+						param.sex = 'M';
+					} else if(param.sex == '女') {
+						param.sex = 'F';
+					} else {
+						layer.msg('请填写正确的性别！', {
+							icon: 2,
+							time: 1000
+						});
+						return false;
+					}
+					var subjects = {
+						"subjectId": "",
+						"subjectName": ""
+					};
+					var classList = {
+						"classId": "",
+						"className": ""
+					}
+
+					var secondarySubjects = new Array();
+
+					var secondaryClass = new Array();
+					for(var i = 0; i < $("input:checkbox[name='subjectList']:checked").length; i++) {
+						secondarySubjects.push({
+							subjectId: $("input:checkbox[name='subjectList']:checked")[i].value,
+							subjectName: $("input:checkbox[name='subjectList']:checked")[i].title
+						});
+					}
+					for(var i = 0; i < $("input:checkbox[name='classList']:checked").length; i++) {
+						secondaryClass.push({
+							classId: $("input:checkbox[name='classList']:checked")[i].value,
+							className: $("input:checkbox[name='classList']:checked")[i].title
+						})
+					}
+					var model = {
+						"account": param.account,
+						"name": param.name,
+						"phrase": {
+							"phraseId": param.phrase,
+							"phraseName": $("#phrase").find("option:selected").text()
+						},
+						"primaryClass": {
+							"classId": param.classId,
+							"className": $("#class").find("option:selected").text()
+						},
+						"primaryGrade": {
+							"gradeId": param.gradeId,
+							"gradeName": $("#grade").find("option:selected").text()
+						},
+						"primarySubject": {
+							"subjectId": param.subjectId,
+							"subjectName": $("#subject").find("option:selected").text()
+						},
+						"pwd": param.pwd,
+						"school": {
+							"schoolId": param.schoolId,
+							"schoolName": $("#status").find("option:selected").text()
+						},
+						"secondaryClass": secondaryClass,
+						"secondarySubjects": secondarySubjects,
+						"sex": param.sex
+					}
+					if(param.schoolId == -1) {
+						layer.msg('请选择学校！', {
+							icon: 2,
+							time: 1000
+						});
+						return false;
+					} else if(param.phrase == -1) {
+						layer.msg('请选择年级段！', {
+							icon: 2,
+							time: 1000
+						});
+						return false;
+					} else if(param.gradeId == -1||param.gradeId=="") {
+						layer.msg('请选择年级！', {
+							icon: 2,
+							time: 1000
+						});
+						return false;
+					} else {
+						$.ajax({
+							type: "post",
+							url: httpUrl() + "/saveTeacher",
+							async: false,
+							headers: {
+								'accessToken': getToken()
+							},
+							contentType: 'application/json',
+							data: JSON.stringify(model),
+							success: function(res) {
+								if(res.code == '0010') {
+									layer.msg('提交成功！', {
+										icon: 1,
+										time: 1000,
+										end: function() {
+											location.reload();
+										}
+									});
+								} else {
+									layer.msg(res.msg, {
+										icon: 2,
+										time: 1000,
+										end: function() {
+											location.reload();
+										}
+									});
+								}
+							}
+						});
+						return false;
+					}
+				});
+				//获取学校列表
+				function getSchool() {
+					$('#status').empty();
+					var options = '<option value="-1" selected="selected">' + "请选择学校" + '</option>';
+					var arr;
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/school/getSchools",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								arr = res.data;
+								if(arr == null || arr == undefined) {
+									options = '<option value="" selected="selected">暂无学校信息请先去添加学校信息</option>'
+								} else {
+									for(var i = 0; i < arr.length; i++) {
+										options += '<option value="' + arr[i].schoolId + '" >' + arr[i].schoolName + '</option>'
+									}
+								}
+								$('#status').append(options);
+								form.render('select');
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										location.reload();
+									}
+								});
+							}
+						}
+					});
+				}
+				//获取教学主要科目
+				function getSubject() {
+					$('#subject').empty();
+					var options = '<option value="-1" selected="selected">' + "请选择科目" + '</option>';
+					var arr;
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/school/subject/getSubjects",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								arr = res.data;
+								if(arr == null || arr == undefined) {
+									options = '<option value="" selected="selected">暂无科目信息请先去添加科目信息</option>'
+								} else {
+									for(var i = 0; i < arr.length; i++) {
+										options += '<option value="' + arr[i].id + '" >' + arr[i].subjectName + '</option>'
+									}
+								}
+								$('#subject').append(options);
+								form.render('select');
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										location.reload();
+									}
+								});
+							}
+						}
+					});
+				}
+				//获取次要科目
+				function getSubjects() {
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/school/subject/getSubjects",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr;
+								arr = res.data;
+								subCount = arr.length;
+								$('#subjects').empty();
+								var inputs = '';
+								for(var i = 0; i < arr.length; i++) {
+									inputs += '<input type="checkbox" name="subjectList" value="' + arr[i].id + '"  title="' + arr[i].subjectName + '">'
+								}
+								subjectsarr = inputs
+								$('#subjects').append(inputs);
+								form.render('checkbox');
+							}
+						}
+					});
+				}
+
+				//监听学校select
+				form.on('select(school)', function(data) {
+					if(data.value != '-1') {
+						var id = data.value;
+						getPhrase(id);
+					}
+				});
+				//获取年段
+				function getPhrase(id) {
+					$('#phrase').empty();
+					var options = '<option value="-1" selected="selected">' + "请选择年级段" + '</option>';
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/school/phrase/getPhraseBySchool?schoolId=" + id,
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr=[];
+								arr = res.data;
+								if(arr == null || arr == undefined||arr.length==0) {
+									options = '<option value="" selected="selected">暂无年级信息请先去添加年级信息</option>'
+								} else {
+									for(var i = 0; i < arr.length; i++) {
+										options += '<option value="' + arr[i].id + '" >' + arr[i].phraseName + '</option>'
+									}
+								}
+								$('#phrase').append(options);
+								form.render('select');
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										location.reload();
+									}
+								});
+							}
+						}
+					});
+				}
+				//监听年级段select
+				form.on('select(phrase)', function(data) {
+					if(data.value != '-1') {
+						var id = data.value;
+						getGrade(id);
+					}
+				});
+
+				function getGrade(id) {
+					$('#grade').empty();
+					var options = '<option value="-1" selected="selected">' + "请选择年级" + '</option>';
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/school/grade/getGradeByPhrase?phraseId=" + id,
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr=[];
+								arr = res.data;
+								if(arr == null || arr == undefined||arr.length==0) {
+									options = '<option value="" selected="selected">暂无年级信息请先去添加年级信息</option>'
+								} else {
+									for(var i = 0; i < arr.length; i++) {
+										options += '<option value="' + arr[i].gradeId + '" >' + arr[i].gradeName + '</option>'
+									}
+								}
+								$('#grade').append(options);
+								form.render('select');
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										location.reload();
+									}
+								});
+							}
+						}
+					});
+				}
+				//根据年级Id获取班级
+				form.on('select(grade)', function(data) {
+					if(data.value != '-1') {
+						var id = data.value;
+						getClass(id);
+						getClassList(id)
+
+					}
+				});
+
+				function getClass(id) {
+					$('#class').empty();
+					var options = '<option value="-1" selected="selected">' + "请选择班级" + '</option>';
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/class/findClasses/" + id + "",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						contentType: 'application/json',
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr=[];
+								arr = res.data;
+								if(arr == null || arr == undefined||arr.length==0) {
+									options = '<option value="" selected="selected">暂无班级信息请先去添加班级信息</option>'
+								} else {
+									for(var i = 0; i < arr.length; i++) {
+										options += '<option value="' + arr[i].classId + '" >' + arr[i].className + '</option>'
+									}
+								}
+								$('#class').append(options);
+								form.render('select');
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										location.reload();
+									}
+								});
+							}
+						}
+					});
+				}
+				//次要科目
+				function getClassList(id) {
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/class/findClasses/" + id + "",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						contentType: 'application/json',
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr;
+								arr = res.data;
+								classCount = arr.length
+								$('#classList').empty();
+								var inputs = '';
+								for(var i = 0; i < arr.length; i++) {
+									inputs += '<input type="checkbox" name="classList" value="' + arr[i].classId + '" title="' + arr[i].className + '">'
+								}
+								$('#classList').append(inputs);
+								form.render('checkbox');
+							}
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>
