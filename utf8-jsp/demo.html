@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ueditor demo</title>
+</head>
+
+<body>
+    <!-- 加载编辑器的容器 -->
+    <script id="container" name="content" type="text/plain">
+        
+    </script>
+    
+    <button onclick="getContent()">获得内容</button>
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="ueditor.all.js"></script>
+    <!-- 公式 -->
+    <script type="text/javascript" charset="utf-8" src="./kityformula-plugin/addKityFormulaDialog.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./kityformula-plugin/getKfContent.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./kityformula-plugin/defaultFilterFix.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+       function getContent() {
+            var content = UE.getEditor('container').getContent();
+            console.log(content)
+        }
+    </script>
+</body>
+
+</html>

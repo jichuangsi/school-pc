@@ -93,25 +93,41 @@ function transPic(){
 				}
 				//console.log(html);
 				if(type == "选择题") {
-					var old = $("textarea[name='Choicequestion']").val()
+					// var old = $("textarea[name='Choicequestion']").val()
+					// if(old) old+="\n";
+					// $("textarea[name='Choicequestion']").val(old + html);
+					var old = UE.getEditor('Choicequestion').getContent()
 					if(old) old+="\n";
-					$("textarea[name='Choicequestion']").val(old + html);
+					console.log(html)
+					UE.getEditor('Choicequestion').setContent(old+html)
 				} else if(type == "多选题") {
-					var old = $("textarea[name='ChoicequestionStone']").val()
+					// var old = $("textarea[name='ChoicequestionStone']").val()
+					// if(old) old+="\n";
+					// $("textarea[name='ChoicequestionStone']").val(old + html);
+					var old = UE.getEditor('ChoicequestionStone').getContent()
 					if(old) old+="\n";
-					$("textarea[name='ChoicequestionStone']").val(old + html);
+					UE.getEditor('ChoicequestionStone').setContent(old+html)
 				} else if(type == "判断题") {
-					var old = $("textarea[name='ChoicequestionPack']").val()
+					// var old = $("textarea[name='ChoicequestionPack']").val()
+					// if(old) old+="\n";
+					// $("textarea[name='ChoicequestionPack']").val(old + html);
+					var old = UE.getEditor('ChoicequestionPack').getContent()
 					if(old) old+="\n";
-					$("textarea[name='ChoicequestionPack']").val(old + html);
+					UE.getEditor('ChoicequestionPack').setContent(old+html)
 				} else if(type == "填空题") {
-					var old = $("textarea[name='ChoicequestionCompletion']").val()
+					// var old = $("textarea[name='ChoicequestionCompletion']").val()
+					// if(old) old+="\n";
+					// $("textarea[name='ChoicequestionCompletion']").val(old + html);
+					var old = UE.getEditor('ChoicequestionCompletion').getContent()
 					if(old) old+="\n";
-					$("textarea[name='ChoicequestionCompletion']").val(old + html);
+					UE.getEditor('ChoicequestionCompletion').setContent(old+html)
 				} else if(type == "主观题") {
-					var old = $("textarea[name='SubjectiveQuestionstone']").val()
+					// var old = $("textarea[name='SubjectiveQuestionstone']").val()
+					// if(old) old+="\n";
+					// $("textarea[name='SubjectiveQuestionstone']").val(old + html);
+					var old = UE.getEditor('SubjectiveQuestionstone').getContent()
 					if(old) old+="\n";
-					$("textarea[name='SubjectiveQuestionstone']").val(old + html);
+					UE.getEditor('SubjectiveQuestionstone').setContent(old+html)
 				}
 			}else{
 				swal(data.msg, "", "error");
@@ -153,7 +169,12 @@ function modify (){
 				if(res.data.questionPic) $("input[name='questionPic']").val(res.data.questionPic);
 				if(res.data.quesetionType=='选择题'){					
 					//题目问题
-					$("textarea[name='Choicequestion']").val(res.data.questionContent)
+					console.log(res.data.questionContent)
+					var ue = UE.getEditor('Choicequestion')
+					ue.ready(function() {
+						//异步回调
+					UE.getEditor('Choicequestion').execCommand('insertHtml',res.data.questionContent)
+					})
 					//选择题目类型
 					$('.tab-hd').find('li').eq(0).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(0).show().siblings().hide();
@@ -189,7 +210,11 @@ function modify (){
 				}
 				if(res.data.quesetionType=='多选题'){
 					//题目问题
-					$("textarea[name='ChoicequestionStone']").val(res.data.questionContent)
+					var ue = UE.getEditor('ChoicequestionStone')
+					ue.ready(function() {
+						//异步回调
+					UE.getEditor('ChoicequestionStone').execCommand('insertHtml',res.data.questionContent)
+					})
 					//选择题目类型
 					$('.tab-hd').find('li').eq(1).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(1).show().siblings().hide();
@@ -223,7 +248,11 @@ function modify (){
 				}
 				if(res.data.quesetionType=='判断题'){
 					//题目问题
-					$("textarea[name='ChoicequestionPack']").val(res.data.questionContent)
+					var ue = UE.getEditor('ChoicequestionPack')
+					ue.ready(function() {
+						//异步回调
+					UE.getEditor('ChoicequestionPack').execCommand('insertHtml',res.data.questionContent)
+					})
 					//选择题目类型
 					$('.tab-hd').find('li').eq(2).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(2).show().siblings().hide();
@@ -252,7 +281,11 @@ function modify (){
 				}
 				if(res.data.quesetionType=='填空题'){
 					//题目问题
-					$("textarea[name='ChoicequestionCompletion']").val(res.data.questionContent)
+					var ue = UE.getEditor('ChoicequestionCompletion')
+					ue.ready(function() {
+						//异步回调
+					UE.getEditor('ChoicequestionCompletion').execCommand('insertHtml',res.data.questionContent)
+					})
 					//选择题目类型
 					$('.tab-hd').find('li').eq(3).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(3).show().siblings().hide();
@@ -284,7 +317,11 @@ function modify (){
 					$('.tab-hd').find('li').eq(4).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(4).show().siblings().hide();
 					//题目问题
-					$("textarea[name='SubjectiveQuestionstone']").val(res.data.questionContent);
+					var ue = UE.getEditor('SubjectiveQuestionstone')
+					ue.ready(function() {
+						//异步回调
+					UE.getEditor('SubjectiveQuestionstone').execCommand('insertHtml',res.data.questionContent)
+					})
 					//题目答案
 					$("textarea[name='SubjectiveQuestionAnswer']").val(res.data.answer);
 					//题目解析
@@ -727,7 +764,8 @@ function pack() {
 //保存上传题目
 function saveQuestion() {
 		var questionPic = $("input[name='questionPic']").val();
-		var content = $("textarea[name='Choicequestion']").val();
+		// var content = $("textarea[name='Choicequestion']").val();
+		var content = UE.getEditor('Choicequestion').getContent()
 		// var knowledge = $("#dept option:selected").attr('data');
 		// var knowledgeId = $("#dept option:selected").val();
 		var knowledges = []
@@ -799,6 +837,7 @@ function saveQuestion() {
 			"code": orcode
 		}
 		console.log(cc)
+
 		//console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
@@ -832,7 +871,8 @@ function saveQuestion() {
 //判断题目
 function saveQuestionPack() {
 		var questionPic = $("input[name='questionPic']").val();
-		var content = $("textarea[name='ChoicequestionPack']").val();
+		// var content = $("textarea[name='ChoicequestionPack']").val();
+		var content = UE.getEditor('ChoicequestionPack').getContent()
 		// var knowledge = $("#packselect option:selected").attr('data');
 		// var knowledgeId = $("#packselect option:selected").val();
 		var knowledges = []
@@ -926,7 +966,8 @@ function saveQuestionPack() {
 //多选题
 function saveQuestionStone() {
 		var questionPic = $("input[name='questionPic']").val();
-		var content = $("textarea[name='ChoicequestionStone']").val();
+		// var content = $("textarea[name='ChoicequestionStone']").val();
+		var content = UE.getEditor('ChoicequestionStone').getContent()
 		// var knowledge = $("#deptselect option:selected").attr('data');
 		// var knowledgeId = $("#deptselect option:selected").val();
 		var knowledges = []
@@ -1037,7 +1078,8 @@ function saveCompletionQuestion() {
 		var arr = answer.split('|');
 		arr.sort();*/
 		var questionPic = $("input[name='questionPic']").val();
-		var content = $("textarea[name='ChoicequestionCompletion']").val();
+		// var content = $("textarea[name='ChoicequestionCompletion']").val();
+		var content = UE.getEditor('ChoicequestionCompletion').getContent()
 		// var knowledge = $("#isselect option:selected").attr('data');
 		// var knowledgeId = $("#isselect option:selected").val();
 		var knowledges = []
@@ -1133,7 +1175,8 @@ function saveCompletionQuestion() {
 //主观题
 function saveSubjectiveQuestions() {
 	var questionPic = $("input[name='questionPic']").val();
-	var content = $("textarea[name='SubjectiveQuestionstone']").val();
+	// var content = $("textarea[name='SubjectiveQuestionstone']").val();
+	var content = UE.getEditor('SubjectiveQuestionstone').getContent()
 	var answer = $("textarea[name='SubjectiveQuestionAnswer']").val();
 	// var knowledge = $("#zgselect option:selected").attr('data');
 	// var knowledgeId = $("#zgselect option:selected").val();

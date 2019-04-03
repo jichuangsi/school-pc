@@ -148,7 +148,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea maxlength="400" name="Choicequestion" id="Choicequestion" class="text-tm"></textarea>
+											<!-- <textarea maxlength="400" name="Choicequestion" id="Choicequestion" class="text-tm"></textarea> -->
+											<script id="Choicequestion" name="Choicequestion" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -233,7 +236,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea maxlength="400" name="ChoicequestionStone" class="text-tm"></textarea>
+											<!-- <textarea maxlength="400" name="ChoicequestionStone" class="text-tm"></textarea> -->
+											<script id="ChoicequestionStone" name="ChoicequestionStone" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -312,7 +318,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea class="text-tm"  maxlength="400" name="ChoicequestionPack"></textarea>
+											<!-- <textarea class="text-tm"  maxlength="400" name="ChoicequestionPack"></textarea> -->
+											<script id="ChoicequestionPack" name="ChoicequestionPack" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -385,7 +394,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea class="text-tm" maxlength="400" name="ChoicequestionCompletion"></textarea>
+											<!-- <textarea class="text-tm" maxlength="400" name="ChoicequestionCompletion"></textarea> -->
+											<script id="ChoicequestionCompletion" name="ChoicequestionCompletion" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -462,7 +474,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea class="text-tm" maxlength="400" name="SubjectiveQuestionstone"></textarea>
+											<!-- <textarea class="text-tm" maxlength="400" name="SubjectiveQuestionstone"></textarea> -->
+											<script id="SubjectiveQuestionstone" name="SubjectiveQuestionstone" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -538,6 +553,25 @@
 	$(function(){
     $('.dept_select').chosen();
 	});
+	</script>
+	
+	
+	
+	<!-- 配置文件 -->
+	<script type="text/javascript" src="../utf8-jsp/ueditor.config.js"></script>
+	<!-- 编辑器源码文件 -->
+	<script type="text/javascript" src="../utf8-jsp/ueditor.all.js"></script>
+	<!-- 公式 -->
+	<script type="text/javascript" charset="utf-8" src="../utf8-jsp/kityformula-plugin/addKityFormulaDialog.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../utf8-jsp/kityformula-plugin/getKfContent.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../utf8-jsp/kityformula-plugin/defaultFilterFix.js"></script>
+	<!-- 实例化编辑器 -->
+	<script type="text/javascript">
+		var ue = UE.getEditor('Choicequestion')
+		var ue = UE.getEditor('ChoicequestionStone')
+		var ue = UE.getEditor('ChoicequestionPack')
+		var ue = UE.getEditor('ChoicequestionCompletion')
+		var ue = UE.getEditor('SubjectiveQuestionstone')
 	</script>
 	</body>
 
