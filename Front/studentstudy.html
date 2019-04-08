@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC“-//W3C//DTD XHTML 1.0 Transitional//EN” “http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+		<title></title>
+	</head>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../lib/js/bootstrap.js"></script>
+	<script src="../js/template-web.js"></script>
+	<link rel="stylesheet" href="../lib/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../css/studentstudy.css" />
+	<link rel="stylesheet" href="../css/Newclassroom_Newtestpaper.css" />
+	<script type="text/javascript" src="..\js\httplocation.js"></script>
+	<script type="text/javascript" src="../js/studentstudy.js"></script>
+	<style type="text/css">
+		.nav-top-manin-but {
+			float: left;
+		}
+	</style>
+
+	<body>
+		<iframe name="content_frame" width=100% height=80 frameborder="0" scrolling="no" marginwidth=0 SRC="../public/header.html"></iframe>
+		<!--<div id="header"></div>-->
+			<div class="nav-top" style="min-width: 1520px;">
+				<div class="nav-top-manin">
+					<!-- <div class="nav-top-manin-content">班级报告</div>
+					<div class="nav-top-manin-content">学科学情</div> -->
+					<div class="nav-top-manin-content  pr">学生学情</div>
+					<div class="nav-top-manin-but"><span class="Gradename"></span>-<span class="Subjectname"></span></div>
+				</div>
+			</div>
+			<div class="center clearfix">
+				<div class="center_nav">
+					<span onclick="window.location.href='./index.html'">< 返回</span>
+					<strong>高二年级14班数学知识点详情</strong>
+					<div class="down fr">高二 16班  数学 <span class="fr"></span></div>
+					<div class="btn fr" onclick="public()">班级共错题</div>
+				</div>
+				<div class="center_list clearfix">
+					<div class="list_nav fr"><span>得分率：</span>
+						<i style="background-color: #59e8e3;"></i>0~0.6
+						<i style="background-color: #ee3dfe;"></i>0.6~0.7
+						<i style="background-color: #3d72fe;"></i>0.7~0.85
+						<i style="background-color: #59e89c;"></i>0.85~1
+					</div>
+					<div class="studentlist clearfix">
+						<!-- <div class="left fl">
+							<div>学生列表</div>
+						</div>
+						<div class="right fr">
+							<div class="leftbtn"><</div>
+								<div id="knowledgelist">
+									<div class="knowledgelist">
+										
+									</div>
+								</div>
+								<div class="rightbtn">></div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+
+				
+		<div>
+				<div id="hidebg"></div>
+				<div id="previews" style="cursor: pointer;">
+					<div class="pre_exit" onClick="hide();">X</div>
+					<div id="Previewinfo" style="margin: 20px;">
+						<h1 style="text-align: center;">班级共错题</h1>
+					</div>
+				</div>
+				<div id="tcbox">
+					<span></span>
+				</div>
+	
+			</div>
+		<script>
+		</script>
+		<script type="text/template" id="student_classlist">
+			<div class="left fl">
+					<div>学生列表</div>
+					{{each data as val index}}
+					<div>{{val.studentName}}</div>
+					{{/each}}
+				</div>
+				<div class="right fr">
+					<div class="rightbox">
+						<div class="leftbtn" onclick="leftbtn()"><</div>
+							<div id="knowledgelist">
+								<div class="knowledgelist">
+									
+								</div>
+							</div>
+							<div class="rightbtn" onclick="rightbtn()">></div>
+						</div>
+					</div>
+					{{each data as val index}}
+					<div class="rightbox">
+							<div id="knowledgelist2">
+									<div class="knowledgelist2">
+										{{each val.knowledgeResultModels as item i}}
+										<div class="jdtbox fl">
+											<div class="jdtbox1">
+												<div class="jdt" style="width:"{{(item.trueNum/(item.trueNum+item.wrongNum)*110).toFixed()}}px"></div>
+											</div>
+										</div>
+										{{/each}}
+									</div>
+							</div>
+					</div>
+					{{/each}}
+				</div>
+		</script>
+		<script>
+			
+		</script>
+	</body>
+
+</html>

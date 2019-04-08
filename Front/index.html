@@ -8,7 +8,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 		<title></title>
 	</head>
+	<script type="text/javascript" src="../js/httplocation.js"></script>
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script src="../js/template-web.js"></script>
 	<script type="text/javascript" src="../js/progressBar.js"></script>
 	<script type="text/javascript" src="../js/homePage.js"></script>
 	<script type="text/javascript" src="../lib/js/bootstrap.js"></script>
@@ -196,89 +198,32 @@
 					<div class="conterToIndex-middle-one-ks">
 						<div class="conterToIndex-middle-ys"></div><label style="float:left;margin-left: 20px;margin-top: 15px;font-weight: 900;">班级情况</label>
 					</div>
-					<div class="MiddlePartSect ng">
-						<div class="name">高二年级15班-物理</div>
-						<div class="displayExample">近一个月，新增错题<span style="color: black;">33</span>题，薄弱知识点<span style="color: black;">0</span>个 </div>
-						<div class="knowledge">
-							<table style="margin-left: 20px;">
-								<tr>
-									<td>物理知识点1</td>
-									<td>
-										<dl class="barbox">
-											<dd class="barline">
-												<div w="60" class="charts" style="width:0px">
-												</div>
-											</dd>
-										</dl>
-									</td>
-									<td>
-										<label style="margin-left:25px;"></label>
-									</td>
-								</tr>
-								<tr>
-									<td>物理知识点1</td>
-									<td>
-										<dl class="barbox">
-											<dd class="barline">
-												<div w="50" class="charts" style="width:0px">
-												</div>
-											</dd>
-										</dl>
-									</td>
-									<td>
-										<label style="margin-left:25px;"></label>
-									</td>
-								</tr>
-								<tr>
-									<td>物理知识点1</td>
-									<td>
-										<dl class="barbox">
-											<dd class="barline">
-												<div w="40" class="charts" style="width:0px">
-												</div>
-											</dd>
-										</dl>
-									</td>
-									<td>
-										<label style="margin-left:25px;"></label>
-									</td>
-								</tr>
-								<tr>
-									<td>物理知识点1</td>
-									<td>
-										<dl class="barbox">
-											<dd class="barline">
-												<div w="30" class="charts" style="width:0px">
-												</div>
-											</dd>
-										</dl>
-									</td>
-									<td>
-										<label style="margin-left:25px;"></label>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div class="look">
-							查看班级学情
+					<div class="leftbtn" onclick="leftbtn()"><</div>
+					<div class="rightbtn" onclick="rightbtn()">></div>
+					<div class="MiddlePartSect clearfix">
+						<div class="classlist clearfix">
+							<div class="list">
+									<div class="classname">高二年级15班-数学</div>
+									<div class="classtitle">近一个月，新增错题<strong>33</strong>题，薄弱知识点<strong>0</strong>个</div>
+									<div class="Knowledge">
+										<div class="left">数学知识点</div>
+										<div class="center">
+											<div class="jdt"></div>
+										</div>
+										<div class="right">50%</div>
+									</div>
+									<div class="change">查看班级详情</div>
+							</div>
 						</div>
 					</div>
-					<div class="MiddlePartSect">
-						<div class="name">高二年级15班-物理</div>
-						<div class="displayExample">近一个月，新增错题<span style="color: black;">33</span>题，薄弱知识点<span style="color: black;">0</span>个 </div>
-						<div class="knowledge">
-							<label class="null">当前暂无薄弱知识点~</label>
-						</div>
-						<div class="look">
-							查看班级学情
-						</div>
+					<div id="tcbox">
 					</div>
 				</div>
 				<!--右边部分-->
 			</div>
 			<script>
 				
-	sessionStorage.setItem('position','首页')
+				sessionStorage.setItem('position','首页')
 				function navs(obj) {
 					if(obj == 1) {
 						$('#la').addClass('la');
@@ -306,6 +251,27 @@
 					})
 				});
 			</script>
+			
+		<script type="text/template" id="classlist">
+			{{each data as value index}}
+			<div class="list fl">
+					<div class="classname">{{value.className}}</div>
+					<div class="classtitle">近一个月，新增错题<strong>{{value.wrongQuestionNum}}</strong>题，薄弱知识点<strong>{{value.weakQuestionNum}}</strong>个</div>
+					{{each value.knowledgeResultModels as item i}}
+					<div class="Knowledge">
+						<div class="left" onmouseover="mouseover(this)" onmouseout="mouseout(this)">
+							{{item.knowledgeName}}
+						</div>
+						<div class="center">
+							<div class="jdt" style="width:"{{(item.trueNum/(item.trueNum+item.wrongNum)*200).toFixed()}}px"></div>
+						</div>
+						<div class="right">{{(item.trueNum/(item.trueNum+item.wrongNum)*100).toFixed()}}%</div>
+					</div>
+					{{/each}}
+					<div class="change" onclick="jump({{value}})">查看班级详情</div>
+			</div>
+			{{/each}}
+		</script>
 	</body>
 
 </html>

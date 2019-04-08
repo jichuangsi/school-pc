@@ -4,6 +4,12 @@
 	padding: 0px;
 }
 
+.fr {
+	float: right;
+}
+.fl {
+	float: left;
+}
 body {
 	font-size: 16px;
 	background-color: #F2F2F2;
@@ -36,7 +42,7 @@ body {
 }
 
 .conterToIndex-middle-one-ks {
-	float: left;
+	position: absolute;
 }
 
 .conterToIndex-middle-ys {
@@ -183,50 +189,17 @@ body {
 	padding-bottom: 20px;
 	background-color: white;
 	float: left;
+	position: relative;
 }
 
 .MiddlePartSect {
 	width: 430px;
 	height: 100%;
-	float: left;
+	/* float: left; */
+	margin: auto;
+	overflow: hidden;
 }
 
-.ng {
-	clear: both;
-}
-
-.name {
-	font-size: 20px;
-	color: #222;
-	text-align: center;
-	line-height: 23px;
-	font-weight: bold;
-	float: left;
-	text-indent: 5em;
-	/*position: relative;
-	top:20px;*/
-	margin-top: 20px;
-}
-
-.displayExample {
-	float: left;
-	font-size: 14px;
-	margin-top: 20px;
-	width: 100%;
-	text-align: center;
-	color: #a6acb2;
-}
-
-.knowledge {
-	float: left;
-	width: 100%;
-	height: 200px;
-	margin-top: 20px;
-	margin-left: 20px;
-	text-align: center;
-}
-
-.knowledge>table {}
 
 .viewDetails {
 	width: 130px;
@@ -235,7 +208,6 @@ body {
 	border-radius: 5px;
 	position: relative;
 	left: 10px;
-	top:
 }
 
 .View {
@@ -247,8 +219,7 @@ body {
 	cursor: pointer;
 }
 
-.look {
-	float: left;
+.change {
 	width: 130px;
 	height: 40px;
 	border-radius: 5px;
@@ -258,6 +229,7 @@ body {
 	line-height: 40px;
 	margin-left: 118px;
 	margin-top: 5px;
+	margin: auto;
 }
 
 .null {
@@ -266,4 +238,103 @@ body {
 	font-size: 26px;
 	color: #a6acb2;
 	font-weight: 200;
+}
+.list {
+	width: 430px;
+}
+.classlist {
+	margin-left: 0px;
+	transition: margin-left 1s linear;
+}
+.classlist .classname {
+	font-size: 20px;
+	font-weight: 700;
+	text-align: center;
+	margin-top: 50px;
+	letter-spacing:2px
+}
+.classlist .classtitle {
+	color: #999;
+	font-size: 18px;
+	text-align: center;
+	margin-top: 10px;
+	letter-spacing:2px
+}
+.classlist .classtitle strong {
+	color: #000;
+}
+.classlist .Knowledge {
+	width: 85%;
+	margin: 10px auto;
+}
+
+.classlist .Knowledge div {
+	display: inline-block;
+	vertical-align: middle;
+}
+.classlist .Knowledge .left {
+	width: 100px;
+	white-space: nowrap;
+/* 文本不换行 */
+text-overflow:ellipsis;
+/* 超出显示为省略号 */
+overflow: hidden;
+/* 超出部分隐藏 */
+cursor: pointer;
+}
+.classlist .Knowledge .left span {
+	position: absolute;
+	top: -100%;
+}
+.classlist .Knowledge .center {
+	width: 200px;
+	height: 20px;
+	border: 20px;
+	background-color: #999;
+	border-radius: 20px;
+	overflow: hidden;
+}
+.classlist .Knowledge .center .jdt{
+	width: 0px;
+	height: 20px;
+	background-color: #3D72FE;
+	border-radius: 20px;
+	transition: width 0.5s linear;
+}
+.classlist .Knowledge .right {
+	text-indent: 10px;
+	width: 30px;
+}
+.leftbtn {
+	font-size: 30px;
+	position: absolute;
+	top: 50%;
+	left: 20%;
+	cursor: pointer;
+}
+.rightbtn {
+	font-size: 30px;
+	position: absolute;
+	top: 50%;
+	right: 20%;
+	cursor: pointer;
+}
+
+#tcbox {
+	display: none;
+	width: 100px;
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 10px;
+	border-top-right-radius: 0px;
+	background-color: #59e8e3;
+	transform: translateX(-110%);
+}
+#tcbox::after {
+    content: "";
+	border: 10px solid #59e8e3;
+    border-color: transparent transparent transparent #59e8e3;
+    position: absolute;
+    top: 0px;
+    right: -20px;
 }

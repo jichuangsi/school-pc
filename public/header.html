@@ -39,7 +39,7 @@
 				<img src="../img/jcs.png" />
 				<nav id="publicheaderNav" style="display: inline-block;" style="cursor: pointer;">
 					<a href="../Front/index.html" target="_parent" >首页</a>
-					<a>测试报告</b>
+					<a href="../Front/studentstudy.html"  target="_parent" >测试报告</b>
 					<a href="../thacherPage/GroupSelection.html"  target="_parent" >组题选卷</a>
 					<a href="../Front/Choreography.html" target="_parent">课堂管理</a>
 					<a href="../Front/TaskRelease.html" target="_parent">习题中心</a>
@@ -80,6 +80,8 @@
 		$('#publicheaderNav').find('a').eq(3).addClass('str')
 	} else if(a == '考试') {
 		$('#publicheaderNav').find('a').eq(5).addClass('str')
+	} else if(a == '报告') {
+		$('#publicheaderNav').find('a').eq(1).addClass('str')
 	}
 	$('#loginout').click(function(){
 		sessionStorage.removeItem('accessToken')

@@ -394,6 +394,8 @@ function nextkeys(obj){
 function PreviewPaper() //显示隐藏层和弹出层 
 {
 	getAllList();
+	console.log(getlist)
+	console.log(questionList)
 	if(getlist == null) {
 		swal("请先选择题目!");
 	} else {
