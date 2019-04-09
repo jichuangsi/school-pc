@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>获取班级信息</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/list/getClass.js"></script>
+	</head>
+	<style>
+		#updata {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		#upSubject {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		.widths {
+			width: 300px;
+		}
+		
+		#addStydentList {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		#addSubjectList {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		#updaStudentPwd {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
+
+	<body>
+		<div class="x-nav">
+			<a href="javascript:history.go(-1)" class="layui-btn layui-btn-small" style="margin-top:3px;margin-right: 8px;">返回</a>
+			<span id="classInfo" style="color: #CCCCCC;"></span>
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+		</div>
+
+		<div class="x-body">
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-md6 ">
+					<table id="student" lay-filter="student"></table>
+				</div>
+				<div class="layui-col-md6">
+					<table id="subject" lay-filter="subject"></table>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/html" id="update">
+			<span class="layui-btn-sm layui-btn" onclick="see()">修改</span>
+		</script>
+		<script type="text/html" id="addStudent">
+			{{# if(true){ }}
+			<span class="layui-btn-sm layui-btn" onclick="addStydent()">添加</span> {{# } }}
+		</script>
+		<script type="text/html" id="del">
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
+		</script>
+		<script type="text/html" id="updatePwd">
+			<span class="layui-btn-sm layui-btn" onclick="Update()">修改密码</span>
+		</script>
+		<!--科目-->
+		<script type="text/html" id="Subjectup">
+			<span class="layui-btn-sm layui-btn" onclick="SubjectUpdate()">修改</span>
+		</script>
+		<script type="text/html" id="addSubject">
+			<span class="layui-btn-sm layui-btn" onclick="addsubject()">添加</span>
+		</script>
+		<script type="text/html" id="subjectdel">
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="subjectdel">删除</span>
+		</script>
+		<script>
+			function see() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '400px'],
+					anim: 2,
+					title: '学生修改',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#updata')
+				});
+			}
+
+			function addStydent() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '450px'],
+					anim: 2,
+					title: '添加学生',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#addStydentList')
+				});
+			}
+
+			function addsubject() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '250px'],
+					anim: 2,
+					title: '科目添加',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#addSubjectList')
+				});
+			}
+
+			function SubjectUpdate() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '260px'],
+					anim: 2,
+					title: '科目修改',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#upSubject')
+				});
+			}
+
+			function Update() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '350px'],
+					anim: 2,
+					title: '修改密码',
+					maxmin: true,
+					shadeClose: true,
+					content: $('#updaStudentPwd')
+				});
+			}
+		</script>
+	</body>
+	<!---->
+	<div id="updaStudentPwd" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="student">
+			<div class="layui-form-item">
+				<label class="layui-form-label">新密码：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="studentId" />
+					<input type="password" name="newPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">确认密码：</label>
+				<div class="layui-input-block widths">
+					<input type="password" name="yesPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_Pwd">修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!--添加-->
+	<div id="addSubjectList" class="layui-fluid">
+		<form class="layui-form" autocomplete="off">
+			<div class="layui-form-item">
+				<label class="layui-form-label">科目：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="subjectName" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="add_subject">添加</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="addStydentList" class="layui-fluid">
+		<form class="layui-form" autocomplete="off">
+			<div class="layui-form-item">
+				<label class="layui-form-label">学生姓名：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="ClassId" class="layui-input ">
+					<input type="hidden" name="gradeId" class="layui-input ">
+					<input type="hidden" name="schoolId" class="layui-input ">
+					<input type="hidden" name="phraseId" class="layui-input ">
+					<input type="text" name="name" class="layui-input" lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">性别：</label>
+				<div class="layui-input-block widths">
+					<input type="radio" name="sex" value="M" title="男">
+					<input type="radio" name="sex" value="F" title="女">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="account" class="layui-input" lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="pwd" class="layui-input" lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-form-label" style="width:390px;">
+					<button class="layui-btn" lay-submit lay-filter="add_student" type="submit">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					<button type="button" class="layui-btn" id="load">
+			 			 <i class="layui-icon">&#xe67c;</i>导入文件
+					</button>
+				</div>
+				<div class="layui-form-mid layui-word-aux" id="error"></div>
+			</div>
+		</form>
+	</div>
+
+	<!--修改-->
+	<div id="updata" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">姓名：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="studentId" class="layui-input ">
+					<input type="text" name="name" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">年级名称：</label>
+				<div class="layui-input-block widths">
+					<select name="gradeId" id="grade" lay-filter="grade">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">所属班级：</label>
+				<div class="layui-input-block widths">
+					<select name="classId" id="class" lay-filter="class">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_student">修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="upSubject" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">科目：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="id" class="layui-input ">
+					<input type="text" name="subjectName" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</html>

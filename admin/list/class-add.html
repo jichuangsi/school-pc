@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>添加学校</title>
+		<title>添加班级</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/list/class-add.js" ></script>
 	</head>
 	<style>
 		.widths {
@@ -28,13 +29,28 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">学校名称：</label>
 					<div class="layui-input-block widths">
-						<input type="text" name="schoolName" class="layui-input" lay-verify="required">
+						<select name="schoolId" id="status" lay-filter="school">
+						</select>
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">学校地址：</label>
+					<label class="layui-form-label">年级段：</label>
 					<div class="layui-input-block widths">
-						<input type="text" name="address" class="layui-input" lay-verify="required">
+						<select name="phraseId" id="phrase" lay-filter="phrase">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">年级名称：</label>
+					<div class="layui-input-block widths">
+						<select name="gradeId" id="grade" lay-filter="grade">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">班级名称：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="className" class="layui-input" lay-verify="required">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -45,44 +61,6 @@
 				</div>
 			</form>
 		</div>
-		<script>
-			layui.use(['laydate', 'form'], function() {
-				var form = layui.form;
-				form.on('submit(add)', function(data) {
-					var param = data.field;
-					$.ajax({
-						type: "POST",
-						url: httpUrl() + "/school/insertSchool",
-						async: false,
-						headers: {
-							'accessToken': getToken()
-						},
-						contentType: 'application/json',
-						data: JSON.stringify(param),
-						success: function(res) {
-							if(res.code == '0010') {
-								layer.msg('添加成功！', {
-									icon: 1,
-									time: 1000,
-									end: function() {
-										location.reload();
-									}
-								});
-							} else {
-								layer.msg(res.msg, {
-									icon: 2,
-									time: 1000,
-									end: function() {
-										location.reload();
-									}
-								});
-							}
-						}
-					});
-					return false;
-				});
-			});
-		</script>
 	</body>
 
 </html>

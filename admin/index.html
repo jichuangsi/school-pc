@@ -15,9 +15,20 @@
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script src="./lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./js/xadmin.js"></script>
-		<script type="text/javascript" src="js/Configuration.js" ></script>
+		<script type="text/javascript" src="js/Configuration.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 
 	</head>
+	<style>
+		.widths {
+			width: 300px;
+		}
+		
+		#upPwd {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
 
 	<body>
 		<!-- 顶部开始 -->
@@ -28,6 +39,20 @@
 			<div class="left_open">
 				<i title="展开左侧栏" class="iconfont">&#xe699;</i>
 			</div>
+			<ul class="layui-nav right" lay-filter="">
+				<li class="layui-nav-item">
+					<a href="javascript:;">admin</a>
+					<dl class="layui-nav-child">
+						<!-- 二级菜单 -->
+						<dd>
+							<a href="javascript:;" onclick="updatePwd()">修改密码</a>
+						</dd>
+						<dd>
+							<a href="./login.html">退出</a>
+						</dd>
+					</dl>
+				</li>
+			</ul>
 		</div>
 		<!-- 顶部结束 -->
 		<!-- 中部开始 -->
@@ -39,52 +64,52 @@
 					<li>
 						<a href="javascript:;">
 							<i class="iconfont">&#xe6b8;</i>
-							<cite>学校管理</cite>
+							<cite id="setName">学校管理</cite>
 							<i class="iconfont nav_right">&#xe697;</i>
 						</a>
 						<ul class="sub-menu">
 							<li>
 								<!--user/userManagement.html-->
-								<a _href="page/school-add.html">
+								<a _href="list/school-add.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>添加学校</cite>
 								</a>
 							</li>
 							<li>
-								<a _href="page/phrase-add.html">
+								<a _href="list/phrase-add.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>添加年段</cite>
 								</a>
 							</li>
 							<li>
-								<a _href="page/grade-add.html">
+								<a _href="list/grade-add.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>添加年级</cite>
 								</a>
 							</li>
 							<li>
-								<a _href="page/class-add.html">
+								<a _href="list/class-add.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>添加班级</cite>
 
 								</a>
 							</li>
 							<li>
-								<a _href="page/teacher-add.html">
+								<a _href="list/teacher-add.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>添加老师</cite>
 								</a>
 							</li>
 							<li>
-								<a _href="page/students-add.html">
+								<a _href="list/subjects-add.html">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>添加学生</cite>
+									<cite>添加科目</cite>
 								</a>
 							</li>
 							<li>
-								<a _href="page/subjects-add.html">
+								<a _href="list/students-add.html">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>添加科目</cite>
+									<cite>添加学生</cite>
 								</a>
 							</li>
 						</ul>
@@ -92,19 +117,40 @@
 					<li>
 						<a href="javascript:;">
 							<i class="iconfont">&#xe6b8;</i>
-							<cite>系统设置</cite>
+							<cite>学校信息</cite>
 							<i class="iconfont nav_right">&#xe697;</i>
 						</a>
 						<ul class="sub-menu">
 							<li>
 								<!--user/userManagement.html-->
-								<a _href="System/site.html">
+								<a _href="list/getSchool.html">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>设置</cite>
+									<cite>学校信息</cite>
+								</a>
+							</li>
+
+						</ul>
+					</li>
+					<li id="site">
+						<a href="javascript:;">
+							<i class="iconfont">&#xe6b8;</i>
+							<cite>系统设置</cite>
+							<i class="iconfont nav_right">&#xe697;</i>
+						</a>
+						<ul class="sub-menu">
+							<li>
+								<a _href="System/regist.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>注册用户</cite>
+								</a>
+							</li>
+							<li id="create">
+								<a _href="System/add_role.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>添加角色</cite>
 								</a>
 							</li>
 						</ul>
-
 					</li>
 				</ul>
 			</div>
@@ -139,14 +185,46 @@
 			<div class="copyright">Copyright ©2017 All Rights Reserved</div>
 		</div>
 		<!-- 底部结束 -->
-		<script>
-			$(function(){
-				var name=siteSchoolName();
-				if(name!="undefined"&&name!=null){
-					$('#school').text(name+"后台");
-				}
-			});
-		</script>
 	</body>
+	<script>
+		function updatePwd() {
+			var index = layer.open({
+				type: 1,
+				area: ['500px', '350px'],
+				anim: 2,
+				title: '修改密码',
+				maxmin: true,
+				shadeClose: true, //点击遮罩关闭
+				content: $('#upPwd')
+			});
+		}
+	</script>
+	<div id="upPwd" class="layui-fluid">
+		<form class="layui-form" autocomplete="off">
+			<div class="layui-form-item">
+				<label class="layui-form-label">旧密码：</label>
+				<div class="layui-input-block widths">
+					<input type="password" name="oldPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">新密码：</label>
+				<div class="layui-input-block widths">
+					<input type="password" name="newPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">确认密码：</label>
+				<div class="layui-input-block widths">
+					<input type="password" name="yesPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_Pwd">添加</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 </html>
