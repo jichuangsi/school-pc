@@ -1,4 +1,4 @@
-﻿var url;
+var url;
 var token;
 var schoolName;
 var schoolId;

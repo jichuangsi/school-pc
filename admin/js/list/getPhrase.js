@@ -19,7 +19,7 @@ layui.use(['table', 'form'], function() {
 		"phraseName":'',
 		"gradeName":'',
 		"className":'',
-		"schoolName":'',
+		"schoolName":''
 	};
 	list.schoolId = id;
 	if(schoolList.schoolId==list.schoolId){
@@ -477,6 +477,9 @@ layui.use(['table', 'form'], function() {
 			delClass(param.classId);
 		});
 		$(document).on('click', '#Classlook', function() {
+			list.ClassId=param.classId;
+			list.className=param.className;
+			sessionStorage.setItem('list',JSON.stringify(list));//存储相关信息
 			var toUrl = "getTeacher.html?ClassId=" + param.classId
 			window.open(toUrl, '_self');
 		})

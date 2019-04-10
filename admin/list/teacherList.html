@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>教师列表</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script type="text/javascript" src="../lib/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/list/teacherlist.js"></script>
+	</head>
+	<style>
+		#subjectList {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
+
+	<body>
+		<div class="x-body">
+			<table id="teacher" lay-filter="teacher"></table>
+		</div>
+	</body>
+	<script type="text/html" id="seesubject">
+		<span class="layui-btn-sm layui-btn" id="subjects" onclick="list()">详情</span>
+	</script>
+	<script type="text/html" id="choiceTeacher">
+		<span class="layui-btn-sm layui-btn" id="choiceTeacher" >选择添加作为任课老师</span>
+	</script>
+	<script type="text/html" id="choicePrimaryTeacher">
+		<span class="layui-btn-sm layui-btn" id="choicePrimaryTeacher" >选择添加作为班主任</span>
+	</script>
+	<script>
+		function list() {
+			index = layer.open({
+				type: 1,
+				area: ['400px', '200px'],
+				anim: 2,
+				title: '教学科目',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#subjectList')
+			});
+		}
+	</script>
+	<div id="subjectList">
+		<div class="x-body">
+			<div id="subject"></div>
+		</div>
+	</div>
+
+</html>

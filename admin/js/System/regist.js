@@ -64,9 +64,8 @@ layui.use('form', function() {
 					$('#role').empty();
 					var inputs = '';
 					for(var i = 0; i < arr.length; i++) {
-						if(arr[i].roleName != "学校管理员"){
 							inputs += '<input type="radio" name="role" value="' + arr[i].roleId + '"  title="' + arr[i].roleName + '">'
-						}
+						
 					}
 					$('#role').append(inputs);
 					form.render('radio');

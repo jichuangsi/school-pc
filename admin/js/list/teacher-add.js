@@ -26,7 +26,7 @@ layui.use('form', function() {
 		}
 
 		var secondarySubjects = new Array();
-
+		var roleIds = new Array();
 		var secondaryClass = new Array();
 		for(var i = 0; i < $("input:checkbox[name='subjectList']:checked").length; i++) {
 			secondarySubjects.push({
@@ -40,21 +40,14 @@ layui.use('form', function() {
 				className: $("input:checkbox[name='classList']:checked")[i].title
 			})
 		}
+		for(var i = 0; i < $("input:checkbox[name='role']:checked").length; i++) {
+			roleIds.push(
+				 $("input:checkbox[name='role']:checked")[i].value
+			)
+		}
 		var model = {
 			"account": param.account,
 			"name": param.name,
-			"phrase": {
-				"phraseId": param.phrase,
-				"phraseName": $("#phrase").find("option:selected").text()
-			},
-			"primaryClass": {
-				"classId": param.classId,
-				"className": $("#class").find("option:selected").text()
-			},
-			"primaryGrade": {
-				"gradeId": param.gradeId,
-				"gradeName": $("#grade").find("option:selected").text()
-			},
 			"primarySubject": {
 				"subjectId": param.subjectId,
 				"subjectName": $("#subject").find("option:selected").text()
@@ -66,27 +59,15 @@ layui.use('form', function() {
 			},
 			"secondaryClass": secondaryClass,
 			"secondarySubjects": secondarySubjects,
+			"roleIds":roleIds,
 			"sex": param.sex
 		}
 		if(param.schoolId != -1 || getRole() >= 2) {
-			if(getRole()>= 2) {
+			if(getRole() >= 2) {
 				model.school = {
 					"schoolId": getSchoolId(),
 					"schoolName": getSchoolName()
 				};
-			}
-			if(param.phrase == -1) {
-				layer.msg('请选择年级段！', {
-					icon: 2,
-					time: 1000
-				});
-				return false;
-			} else if(param.gradeId == -1 || param.gradeId == "") {
-				layer.msg('请选择年级！', {
-					icon: 2,
-					time: 1000
-				});
-				return false;
 			}
 			$.ajax({
 				type: "post",
@@ -379,6 +360,32 @@ layui.use('form', function() {
 						inputs += '<input type="checkbox" name="classList" value="' + arr[i].classId + '" title="' + arr[i].className + '">'
 					}
 					$('#classList').append(inputs);
+					form.render('checkbox');
+				}
+			}
+		});
+	}
+	getRoleS();
+	//获取角色
+	function getRoleS() {
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/back/role/getRoles",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					var arr;
+					arr = res.data;
+					subCount = arr.length;
+					$('#role').empty();
+					var inputs = '';
+					for(var i = 0; i < arr.length; i++) {
+						inputs += '<input type="checkbox" name="role" value="' + arr[i].roleId + '"  title="' + arr[i].roleName + '">'
+					}
+					$('#role').append(inputs);
 					form.render('checkbox');
 				}
 			}
