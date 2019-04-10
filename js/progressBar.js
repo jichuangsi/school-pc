@@ -66,6 +66,7 @@ var accessToken;
 var user
 var local
 var classlistlength
+var btnclick = true
 $(function() {
 	local = httpLocation();
 	accessToken = getAccessToken()
@@ -83,12 +84,14 @@ function getdata() {
         },
         type: "GET",
         success: function(data) {
-			var html = template('classlist',data)
-			classlistlength = data.data.length
-			var width = data.data.length * 430
-			$('.classlist').html(html)
-			$('.classlist').css('width',width+'px')
-			$('.classname').text($('.classname').text()+'-'+user.roles[0].primarySubject.subjectName)
+			if(data.code=="0010"){
+				var html = template('classlist',data)
+				classlistlength = data.data.length
+				var width = data.data.length * 582
+				$('.classlist').html(html)
+				$('.classlist').css('width',width+'px')
+				$('.classname').text($('.classname').text()+'-'+user.roles[0].primarySubject.subjectName)
+			}
         },
 		error: function() {
 		}
@@ -104,26 +107,38 @@ function jump(val){
 	window.location.href = '../Front/studentstudy.html'
 }
 function leftbtn () {
-	var num = Number($('.classlist').css('marginLeft').split('px')[0])
-	var left
-	if(num == 0) {
-		return;
-	} else {
-		left = num + 430 + 'px'
+	if(btnclick){
+		var num = Number($('.classlist').css('marginLeft').split('px')[0])
+		var left
+		if(num == 0) {
+			return;
+		} else {
+			left = num + 582 + 'px'
+		}
+		$('.classlist').css('marginLeft',left)
+		setTimeout(function(){
+			btnclick = true
+		},1000)
 	}
-	$('.classlist').css('marginLeft',left)
 }
 
 function rightbtn () {
-	var num = Number($('.classlist').css('marginLeft').split('px')[0])
-	var numend = 0-(classlistlength-1)*430
-	var left
-	if(num == (numend)) {
-		return;
-	} else {
-		left = num - 430 + 'px'
+	if(classlistlength&&btnclick){
+		btnclick = false
+		var num = Number($('.classlist').css('marginLeft').split('px')[0])
+		var numend = 0-(classlistlength-1)*582
+		var left
+		console.log(321123)
+		if(num == (numend)) {
+			return;
+		} else {
+			left = num - 582 + 'px'
+		}
+		$('.classlist').css('marginLeft',left)
+		setTimeout(function(){
+			btnclick = true
+		},1000)
 	}
-	$('.classlist').css('marginLeft',left)
 }
 
 function mouseover (val) {

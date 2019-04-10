@@ -3,6 +3,7 @@ var accessToken;
 var questionList;
 var local
 var classlistlength
+var btnclick = true
 $(function() {
 	local = httpLocation();
     getgradename();
@@ -165,32 +166,42 @@ function PreviewPaper(val) //显示隐藏层和弹出层
 }
 
 function leftbtn () {
-	$('#tcbox').text(" ")
-	$('#tcbox').css('display','none')
-	var num = Number($('.knowledgelist').css('marginLeft').split('px')[0])
-	var left
-	if(num == 0) {
-		return;
-	} else {
-		left = num + 250 + 'px'
+	if(btnclick){
+		$('#tcbox').text(" ")
+		$('#tcbox').css('display','none')
+		var num = Number($('.knowledgelist').css('marginLeft').split('px')[0])
+		var left
+		if(num == 0) {
+			return;
+		} else {
+			left = num + 250 + 'px'
+		}
+		$('.knowledgelist').css('marginLeft',left)
+		$('.knowledgelist2').css('marginLeft',left)
+		setTimeout(function(){
+			btnclick = true
+		},1000)
 	}
-	$('.knowledgelist').css('marginLeft',left)
-	$('.knowledgelist2').css('marginLeft',left)
 }
 
 function rightbtn () {
-	$('#tcbox').text(" ")
-	$('#tcbox').css('display','none')
-	var num = Number($('.knowledgelist').css('marginLeft').split('px')[0])
-	var numend = 0-(classlistlength-9) *125
-	var left
-	if(num <= (numend)) {
-		return;
-	} else {
-		left = num - 250 + 'px'
+	if(classlistlength&&btnclick){
+		$('#tcbox').text(" ")
+		$('#tcbox').css('display','none')
+		var num = Number($('.knowledgelist').css('marginLeft').split('px')[0])
+		var numend = 0-(classlistlength-9) *125
+		var left
+		if(num <= (numend)) {
+			return;
+		} else {
+			left = num - 250 + 'px'
+		}
+		$('.knowledgelist').css('marginLeft',left)
+		$('.knowledgelist2').css('marginLeft',left)
+		setTimeout(function(){
+			btnclick = true
+		},1000)
 	}
-	$('.knowledgelist').css('marginLeft',left)
-	$('.knowledgelist2').css('marginLeft',left)
 }
 //点击解析
 function analysis_click(obj) {

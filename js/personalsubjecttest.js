@@ -158,7 +158,7 @@ function loopitem() {
 				a1 += "<input type='hidden' name='id'value='" + itembaklist.content[i].questionIdMD52 + "' />";
 				a1 += "<div class='subjectOperation' style='margin-left:620px;'><a onclick='capabilitySelection(this,2)' class='subjectOperation_add' style='line-height:17px;"+(!added?"display:inline-block;":"display:none;")+"'>加入试卷</a><a  onclick='remove_paper(this,2)' class='subjectOperation_remove' style='line-height:17px;background-color:#B93535;color:#fff;"+(added?"display:inline-block;background-color:#B93535;color:#fff;":"display:none;")+"'>移除试卷</a>";
 				if(isWhichoneItem == 3) {
-					a1 += "<div class='del' style='float:right;margin-right:20px;'><div style='top:0px;left:0px' class='sub-del'  onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
+					a1 += "<div class='del' style='float:right;margin-right:20px;'><div style='top:0px;left:0px;' class='sub-del'  onclick='delObj(this)'>删除题目</div><input type='hidden' class='delId' value='" + itembaklist.content[i].questionId + "' /></div>"
 				}				
 				a1 += "</div></div>";
 				a1 += "<div class='subject_info' style='display: none;'>";
