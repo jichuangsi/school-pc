@@ -48,7 +48,7 @@ layui.use("form", function() {
 	function validation() {
 		if(admin == 'M') { //超级
 			//无权限限制
-		} else if(admin == '学校管理员') { //学校管理员
+		} else if(admin == '管理员') { //学校管理员
 			$('#nav').first('li').find('ul').first().find('li').slice(0, 1).hide();
 			$('#create').hide();
 		} else if(admin == "校长") { //校长
@@ -57,7 +57,7 @@ layui.use("form", function() {
 		} else if(admin == "教务处") { //添加学生一级
 			$('#nav').first('li').find('ul').first().find('li').slice(0, 1).hide();
 			$('#site').hide()
-		} else if(admin== '老师') { //未确认的
+		} else if(admin== '教师') { //未确认的
 			$('#nav').first('li').find('ul').first().find('li').slice(0, 6).hide();
 			$('#site').hide()
 		} else {

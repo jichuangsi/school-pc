@@ -10,6 +10,7 @@ layui.use(['table', 'form'], function() {
 		var arr = str.split("="); //各个参数放到数组里
 		return arr[1];
 	}
+
 	var id = UrlSearch();
 	table.render({
 		elem: '#teacher',
@@ -33,11 +34,6 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'subjectName',
 					title: '教学科目'
-				},
-				{
-					field: 'subjectId',
-					title: '查看',
-					toolbar: '#teacherList'
 				},
 				{
 					field: 'id',
@@ -77,7 +73,7 @@ layui.use(['table', 'form'], function() {
 	table.on('row(teacher)', function(data) {
 		var param = data.data;
 		$(document).on('click', '#teacherDel', function() {
-			delAll(param.teacherId);
+			ChoiceTeacher(param.teacherId);
 		});
 		form.val('test', {
 			"teacherId": param.teacherId
@@ -162,6 +158,11 @@ layui.use(['table', 'form'], function() {
 	//添加老师先获取一堆东西。。。。。。
 	//list里面有学校，年段，年级，班级
 	var list = JSON.parse(sessionStorage.getItem('list'));
+
+	function setClass() {
+		$('#Info').text('当前:' + list.className)
+	}
+	setClass();
 	getSubjects();
 	getClassList();
 	getSubject();
@@ -387,5 +388,39 @@ layui.use(['table', 'form'], function() {
 		return false;
 	});
 	//修改教师
+	//
+	function ChoiceTeacher(teacherid) {
+		var id = list.ClassId;
+		layer.confirm('确认该老师已离任？', function(index) {
+			$.ajax({
+				type: "get",
+				url: httpUrl() + "/class/classRemoveTeacher/" + id + "/" + teacherid,
+				headers: {
+					'accessToken': getToken()
+				},
+				async: false,
+				contentType: 'application/json',
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('操作成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					}
+				}
+			});
+		});
+	}
 
 });

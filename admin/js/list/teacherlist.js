@@ -22,7 +22,14 @@ layui.use('table', function() {
 				},
 				{
 					field: 'sex',
-					title: '性别'
+					title: '性别',
+					templet: function(d) {
+						if(d.sex == "M") {
+							return "男"
+						} else if(d.sex == 'F') {
+							return "女"
+						}
+					}
 				},
 				{
 					field: 'account',
@@ -98,32 +105,37 @@ layui.use('table', function() {
 		var model = {
 			"secondaryClassId": list.ClassId
 		}
-		$.ajax({
-			url: httpUrl() + "/class/classInsertTeacher/" + id,
-			type: "post",
-			async: false,
-			dataType: 'JSON',
-			contentType: 'application/json',
-			data: JSON.stringify(model),
-			success: function(res) {
-				if(res.code == '0010') {
-					layer.msg('添加成功！', {
-						icon: 1,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-						}
-					});
-				} else {
-					layer.msg(res.msg, {
-						icon: 2,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-						}
-					});
+		layer.confirm('确认添加该老师为任课老师？', function(index) {
+			$.ajax({
+				url: httpUrl() + "/class/classInsertTeacher/" + id,
+				headers: {
+					'accessToken': getToken()
+				},
+				type: "post",
+				async: false,
+				dataType: 'JSON',
+				contentType: 'application/json',
+				data: JSON.stringify(model),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('添加成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					}
 				}
-			}
+			});
 		});
 	}
 
@@ -131,33 +143,39 @@ layui.use('table', function() {
 		var param = {
 			"primaryClassId": list.ClassId
 		}
-		$.ajax({
-			url: httpUrl() + "/class/classInsertTeacher/" + id,
-			type: "post",
-			async: false,
-			contentType: 'application/json',
-			data: JSON.stringify(param),
-			success: function(res) {
-				if(res.code == '0010') {
-					layer.msg('添加成功！', {
-						icon: 1,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-						}
-					});
-				} else {
-					layer.msg(res.msg, {
-						icon: 2,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-						}
-					});
+		layer.confirm('确认添加该老师为班主任？', function(index) {
+			$.ajax({
+				url: httpUrl() + "/class/classInsertTeacher/" + id,
+				headers: {
+					'accessToken': getToken()
+				},
+				type: "post",
+				async: false,
+				contentType: 'application/json',
+				data: JSON.stringify(param),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('添加成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					}
+				},
+				error: function(res) {
+					console.log(res);
 				}
-			},error:function(res){
-				console.log(res);
-			}
+			});
 		});
 	}
 });

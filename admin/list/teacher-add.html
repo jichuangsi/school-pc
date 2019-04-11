@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/Configuration.js"></script>
-		<script type="text/javascript" src="../js/list/teacher-add.js" ></script>
+		<script type="text/javascript" src="../js/list/teacher-add.js"></script>
 	</head>
 	<style>
 		.widths {
@@ -24,6 +24,10 @@
 	</style>
 
 	<body>
+		<div class="x-nav">
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+		</div>
 		<div class="x-body">
 			<form class="layui-form">
 				<div class="layui-form-item">
@@ -40,12 +44,12 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-				<label class="layui-form-label">性别：</label>
-				<div class="layui-input-block widths">
-					<input type="radio" name="sex" value="M" title="男">
-					<input type="radio" name="sex" value="F" title="女" >
+					<label class="layui-form-label">性别：</label>
+					<div class="layui-input-block widths">
+						<input type="radio" name="sex" value="M" title="男">
+						<input type="radio" name="sex" value="F" title="女">
+					</div>
 				</div>
-			</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">账号：</label>
 					<div class="layui-input-block widths">
@@ -70,7 +74,7 @@
 					<div class="layui-input-block widths" id="subjects">
 					</div>
 				</div>
-			<!--	<div class="layui-form-item">
+				<!--	<div class="layui-form-item">
 					<label class="layui-form-label">年段级：</label>
 					<div class="layui-input-block widths">
 						<select name="phrase" id="phrase" lay-filter="phrase">
@@ -110,7 +114,6 @@
 			</form>
 		</div>
 		<script>
-		
 		</script>
 	</body>
 

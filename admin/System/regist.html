@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
-		<script type="text/javascript" src="../js/System/regist.js" ></script>
+		<script type="text/javascript" src="../js/System/regist.js"></script>
 	</head>
 	<style>
 		.widths {
@@ -29,44 +29,141 @@
 				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
 		</div>
 		<div class="x-body">
-			
-			<form class="layui-form">
-				<div class="layui-form-item">
-					<label class="layui-form-label">归属学校：</label>
-					<div class="layui-input-block widths">
-						<select name="schoolId" id="status" lay-filter="school">
-						</select>
-					</div>
+			<div class="layui-row">
+				<div class="layui-col-md4">
+					<form class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">归属学校：</label>
+							<div class="layui-input-block widths">
+								<select name="schoolId" id="status" lay-filter="school">
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">用户名：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="userName" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">账户：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="account" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">密码：</label>
+							<div class="layui-input-block widths">
+								<input type="password" name="pwd" class="layui-input" lay-verify="pwd">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">角色：</label>
+							<div class="layui-input-block widths" id="role">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="register" type="submit">立即注册</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">用户名：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="userName" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">账户：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">密码：</label>
-					<div class="layui-input-block widths">
-						<input type="password" name="pwd" class="layui-input" lay-verify="pwd">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">角色：</label>
-					<div class="layui-input-block widths" id="role">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay-filter="register" type="submit">立即注册</button>
-					</div>
-				</div>
-			</form>
+				<!--<div class="layui-col-md8">
+					<form class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">学校权限：</label>
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<label class="layui-form-label">学校增加</label>
+									<input type="checkbox" name="school_1" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">学校删除</label>
+									<input type="checkbox" name="school_2" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">学校修改</label>
+									<input type="checkbox" name="school_3" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">学校查看</label>
+									<input type="checkbox" name="school_4" lay-skin="switch" checked>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">年段权限：</label>
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年段增加</label>
+									<input type="checkbox" name="phrase_!" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年段删除</label>
+									<input type="checkbox" name="phrase_2" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年段修改</label>
+									<input type="checkbox" name="phrase_3" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年段查看</label>
+									<input type="checkbox" name="phrase_4" lay-skin="switch" checked>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">年级权限：</label>
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年级增加</label>
+									<input type="checkbox" name="grade_1" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年级删除</label>
+									<input type="checkbox" name="grade_2" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年级修改</label>
+									<input type="checkbox" name="grade_3" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">年级查询</label>
+									<input type="checkbox" name="grade_4" lay-skin="switch" checked>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">班级权限：</label>
+							<div class="layui-input-block">
+								<div class="layui-input-inline">
+									<label class="layui-form-label">班级增加</label>
+									<input type="checkbox" name="class_1" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">班级删除</label>
+									<input type="checkbox" name="class_2" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">班级修改</label>
+									<input type="checkbox" name="class_3" lay-skin="switch" checked>
+								</div>
+								<div class="layui-input-inline">
+									<label class="layui-form-label">班级查询</label>
+									<input type="checkbox" name="class_4" lay-skin="switch" checked>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="power" type="submit">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>-->
+			</div>
+
 		</div>
 	</body>
 

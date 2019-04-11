@@ -49,7 +49,7 @@ layui.use(['form', 'table'], function() {
 			elem: '#demo',
 			method: "get",
 			async: false,
-			url: httpUrl() + "/back/user/getSchoolUserInfo?schoolId=" + id + "",
+			url: httpUrl() + "/back/user/getSchoolUserInfo",
 			headers: {
 				'accessToken': getToken()
 			},
@@ -137,7 +137,7 @@ layui.use(['form', 'table'], function() {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								location.reload();
+								table.reload('demo');
 							}
 						});
 					} else {
@@ -145,7 +145,7 @@ layui.use(['form', 'table'], function() {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								location.reload();
+								table.reload('demo');
 							}
 						});
 					}

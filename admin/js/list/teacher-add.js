@@ -370,7 +370,7 @@ layui.use('form', function() {
 	function getRoleS() {
 		$.ajax({
 			type: "get",
-			url: httpUrl() + "/back/role/getRoles",
+			url: httpUrl() + "/getSystemRoles",
 			async: false,
 			headers: {
 				'accessToken': getToken()

@@ -148,6 +148,9 @@ layui.use('form', function() {
 	form.verify({　　　　
 		pwd: [/^((?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12})$/, '密码必须为6-12位数字与字母混合']　　
 	});
-	
-	
+	//测试
+	form.on('submit(power)',function(data){
+		var param =data.field;
+		$("input:not(:checked)");//获取没有选中的
+	})
 });
