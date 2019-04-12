@@ -24,24 +24,117 @@
 
 	<body>
 		<div class="x-body">
-			<form class="layui-form">
-				<div class="layui-form-item">
-					<label class="layui-form-label">角色：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="roleName" class="layui-input" placeholder="" lay-verify="required">
-					</div>
+			<div class="layui-row">
+				<div class="layui-col-md6">
+					<form class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">角色：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="roleName" class="layui-input" placeholder="" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="add_role" type="submit">立即添加</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="layui-form-item">
-					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay-filter="add_role" type="submit">立即添加</button>
-					</div>
+				<div class="layui-col-md6">
+					<table id="role" lay-filter='role'></table>
 				</div>
-			</form>
+			</div>
+			<script type="text/html" id="roleDel">
+				<span class="layui-btn layui-btn-sm layui-btn-danger" id="roleDel">删除</span>
+			</script>
 		</div>
+
 	</body>
 	<script>
-		layui.use('form', function() {
+		layui.use(['form', 'table'], function() {
 			var form = layui.form;
+			var table = layui.table;
+			table.render({
+				elem: '#role',
+				method: "get",
+				async: false,
+				url: httpUrl() + "/back/role/getRoles",
+				headers: {
+					'accessToken': getToken()
+				},
+				cols: [
+					[{
+							field: 'roleId',
+							title: '序号',
+							type: 'numbers'
+						},
+						{
+							field: 'roleName',
+							title: '角色'
+						},
+						{
+							field: 'schooldel',
+							title: '删除',
+							toolbar: '#roleDel'
+						}
+					]
+				],
+				parseData: function(res) {
+					var arr;
+					var code;
+					var total;
+					if(res.code == "0010") {
+						code = 0;
+						arr = res.data;
+						total = arr.length;
+					}
+					return {
+						"code": 0,
+						"msg": res.msg,
+						"count": total,
+						"data": arr
+					};
+				}
+			});
+			table.on('row(role)', function(data) {
+				var param = data.data;
+				$(document).on('click', '#roleDel', function() {
+					delRole(param.roleId);
+				})
+			});
+
+			function delRole(id) {
+				layer.confirm('确认要删除吗？', function(index) {
+					$.ajax({
+						type: "DELETE",
+						url: httpUrl() + "/back/role/deleteRole/" + id + "",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								layer.msg('删除成功！！', {
+									icon: 1,
+									time: 1000,
+									end: function() {
+										table.reload('role');
+									}
+								});
+							} else {
+								layer.msg(res.msg, {
+									icon: 2,
+									time: 1000,
+									end: function() {
+										table.reload('role');
+									}
+								});
+							}
+						}
+					});
+				})
+			}
+
 			form.on('submit(add_role)', function(data) {
 				var param = data.field;
 				$.ajax({

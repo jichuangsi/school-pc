@@ -61,9 +61,6 @@
 				<div class="layui-col-md6 ">
 					<table id="student" lay-filter="student"></table>
 				</div>
-				<div class="layui-col-md6">
-					<table id="subject" lay-filter="subject"></table>
-				</div>
 			</div>
 		</div>
 
@@ -71,8 +68,7 @@
 			<span class="layui-btn-sm layui-btn" onclick="see()">修改</span>
 		</script>
 		<script type="text/html" id="addStudent">
-			{{# if(true){ }}
-			<span class="layui-btn-sm layui-btn" onclick="addStydent()">添加</span> {{# } }}
+			<span class="layui-btn-sm layui-btn" onclick="addStydent()">添加</span>
 		</script>
 		<script type="text/html" id="del">
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
@@ -176,21 +172,7 @@
 		</form>
 	</div>
 	<!--添加-->
-	<div id="addSubjectList" class="layui-fluid">
-		<form class="layui-form" autocomplete="off">
-			<div class="layui-form-item">
-				<label class="layui-form-label">科目：</label>
-				<div class="layui-input-block widths">
-					<input type="text" name="subjectName" class="layui-input ">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-block">
-					<button class="layui-btn" lay-submit lay-filter="add_subject">添加</button>
-				</div>
-			</div>
-		</form>
-	</div>
+
 	<div id="addStydentList" class="layui-fluid">
 		<form class="layui-form" autocomplete="off">
 			<div class="layui-form-item">
@@ -262,22 +244,6 @@
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-submit lay-filter="update_student">修改</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div id="upSubject" class="layui-fluid">
-		<form class="layui-form" autocomplete="off" lay-filter="test">
-			<div class="layui-form-item">
-				<label class="layui-form-label">科目：</label>
-				<div class="layui-input-block widths">
-					<input type="hidden" name="id" class="layui-input ">
-					<input type="text" name="subjectName" class="layui-input ">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-block">
-					<button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
 				</div>
 			</div>
 		</form>

@@ -18,6 +18,7 @@ layui.use(['table', 'form', 'upload'], function() {
 	function setClass() {
 		$('#classInfo').text('当前:' + list.className)
 	}
+	
 	table.render({
 		elem: '#student',
 		method: "get",

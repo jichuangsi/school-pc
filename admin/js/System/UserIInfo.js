@@ -1,50 +1,49 @@
 layui.use(['form', 'table'], function() {
 	var form = layui.form;
 	var table = layui.table;
-	getSchool();
-	//获取学校列表
-	function getSchool() {
-		$('#school').empty();
-		var options = '<option value="-1" selected="selected">' + "请选择学校" + '</option>';
-		var arr;
-		$.ajax({
-			type: "get",
-			url: httpUrl() + "/school/getSchools",
-			async: false,
-			headers: {
-				'accessToken': getToken()
-			},
-			success: function(res) {
-				if(res.code == '0010') {
-					arr = res.data;
-					if(arr == null || arr == undefined) {
-						options = '<option value="" selected="selected">暂无学校信息请先去添加学校信息</option>'
-					} else {
-						for(var i = 0; i < arr.length; i++) {
-							options += '<option value="' + arr[i].schoolId + '" >' + arr[i].schoolName + '</option>'
-						}
-					}
-					$('#school').append(options);
-					form.render('select');
-				} else {
-					layer.msg(res.msg, {
-						icon: 2,
-						time: 1000,
-						end: function() {
-							location.reload();
-						}
-					});
-				}
-			}
-		});
-	}
-	form.on('select(school)', function(data) {
-		if(data.value != '-1') {
-			var id = data.value;
-			index(id);
-		}
-	});
-	index = function(id) {
+	//	getSchool();
+	//	//获取学校列表
+	//	function getSchool() {
+	//		$('#school').empty();
+	//		var options = '<option value="-1" selected="selected">' + "请选择学校" + '</option>';
+	//		var arr;
+	//		$.ajax({
+	//			type: "get",
+	//			url: httpUrl() + "/school/getSchools",
+	//			async: false,
+	//			headers: {
+	//				'accessToken': getToken()
+	//			},
+	//			success: function(res) {
+	//				if(res.code == '0010') {
+	//					arr = res.data;
+	//					if(arr == null || arr == undefined) {
+	//						options = '<option value="" selected="selected">暂无学校信息请先去添加学校信息</option>'
+	//					} else {
+	//						for(var i = 0; i < arr.length; i++) {
+	//							options += '<option value="' + arr[i].schoolId + '" >' + arr[i].schoolName + '</option>'
+	//						}
+	//					}
+	//					$('#school').append(options);
+	//					form.render('select');
+	//				} else {
+	//					layer.msg(res.msg, {
+	//						icon: 2,
+	//						time: 1000,
+	//						end: function() {
+	//							location.reload();
+	//						}
+	//					});
+	//				}
+	//			}
+	//		});
+	//	}
+	//	form.on('select(school)', function(data) {
+	//		if(data.value != '-1') {
+	//			var id = data.value;
+	//			index(id);
+	//		}
+	//	});
 		table.render({
 			elem: '#demo',
 			method: "get",
@@ -102,7 +101,6 @@ layui.use(['form', 'table'], function() {
 				};
 			}
 		});
-	}
 	table.on('row(demo)', function(data) {
 		var param = data.data;
 		$(document).on('click', '#userDel', function() {

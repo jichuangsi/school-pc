@@ -15,7 +15,22 @@
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/list/subjectlist.js"></script>
 	</head>
+	<style>
+		#upSubject {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		.widths {
+			width: 300px;
+		}
+		#addSubjectList {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
 
 	<body>
 		<div class="x-nav">
@@ -25,49 +40,71 @@
 		<div class="x-body">
 			<table id="subject" lay-filter="subject"></table>
 		</div>
-	</body>
-	<script>
-		layui.use('table', function() {
-			var table = layui.table;
-			table.render({
-				elem: '#subject',
-				method: "get",
-				async: false,
-				url: httpUrl() + "/school/subject/getSubjects",
-				headers: {
-					'accessToken': getToken()
-				},
-				cols: [
-					[{
-							field: 'id',
-							title: '序号',
-							type: 'numbers'
-						},
-						{
-							field: 'subjectName',
-							title: '科目名称'
+		<script type="text/html" id="Subjectup">
+			<span class="layui-btn-sm layui-btn" onclick="SubjectUpdate()">修改</span>
+		</script>
+		<script type="text/html" id="addSubject">
+			<span class="layui-btn-sm layui-btn" onclick="addsubject()">添加</span>
+		</script>
+		<script type="text/html" id="subjectdel">
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="subjectdel">删除</span>
+		</script>
+		<script>
+			function addsubject() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '250px'],
+					anim: 2,
+					title: '科目添加',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#addSubjectList')
+				});
+			}
 
-						}
-					]
-				],
-				parseData: function(res) {
-					var arr;
-					var code;
-					var total;
-					if(res.code == "0010") {
-						code = 0;
-						arr = res.data;
-						total = arr.length;
-					}
-					return {
-						"code": 0,
-						"msg": res.msg,
-						"count": total,
-						"data": arr
-					};
-				}
-			});
-		})
-	</script>
+			function SubjectUpdate() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '260px'],
+					anim: 2,
+					title: '科目修改',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#upSubject')
+				});
+			}
+		</script>
+	</body>
+	<div id="addSubjectList" class="layui-fluid">
+		<form class="layui-form" autocomplete="off">
+			<div class="layui-form-item">
+				<label class="layui-form-label">科目：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="subjectName" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="add_subject">添加</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="upSubject" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">科目：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="id" class="layui-input ">
+					<input type="text" name="subjectName" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 </html>

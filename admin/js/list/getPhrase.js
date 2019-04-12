@@ -10,21 +10,21 @@ layui.use(['table', 'form'], function() {
 	var id = UrlSearch();
 	var table = layui.table;
 	var form = layui.form;
-	var schoolList=JSON.parse(sessionStorage.getItem('schoolList'));
+	var schoolList = JSON.parse(sessionStorage.getItem('schoolList'));
 	var list = {
 		"schoolId": '',
 		"phraseId": '',
 		"gradeId": '',
 		"ClassId": '',
-		"phraseName":'',
-		"gradeName":'',
-		"className":'',
-		"schoolName":''
+		"phraseName": '',
+		"gradeName": '',
+		"className": '',
+		"schoolName": ''
 	};
 	list.schoolId = id;
-	if(schoolList.schoolId==list.schoolId){
-		list.schoolName=schoolList.schoolName;
-	}//取到学校名称
+	if(schoolList.schoolId == list.schoolId) {
+		list.schoolName = schoolList.schoolName;
+	} //取到学校名称
 	var IdList = [];
 	IdList.push(id); //存储学校Id
 	table.render({
@@ -98,7 +98,7 @@ layui.use(['table', 'form'], function() {
 		});
 		$(document).on('click', '#look', function() {
 			list.phraseId = param.id;
-			list.phraseName=param.phraseName;
+			list.phraseName = param.phraseName;
 			renderTable(param.id);
 		})
 	});
@@ -283,7 +283,7 @@ layui.use(['table', 'form'], function() {
 		$(document).on('click', '#gradelook', function() {
 			IdList.push(param.gradeId);
 			list.gradeId = param.gradeId;
-			list.gradeName=param.gradeName;
+			list.gradeName = param.gradeName;
 			renderClassTable(param.gradeId);
 		})
 	});
@@ -477,16 +477,16 @@ layui.use(['table', 'form'], function() {
 			delClass(param.classId);
 		});
 		$(document).on('click', '#Classlook', function() {
-			list.ClassId=param.classId;
-			list.className=param.className;
-			sessionStorage.setItem('list',JSON.stringify(list));//存储相关信息
+			list.ClassId = param.classId;
+			list.className = param.className;
+			sessionStorage.setItem('list', JSON.stringify(list)); //存储相关信息
 			var toUrl = "getTeacher.html?ClassId=" + param.classId
 			window.open(toUrl, '_self');
 		})
 		$(document).on('click', '#ClassStudent', function() {
-			list.ClassId=param.classId;
-			list.className=param.className;
-			sessionStorage.setItem('list',JSON.stringify(list));//存储相关信息
+			list.ClassId = param.classId;
+			list.className = param.className;
+			sessionStorage.setItem('list', JSON.stringify(list)); //存储相关信息
 			var toUrl = "getClass.html?ClassId=" + param.classId
 			window.open(toUrl, '_self');
 		})
@@ -558,6 +558,9 @@ layui.use(['table', 'form'], function() {
 							}
 						});
 					}
+				},
+				error: function(res) {
+					console.log(res.msg)
 				}
 			});
 		});
@@ -567,7 +570,7 @@ layui.use(['table', 'form'], function() {
 		var param = data.field;
 		param.schoolId = list.schoolId;
 		param.phraseId = list.phraseId;
-		param.gradeId=list.gradeId;
+		param.gradeId = list.gradeId;
 		$.ajax({
 			type: "post",
 			url: httpUrl() + "/class/saveClass",

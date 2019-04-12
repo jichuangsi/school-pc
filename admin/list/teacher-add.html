@@ -21,6 +21,11 @@
 		.widths {
 			width: 300px;
 		}
+		
+		#subjectList {
+			display: none;
+			margin-top: 10px;
+		}
 	</style>
 
 	<body>
@@ -29,52 +34,54 @@
 				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
 		</div>
 		<div class="x-body">
-			<form class="layui-form">
-				<div class="layui-form-item">
-					<label class="layui-form-label">学校名称：</label>
-					<div class="layui-input-block widths">
-						<select name="schoolId" id="status" lay-filter="school">
-						</select>
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">教师姓名：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="name" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">性别：</label>
-					<div class="layui-input-block widths">
-						<input type="radio" name="sex" value="M" title="男">
-						<input type="radio" name="sex" value="F" title="女">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">账号：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">密码：</label>
-					<div class="layui-input-block widths">
-						<input type="password" name="pwd" class="layui-input" lay-verify="pwd">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">主要科目：</label>
-					<div class="layui-input-block widths">
-						<select name="subjectId" id="subject" lay-filter="subject">
-						</select>
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">次要科目：</label>
-					<div class="layui-input-block widths" id="subjects">
-					</div>
-				</div>
-				<!--	<div class="layui-form-item">
+			<div class="layui-row">
+				<div class="layui-col-md4">
+					<form class="layui-form">
+						<div class="layui-form-item">
+							<label class="layui-form-label">学校名称：</label>
+							<div class="layui-input-block widths">
+								<select name="schoolId" id="status" lay-filter="school">
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">教师姓名：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="name" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">性别：</label>
+							<div class="layui-input-block widths">
+								<input type="radio" name="sex" value="M" title="男">
+								<input type="radio" name="sex" value="F" title="女">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">账号：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="account" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">密码：</label>
+							<div class="layui-input-block widths">
+								<input type="password" name="pwd" class="layui-input" lay-verify="pwd">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">主要科目：</label>
+							<div class="layui-input-block widths">
+								<select name="subjectId" id="subject" lay-filter="subject">
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">次要科目：</label>
+							<div class="layui-input-block widths" id="subjects">
+							</div>
+						</div>
+						<!--	<div class="layui-form-item">
 					<label class="layui-form-label">年段级：</label>
 					<div class="layui-input-block widths">
 						<select name="phrase" id="phrase" lay-filter="phrase">
@@ -100,21 +107,74 @@
 					<div class="layui-input-block" style="width: 450px;" id="classList">
 					</div>
 				</div>-->
-				<div class="layui-form-item">
-					<label class="layui-form-label">角色：</label>
-					<div class="layui-input-block widths" id="role">
-					</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">角色：</label>
+							<div class="layui-input-block widths" id="role">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="add" type="submit">立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</div>
+					</form>
 				</div>
-				<div class="layui-form-item">
-					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay-filter="add" type="submit">立即提交</button>
-						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-					</div>
+				<div class="layui-col-md8">
+
+					<table id="teacher" lay-filter="teacher"></table>
 				</div>
-			</form>
+			</div>
 		</div>
-		<script>
+		<script type="text/html" id="teacherSet">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12">
+					<div class="layui-input-inline">
+						<input type="text" name="username" placeholder="姓名" autocomplete="off" class="layui-input" style="width: 100px;">
+					</div>
+					<div class="layui-input-inline">
+						<input type="text" name="subject" placeholder="科目" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-input-inline">
+						<select name="phrase" id="phraseSearch" lay-filter="phraseSearch">
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select name="gradeId" id="gradeSearch" lay-filter="gradeSearch">
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select name="classId" id="classSearch" lay-filter="classSearch">
+						</select>
+					</div>
+					<div class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></div>
+				</form>
+			</div>
+		</script>
+		<script type="text/html" id="seesubject">
+			<span class="layui-btn-sm layui-btn" id="subjects" onclick="list()">详情</span>
+		</script>
+		<script type="text/html" id="teacherDel">
+			<span class="layui-btn-sm layui-btn layui-btn-danger" id="del">删除</span>
 		</script>
 	</body>
+	<script>
+		function list() {
+			index = layer.open({
+				type: 1,
+				area: ['400px', '200px'],
+				anim: 2,
+				title: '教学科目',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#subjectList')
+			});
+		}
+	</script>
+	<div id="subjectList">
+		<div class="x-body">
+			<div id="subjectAll"></div>
+		</div>
+	</div>
 
 </html>
