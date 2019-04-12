@@ -42,16 +42,16 @@
 			<span class="layui-btn-sm layui-btn" id="look" >查看</span>
 		</script>
 		<script type="text/html" id="update">
-			{{# if(getRole()>=3){ }}
+			{{# if(getRole()>3){ }}
 			<span class="layui-btn-sm layui-btn layui-btn-disabled" >修改</span>
-			{{# }else if(getRole()<=2){ }}
+			{{# }else if(getRole()<3){ }}
 			<span class="layui-btn-sm layui-btn" onclick="see()">修改</span>
 			{{#} }}
 		</script>
 		<script type="text/html" id="del">
-			{{# if(getRole()==1){ }}
+			{{# if(getRole()<3){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del" >删除</span>
-			{{# }else if(getRole()>=2){ }}
+			{{# }else if(getRole()>2){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
 			{{# } }}
 		</script>

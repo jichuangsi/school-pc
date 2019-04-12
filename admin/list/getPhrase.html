@@ -78,22 +78,25 @@
 			<span class="layui-btn-sm layui-btn" id="look">查看</span>
 		</script>
 		<script type="text/html" id="addPhrase">
-			{{# if(getRole()>=3){ }}
-			<span class="layui-btn-sm layui-btn layui-btn-disabled">添加</span> {{# }else if(getRole()
-			<=2){ }} <span class="layui-btn-sm layui-btn" onclick="addPhrase()">添加</span>
+			{{# if(getRole()>2){ }}
+			<span class="layui-btn-sm layui-btn layui-btn-disabled">添加</span> 
+			{{# }else if(getRole()<=2){ }} 
+		<span class="layui-btn-sm layui-btn" onclick="addPhrase()">添加</span>
 				{{# } }}
 		</script>
 		<script type="text/html" id="update">
 			{{# if(getRole()>=3){ }}
-			<span class="layui-btn-sm layui-btn layui-btn-disabled">修改</span> {{# }else if(getRole()
-			<=2){ }} <span class="layui-btn-sm layui-btn" onclick="see()">修改</span>
-				{{# } }}
+			<span class="layui-btn-sm layui-btn layui-btn-disabled">修改</span>
+			{{# }else if(getRole()<=2){ }} 
+			<span class="layui-btn-sm layui-btn" onclick="see()">修改</span>
+			{{# } }}
 
 		</script>
 		<script type="text/html" id="del">
 			{{# if(getRole()>=3){ }}
-			<span class="layui-btn layui-btn-sm  layui-btn-disabled">删除</span> {{# }else if(getRole()
-			<=2){ }} <span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
+			<span class="layui-btn layui-btn-sm  layui-btn-disabled">删除</span> 
+			{{# }else if(getRole()<=2){ }} 
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
 				{{# } }}
 
 		</script>
@@ -102,32 +105,32 @@
 			<span class="layui-btn-sm layui-btn" id="gradelook">查看</span>
 		</script>
 		<script type="text/html" id="gradeupdate">
-			{{# if(getRole()>=4 ){ }} 
+			{{# if(getRole()>2 ){ }} 
 			 	<span class="layui-btn-sm layui-btn layui-btn-disabled">修改</span>
-			{{# }else if(getRole()<=3){ }}
+			{{# }else if(getRole()<3){ }}
 				<span class="layui-btn-sm layui-btn" onclick="gradeSee()">修改</span>
 			{{# } }} 
 		</script>
 		<script type="text/html" id="addGrade">
-			{{# if(getRole()>=4 ){ }} 
+			{{# if(getRole()>=2 ){ }} 
 				<span class="layui-btn-sm layui-btn layui-btn-disabled">添加</span>
-			{{# }else if(getRole()<=3){ }}
+			{{# }else if(getRole()<3){ }}
 				<span class="layui-btn-sm layui-btn" onclick="addGrade()">添加</span>
 			{{# } }} 
 		</script>
 		<script type="text/html" id="gradedel">
-		{{# if(getRole()>=4 ){ }} 
+		{{# if(getRole()>3 ){ }} 
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
-		{{# }else if(getRole()<=3){ }}
+		{{# }else if(getRole()<3){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="gradeDel">删除</span>
 		{{# } }} 
 			
 		</script>
 		<!--班级的按钮-->
 		<script type="text/html" id="Classlook">
-		{{# if(getRole()>=4 ){ }} 
+		{{# if(getRole()>3 ){ }} 
 		<span class="layui-btn-sm layui-btn layui-btn-disabled">查看教师</span>
-		{{# }else if(getRole()<=3){ }}
+		{{# }else if(getRole()<3){ }}
 			<span class="layui-btn-sm layui-btn" id="Classlook">查看教师</span>
 		{{# } }} 
 			
@@ -136,25 +139,25 @@
 			<span class="layui-btn-sm layui-btn" id="ClassStudent">查看学生</span>
 		</script>
 		<script type="text/html" id="addClass">
-		{{# if(getRole()>=4 ){ }} 
+		{{# if(getRole()>4 ){ }} 
 			<span class="layui-btn-sm layui-btn layui-btn-disabled">添加</span>
-		{{# }else if(getRole()<=3){ }}
+		{{# }else if(getRole()<3){ }}
 			<span class="layui-btn-sm layui-btn" onclick="addClass()">添加</span>
 		{{# } }} 
 			
 		</script>
 		<script type="text/html" id="Classupdate">
-		{{# if(getRole()>=4 ){ }} 
+		{{# if(getRole()>4 ){ }} 
 			<span class="layui-btn-sm layui-btn layui-btn-disabled">修改</span>
-		{{# }else if(getRole()<=3){ }}
+		{{# }else if(getRole()<3){ }}
 			<span class="layui-btn-sm layui-btn" onclick="ClassSee()">修改</span>
 		{{# } }} 
 			
 		</script>
 		<script type="text/html" id="ClassDel">
-		{{# if(getRole()>=4 ){ }} 
+		{{# if(getRole()>4 ){ }} 
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
-		{{# }else if(getRole()<=3){ }}
+		{{# }else if(getRole()<3){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="ClassDel">删除</span>
 		{{# } }} 
 			

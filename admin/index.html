@@ -41,7 +41,7 @@
 			</div>
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
-					<a href="javascript:;">admin</a>
+					<a href="javascript:;" id="admin"></a>
 					<dl class="layui-nav-child">
 						<!-- 二级菜单 -->
 						<dd>
@@ -54,6 +54,10 @@
 				</li>
 			</ul>
 		</div>
+		<script>
+			console.log(getuserName());
+			$('#admin').text(getuserName());
+		</script>
 		<!-- 顶部结束 -->
 		<!-- 中部开始 -->
 		<!-- 左侧菜单开始 -->

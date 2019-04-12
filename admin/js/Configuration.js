@@ -37,6 +37,11 @@ function getRoleName(){
 	roleName = list.roleName;
 	return roleName;
 }
+function getuserName(){
+	var list = JSON.parse(sessionStorage.getItem("userInfo"));
+	var userName = list.account;
+	return userName
+}
 function getRole() {
 	
 	var list = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -45,13 +50,14 @@ function getRole() {
 		return 1
 	} else if(admin == '管理员') { //学校管理员
 		return 2
-	} else if(admin == "校长") { //校长
-		return 2
-	} else if(admin == "教务处") { //添加学生一级
-		return 3
-	} else if(admin =="教师" ) {
-		return 4;
-	} else {
-		return 5;
 	}
+//	} else if(admin == "校长") { //校长
+//		return 2
+//	} else if(admin == "教务处") { //添加学生一级
+//		return 3
+//	} else if(admin =="教师" ) {
+//		return 4;
+//	} else {
+//		return 5;
+//	}
 }
