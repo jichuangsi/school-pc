@@ -48,10 +48,12 @@ layui.use("form", function() {
 			function validation() {
 				if(admin == 'M') { //超级
 					//无权限限制
-				} else if(admin == '学校管理员') { //学校管理员
+				} else if(admin == '管理员') { //学校管理员
 					$('#nav').first('li').find('ul').first().find('li').slice(0, 1).hide();
+					$('#create3').hide();
 					$('#create').hide();
 					$('#create2').hide();
+					
 				} else {
 					$('#nav').first('li').find('ul').first().find('li').slice(0, 7).hide();
 					$('#site').hide();
@@ -76,8 +78,7 @@ layui.use("form", function() {
 							if(res.data.schoolName == null) {
 								$('#school').text("学校后台");
 							} else {
-								console.log(getuserName());
-								$('#admin').text(getuserName());
+								
 								$('#school').text(res.data.schoolName + "后台");
 								
 							}
@@ -87,4 +88,5 @@ layui.use("form", function() {
 				});
 
 			}
+			$('#admin').text(getuserName());
 });

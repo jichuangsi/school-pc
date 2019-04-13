@@ -49,9 +49,9 @@
 			{{#} }}
 		</script>
 		<script type="text/html" id="del">
-			{{# if(getRole()<3){ }}
+			{{# if(getRole()<2){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del" >删除</span>
-			{{# }else if(getRole()>2){ }}
+			{{# }else if(getRole()>=2){ }}
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
 			{{# } }}
 		</script>

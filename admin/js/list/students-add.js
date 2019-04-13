@@ -52,6 +52,12 @@ layui.use(['form', 'upload', 'table'], function() {
 					time: 1000
 				});
 				return false;
+			} else if(param.sex==null ||param.sex==undefined){
+				layer.msg('请选择性别！', {
+					icon: 2,
+					time: 1000
+				});
+				return false;
 			} else if(param.gradeId == -1 || param.gradeId == "") {
 				layer.msg('请选择年级！', {
 					icon: 2,

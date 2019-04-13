@@ -61,8 +61,8 @@
 						<div class="layui-form-item">
 							<label class="layui-form-label">性别：</label>
 							<div class="layui-input-block widths">
-								<input type="radio" name="sex" value="M" title="男">
-								<input type="radio" name="sex" value="F" title="女">
+								<input type="radio" name="sex" value="M" title="男" lay-verify="required">
+								<input type="radio" name="sex" value="F" title="女" lay-verify="required">
 							</div>
 						</div>
 						<div class="layui-form-item">
@@ -127,9 +127,6 @@
 				<form class="layui-form layui-col-md12">
 					<div class="layui-input-inline">
 						<input type="text" name="username" placeholder="姓名" autocomplete="off" class="layui-input" style="width: 100px;">
-					</div>
-					<div class="layui-input-inline">
-						<input type="text" name="subject" placeholder="科目" autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
 						<select name="phrase" id="phraseSearch" lay-filter="phraseSearch">

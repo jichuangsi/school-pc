@@ -112,7 +112,7 @@
 			{{# } }} 
 		</script>
 		<script type="text/html" id="addGrade">
-			{{# if(getRole()>=2 ){ }} 
+			{{# if(getRole()>3 ){ }} 
 				<span class="layui-btn-sm layui-btn layui-btn-disabled">添加</span>
 			{{# }else if(getRole()<3){ }}
 				<span class="layui-btn-sm layui-btn" onclick="addGrade()">添加</span>

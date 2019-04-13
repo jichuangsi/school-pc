@@ -45,12 +45,16 @@ layui.use(['form', 'table'], function() {
 				$("input:checkbox[name='role']:checked")[i].value
 			)
 		}
+		var str =$("#subject").find("option:selected").text();
+		if(str=="请选择科目"){
+			str="";
+		}
 		var model = {
 			"account": param.account,
 			"name": param.name,
 			"primarySubject": {
 				"subjectId": param.subjectId,
-				"subjectName": $("#subject").find("option:selected").text()
+				"subjectName": str
 			},
 			"pwd": param.pwd,
 			"school": {
@@ -62,6 +66,7 @@ layui.use(['form', 'table'], function() {
 			"roleIds": roleIds,
 			"sex": param.sex
 		}
+		
 		if(param.schoolId != -1 || getRole() >= 2) {
 			if(getRole() >= 2) {
 				model.school = {
@@ -69,36 +74,44 @@ layui.use(['form', 'table'], function() {
 					"schoolName": getSchoolName()
 				};
 			}
-			$.ajax({
-				type: "post",
-				url: httpUrl() + "/saveTeacher",
-				async: false,
-				headers: {
-					'accessToken': getToken()
-				},
-				contentType: 'application/json',
-				data: JSON.stringify(model),
-				success: function(res) {
-					if(res.code == '0010') {
-						layer.msg('提交成功！', {
-							icon: 1,
-							time: 1000,
-							end: function() {
-								table.reload('idTest');
-							}
-						});
-					} else {
-						layer.msg(res.msg, {
-							icon: 2,
-							time: 1000,
-							end: function() {
-								table.reload('idTest');
-							}
-						});
+			if(param.sex == null || param.sex == undefined) {
+				layer.msg('请选择性别！', {
+					icon: 2,
+					time: 1000
+				});
+				return false;
+			} else {
+				$.ajax({
+					type: "post",
+					url: httpUrl() + "/saveTeacher",
+					async: false,
+					headers: {
+						'accessToken': getToken()
+					},
+					contentType: 'application/json',
+					data: JSON.stringify(model),
+					success: function(res) {
+						if(res.code == '0010') {
+							layer.msg('提交成功！', {
+								icon: 1,
+								time: 1000,
+								end: function() {
+									table.reload('idTest');
+								}
+							});
+						} else {
+							layer.msg(res.msg, {
+								icon: 2,
+								time: 1000,
+								end: function() {
+									table.reload('idTest');
+								}
+							});
+						}
 					}
-				}
-			});
-			return false;
+				});
+				return false;
+			}
 
 		} else {
 			layer.msg('请选择学校！', {
@@ -212,7 +225,7 @@ layui.use(['form', 'table'], function() {
 		if(data.value != '-1') {
 			var id = data.value;
 			getPhrase(id);
-			
+
 		}
 	});
 	//获取年段
@@ -394,7 +407,7 @@ layui.use(['form', 'table'], function() {
 	form.verify({　　　　
 		pwd: [/^((?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12})$/, '密码必须为6-12位数字与字母混合']　　
 	});
-	
+
 	renderTeacher = function(id) {
 		table.render({
 			elem: '#teacher',
