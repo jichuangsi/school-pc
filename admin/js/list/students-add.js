@@ -52,7 +52,7 @@ layui.use(['form', 'upload', 'table'], function() {
 					time: 1000
 				});
 				return false;
-			} else if(param.sex==null ||param.sex==undefined){
+			} else if(param.sex == null || param.sex == undefined) {
 				layer.msg('请选择性别！', {
 					icon: 2,
 					time: 1000
@@ -87,6 +87,7 @@ layui.use(['form', 'upload', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
+									getPhraseSearch(schoolId)
 								}
 							});
 						} else {
@@ -331,7 +332,7 @@ layui.use(['form', 'upload', 'table'], function() {
 		pwd: [/^((?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12})$/, '密码必须为6-12位数字与字母混合']　　
 	});
 	var schoolId;
-	
+
 	renderStudent = function(id) {
 		table.render({
 			elem: '#student',

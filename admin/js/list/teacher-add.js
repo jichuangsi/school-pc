@@ -25,9 +25,9 @@ layui.use(['form', 'table'], function() {
 			"className": ""
 		}
 
-		var secondarySubjects = new Array();
 		var roleIds = new Array();
 		var secondaryClass = new Array();
+		var secondarySubjects = new Array();
 		for(var i = 0; i < $("input:checkbox[name='subjectList']:checked").length; i++) {
 			secondarySubjects.push({
 				subjectId: $("input:checkbox[name='subjectList']:checked")[i].value,
@@ -45,9 +45,9 @@ layui.use(['form', 'table'], function() {
 				$("input:checkbox[name='role']:checked")[i].value
 			)
 		}
-		var str =$("#subject").find("option:selected").text();
-		if(str=="请选择科目"){
-			str="";
+		var str = $("#subject").find("option:selected").text();
+		if(str == "请选择科目") {
+			str = "";
 		}
 		var model = {
 			"account": param.account,
@@ -66,7 +66,7 @@ layui.use(['form', 'table'], function() {
 			"roleIds": roleIds,
 			"sex": param.sex
 		}
-		
+
 		if(param.schoolId != -1 || getRole() >= 2) {
 			if(getRole() >= 2) {
 				model.school = {
@@ -97,6 +97,7 @@ layui.use(['form', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
+									getPhraseSearch(schoolId);
 								}
 							});
 						} else {
@@ -313,7 +314,6 @@ layui.use(['form', 'table'], function() {
 			var id = data.value;
 			getClass(id);
 			getClassList(id)
-
 		}
 	});
 
@@ -456,6 +456,11 @@ layui.use(['form', 'table'], function() {
 					},
 					{
 						field: 'subjectId',
+						title: '修改',
+						toolbar: '#updateteacher'
+					},
+					{
+						field: 'subjectId',
 						title: '删除',
 						toolbar: '#teacherDel'
 					}
@@ -513,12 +518,158 @@ layui.use(['form', 'table'], function() {
 	}
 	table.on('row(teacher)', function(data) {
 		var param = data.data;
+
 		var subjectList = param.secondarySubjects
 		showSubject(subjectList);
 		$(document).on('click', '#del', function() {
 			delTeacher(param.id);
 		});
+		form.val('test', {
+			"teacherId": param.id,
+			"name": param.name
+		})
+		getUpSubject(param.primarySubject.subjectId);
+		getUpSubjects(param.secondarySubjects)
 	});
+	form.on('submit(update_teacher)', function(data) {
+		var param = data.field;
+		var subjects = {
+			"subjectId": "",
+			"subjectName": ""
+		};
+		var str = $("#upsubject").find("option:selected").text();
+		if(str == "请选择科目") {
+			str = "";
+		}
+		var secondarySubjects = new Array();
+		for(var i = 0; i < $("input:checkbox[name='upsubject']:checked").length; i++) {
+			secondarySubjects.push({
+				subjectId: $("input:checkbox[name='upsubject']:checked")[i].value,
+				subjectName: $("input:checkbox[name='upsubject']:checked")[i].title
+			});
+		}
+		var model = {
+			"id": param.teacherId,
+			"name": param.name,
+			"primarySubject": {
+				"subjectId": $("#upsubject").find("option:selected").val(),
+				"subjectName": str
+			},
+			"secondarySubjects": secondarySubjects
+		}
+		$.ajax({
+			type: "post",
+			url: httpUrl() + "/teacher/updateTeacher",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			contentType: 'application/json',
+			data: JSON.stringify(model),
+			success: function(res) {
+				if(res.code == '0010') {
+					layer.msg('修改成功！！', {
+						icon: 1,
+						time: 1000,
+						end: function() {
+							table.reload('idTest');
+							layer.close(index);
+						}
+					});
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {
+							table.reload('idTest');
+							layer.close(index);
+						}
+					});
+				}
+			}
+		});
+		return false;
+	});
+	//获取次要科目
+	function getUpSubjects(List) {
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/school/subject/getSubjects",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					var arr;
+					arr = res.data;
+					subCount = arr.length;
+					$('#upsubjects').empty();
+					var inputs = '';
+					console.log(list)
+					for(var i = 0; i < arr.length; i++) {
+						if(List.length != 0) {
+							console.log(List)
+							for(var j = 0; j < List.length; j++) {
+								if(arr[i].id == List[j].subjectId) {
+									arr[i].status = 1
+								}
+							}
+
+						} else {
+							inputs += '<input type="checkbox" name="subjectList" value="' + arr[i].id + '"  title="' + arr[i].subjectName + '">'
+						}
+					}
+					for(var i = 0; i < arr.length; i++) {
+						if(arr[i].status == 1) {
+							inputs += '<input type="checkbox" name="upsubject" value="' + arr[i].id + '"  title="' + arr[i].subjectName + ' "checked/>'
+						} else {
+							inputs += '<input type="checkbox" name="upsubject" value="' + arr[i].id + '"  title="' + arr[i].subjectName + '">'
+						}
+					}
+					$('#upsubjects').append(inputs);
+					form.render('checkbox');
+				}
+			}
+		});
+	}
+	//获取教学主要科目
+	function getUpSubject(subjectId) {
+		$('#upsubject').empty();
+		var options = '<option value="-1" selected="selected">' + "请选择科目" + '</option>';
+		var arr;
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/school/subject/getSubjects",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					arr = res.data;
+					if(arr == null || arr == undefined) {
+						options = '<option value="" selected="selected">暂无科目信息请先去添加科目信息</option>'
+					} else {
+						for(var i = 0; i < arr.length; i++) {
+							options += '<option value="' + arr[i].id + '" >' + arr[i].subjectName + '</option>'
+						}
+					}
+					$('#upsubject').append(options);
+					$("#upsubject option[value=" + subjectId + "]").prop("selected", true);
+					form.render('select');
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {
+							location.reload();
+						}
+					});
+				}
+			}
+		});
+	}
 
 	function showSubject(subjectList) {
 		$('#subjectAll').empty();

@@ -88,6 +88,9 @@ layui.use(['form', 'table'], function() {
 	});
 	form.on('submit(add_role)', function(data) {
 		var param = data.field;
+		if(param.schoolId==-1){
+			param.schoolId=getSchoolId();
+		}
 		$.ajax({
 			type: "post",
 			url: httpUrl() + "/insertSystemRole/" + param.schoolId,

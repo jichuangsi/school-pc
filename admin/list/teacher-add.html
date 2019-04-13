@@ -26,6 +26,11 @@
 			display: none;
 			margin-top: 10px;
 		}
+		
+		#teacherUpdate {
+			display: none;
+			margin-top: 10px;
+		}
 	</style>
 
 	<body>
@@ -154,6 +159,9 @@
 		<script type="text/html" id="seesubject">
 			<span class="layui-btn-sm layui-btn" id="subjects" onclick="list()">详情</span>
 		</script>
+		<script type="text/html" id="updateteacher">
+			<span class="layui-btn-sm layui-btn" id="updateteacher" onclick="teacher()">修改</span>
+		</script>
 		<script type="text/html" id="teacherDel">
 			<span class="layui-btn-sm layui-btn layui-btn-danger" id="del">删除</span>
 		</script>
@@ -170,11 +178,51 @@
 				content: $('#subjectList')
 			});
 		}
+
+		function teacher() {
+			index = layer.open({
+				type: 1,
+				area: ['500px', '400px'],
+				anim: 2,
+				title: '修改老师',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#teacherUpdate')
+			});
+		}
 	</script>
 	<div id="subjectList">
 		<div class="x-body">
 			<div id="subjectAll"></div>
 		</div>
+	</div>
+	<div id="teacherUpdate" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">姓名：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="teacherId" class="layui-input ">
+					<input type="text" name="name" class="layui-input layui-disabled">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">主要科目：</label>
+				<div class="layui-input-block widths">
+					<select name="subjectId" id="upsubject" lay-filter="upsubject">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">次要科目：</label>
+				<div class="layui-input-block widths" id="upsubjects">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_teacher">修改</button>
+				</div>
+			</div>
+		</form>
 	</div>
 
 </html>

@@ -53,6 +53,7 @@ layui.use("form", function() {
 					$('#create3').hide();
 					$('#create').hide();
 					$('#create2').hide();
+					$('#site').hide();
 					
 				} else {
 					$('#nav').first('li').find('ul').first().find('li').slice(0, 7).hide();

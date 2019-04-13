@@ -81,10 +81,10 @@ layui.use('table', function() {
 		var subjectList = param.secondarySubjects
 		showSubject(subjectList);
 		$(document).on('click', '#choiceTeacher', function() {
-			ChoiceTeacher(param.id);
+			ChoiceTeacher(param.id,param.primarySubject.subjectId,param.primarySubject.subjectName);
 		});
 		$(document).on('click', '#choicePrimaryTeacher', function() {
-			ChoicePrimaryTeacher(param.id);
+			ChoicePrimaryTeacher(param.id,param.primarySubject.subjectId,param.primarySubject.subjectName);
 		});
 	});
 	///
@@ -101,9 +101,11 @@ layui.use('table', function() {
 		}
 	}
 
-	function ChoiceTeacher(id) {
+	function ChoiceTeacher(id,subjectId,subjectName) {
 		var model = {
-			"secondaryClassId": list.ClassId
+			"secondaryClassId": list.ClassId,
+			"subjectId":subjectId,
+			"subjectName":subjectName
 		}
 		layer.confirm('确认添加该老师为任课老师？', function(index) {
 			$.ajax({
@@ -141,7 +143,9 @@ layui.use('table', function() {
 
 	function ChoicePrimaryTeacher(id) {
 		var param = {
-			"primaryClassId": list.ClassId
+			"primaryClassId": list.ClassId,
+			"subjectId":subjectId,
+			"subjectName":subjectName
 		}
 		layer.confirm('确认添加该老师为班主任？', function(index) {
 			$.ajax({

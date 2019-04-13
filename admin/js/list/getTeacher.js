@@ -354,38 +354,46 @@ layui.use(['table', 'form'], function() {
 				"sex": param.sex
 			}
 		}
-		$.ajax({
-			type: "post",
-			url: httpUrl() + "/saveTeacher",
-			async: false,
-			headers: {
-				'accessToken': getToken()
-			},
-			contentType: 'application/json',
-			data: JSON.stringify(model),
-			success: function(res) {
-				if(res.code == '0010') {
-					layer.msg('添加成功！', {
-						icon: 1,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-							layer.close(index);
-						}
-					});
-				} else {
-					layer.msg(res.msg, {
-						icon: 2,
-						time: 1000,
-						end: function() {
-							table.reload('teacher');
-							layer.close(index);
-						}
-					});
+		if(param.sex == null || param.sex == undefined) {
+			layer.msg('请选择性别！', {
+				icon: 2,
+				time: 1000
+			});
+			return false;
+		} else {
+			$.ajax({
+				type: "post",
+				url: httpUrl() + "/saveTeacher",
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				contentType: 'application/json',
+				data: JSON.stringify(model),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('添加成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+								layer.close(index);
+							}
+						});
+					}
 				}
-			}
-		});
-		return false;
+			});
+			return false;
+		}
 	});
 	//修改教师
 	//

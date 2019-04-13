@@ -18,7 +18,7 @@ layui.use(['table', 'form', 'upload'], function() {
 	function setClass() {
 		$('#classInfo').text('当前:' + list.className)
 	}
-	
+
 	table.render({
 		elem: '#student',
 		method: "get",
@@ -55,7 +55,7 @@ layui.use(['table', 'form', 'upload'], function() {
 					field: 'schooldel',
 					title: '删除',
 					toolbar: '#del'
-				},{
+				}, {
 					field: 'id',
 					title: '修改密码',
 					toolbar: '#updatePwd'
@@ -335,38 +335,47 @@ layui.use(['table', 'form', 'upload'], function() {
 			},
 			"sex": param.sex
 		}
-		$.ajax({
-			type: "post",
-			url: httpUrl() + "/saveStudent",
-			async: false,
-			headers: {
-				'accessToken': getToken()
-			},
-			contentType: 'application/json',
-			data: JSON.stringify(model),
-			success: function(res) {
-				if(res.code == '0010') {
-					layer.msg('提交成功！', {
-						icon: 1,
-						time: 1000,
-						end: function() {
-							table.reload('student');
-							layer.close(index);
-						}
-					});
-				} else {
-					layer.msg(res.msg, {
-						icon: 2,
-						time: 1000,
-						end: function() {
-							table.reload('student');
-							layer.close(index);
-						}
-					});
+		if(param.sex == null || param.sex == undefined) {
+			layer.msg('请选择性别！', {
+				icon: 2,
+				time: 1000
+			});
+			return false;
+		} else {
+			$.ajax({
+				type: "post",
+				url: httpUrl() + "/saveStudent",
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				contentType: 'application/json',
+				data: JSON.stringify(model),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('提交成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('student');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('student');
+								layer.close(index);
+							}
+						});
+					}
 				}
-			}
-		});
-		return false;
+			});
+			return false;
+		}
+
 	});
 	/*----------------获取科目信息--------------------------*/
 	table.render({
