@@ -57,13 +57,7 @@ layui.use("form", function() {
 				} else {
 					$('#nav').first('li').find('ul').first().find('li').slice(0, 7).hide();
 					$('#site').hide();
-					layui.msg('非法登陆!',{
-						icon:2,
-						time:1000,
-						end:function(){
-							window.location.href='login.html';
-						}
-					});
+					window.location.href='login.html';
 				}
 
 			}

@@ -97,6 +97,7 @@ layui.use(['form', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
+									getSubjectList();
 									if(getRole() >= 2) {
 										getPhraseSearch(getSchoolId());
 									} else {
@@ -484,7 +485,7 @@ layui.use(['form', 'table'], function() {
 				"gradeId": "",
 				"phraseId": "",
 				"schoolId": id,
-				"userName": "",
+				"subjectId": "",
 				"subjectName": ''
 			},
 			parseData: function(res) {
@@ -511,6 +512,7 @@ layui.use(['form', 'table'], function() {
 		renderTeacher(getSchoolId());
 		getPhraseSearch(getSchoolId());
 		getRoleS(getSchoolId());
+		getSubjectList();
 	} else {
 		form.on('select(school)', function(data) {
 			if(data.value != '-1') {
@@ -518,9 +520,11 @@ layui.use(['form', 'table'], function() {
 				renderTeacher(schoolId);
 				getPhraseSearch(schoolId);
 				getRoleS(schoolId);
+				getSubjectList();
 			}
 		});
 	}
+	
 	table.on('row(teacher)', function(data) {
 		var param = data.data;
 
@@ -578,6 +582,7 @@ layui.use(['form', 'table'], function() {
 						time: 1000,
 						end: function() {
 							table.reload('idTest');
+							getSubjectList();
 							if(getRole() >= 2) {
 								getPhraseSearch(getSchoolId());
 							} else {
@@ -636,6 +641,43 @@ layui.use(['form', 'table'], function() {
 					}
 					$('#upsubjects').append(inputs);
 					form.render('checkbox');
+				}
+			}
+		});
+	}
+	
+	//获取教学主要科目
+	function getSubjectList() {
+		$('#subjectListS').empty();
+		var options = '<option value="-1" selected="selected">' + "请选择科目" + '</option>';
+		var arr;
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/school/subject/getSubjects",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					arr = res.data;
+					if(arr == null || arr == undefined) {
+						options = '<option value="" selected="selected">暂无科目信息请先去添加科目信息</option>'
+					} else {
+						for(var i = 0; i < arr.length; i++) {
+							options += '<option value="' + arr[i].id + '" >' + arr[i].subjectName + '</option>'
+						}
+					}
+					$('#subjectListS').append(options);
+					form.render('select');
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {
+							location.reload();
+						}
+					});
 				}
 			}
 		});
@@ -853,15 +895,20 @@ layui.use(['form', 'table'], function() {
 		} else if(param.classId == -1) {
 			param.classId = "";
 		}
+		
+		if (param.subjectId==-1){
+			param.subjectId="";
+		}
 		table.reload('idTest', {
 			where: {
 				"classId": param.classId,
 				"gradeId": param.gradeId,
 				"phraseId": param.phrase,
 				"userName": param.username,
-				"subjectName": param.subject
+				"subjectId": param.subjectId
 			}
 		})
+		getSubjectList();
 		if(getRole() >= 2) {
 			getPhraseSearch(getSchoolId());
 		} else {
