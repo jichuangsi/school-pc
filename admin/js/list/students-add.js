@@ -87,9 +87,9 @@ layui.use(['form', 'upload', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
-									if(getRole() >= 2){
+									if(getRole() >= 2) {
 										getPhraseSearch(getSchoolId());
-									}else{
+									} else {
 										getPhraseSearch(schoolId);
 									}
 								}
@@ -488,6 +488,11 @@ layui.use(['form', 'upload', 'table'], function() {
 						time: 1000,
 						end: function() {
 							table.reload('idTest');
+							if(getRole() >= 2) {
+								getPhraseSearch(getSchoolId());
+							} else {
+								getPhraseSearch(schoolId);
+							}
 							layer.close(index);
 						}
 					});
@@ -638,7 +643,11 @@ layui.use(['form', 'upload', 'table'], function() {
 				"subjectName": param.subject
 			}
 		})
-		getPhraseSearch(schoolId)
+		if(getRole() >= 2) {
+			getPhraseSearch(getSchoolId());
+		} else {
+			getPhraseSearch(schoolId);
+		}
 	})
 
 	//条件
