@@ -87,7 +87,11 @@ layui.use(['form', 'upload', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
-									getPhraseSearch(schoolId)
+									if(getRole() >= 2){
+										getPhraseSearch(getSchoolId());
+									}else{
+										getPhraseSearch(schoolId);
+									}
 								}
 							});
 						} else {

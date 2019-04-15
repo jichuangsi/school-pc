@@ -97,7 +97,12 @@ layui.use(['form', 'table'], function() {
 								time: 1000,
 								end: function() {
 									table.reload('idTest');
-									getPhraseSearch(schoolId);
+									if(getRole() >= 2){
+										getPhraseSearch(getSchoolId());
+									}else{
+										getPhraseSearch(schoolId);
+									}
+									
 								}
 							});
 						} else {
@@ -615,9 +620,6 @@ layui.use(['form', 'table'], function() {
 									arr[i].status = 1
 								}
 							}
-
-						} else {
-							inputs += '<input type="checkbox" name="subjectList" value="' + arr[i].id + '"  title="' + arr[i].subjectName + '">'
 						}
 					}
 					for(var i = 0; i < arr.length; i++) {

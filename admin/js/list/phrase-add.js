@@ -38,7 +38,7 @@ layui.use(['laydate', 'form', 'table'], function() {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								table.reload('demo');
+								table.reload('phrase');
 							}
 						});
 					} else {
