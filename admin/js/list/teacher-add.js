@@ -402,7 +402,7 @@ layui.use(['form', 'table'], function() {
 					$('#role').empty();
 					var inputs = '';
 					for(var i = 0; i < arr.length; i++) {
-						inputs += '<input type="checkbox" name="role" value="' + arr[i].roleId + '"  title="' + arr[i].roleName + '">'
+						inputs += '<input type="checkbox" name="role" value="' + arr[i].id + '"  title="' + arr[i].roleName + '">'
 					}
 					$('#role').append(inputs);
 					form.render('checkbox');
@@ -538,7 +538,8 @@ layui.use(['form', 'table'], function() {
 			"name": param.name
 		})
 		getUpSubject(param.primarySubject.subjectId);
-		getUpSubjects(param.secondarySubjects)
+		getUpSubjects(param.secondarySubjects);
+		getUpRole(param.school.schoolId,param.roleIds);
 	});
 	form.on('submit(update_teacher)', function(data) {
 		var param = data.field;
@@ -557,6 +558,12 @@ layui.use(['form', 'table'], function() {
 				subjectName: $("input:checkbox[name='upsubject']:checked")[i].title
 			});
 		}
+		var roleIds=new Array();
+		for(var i = 0; i < $("input:checkbox[name='upRole']:checked").length; i++) {
+			roleIds.push(
+				$("input:checkbox[name='upRole']:checked")[i].value
+			)
+		}
 		var model = {
 			"id": param.teacherId,
 			"name": param.name,
@@ -564,6 +571,7 @@ layui.use(['form', 'table'], function() {
 				"subjectId": $("#upsubject").find("option:selected").val(),
 				"subjectName": str
 			},
+			"roleIds":roleIds,
 			"secondarySubjects": secondarySubjects
 		}
 		$.ajax({
@@ -621,10 +629,8 @@ layui.use(['form', 'table'], function() {
 					subCount = arr.length;
 					$('#upsubjects').empty();
 					var inputs = '';
-					console.log(list)
 					for(var i = 0; i < arr.length; i++) {
 						if(List.length != 0) {
-							console.log(List)
 							for(var j = 0; j < List.length; j++) {
 								if(arr[i].id == List[j].subjectId) {
 									arr[i].status = 1
@@ -640,6 +646,44 @@ layui.use(['form', 'table'], function() {
 						}
 					}
 					$('#upsubjects').append(inputs);
+					form.render('checkbox');
+				}
+			}
+		});
+	}
+	//获取角色
+	function getUpRole(id,List) {
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/getSystemRoles/" + id,
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					var arr;
+					arr = res.data;
+					subCount = arr.length;
+					$('#upRole').empty();
+					var inputs = '';
+					for(var i = 0; i < arr.length; i++) {
+						if(List.length != 0) {
+							for(var j = 0; j < List.length; j++) {
+								if(arr[i].id == List[j]) {
+									arr[i].status = 1
+								}
+							}
+						}
+					}
+					for(var i = 0; i < arr.length; i++) {
+						if(arr[i].status == 1) {
+							inputs += '<input type="checkbox" name="upRole" value="' + arr[i].id + '"  title="' + arr[i].roleName + ' "checked/>'
+						} else {
+							inputs += '<input type="checkbox" name="upRole" value="' + arr[i].id + '"  title="' + arr[i].roleName + '">'
+						}
+					}
+					$('#upRole').append(inputs);
 					form.render('checkbox');
 				}
 			}
