@@ -569,7 +569,7 @@ layui.use(['table', 'form'], function() {
 	form.on('submit(add_Class)', function(data) {
 		var param = data.field;
 		param.schoolId = list.schoolId;
-		param.phraseId = list.phraseId;
+//		param.phraseId = list.phraseId;
 		param.gradeId = list.gradeId;
 		$.ajax({
 			type: "post",

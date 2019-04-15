@@ -32,6 +32,20 @@ layui.use(['table', 'form'], function() {
 					title: '教师'
 				},
 				{
+					field: 'headMaster',
+					title: '教师 身份',
+					templet:function(d){
+						if(d.headMaster=='0'){
+							return '缺少任课老师'
+						}else if(d.headMaster=='1'){
+							return "班主任"
+						}else if(d.headMaster=='2'){
+							return '任课老师'
+							
+						}
+					}
+				},
+				{
 					field: 'subjectName',
 					title: '教学科目'
 				},

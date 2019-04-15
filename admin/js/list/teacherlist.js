@@ -141,7 +141,7 @@ layui.use('table', function() {
 		});
 	}
 
-	function ChoicePrimaryTeacher(id) {
+	function ChoicePrimaryTeacher(id,subjectId,subjectName) {
 		var param = {
 			"primaryClassId": list.ClassId,
 			"subjectId":subjectId,
