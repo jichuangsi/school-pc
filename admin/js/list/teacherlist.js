@@ -57,7 +57,11 @@ layui.use('table', function() {
 				}
 			]
 		],
-		limit: 90,
+		loading: true,
+		request: {
+				pageName: 'pageIndex',
+				limitName: "pageSize"
+			},
 		parseData: function(res) {
 			var arr;
 			var code;

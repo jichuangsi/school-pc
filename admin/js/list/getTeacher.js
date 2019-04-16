@@ -56,9 +56,20 @@ layui.use(['table', 'form'], function() {
 				},
 				{
 					field: 'schooldel',
-					title: '删除',
+					title: '离任',
 					toolbar: '#teacherDel'
-				}, {
+				},
+				{
+					field: 'id',
+					title: '添加科目',
+					toolbar: '#addTeacherSubject'
+				},
+				{
+					field: 'schooldel',
+					title: '删除科目',
+					toolbar: '#teacherDelSubject'
+				},
+				{
 					field: 'id',
 					title: '修改密码',
 					toolbar: '#updatePwd'
@@ -91,6 +102,13 @@ layui.use(['table', 'form'], function() {
 		});
 		form.val('test', {
 			"teacherId": param.teacherId
+		});
+		$(document).on('click', '#teacherDelSubject', function() {
+			delsubject(param.subjectId,param.primaryClassId)
+		});
+		getClassSubjects();
+		form.val('test1',{
+			"classId":param.primaryClassId
 		});
 	});
 	//修改密码
@@ -136,6 +154,71 @@ layui.use(['table', 'form'], function() {
 			return false;
 		}
 	});
+	//删除科目
+	function delsubject(subjectId,classId){
+		layer.confirm('确认要删除该科目吗？', function(index) {
+			$.ajax({
+				type: "get",
+				url: httpUrl() + "/class/updateClassDeleteSubject/"+subjectId+"/"+classId,
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('删除成功！！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+							}
+						});
+					}
+				}
+			});
+		});
+	}
+	form.on('submit(add_teacherSubject)',function(data){
+		var param =data.field;
+		$.ajax({
+				type: "get",
+				url: httpUrl() + "/class/updateClassInsertSubject/"+param.subjectId+"/"+param.classId,
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('添加成功！！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('teacher');
+								layer.close(index);
+							}
+						});
+					}
+				}
+			});
+			return false;
+	})
 	//删除教师
 	function delAll(id) {
 		layer.confirm('确认要删除吗？', function(index) {
@@ -166,6 +249,42 @@ layui.use(['table', 'form'], function() {
 					}
 				}
 			});
+		});
+	}
+//获取教学主要科目
+	function getClassSubjects() {
+		$('#addsubject').empty();
+		var options = '<option value="-1" selected="selected">' + "请选择科目" + '</option>';
+		var arr;
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/school/subject/getSubjects",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					arr = res.data;
+					if(arr == null || arr == undefined) {
+						options = '<option value="" selected="selected">暂无科目信息请先去添加科目信息</option>'
+					} else {
+						for(var i = 0; i < arr.length; i++) {
+							options += '<option value="' + arr[i].id + '" >' + arr[i].subjectName + '</option>'
+						}
+					}
+					$('#addsubject').append(options);
+					form.render('select');
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {
+							location.reload();
+						}
+					});
+				}
+			}
 		});
 	}
 

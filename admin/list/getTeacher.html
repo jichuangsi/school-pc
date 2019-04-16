@@ -26,7 +26,12 @@
 			display: none;
 			margin-top: 10px;
 		}
+		
 		#updateacherPwd {
+			display: none;
+			margin-top: 10px;
+		}
+		#addSubject {
 			display: none;
 			margin-top: 10px;
 		}
@@ -57,6 +62,12 @@
 	<script type="text/html" id="teacherDel">
 		<span class="layui-btn layui-btn-sm layui-btn-danger" id="teacherDel">离任</span>
 	</script>
+	<script type="text/html" id="teacherDelSubject">
+		<span class="layui-btn layui-btn-sm layui-btn-danger" id="teacherDelSubject">删除科目</span>
+	</script>
+	<script type="text/html" id="addTeacherSubject">
+		<span class="layui-btn-sm layui-btn" onclick="addSubject()">添加科目</span>
+	</script>
 	<!---->
 	<script>
 		function addTeacher() {
@@ -66,10 +77,11 @@
 				anim: 2,
 				title: '添加教师',
 				maxmin: true,
-				shadeClose: true, 
-				content:'teacherList.html'
+				shadeClose: true,
+				content: 'teacherList.html'
 			});
 		}
+
 		function Update() {
 			index = layer.open({
 				type: 1,
@@ -77,11 +89,39 @@
 				anim: 2,
 				title: '修改密码',
 				maxmin: true,
-				shadeClose: true, 
+				shadeClose: true,
 				content: $('#updateacherPwd')
 			});
 		}
+		function addSubject() {
+			index = layer.open({
+				type: 1,
+				area: ['500px', '400px'],
+				anim: 2,
+				title: '添加科目',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#addSubject')
+			});
+		}
 	</script>
+	<div id="addSubject" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test1">
+			<div class="layui-form-item">
+				<label class="layui-form-label">主要科目：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden"name="classId" />
+					<select name="subjectId" id="addsubject" lay-filter="addsubject">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="add_teacherSubject">立即添加</button>
+				</div>
+			</div>
+		</form>
+	</div>
 	<div id="updateacherPwd" class="layui-fluid">
 		<form class="layui-form" autocomplete="off" lay-filter="test">
 			<div class="layui-form-item">
