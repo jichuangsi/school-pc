@@ -68,7 +68,7 @@ layui.use('table', function() {
 			var total;
 			if(res.code == "0010") {
 				code = 0;
-				arr = res.data;
+				arr = res.data.list;
 				total = arr.length;
 			}
 			return {
