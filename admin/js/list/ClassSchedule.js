@@ -242,6 +242,15 @@ layui.use(['form', 'upload', 'table'], function() {
 				'accessToken': getToken()
 			},
 			success: function(res) {
+				if(res.code=="0050"){
+					layer.msg("该班没有课程表", {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								location.reload();
+							}
+						})
+				}
 				dataInfo = res.data.dataInfo;
 				list = dataInfo[0];
 				var list2 = dataInfo[1];
@@ -252,6 +261,11 @@ layui.use(['form', 'upload', 'table'], function() {
 				var list7 = dataInfo[6];
 				var list8 = dataInfo[7];
 				var list9 = dataInfo[8];
+				for(var i=0;i<dataInfo.length;i++){
+					for(var j=0;j<dataInfo[i].length;j++){
+						console.log(dataInfo[i][j]);
+					}
+				}
 				table.render({
 					elem: '#demo',
 					cols: [

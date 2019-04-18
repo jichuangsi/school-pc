@@ -206,18 +206,48 @@ layui.use(['table', 'form', 'layedit'], function() {
 		//富文本的内容
 		var str = layedit.getText(index)
 		param.content = str;
-		if(param.schoolId==-1&&getRole() >= 2){
-			param.schoolId=getSchoolId();
+		var model = {
+			"schoolId": "",
+			"schoolName": "",
+			"pharseId": "",
+			"pharseName": "",
+			"gradeId": "",
+			"gradeName": "",
+			"classId": "",
+			"className": "",
+			"content": str,
+			"tiltle": param.tiltle
 		}
-		if(param.pharseId==-1){
-			param.pharseId='';
+		if(param.schoolId == -1 && getRole() >= 2) {
+			model.schoolId = getSchoolId();
+			model.schoolName = getSchoolName();
+		} else {
+			model.schoolId = param.schoolId;
+			model.schoolName = $("#status").find("option:selected").text()
 		}
-		if(param.gradeId==-1){
-			param.gradeId='';
+
+		if(param.pharseId == -1) {
+			model.pharseId = '';
+			model.pharseName = '';
+		} else {
+			model.pharseId = param.pharseId;
+			model.pharseName = $("#phrase").find("option:selected").text()
 		}
-		if(param.classId==-1){
-			param.classId='';
+		if(param.gradeId == -1) {
+			model.gradeId = '';
+			model.gradeName = '';
+		} else {
+			model.gradeId = param.gradeId;
+			model.gradeName = $("#grade").find("option:selected").text()
 		}
+		if(param.classId == -1) {
+			model.classId = '';
+			model.className = '';
+		} else {
+			model.classId = param.classId;
+			model.className = $("#class").find("option:selected").text()
+		}
+
 		var tourl;
 		if(getRole() >= 2) {
 			tourl = "/back/school/sendSchoolMessage/" + getSchoolId()
@@ -233,14 +263,14 @@ layui.use(['table', 'form', 'layedit'], function() {
 				},
 				async: false,
 				contentType: 'application/json',
-				data: JSON.stringify(param),
+				data: JSON.stringify(model),
 				success: function(res) {
 					if(res.code == '0010') {
 						layer.msg('发布成功！', {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								location.reload()
+								table.reload('Info');
 							}
 						});
 					} else {
@@ -248,13 +278,13 @@ layui.use(['table', 'form', 'layedit'], function() {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								location.reload()
+								table.reload('Info');
 							}
 						});
 					}
 				}
 			});
-			return false;	
+			return false;
 		} else {
 			layer.msg('请选择学校！', {
 				icon: 2,
@@ -265,4 +295,137 @@ layui.use(['table', 'form', 'layedit'], function() {
 
 	});
 
+	/*发布信息查询*/
+	renderInfo = function(id) {
+		table.render({
+			elem: '#Info',
+			method: "get",
+			async: false,
+			url: httpUrl() + '/back/school/getSchoolNotices/'+id,
+			headers: {
+				'accessToken': getToken()
+			},
+			cols: [
+				[{
+						field: 'id',
+						title: '序号',
+						type: 'numbers'
+					}, {
+						field: 'title',
+						title: '发送标题',
+						width:100
+					},
+					{
+						field: 'createdTime',
+						title: '发送时间',
+						width:150,
+						templet: function(d) {
+							if(d.createdTime != 0) {
+								return new Date(+new Date(d.createdTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+							} else {
+								return "-"
+							}
+						}
+					}, 
+					{
+						field: 'pharseName',
+						title: '发送至',
+						width:100,
+						templet:function(d){
+							if(d.pharseName!=null){
+								return d.pharseName
+							}else if(d.gradeName!=null){
+								return d.gradeName
+							}else if(d.className!=null){
+								return d.className
+							}else{
+								return '全校'
+							}
+							
+						}
+					},{
+						field: 'content',
+						title: '内容'
+					}, {
+						field: 'id',
+						title: '删除',
+						width:100,
+						toolbar: '#del'
+					}
+				]
+			],
+			page: true,
+			limit: 10,
+			loading: true,
+			request: {
+				pageName: 'pageIndex',
+				limitName: "pageSize"
+			},
+			parseData: function(res) {
+				var arr;
+				var code;
+				var total = 0;
+				if(res.code == "0010") {
+					arr = res.data.list;
+					total = arr.length;
+					code = 0;
+				}
+				return {
+					"code": 0,
+					"msg": res.msg,
+					"count": total,
+					"data": arr
+				};
+			}
+
+		});
+	}
+	if(getRole() >= 2){
+		renderInfo(getSchoolId());
+	}else{
+		form.on('select(school)', function(data) {
+			if(data.value != '-1') {
+			var	schoolId = data.value;
+				renderInfo(schoolId);
+			}
+		});
+	}
+	table.on('row(Info)',function(data){
+		var param =data.data;
+		$(document).on('click', '#del', function() {
+			delInfo(param.id);
+		});
+	});
+	
+	function delInfo(id){
+		layer.confirm('确认要删除该信息吗？', function(index) {
+			$.ajax({
+				type: "DELETE",
+				url: httpUrl() + "/back/school/deleteSchoolNotice/"+getSchoolId()+"/"+id,
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('删除成功！！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('Info');
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('Info');
+							}
+						});
+					}
+				}
+			});
+		});
+	}
 });
