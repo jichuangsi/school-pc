@@ -1,4 +1,4 @@
-layui.use(['form', 'upload', 'table'], function() {
+layui.use(['table', 'form', 'layedit'], function() {
 	settab();
 
 	function settab() {
@@ -9,10 +9,24 @@ layui.use(['form', 'upload', 'table'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	var form = layui.form;
-	var upload = layui.upload;
+	var layedit = layui.layedit;
 	var table = layui.table;
-	//获取学校列表
+	var form = layui.form;
+	var index = layedit.build('demo', {
+		tool: [
+			'strong' //加粗
+			, 'italic' //斜体
+			, 'underline' //下划线
+			, 'del' //删除线
+			, '|' //分割线
+			, 'left' //左对齐
+			, 'center' //居中对齐
+			, 'right' //右对齐
+			, 'link' //超链接
+			, 'unlink' //清除链接
+		]
+	});
+
 	getSchool();
 
 	function getSchool() {
@@ -186,160 +200,69 @@ layui.use(['form', 'upload', 'table'], function() {
 			}
 		});
 	}
-	var classId;
-	form.on('select(class)', function(data) {
-		if(data.value != '-1') {
-			classId = data.value;
-			getSchedule(classId);
-			upload.render({
-				elem: '#test8',
-				url: httpUrl() + '/back/school/saveTimeTableByClass/' + classId,
+
+	form.on('submit(add_info)', function(data) {
+		var param = data.field;
+		//富文本的内容
+		var str = layedit.getText(index)
+		param.content = str;
+		if(param.schoolId==-1&&getRole() >= 2){
+			param.schoolId=getSchoolId();
+		}
+		if(param.pharseId==-1){
+			param.pharseId='';
+		}
+		if(param.gradeId==-1){
+			param.gradeId='';
+		}
+		if(param.classId==-1){
+			param.classId='';
+		}
+		var tourl;
+		if(getRole() >= 2) {
+			tourl = "/back/school/sendSchoolMessage/" + getSchoolId()
+		} else {
+			tourl = "/back/school/sendSchoolMessage/" + param.schoolId
+		}
+		if(param.schoolId != -1 || getRole() >= 2) {
+			$.ajax({
+				type: "post",
+				url: httpUrl() + tourl,
 				headers: {
 					'accessToken': getToken()
 				},
-				method: 'POST',
-				accept: 'file',
-				auto: false,
-				size: 10240,
-				exts: 'xls/*',
-				bindAction: '#test9',
-				before: function(obj) {
-					//layer.load(); //上传loading
-				},
-				done: function(res, index, upload) { //上传后的回调
-					if(res.code == "0010") {
-						layer.msg("导入成功！", {
+				async: false,
+				contentType: 'application/json',
+				data: JSON.stringify(param),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('发布成功！', {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								location.reload();
+								location.reload()
 							}
-						})
+						});
 					} else {
-						layer.msg("导入失败！", {
+						layer.msg(res.msg, {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								location.reload();
+								location.reload()
 							}
-						})
+						});
 					}
-				},
-				error: function() {
-					layer.closeAll('loading');
 				}
-			})
+			});
+			return false;	
+		} else {
+			layer.msg('请选择学校！', {
+				icon: 2,
+				time: 1000
+			});
+			return false;
 		}
-	});
-	var dataInfo;
-	var list = [];
-	function getSchedule(id) {
-		$.ajax({
-			type: "get",
-			url: httpUrl() + "/back/school/getTimeTableByClass/" + id,
-			async: false,
-			headers: {
-				'accessToken': getToken()
-			},
-			success: function(res) {
-				dataInfo = res.data.dataInfo;
-				list = dataInfo[0];
-				var list2 = dataInfo[1];
-				var list3 = dataInfo[2];
-				var list4 = dataInfo[3];
-				var list5 = dataInfo[4];
-				var list6 = dataInfo[5];
-				var list7 = dataInfo[6];
-				var list8 = dataInfo[7];
-				var list9 = dataInfo[8];
-				table.render({
-					elem: '#demo',
-					cols: [
-						[ //标题栏
-							{
-								field: 'id',
-								title: '时间'
-							}, {
-								field: 'username',
-								title: '星期一'
-							}, {
-								field: 'email',
-								title: '星期二'
-							}, {
-								field: 'sign',
-								title: '星期三'
-							}, {
-								field: 'sex',
-								title: '星期四'
-							}, {
-								field: 'city',
-								title: '星期五'
-							}
-						]
-					],
-					data: [{
-						"id": list2[0],
-						"username": list2[1],
-						"email": list2[2],
-						"sign": list2[3],
-						"sex": list2[4],
-						"city": list2[5]
-					}, {
-						"id": list3[0],
-						"username": list3[1],
-						"email": list3[2],
-						"sign": list3[3],
-						"sex": list3[4],
-						"city": list3[5]
-					}, {
-						"id": list4[0],
-						"username": list4[1],
-						"email": list4[2],
-						"sign": list4[3],
-						"sex": list4[4],
-						"city": list4[5]
-					}, {
-						"id": list5[0],
-						"username": list5[1],
-						"email": list5[2],
-						"sign": list5[3],
-						"sex": list5[4],
-						"city": list5[5]
-					}, {
-						"id": list6[0],
-						"username": list6[1],
-						"email": list6[2],
-						"sign": list6[3],
-						"sex": list6[4],
-						"city": list6[5]
-					}, {
-						"id": list7[0],
-						"username": list7[1],
-						"email": list7[2],
-						"sign": list7[3],
-						"sex": list7[4],
-						"city": list7[5]
-					}, {
-						"id": list8[0],
-						"username": list8[1],
-						"email": list8[2],
-						"sign": list8[3],
-						"sex": list8[4],
-						"city": list8[5]
-					}, {
-						"id": list9[0],
-						"username": list9[1],
-						"email": list9[2],
-						"sign": list9[3],
-						"sex": list9[4],
-						"city": list9[5]
-					}],
-					skin: 'line',
-					even: true
-				});
-			}
-		});
-	}
-	/*---------------*/
 
-})
+	});
+
+});

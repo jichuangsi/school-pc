@@ -15,11 +15,13 @@
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/list/Information.js" ></script>
 	</head>
 	<style>
 		.widths {
 			width: 300px;
 		}
+		
 		.Twowidths {
 			width: 600px;
 		}
@@ -33,30 +35,58 @@
 		<div class="x-body">
 			<form class="layui-form" autocomplete="off">
 				<div class="layui-form-item">
+					<label class="layui-form-label">学校名称：</label>
+					<div class="layui-input-block widths">
+						<select name="schoolId" id="status" lay-filter="school">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">发送年段级：</label>
+					<div class="layui-input-block widths">
+						<select name="pharseId" id="phrase" lay-filter="phrase">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">发送年级：</label>
+					<div class="layui-input-block widths">
+						<select name="gradeId" id="grade" lay-filter="grade">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">发送班级：</label>
+					<div class="layui-input-block widths">
+						<select name="classId" id="class" lay-filter="class">
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
 					<label class="layui-form-label">消息名称：</label>
 					<div class="layui-input-block widths ">
-						<input type="text" class="layui-input" name="name" lay-verify="required" />
+						<input type="text" class="layui-input" name="tiltle" lay-verify="required" />
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">内容：</label>
 					<div class="layui-input-block Twowidths">
-						<textarea id="demo" style="display: none;"></textarea>
+						<textarea id="demo" style="display: none;"name="content"></textarea>
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block ">
-						<button class="layui-btn" lay-submit lay-filter="add_teacher">立即添加</button>
+						<button class="layui-btn" lay-submit lay-filter="add_info">立即发布</button>
 					</div>
 				</div>
 			</form>
 		</div>
-		<script>
+		<!--<script>
 			layui.use('layedit', function() {
 				var layedit = layui.layedit;
 				layedit.build('demo'); //建立编辑器
 			});
-		</script>
+		</script>-->
 	</body>
 
 </html>

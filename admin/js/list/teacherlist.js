@@ -1,11 +1,14 @@
-layui.use('table', function() {
+layui.use(['table', 'form'], function() {
 	var table = layui.table;
+	var form = layui.form;
 	var list = JSON.parse(sessionStorage.getItem('list'));
 	table.render({
 		elem: '#teacher',
-		method: "get",
+		method: "post",
+		id: 'idTest',
 		async: false,
-		url: httpUrl() + "/teacher/getTeachers/" + list.schoolId,
+		url: httpUrl() + "/teacher/getTeacherByCondition",
+		contentType: 'application/json',
 		headers: {
 			'accessToken': getToken()
 		},
@@ -57,11 +60,20 @@ layui.use('table', function() {
 				}
 			]
 		],
+		toolbar: '#teacherSet',
 		loading: true,
 		request: {
-				pageName: 'pageIndex',
-				limitName: "pageSize"
-			},
+			pageName: 'pageIndex',
+			limitName: "pageSize"
+		},
+		where: {
+			"classId": "",
+			"gradeId": "",
+			"phraseId": "",
+			"schoolId": list.schoolId,
+			"subjectId": "",
+			"subjectName": ''
+		},
 		parseData: function(res) {
 			var arr;
 			var code;
@@ -79,16 +91,30 @@ layui.use('table', function() {
 			};
 		}
 	});
+	getSubjectList();
+	form.on('submit(search)', function(data) {
+		var param = data.field;
+		if(param.subjectId==-1){
+			param.subjectId=""
+		}
+		table.reload('idTest', {
+			where: {
+				"userName": param.username,
+				"subjectId": param.subjectId
+			}
+		})
+		getSubjectList();
+	});
 	subjectList
 	table.on('row(teacher)', function(data) {
 		var param = data.data;
 		var subjectList = param.secondarySubjects
 		showSubject(subjectList);
 		$(document).on('click', '#choiceTeacher', function() {
-			ChoiceTeacher(param.id,param.primarySubject.subjectId,param.primarySubject.subjectName);
+			ChoiceTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName);
 		});
 		$(document).on('click', '#choicePrimaryTeacher', function() {
-			ChoicePrimaryTeacher(param.id,param.primarySubject.subjectId,param.primarySubject.subjectName);
+			ChoicePrimaryTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName);
 		});
 	});
 	///
@@ -105,11 +131,11 @@ layui.use('table', function() {
 		}
 	}
 
-	function ChoiceTeacher(id,subjectId,subjectName) {
+	function ChoiceTeacher(id, subjectId, subjectName) {
 		var model = {
 			"secondaryClassId": list.ClassId,
-			"subjectId":subjectId,
-			"subjectName":subjectName
+			"subjectId": subjectId,
+			"subjectName": subjectName
 		}
 		layer.confirm('确认添加该老师为任课老师？', function(index) {
 			$.ajax({
@@ -128,7 +154,7 @@ layui.use('table', function() {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								table.reload('teacher');
+								table.reload('idTest');
 							}
 						});
 					} else {
@@ -136,7 +162,7 @@ layui.use('table', function() {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								table.reload('teacher');
+								table.reload('idTest');
 							}
 						});
 					}
@@ -144,12 +170,48 @@ layui.use('table', function() {
 			});
 		});
 	}
+	//获取教学主要科目
+	function getSubjectList() {
+		$('#subjectListS').empty();
+		var options = '<option value="-1" selected="selected">' + "请选择科目" + '</option>';
+		var arr;
+		$.ajax({
+			type: "get",
+			url: httpUrl() + "/school/subject/getSubjects",
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					arr = res.data;
+					if(arr == null || arr == undefined) {
+						options = '<option value="" selected="selected">暂无科目信息请先去添加科目信息</option>'
+					} else {
+						for(var i = 0; i < arr.length; i++) {
+							options += '<option value="' + arr[i].id + '" >' + arr[i].subjectName + '</option>'
+						}
+					}
+					$('#subjectListS').append(options);
+					form.render('select');
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {
+							location.reload();
+						}
+					});
+				}
+			}
+		});
+	}
 
-	function ChoicePrimaryTeacher(id,subjectId,subjectName) {
+	function ChoicePrimaryTeacher(id, subjectId, subjectName) {
 		var param = {
 			"primaryClassId": list.ClassId,
-			"subjectId":subjectId,
-			"subjectName":subjectName
+			"subjectId": subjectId,
+			"subjectName": subjectName
 		}
 		layer.confirm('确认添加该老师为班主任？', function(index) {
 			$.ajax({
@@ -167,7 +229,7 @@ layui.use('table', function() {
 							icon: 1,
 							time: 1000,
 							end: function() {
-								table.reload('teacher');
+								table.reload('idTest');
 							}
 						});
 					} else {
@@ -175,7 +237,7 @@ layui.use('table', function() {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								table.reload('teacher');
+								table.reload('idTest');
 							}
 						});
 					}

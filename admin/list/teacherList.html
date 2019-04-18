@@ -51,6 +51,20 @@
 			});
 		}
 	</script>
+	<script type="text/html" id="teacherSet">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12">
+					<div class="layui-input-inline">
+						<input type="text" name="username" placeholder="姓名" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-input-inline">
+						<select name="subjectId" id="subjectListS" lay-filter="subjectListS">
+						</select>
+					</div>
+					<div class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></div>
+				</form>
+			</div>
+		</script>
 	<div id="subjectList">
 		<div class="x-body">
 			<div id="subject"></div>

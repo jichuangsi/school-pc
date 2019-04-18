@@ -48,6 +48,9 @@ layui.use("form", function() {
 			function validation() {
 				if(admin == 'M') { //超级
 					//无权限限制
+					$('#infomation').hide();
+					$('#schedule').hide();
+					
 				} else if(admin == '管理员') { //学校管理员
 					$('#nav').first('li').find('ul').first().find('li').slice(0, 1).hide();
 					$('#create3').hide();
