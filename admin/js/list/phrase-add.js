@@ -107,7 +107,6 @@ layui.use(['laydate', 'form', 'table'], function() {
 			headers: {
 				'accessToken': getToken()
 			},
-			page: true,
 			cols: [
 				[{
 						field: 'id',

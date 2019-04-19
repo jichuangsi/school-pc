@@ -35,7 +35,6 @@ layui.use(['table', 'form'], function() {
 		headers: {
 			'accessToken': getToken()
 		},
-		page: true,
 		cols: [
 			[{
 					field: 'id',
@@ -221,7 +220,6 @@ layui.use(['table', 'form'], function() {
 			headers: {
 				'accessToken': getToken()
 			},
-			page: true,
 			cols: [
 				[{
 						field: 'gradeId',

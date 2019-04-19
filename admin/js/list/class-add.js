@@ -219,7 +219,6 @@ layui.use(['form', 'table'], function() {
 			headers: {
 				'accessToken': getToken()
 			},
-			page: true,
 			cols: [
 				[{
 						field: 'classId',
