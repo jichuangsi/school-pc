@@ -401,7 +401,7 @@ layui.use(['form', 'upload', 'table'], function() {
 				var total = 0;
 				if(res.code == "0010") {
 					arr = res.data.list;
-					total = arr.length;
+					total = res.data.total;
 					code = 0;
 				}
 				return {

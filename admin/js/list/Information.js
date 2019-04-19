@@ -355,7 +355,6 @@ layui.use(['table', 'form', 'layedit'], function() {
 				]
 			],
 			page: true,
-			limit: 10,
 			loading: true,
 			request: {
 				pageName: 'pageIndex',
@@ -367,7 +366,7 @@ layui.use(['table', 'form', 'layedit'], function() {
 				var total = 0;
 				if(res.code == "0010") {
 					arr = res.data.list;
-					total = arr.length;
+					total = res.data.total;
 					code = 0;
 				}
 				return {

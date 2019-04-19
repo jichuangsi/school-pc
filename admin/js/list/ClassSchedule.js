@@ -247,7 +247,7 @@ layui.use(['form', 'upload', 'table'], function() {
 							icon: 2,
 							time: 1000,
 							end: function() {
-								location.reload();
+								//location.reload();
 							}
 						})
 				}
@@ -261,11 +261,11 @@ layui.use(['form', 'upload', 'table'], function() {
 				var list7 = dataInfo[6];
 				var list8 = dataInfo[7];
 				var list9 = dataInfo[8];
-				for(var i=0;i<dataInfo.length;i++){
-					for(var j=0;j<dataInfo[i].length;j++){
-						console.log(dataInfo[i][j]);
-					}
-				}
+//				for(var i=0;i<dataInfo.length;i++){
+//					for(var j=0;j<dataInfo[i].length;j++){
+//						console.log(dataInfo[i][j]);
+//					}
+//				}
 				table.render({
 					elem: '#demo',
 					cols: [
