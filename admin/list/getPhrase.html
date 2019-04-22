@@ -61,7 +61,7 @@
 		</div>
 		<div class="x-body">
 
-			<div class="layui-row layui-col-space20">
+			<div class="layui-row layui-col-space5">
 				<div class="layui-col-md6 ">
 					<table id="demo" lay-filter="demo"></table>
 				</div>
@@ -117,6 +117,15 @@
 			{{# }else if(getRole()<3){ }}
 				<span class="layui-btn-sm layui-btn" onclick="addGrade()">添加</span>
 			{{# } }} 
+		</script>
+		<script type="text/html" id="graduation">
+		{{# if(getRole()>3 ){ }} 
+			<span class="layui-btn layui-btn-sm layui-btn-disabled" >毕业</span>
+		{{# }else if(getRole()<3){ }}
+		{{# if(d.gradeName=='初三'){  }}
+			<span class="layui-btn layui-btn-sm layui-btn-warm" id="graduation">毕业</span>
+		{{# }  }}
+		{{# } }} 
 		</script>
 		<script type="text/html" id="gradedel">
 		{{# if(getRole()>3 ){ }} 

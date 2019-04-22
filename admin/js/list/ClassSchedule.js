@@ -3,9 +3,9 @@ layui.use(['form', 'upload', 'table'], function() {
 
 	function settab() {
 		if(getRole() == 1) {
-
+			var str = $('.layui-form').find('div').first().removeClass('site');
 		} else if(getRole() >= 2) {
-			var str = $('.layui-form').find('div').first().hide();
+			//var str = $('.layui-form').find('div').first().hide();
 			getPhrase(getSchoolId());
 		}
 	}
@@ -233,6 +233,7 @@ layui.use(['form', 'upload', 'table'], function() {
 	});
 	var dataInfo;
 	var list = [];
+
 	function getSchedule(id) {
 		$.ajax({
 			type: "get",
@@ -242,14 +243,14 @@ layui.use(['form', 'upload', 'table'], function() {
 				'accessToken': getToken()
 			},
 			success: function(res) {
-				if(res.code=="0050"){
+				if(res.code == "0050") {
 					layer.msg("该班没有课程表", {
-							icon: 2,
-							time: 1000,
-							end: function() {
-								//location.reload();
-							}
-						})
+						icon: 2,
+						time: 1000,
+						end: function() {
+							//location.reload();
+						}
+					})
 				}
 				dataInfo = res.data.dataInfo;
 				list = dataInfo[0];
@@ -261,11 +262,11 @@ layui.use(['form', 'upload', 'table'], function() {
 				var list7 = dataInfo[6];
 				var list8 = dataInfo[7];
 				var list9 = dataInfo[8];
-//				for(var i=0;i<dataInfo.length;i++){
-//					for(var j=0;j<dataInfo[i].length;j++){
-//						console.log(dataInfo[i][j]);
-//					}
-//				}
+				//				for(var i=0;i<dataInfo.length;i++){
+				//					for(var j=0;j<dataInfo[i].length;j++){
+				//						console.log(dataInfo[i][j]);
+				//					}
+				//				}
 				table.render({
 					elem: '#demo',
 					cols: [

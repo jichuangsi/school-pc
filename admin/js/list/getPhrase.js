@@ -245,6 +245,11 @@ layui.use(['table', 'form'], function() {
 					},
 					{
 						field: 'schooldel',
+						title: '毕业',
+						toolbar: '#graduation'
+					},
+					{
+						field: 'schooldel',
 						title: '删除',
 						toolbar: '#gradedel'
 					}
@@ -277,6 +282,10 @@ layui.use(['table', 'form'], function() {
 		});
 		$(document).on('click', '#gradeDel', function() {
 			delGrade(param.gradeId);
+		});
+		//毕业
+		$(document).on('click', '#graduation', function() {
+			graduation(param.gradeId);
 		});
 		$(document).on('click', '#gradelook', function() {
 			IdList.push(param.gradeId);
@@ -321,6 +330,42 @@ layui.use(['table', 'form'], function() {
 		});
 		return false;
 	});
+	//毕业年级
+	function graduation(id) {
+		layer.confirm('确认该年级已经毕业吗？', function(index) {
+			//捉到所有被选中的，发异步进行删除
+			$.ajax({
+				type: "DELETE",
+				url: httpUrl() + "/school/deleteGrade/" + id,
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('毕业成功！！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('grade');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('grade');
+								layer.close(index);
+							}
+						});
+					}
+				}
+			});
+		});
+
+	}
 	//删除年级
 	function delGrade(id) {
 		layer.confirm('确认要删除吗？', function(index) {
@@ -567,7 +612,7 @@ layui.use(['table', 'form'], function() {
 	form.on('submit(add_Class)', function(data) {
 		var param = data.field;
 		param.schoolId = list.schoolId;
-//		param.phraseId = list.phraseId;
+		//		param.phraseId = list.phraseId;
 		param.gradeId = list.gradeId;
 		$.ajax({
 			type: "post",

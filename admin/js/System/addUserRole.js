@@ -3,19 +3,19 @@ layui.use(['form', 'table'], function() {
 
 	function settab() {
 		if(getRole() == 1) {
-
+			var str = $('.layui-form').find('div').first().removeClass('site');
 		} else if(getRole() >= 2) {
-			var str = $('.layui-form').find('div').first().hide();
+			//var str = $('.layui-form').find('div').first().hide();
 		}
 	}
 	var form = layui.form;
 	var table = layui.table;
-//	form.on('select(school)', function(data) {
-//		if(data.value != '-1') {
-//			var id = data.value;
-//			renderRole(id);
-//		}
-//	});
+	//	form.on('select(school)', function(data) {
+	//		if(data.value != '-1') {
+	//			var id = data.value;
+	//			renderRole(id);
+	//		}
+	//	});
 	renderRole = function(id) {
 		table.render({
 			elem: '#role',
@@ -65,7 +65,7 @@ layui.use(['form', 'table'], function() {
 			}
 		});
 	}
-		if(getRole() >= 2) {
+	if(getRole() >= 2) {
 		renderRole(getSchoolId());
 	} else {
 		form.on('select(school)', function(data) {
@@ -88,8 +88,8 @@ layui.use(['form', 'table'], function() {
 	});
 	form.on('submit(add_role)', function(data) {
 		var param = data.field;
-		if(param.schoolId==-1){
-			param.schoolId=getSchoolId();
+		if(param.schoolId == -1) {
+			param.schoolId = getSchoolId();
 		}
 		$.ajax({
 			type: "post",

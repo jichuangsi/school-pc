@@ -3,9 +3,9 @@ layui.use(['table', 'form', 'layedit'], function() {
 
 	function settab() {
 		if(getRole() == 1) {
-
+			var str = $('.layui-form').find('div').first().removeClass('site');
 		} else if(getRole() >= 2) {
-			var str = $('.layui-form').find('div').first().hide();
+			//var str = $('.layui-form').find('div').first().hide();
 			getPhrase(getSchoolId());
 		}
 	}

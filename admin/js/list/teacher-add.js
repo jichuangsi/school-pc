@@ -4,8 +4,10 @@ layui.use(['form', 'table'], function() {
 	var table = layui.table;
 
 	function settab() {
-		if(getRole() == 1) {} else if(getRole() >= 2) {
-			var str = $('.layui-form').find('div').first().hide();
+		if(getRole() == 1) {
+			var str = $('.layui-form').find('div').first().removeClass('site');
+		} else if(getRole() >= 2) {
+			//var str = $('.layui-form').find('div').first().hide();
 			getPhrase(getSchoolId());
 		}
 	}

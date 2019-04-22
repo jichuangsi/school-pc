@@ -7,8 +7,8 @@ var role;
 var roleName;
 //修改路径
 function httpUrl() {
-	//url = "http://192.168.31.154:8083"
-	url="http://api.jichuangsi.com/USERSERVICE"
+	url = "http://192.168.31.154:8083"
+	//url="http://api.jichuangsi.com/USERSERVICE"
 	return url;
 }
 //获取token

@@ -3,14 +3,15 @@ layui.use(['form', 'table'], function() {
 
 	function settab() {
 		if(getRole() == 1) {
-
+			var str = $('.layui-form').find('div').first().removeClass('site');
 		} else if(getRole() >= 2) {
-			var str = $('.layui-form').find('div').first().hide();
+//			var str = $('.layui-form').find('div').first().hide();
 			getGrade(getSchoolId());
 		}
 	}
 	var form = layui.form;
 	var table = layui.table;
+
 	getSchool();
 	form.on('submit(add)', function(data) {
 		var param = data.field;

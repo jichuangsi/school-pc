@@ -21,6 +21,9 @@
 		.widths {
 			width: 300px;
 		}
+		.site{
+			display: none;
+		}
 	</style>
 
 	<body>
@@ -32,7 +35,7 @@
 			<div class="layui-row">
 				<div class="layui-col-md4">
 					<form class="layui-form">
-						<div class="layui-form-item">
+						<div class="layui-form-item site">
 							<label class="layui-form-label">学校名称：</label>
 							<div class="layui-input-block widths">
 								<select name="schoolId" id="status" lay-filter="school">
@@ -65,9 +68,11 @@
 								<div class="layui-upload">
 									<button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
 									<button type="button" class="layui-btn" id="test9">开始上传</button>
+									<button class="layui-btn layui-btn-danger" lay-submit lay-filter="update_student">删除</button>
 								</div>
 							</div>
 						</div>
+						<a href="http://download.jichuangsi.com/template/课程表.xls">课程表.xls</a>
 					</form>
 				</div>
 				<div class="layui-col-md8">

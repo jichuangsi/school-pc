@@ -31,6 +31,9 @@
 			display: none;
 			margin-top: 10px;
 		}
+		.site{
+			display: none;
+		}
 	</style>
 
 	<body>
@@ -42,7 +45,7 @@
 			<div class="layui-row">
 				<div class="layui-col-md4">
 					<form class="layui-form">
-						<div class="layui-form-item">
+						<div class="layui-form-item site">
 							<label class="layui-form-label">学校名称：</label>
 							<div class="layui-input-block widths">
 								<select name="schoolId" id="status" lay-filter="school">
@@ -111,19 +114,19 @@
 					<div class="layui-input-inline">
 						<input type="text" name="username" placeholder="姓名" autocomplete="off" class="layui-input" style="width: 100px;">
 					</div>
-					<div class="layui-input-inline">
+					<div class="layui-input-inline"  style="width: 150px;">
 						<select name="subjectId" id="subjectListS" lay-filter="subjectListS">
 						</select>
 					</div>
-					<div class="layui-input-inline">
+					<div class="layui-input-inline" style="width: 150px;">
 						<select name="phrase" id="phraseSearch" lay-filter="phraseSearch">
 						</select>
 					</div>
-					<div class="layui-input-inline">
+					<div class="layui-input-inline" style="width: 150px;">
 						<select name="gradeId" id="gradeSearch" lay-filter="gradeSearch">
 						</select>
 					</div>
-					<div class="layui-input-inline">
+					<div class="layui-input-inline" style="width: 150px;">
 						<select name="classId" id="classSearch" lay-filter="classSearch">
 						</select>
 					</div>
