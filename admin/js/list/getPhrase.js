@@ -409,7 +409,7 @@ layui.use(['table', 'form'], function() {
 	form.on('submit(add_Grade)', function(data) {
 		var param = data.field;
 		param.schoolId = list.schoolId;
-		param.phraseId = list.phraseId;
+		param.phraseId = list.id;
 		$.ajax({
 			type: "post",
 			url: httpUrl() + "/school/grade/insertGrade",

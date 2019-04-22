@@ -135,7 +135,7 @@ layui.use(['table', 'form', 'upload'], function() {
 	getGrade();
 
 	function getGrade() {
-		var id = list.phraseId;
+		var id = list.id;
 		$('#grade').empty();
 		var options = '<option value="-1" selected="selected">' + "请选择年级" + '</option>';
 		$.ajax({

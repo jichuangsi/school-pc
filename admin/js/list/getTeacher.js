@@ -463,7 +463,7 @@ layui.use(['table', 'form'], function() {
 				"account": param.account,
 				"name": param.name,
 				"phrase": {
-					"phraseId": list.phraseId,
+					"phraseId": list.id,
 					"phraseName": list.phraseName
 				},
 				"primaryClass": {

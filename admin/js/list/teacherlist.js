@@ -133,6 +133,8 @@ layui.use(['table', 'form'], function() {
 
 	function ChoiceTeacher(id, subjectId, subjectName) {
 		var model = {
+			"phraseName":list.phraseName,
+			"phraseId":list.phraseId,
 			"secondaryClassId": list.ClassId,
 			"subjectId": subjectId,
 			"subjectName": subjectName
@@ -209,6 +211,8 @@ layui.use(['table', 'form'], function() {
 
 	function ChoicePrimaryTeacher(id, subjectId, subjectName) {
 		var param = {
+			"phraseName":list.phraseName,
+			"phraseId":list.phraseId,
 			"primaryClassId": list.ClassId,
 			"subjectId": subjectId,
 			"subjectName": subjectName

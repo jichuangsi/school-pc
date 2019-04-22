@@ -20,7 +20,7 @@ layui.use(['form', 'upload', 'table'], function() {
 		var param = data.field;
 		var str;
 		for(var i=0;i<Phrase.length;i++){
-			if( param.phrase=Phrase[i].id){
+			if( param.phrase==Phrase[i].id){
 				str=Phrase[i].pharseId
 			}
 		}
