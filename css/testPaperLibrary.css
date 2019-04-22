@@ -247,6 +247,7 @@
 
 #container {
 	padding-top: 7px;
+	position: relative;
 }
 
 .bar6 form {
@@ -322,4 +323,31 @@ button {
 		margin-right: 24.75%;
 		background-color: #59e8e3;
 		text-align: center;
+	}
+	.tab {
+		position: absolute;
+		left: 60px;
+		top: 30px;
+	}
+	.tab div {
+		float: left;
+		padding: 4px 18px;
+		margin-left: 10px;
+		cursor: pointer;
+	}
+	.tab div:first-child{
+	}
+	.tab_change {
+		background-color: #3D72FE;
+		color: #fff;
+		border-radius: 15px;
+	}
+	.sq {
+		position: absolute;
+		right: 330px;
+		padding: 8px 18px;
+		background-color: #3D72FE;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
 	}

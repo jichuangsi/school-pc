@@ -669,6 +669,7 @@ function uploadAttachments(){
 		{	
 		},
 		deleteCallback: function (data, pd) {
+			console.log(data)
 			if(!data.data&&data&&data.length>0){
 				for(var i=0;i<attachmentList.length;i++){
 					for(var j=0;j<data.length;j++){

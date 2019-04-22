@@ -9,6 +9,9 @@
 		<script type="text/javascript" src="../js/testPaperLibrary.js" ></script>
 		<script src="../js/jquery.page.js"></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/tinyImgUpload.js"></script>
+		<script type="text/javascript" src="../js/jquery.uploadfile.min.js"></script>
+		<link rel="stylesheet" href="../css/uploadfile.css" />
 		<link rel="stylesheet" href="../css/page.css" />
 		<link rel="stylesheet" href="../css/testPaperLibrary.css" />
 		<!-- <script type="text/javascript" src="../js/personalsubject.js" ></script> -->
@@ -17,6 +20,150 @@
 		<link rel="stylesheet" href="../css/sweetalert.css" />
 	</head>
 	<style>
+		#sc {
+			width: 100%;
+			height: 100%;
+			display:none;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			background-color: rgba(0, 0, 0, 0.3)
+		}
+		.scbox {
+			width: 400px;
+			height: 300px;
+			background-color: #fff;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			overflow: hidden;
+		}
+		.scbox .none {
+			position: absolute;
+			right: 0px;
+			top:-5px;
+			background-color: #3d72fe;
+			font-size: 30px;
+			line-height: 30px;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+		.ipt {
+			width: 150px;
+			height: 150px;
+			border: 3px solid #999;
+			margin: 30px auto;
+			cursor: pointer;
+			position: relative;
+		}
+		.ipt div {
+			line-height: 150px;
+			text-align: center;
+			font-size: 56px;
+			color: #999;	
+			font-weight: 700;
+			position: absolute;
+			top: 0px;
+			left:50%;
+			transform: translateX(-50%)
+		}
+		.ipt span{
+			text-align: center;
+			font-size: 22px;
+			position: absolute;
+			top: 40px;
+		}
+		.ipt input {	
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			position: relative;
+			z-index: 10;
+		}
+		.confirm {
+			position: absolute;
+			bottom: 30px;
+			padding: 5px 15px;
+			border-radius: 10px;
+			background-color: #3d72fe;
+			color: #fff;
+			cursor: pointer;
+			left:50%;
+			transform: translateX(-50%)
+		}
+		.xzbox {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			background-color: #fff;
+			z-index: 120;
+			display: none;
+		}
+		.xzbox1 {
+			width: 150px;
+			height: 150px;
+			position: absolute;
+			top: 75px;
+			left: 125px;
+			text-align: center;
+			line-height: 150px;
+		}
+		.xzbox2 {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			border: 1px solid #999;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			transform: rotate(0deg);
+			animation: all 3s linear infinite;
+		}
+		.zz {
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			right: -25px;
+			top: 50px;
+			background-color: #fff;
+		}
+		@keyframes all {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(720deg);
+			}
+		}
+		.black_overlay {
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index: 1001;
+			-moz-opacity: 0.8;
+			opacity: .80;
+			filter: alpha(opacity=80);
+		}
+		
+		.white_content {
+			display: none;
+			position: absolute;
+			top: 10%;
+			left: 26%;
+			width: 80%;
+			height: 80%;
+			border: 1px solid lightblue;
+			background-color: white;
+			z-index: 1002;
+			overflow: auto;
+		}
 		.MathJye table {
 			border-collapse: collapse;
 			margin: 0;
@@ -102,6 +249,11 @@
 		</div>
 		<div class="tpl_div1" >
 			<div id="container">
+				<div class="tab">
+					<div class="tab_change" onclick="tab_zz()">自组卷题</div>
+					<div onclick="tab_sq()">上传卷题</div>
+				</div>
+				<div class="sq" onclick="ShowDiv()">上传试卷</div>
 				<div class="search bar6">
 					<form>
 						<input type="text" id="examName" placeholder="请输入关键字查询" value="">
@@ -333,5 +485,38 @@
 			</div>
 		<div class="tcdPageCode1"></div>
 		</div>
+			<!-- <div id="fade" class="black_overlay">
+			</div>
+			<div id="MyDiv" class="white_content" style="width: 600px;height:600px;margin-left: 10%;margin-top: 5%">
+				
+				<div style="text-align: right; cursor: default; height: 40px;">
+					<span style="font-size: 20px;float:left">上传文件大小限制为5M以内，数量限制为5个以内</span>
+					<label style="font-size: 25px;width: 20px;height:20px;cursor: pointer;background-color: #F2F2F2;border-radius: 20px;color:red;" onclick="CloseDiv('MyDiv','fade')">X</label>											
+					<div id="fileuploader">上传</div>
+					 <div id="upload">
+
+					</div>
+					<button style="width: 80px;height: 40px;color: white;background-color: #3d72fe;border-radius: 5px;position: relative;right: 149px;top: 340px ;cursor: pointer;" class="submit">本地上传</button>
+				</div>
+			</div> -->
+			<div id="sc">
+				<div class="scbox">
+					<div class="none" onclick='CloseDiv()'>x</div>
+					<div class="ipt">
+						<div>+</div>
+						<span></span>
+						<input type="file"  id="file"  multiple="multiple">
+					</div>
+					<div class="confirm" onclick="fileconfirm()">确认</div>
+					<div class="xzbox">
+							<div class="xzbox1">
+								loading...
+								<div class="xzbox2">
+									<div class="zz"></div>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
 	</body>
 </html>
