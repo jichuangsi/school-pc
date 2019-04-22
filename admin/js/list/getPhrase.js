@@ -14,6 +14,7 @@ layui.use(['table', 'form'], function() {
 	var list = {
 		"schoolId": '',
 		"phraseId": '',
+		"id":'',
 		"gradeId": '',
 		"ClassId": '',
 		"phraseName": '',
@@ -96,7 +97,9 @@ layui.use(['table', 'form'], function() {
 			delAll(param.id);
 		});
 		$(document).on('click', '#look', function() {
-			list.phraseId = param.id;
+			list.phraseId = param.pharseId;
+			list.id=param.id;
+			console.log(list)
 			list.phraseName = param.phraseName;
 			renderTable(param.id);
 		})

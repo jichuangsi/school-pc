@@ -13,15 +13,23 @@ layui.use(['form', 'upload', 'table'], function() {
 	var upload = layui.upload;
 	var table = layui.table;
 	getSchool()
+	var Phrase=[];
 	/*两种额外情况，校长一级别添加学生,直接隐藏学校在做判断*/
 	/*另外一种教师添加学生,需要获取教师所在的班级及各种信息，从而隐藏部分标签，跳过判断重新做相应的判断*/
 	form.on('submit(add)', function(data) {
 		var param = data.field;
+		var str;
+		for(var i=0;i<Phrase.length;i++){
+			if( param.phrase=Phrase[i].id){
+				str=Phrase[i].pharseId
+			}
+		}
 		var model = {
 			"account": param.account,
 			"name": param.name,
 			"phrase": {
-				"phraseId": param.phrase,
+				"id": param.phrase,
+				"phraseId":str,
 				"phraseName": $("#phrase").find("option:selected").text()
 			},
 			"primaryClass": {
@@ -173,11 +181,12 @@ layui.use(['form', 'upload', 'table'], function() {
 				if(res.code == '0010') {
 					var arr = [];
 					arr = res.data;
+					Phrase=arr;
 					if(arr == null || arr == undefined || arr.length == 0) {
 						options = '<option value="" selected="selected">暂无年级信息请先去添加年级信息</option>'
 					} else {
 						for(var i = 0; i < arr.length; i++) {
-							options += '<option value="' + arr[i].id + '" >' + arr[i].phraseName + '</option>'
+							options += '<option value="' + arr[i].id + '" name="' + arr[i].pharseId + '" >' + arr[i].phraseName + '</option>'
 						}
 					}
 					$('#phrase').append(options);

@@ -317,6 +317,7 @@ layui.use(['table', 'form', 'upload'], function() {
 			"id": param.id,
 			"name": param.name,
 			"phrase": {
+				"id":list.id,
 				"phraseId": list.phraseId,
 				"phraseName": list.phraseName
 			},

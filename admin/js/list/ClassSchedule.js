@@ -233,6 +233,7 @@ layui.use(['form', 'upload', 'table'], function() {
 	});
 	var dataInfo;
 	var list = [];
+	var tableId;
 
 	function getSchedule(id) {
 		$.ajax({
@@ -249,112 +250,145 @@ layui.use(['form', 'upload', 'table'], function() {
 						time: 1000,
 						end: function() {
 							//location.reload();
+							$('#tableId').addClass('site')
 						}
 					})
+				} else {
+					$('#tableId').removeClass('site')
+					dataInfo = res.data.dataInfo;
+					tableId = res.data.id;
+					console.log(tableId);
+					list = dataInfo[0];
+					var list2 = dataInfo[1];
+					var list3 = dataInfo[2];
+					var list4 = dataInfo[3];
+					var list5 = dataInfo[4];
+					var list6 = dataInfo[5];
+					var list7 = dataInfo[6];
+					var list8 = dataInfo[7];
+					var list9 = dataInfo[8];
+	//				for(var i=0;i<dataInfo.length;i++){
+	//					for(var j=0;j<dataInfo[i].length;j++){
+	//						console.log(dataInfo[i][j]);
+	//					}
+	//				}
+					table.render({
+						elem: '#demo',
+						cols: [
+							[ //标题栏
+								{
+									field: 'id',
+									title: '时间'
+								}, {
+									field: 'username',
+									title: '星期一'
+								}, {
+									field: 'email',
+									title: '星期二'
+								}, {
+									field: 'sign',
+									title: '星期三'
+								}, {
+									field: 'sex',
+									title: '星期四'
+								}, {
+									field: 'city',
+									title: '星期五'
+								}
+							]
+						],
+						data: [{
+							"id": list2[0],
+							"username": list2[1],
+							"email": list2[2],
+							"sign": list2[3],
+							"sex": list2[4],
+							"city": list2[5]
+						}, {
+							"id": list3[0],
+							"username": list3[1],
+							"email": list3[2],
+							"sign": list3[3],
+							"sex": list3[4],
+							"city": list3[5]
+						}, {
+							"id": list4[0],
+							"username": list4[1],
+							"email": list4[2],
+							"sign": list4[3],
+							"sex": list4[4],
+							"city": list4[5]
+						}, {
+							"id": list5[0],
+							"username": list5[1],
+							"email": list5[2],
+							"sign": list5[3],
+							"sex": list5[4],
+							"city": list5[5]
+						}, {
+							"id": list6[0],
+							"username": list6[1],
+							"email": list6[2],
+							"sign": list6[3],
+							"sex": list6[4],
+							"city": list6[5]
+						}, {
+							"id": list7[0],
+							"username": list7[1],
+							"email": list7[2],
+							"sign": list7[3],
+							"sex": list7[4],
+							"city": list7[5]
+						}, {
+							"id": list8[0],
+							"username": list8[1],
+							"email": list8[2],
+							"sign": list8[3],
+							"sex": list8[4],
+							"city": list8[5]
+						}, {
+							"id": list9[0],
+							"username": list9[1],
+							"email": list9[2],
+							"sign": list9[3],
+							"sex": list9[4],
+							"city": list9[5]
+						}],
+						skin: 'line',
+						even: true
+					});
 				}
-				dataInfo = res.data.dataInfo;
-				list = dataInfo[0];
-				var list2 = dataInfo[1];
-				var list3 = dataInfo[2];
-				var list4 = dataInfo[3];
-				var list5 = dataInfo[4];
-				var list6 = dataInfo[5];
-				var list7 = dataInfo[6];
-				var list8 = dataInfo[7];
-				var list9 = dataInfo[8];
-				//				for(var i=0;i<dataInfo.length;i++){
-				//					for(var j=0;j<dataInfo[i].length;j++){
-				//						console.log(dataInfo[i][j]);
-				//					}
-				//				}
-				table.render({
-					elem: '#demo',
-					cols: [
-						[ //标题栏
-							{
-								field: 'id',
-								title: '时间'
-							}, {
-								field: 'username',
-								title: '星期一'
-							}, {
-								field: 'email',
-								title: '星期二'
-							}, {
-								field: 'sign',
-								title: '星期三'
-							}, {
-								field: 'sex',
-								title: '星期四'
-							}, {
-								field: 'city',
-								title: '星期五'
-							}
-						]
-					],
-					data: [{
-						"id": list2[0],
-						"username": list2[1],
-						"email": list2[2],
-						"sign": list2[3],
-						"sex": list2[4],
-						"city": list2[5]
-					}, {
-						"id": list3[0],
-						"username": list3[1],
-						"email": list3[2],
-						"sign": list3[3],
-						"sex": list3[4],
-						"city": list3[5]
-					}, {
-						"id": list4[0],
-						"username": list4[1],
-						"email": list4[2],
-						"sign": list4[3],
-						"sex": list4[4],
-						"city": list4[5]
-					}, {
-						"id": list5[0],
-						"username": list5[1],
-						"email": list5[2],
-						"sign": list5[3],
-						"sex": list5[4],
-						"city": list5[5]
-					}, {
-						"id": list6[0],
-						"username": list6[1],
-						"email": list6[2],
-						"sign": list6[3],
-						"sex": list6[4],
-						"city": list6[5]
-					}, {
-						"id": list7[0],
-						"username": list7[1],
-						"email": list7[2],
-						"sign": list7[3],
-						"sex": list7[4],
-						"city": list7[5]
-					}, {
-						"id": list8[0],
-						"username": list8[1],
-						"email": list8[2],
-						"sign": list8[3],
-						"sex": list8[4],
-						"city": list8[5]
-					}, {
-						"id": list9[0],
-						"username": list9[1],
-						"email": list9[2],
-						"sign": list9[3],
-						"sex": list9[4],
-						"city": list9[5]
-					}],
-					skin: 'line',
-					even: true
-				});
 			}
 		});
 	}
 	/*---------------*/
-
+	form.on('submit(Del_schedule)', function(data) {
+		var param = data.field;
+		$.ajax({
+			type: "DELETE",
+			url: httpUrl() + "/back/school/deleteClassTimeTable/" + tableId + "/" + param.classId,
+			async: false,
+			headers: {
+				'accessToken': getToken()
+			},
+			success: function(res) {
+				if(res.code == '0010') {
+					layer.msg('删除成功！！', {
+						icon: 1,
+						time: 1000,
+						end: function() {
+							location.reload();
+						}
+					});
+				} else {
+					layer.msg(res.msg, {
+						icon: 2,
+						time: 1000,
+						end: function() {}
+					});
+				}
+			}
+		});
+		return false;
+	});
 })
