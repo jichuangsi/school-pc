@@ -210,6 +210,7 @@ layui.use(['form', 'table'], function() {
 						time: 1000,
 						end: function() {
 							table.reload('role');
+							layer.close(index);
 						}
 					});
 				} else {
@@ -218,6 +219,7 @@ layui.use(['form', 'table'], function() {
 						time: 1000,
 						end: function() {
 							table.reload('role');
+							layer.close(index);
 						}
 					});
 				}

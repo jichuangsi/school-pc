@@ -100,7 +100,10 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(phrase)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getGrade(id);
+			if(id!=""){
+				getGrade(id);
+			}
+			
 		}
 	});
 
@@ -146,7 +149,10 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(grade)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getClass(id);
+			if(id!=""){
+				getClass(id);
+			}
+			
 
 		}
 	});
@@ -191,7 +197,9 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(class)', function(data) {
 		if(data.value != '-1') {
 			classId = data.value;
-			getSchedule(classId);
+			if(classId!=""){
+				getSchedule(classId);
+			}
 			upload.render({
 				elem: '#test8',
 				url: httpUrl() + '/back/school/saveTimeTableByClass/' + classId,

@@ -207,7 +207,10 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(phrase)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getGrade(id);
+			if(id!=""){
+				getGrade(id);
+			}
+			
 		}
 	});
 
@@ -253,7 +256,10 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(grade)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getClass(id);
+			if(id!=""){
+				getClass(id);
+			}
+			
 
 		}
 	});
@@ -449,7 +455,13 @@ layui.use(['form', 'upload', 'table'], function() {
 		});
 		var gradeId = param.primaryGrade.gradeId;
 		var classId = param.primaryClass.classId;
-		var phrase = param.phrase.phraseId;
+		var phrase
+		if( param.phrase.id==null&&param.phrase.phraseId!=null&&param.phrase.phraseId.length>2){
+			 phrase=param.phrase.phraseId
+		}else{
+			 phrase= param.phrase.id;
+		}
+		
 		getUpdateGrade(phrase, gradeId);
 		if(flag) {
 			getUpdateClass(gradeId, classId);
@@ -556,7 +568,7 @@ layui.use(['form', 'upload', 'table'], function() {
 						icon: 2,
 						time: 1000,
 						end: function() {
-							location.reload();
+							//location.reload();
 						}
 					});
 				}
@@ -594,7 +606,7 @@ layui.use(['form', 'upload', 'table'], function() {
 						icon: 2,
 						time: 1000,
 						end: function() {
-							location.reload();
+							//location.reload();
 						}
 					});
 				}
@@ -676,7 +688,7 @@ layui.use(['form', 'upload', 'table'], function() {
 					var arr = [];
 					arr = res.data;
 					if(arr == null || arr == undefined || arr.length == 0) {
-						options = '<option value="" selected="selected">暂无年级信息请先去添加年级信息</option>'
+						options = '<option value="" selected="selected">暂无年级段信息请先去添加年级段</option>'
 					} else {
 						for(var i = 0; i < arr.length; i++) {
 							options += '<option value="' + arr[i].id + '" >' + arr[i].phraseName + '</option>'

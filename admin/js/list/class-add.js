@@ -124,7 +124,10 @@ layui.use(['form', 'table'], function() {
 		if(data.value != '-1') {
 			var id = data.value;
 			phrase = id;
-			getGrade(id);
+			if(id!=""){
+				getGrade(id);
+			}
+			
 
 		}
 	});
@@ -207,7 +210,10 @@ layui.use(['form', 'table'], function() {
 		if(data.value != '-1') {
 			var id = data.value;
 			grade = id;
-			renderClassTable(id)
+			if(id!=""){
+				renderClassTable(id)
+			}
+			
 		}
 	});
 	renderClassTable = function(id) {
@@ -262,6 +268,9 @@ layui.use(['form', 'table'], function() {
 	}
 	table.on('row(classList)', function(data) {
 		var param = data.data;
+		if(getRole() >= 2){
+			school=getSchoolId()
+		}
 		form.val('test3', {
 			"className": param.className,
 			"classId": param.classId,

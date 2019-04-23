@@ -147,7 +147,10 @@ layui.use(['form', 'table'], function() {
 	form.on('select(phrase)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			renderTable(id);
+			if(id!=null&&id!=""){
+				renderTable(id);
+			}
+			
 		}
 	})
 

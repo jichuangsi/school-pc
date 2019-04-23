@@ -57,7 +57,9 @@
 		<span class="layui-btn-sm layui-btn" onclick="addTeacher()">添加</span>
 	</script>
 	<script type="text/html" id="updatePwd">
+		{{# if(d.teacherName!=null){ }}
 		<span class="layui-btn-sm layui-btn" onclick="Update()">修改密码</span>
+		{{# } }}
 	</script>
 	<script type="text/html" id="teacher_Del">
 		<span class="layui-btn layui-btn-sm layui-btn-danger" id="teacherDel">离任</span>
