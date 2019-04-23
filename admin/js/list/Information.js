@@ -1,4 +1,8 @@
 layui.use(['table', 'form', 'layedit'], function() {
+
+	var layedit = layui.layedit;
+	var table = layui.table;
+	var form = layui.form;
 	settab();
 
 	function settab() {
@@ -9,9 +13,6 @@ layui.use(['table', 'form', 'layedit'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	var layedit = layui.layedit;
-	var table = layui.table;
-	var form = layui.form;
 	var index = layedit.build('demo', {
 		tool: [
 			'strong' //加粗
@@ -301,7 +302,7 @@ layui.use(['table', 'form', 'layedit'], function() {
 			elem: '#Info',
 			method: "get",
 			async: false,
-			url: httpUrl() + '/back/school/getSchoolNotices/'+id,
+			url: httpUrl() + '/back/school/getSchoolNotices/' + id,
 			headers: {
 				'accessToken': getToken()
 			},
@@ -313,12 +314,12 @@ layui.use(['table', 'form', 'layedit'], function() {
 					}, {
 						field: 'title',
 						title: '发送标题',
-						width:100
+						width: 100
 					},
 					{
 						field: 'createdTime',
 						title: '发送时间',
-						width:150,
+						width: 150,
 						templet: function(d) {
 							if(d.createdTime != 0) {
 								return new Date(+new Date(d.createdTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
@@ -326,31 +327,31 @@ layui.use(['table', 'form', 'layedit'], function() {
 								return "-"
 							}
 						}
-					}, 
+					},
 					{
 						field: 'pharseName',
 						title: '发送至',
-						width:100,
-						templet:function(d){
-							if(d.pharseName!=null){
+						width: 100,
+						templet: function(d) {
+							if(d.pharseName != null) {
 								return d.pharseName
-							}else if(d.gradeName!=null){
+							} else if(d.gradeName != null) {
 								return d.gradeName
-							}else if(d.className!=null){
+							} else if(d.className != null) {
 								return d.className
-							}else{
+							} else {
 								return '全校'
 							}
-							
+
 						}
-					},{
+					}, {
 						field: 'content',
 						title: '内容'
 					}, {
 						field: 'id',
 						title: '删除',
-						width:100,
-						toolbar: '#del'
+						width: 100,
+						toolbar: '#info_del'
 					}
 				]
 			],
@@ -379,28 +380,28 @@ layui.use(['table', 'form', 'layedit'], function() {
 
 		});
 	}
-	if(getRole() >= 2){
+	if(getRole() >= 2) {
 		renderInfo(getSchoolId());
-	}else{
+	} else {
 		form.on('select(school)', function(data) {
 			if(data.value != '-1') {
-			var	schoolId = data.value;
+				var schoolId = data.value;
 				renderInfo(schoolId);
 			}
 		});
 	}
-	table.on('row(Info)',function(data){
-		var param =data.data;
+	table.on('row(Info)', function(data) {
+		var param = data.data;
 		$(document).on('click', '#del', function() {
 			delInfo(param.id);
 		});
 	});
-	
-	function delInfo(id){
+
+	function delInfo(id) {
 		layer.confirm('确认要删除该信息吗？', function(index) {
 			$.ajax({
 				type: "DELETE",
-				url: httpUrl() + "/back/school/deleteSchoolNotice/"+getSchoolId()+"/"+id,
+				url: httpUrl() + "/back/school/deleteSchoolNotice/" + getSchoolId() + "/" + id,
 				async: false,
 				headers: {
 					'accessToken': getToken()

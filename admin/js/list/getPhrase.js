@@ -50,7 +50,7 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'id',
 					title: '查看',
-					toolbar: '#look'
+					toolbar: '#look_phrase'
 				}, {
 					field: 'id',
 					title: '修改',
@@ -64,10 +64,11 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'schooldel',
 					title: '删除',
-					toolbar: '#del'
+					toolbar: '#del_phrase'
 				}
 			]
 		],
+		page:true,
 		toolbar: '#addPhrase',
 		parseData: function(res) {
 			var arr;
@@ -99,7 +100,6 @@ layui.use(['table', 'form'], function() {
 		$(document).on('click', '#look', function() {
 			list.phraseId = param.pharseId;
 			list.id=param.id;
-			console.log(list)
 			list.phraseName = param.phraseName;
 			renderTable(param.id);
 		})
@@ -236,7 +236,7 @@ layui.use(['table', 'form'], function() {
 					{
 						field: 'id',
 						title: '查看',
-						toolbar: '#gradelook'
+						toolbar: '#grade_look'
 					}, {
 						field: 'id',
 						title: '修改',
@@ -249,15 +249,16 @@ layui.use(['table', 'form'], function() {
 					{
 						field: 'schooldel',
 						title: '毕业',
-						toolbar: '#graduation'
+						toolbar: '#graduation_grade'
 					},
 					{
 						field: 'schooldel',
 						title: '删除',
-						toolbar: '#gradedel'
+						toolbar: '#grade_del'
 					}
 				]
 			],
+			page:true,
 			toolbar: '#addGrade',
 			parseData: function(res) {
 				var arr;
@@ -467,16 +468,16 @@ layui.use(['table', 'form'], function() {
 					{
 						field: 'id',
 						title: '查看教师',
-						toolbar: '#Classlook'
+						toolbar: '#Class_look'
 					},
 					{
 						field: 'id',
 						title: '查看学生',
-						toolbar: '#ClassStudent'
+						toolbar: '#Class_Student'
 					}, {
 						field: 'id',
 						title: '修改',
-						toolbar: '#Classupdate'
+						toolbar: '#Class_update'
 					},
 					{
 						field: 'id',
@@ -486,10 +487,11 @@ layui.use(['table', 'form'], function() {
 					{
 						field: 'schooldel',
 						title: '删除',
-						toolbar: '#ClassDel'
+						toolbar: '#Class_Del'
 					}
 				]
 			],
+			page:true,
 			toolbar: '#addClass',
 			parseData: function(res) {
 				var arr;

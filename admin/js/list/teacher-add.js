@@ -1,7 +1,8 @@
 layui.use(['form', 'table'], function() {
-	settab();
+
 	var form = layui.form;
 	var table = layui.table;
+	settab();
 
 	function settab() {
 		if(getRole() == 1) {
@@ -465,12 +466,12 @@ layui.use(['form', 'table'], function() {
 					{
 						field: 'subjectId',
 						title: '修改',
-						toolbar: '#updateteacher'
+						toolbar: '#update_teacher'
 					},
 					{
 						field: 'subjectId',
 						title: '删除',
-						toolbar: '#teacherDel'
+						toolbar: '#teacher_Del'
 					}
 				]
 			],
@@ -526,7 +527,7 @@ layui.use(['form', 'table'], function() {
 			}
 		});
 	}
-	
+
 	table.on('row(teacher)', function(data) {
 		var param = data.data;
 
@@ -541,7 +542,7 @@ layui.use(['form', 'table'], function() {
 		})
 		getUpSubject(param.primarySubject.subjectId);
 		getUpSubjects(param.secondarySubjects);
-		getUpRole(param.school.schoolId,param.roleIds);
+		getUpRole(param.school.schoolId, param.roleIds);
 	});
 	form.on('submit(update_teacher)', function(data) {
 		var param = data.field;
@@ -560,7 +561,7 @@ layui.use(['form', 'table'], function() {
 				subjectName: $("input:checkbox[name='upsubject']:checked")[i].title
 			});
 		}
-		var roleIds=new Array();
+		var roleIds = new Array();
 		for(var i = 0; i < $("input:checkbox[name='upRole']:checked").length; i++) {
 			roleIds.push(
 				$("input:checkbox[name='upRole']:checked")[i].value
@@ -573,7 +574,7 @@ layui.use(['form', 'table'], function() {
 				"subjectId": $("#upsubject").find("option:selected").val(),
 				"subjectName": str
 			},
-			"roleIds":roleIds,
+			"roleIds": roleIds,
 			"secondarySubjects": secondarySubjects
 		}
 		$.ajax({
@@ -654,7 +655,7 @@ layui.use(['form', 'table'], function() {
 		});
 	}
 	//获取角色
-	function getUpRole(id,List) {
+	function getUpRole(id, List) {
 		$.ajax({
 			type: "get",
 			url: httpUrl() + "/getSystemRoles/" + id,
@@ -691,7 +692,7 @@ layui.use(['form', 'table'], function() {
 			}
 		});
 	}
-	
+
 	//获取教学主要科目
 	function getSubjectList() {
 		$('#subjectListS').empty();
@@ -941,9 +942,9 @@ layui.use(['form', 'table'], function() {
 		} else if(param.classId == -1) {
 			param.classId = "";
 		}
-		
-		if (param.subjectId==-1){
-			param.subjectId="";
+
+		if(param.subjectId == -1) {
+			param.subjectId = "";
 		}
 		table.reload('idTest', {
 			where: {

@@ -54,7 +54,7 @@ layui.use(['table', 'form', 'upload'], function() {
 				{
 					field: 'schooldel',
 					title: '删除',
-					toolbar: '#del'
+					toolbar: '#del_student'
 				}, {
 					field: 'id',
 					title: '修改密码',

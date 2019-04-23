@@ -1,17 +1,16 @@
 layui.use(['form', 'table'], function() {
+
+	var form = layui.form;
+	var table = layui.table;
 	settab();
 
 	function settab() {
 		if(getRole() == 1) {
 			var str = $('.layui-form').find('div').first().removeClass('site');
 		} else if(getRole() >= 2) {
-//			var str = $('.layui-form').find('div').first().hide();
 			getGrade(getSchoolId());
 		}
 	}
-	var form = layui.form;
-	var table = layui.table;
-
 	getSchool();
 	form.on('submit(add)', function(data) {
 		var param = data.field;
@@ -179,10 +178,11 @@ layui.use(['form', 'table'], function() {
 					{
 						field: 'schooldel',
 						title: '删除',
-						toolbar: '#gradedel'
+						toolbar: '#grade_del'
 					}
 				]
 			],
+			page: true,
 			toolbar: '#addGrade',
 			parseData: function(res) {
 				var arr;

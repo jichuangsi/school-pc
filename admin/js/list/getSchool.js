@@ -40,7 +40,7 @@ layui.use(['table', 'form'], function() {
 					field: 'schoolId',
 					title: '查看',
 					width: '8%',
-					toolbar: '#look'
+					toolbar: '#look_school'
 				}, {
 					field: 'schoolId',
 					title: '修改',
@@ -51,10 +51,11 @@ layui.use(['table', 'form'], function() {
 					field: 'schooldel',
 					title: '删除',
 					width: '8%',
-					toolbar: '#del'
+					toolbar: '#del_school'
 				}
 			]
 		],
+		page:true,
 		parseData: function(res) {
 			var arr;
 			var code;

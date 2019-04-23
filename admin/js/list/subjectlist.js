@@ -34,7 +34,7 @@ layui.use(['table','form'], function() {
 				{
 					field: 'schooldel',
 					title: '删除',
-					toolbar: '#subjectdel'
+					toolbar: '#subject_del'
 				}
 			]
 		],

@@ -43,10 +43,11 @@ layui.use(['form', 'table'], function() {
 					{
 						field: 'schooldel',
 						title: '删除',
-						toolbar: '#del'
+						toolbar: '#del_role'
 					}
 				]
 			],
+			page:true,
 			parseData: function(res) {
 				var arr;
 				var code;

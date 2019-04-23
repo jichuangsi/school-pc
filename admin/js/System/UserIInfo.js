@@ -78,7 +78,7 @@ layui.use(['form', 'table'], function() {
 					{
 						field: 'id',
 						title: '注销',
-						toolbar: '#userDel'
+						toolbar: '#user_Del'
 					}
 
 				]

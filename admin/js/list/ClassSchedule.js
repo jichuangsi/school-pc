@@ -1,4 +1,8 @@
 layui.use(['form', 'upload', 'table'], function() {
+
+	var form = layui.form;
+	var upload = layui.upload;
+	var table = layui.table;
 	settab();
 
 	function settab() {
@@ -9,9 +13,6 @@ layui.use(['form', 'upload', 'table'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	var form = layui.form;
-	var upload = layui.upload;
-	var table = layui.table;
 	//获取学校列表
 	getSchool();
 
@@ -267,11 +268,11 @@ layui.use(['form', 'upload', 'table'], function() {
 					var list7 = dataInfo[6];
 					var list8 = dataInfo[7];
 					var list9 = dataInfo[8];
-	//				for(var i=0;i<dataInfo.length;i++){
-	//					for(var j=0;j<dataInfo[i].length;j++){
-	//						console.log(dataInfo[i][j]);
-	//					}
-	//				}
+					//				for(var i=0;i<dataInfo.length;i++){
+					//					for(var j=0;j<dataInfo[i].length;j++){
+					//						console.log(dataInfo[i][j]);
+					//					}
+					//				}
 					table.render({
 						elem: '#demo',
 						cols: [

@@ -125,10 +125,11 @@ layui.use(['laydate', 'form', 'table'], function() {
 					{
 						field: 'schooldel',
 						title: '删除',
-						toolbar: '#del'
+						toolbar: '#del_phrase'
 					}
 				]
 			],
+			page:true,
 			toolbar: '#addPhrase', 
 			parseData: function(res) {
 				var arr;

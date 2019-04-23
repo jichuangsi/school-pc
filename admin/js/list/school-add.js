@@ -42,6 +42,7 @@ layui.use(['laydate', 'form', 'table'], function() {
 		headers: {
 			'accessToken': getToken()
 		},
+		page:true,
 		cols: [
 			[{
 					field: 'schoolId',
@@ -67,7 +68,7 @@ layui.use(['laydate', 'form', 'table'], function() {
 					field: 'schooldel',
 					title: '删除',
 					width: '8%',
-					toolbar: '#del'
+					toolbar: '#del_school'
 				}
 			]
 		],

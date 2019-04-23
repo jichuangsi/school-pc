@@ -74,7 +74,7 @@
 			</div>
 		</div>
 		<!--年段的按钮-->
-		<script type="text/html" id="look">
+		<script type="text/html" id="look_phrase">
 			<span class="layui-btn-sm layui-btn" id="look">查看</span>
 		</script>
 		<script type="text/html" id="addPhrase">
@@ -92,7 +92,7 @@
 			{{# } }}
 
 		</script>
-		<script type="text/html" id="del">
+		<script type="text/html" id="del_phrase">
 			{{# if(getRole()>=3){ }}
 			<span class="layui-btn layui-btn-sm  layui-btn-disabled">删除</span> 
 			{{# }else if(getRole()<=2){ }} 
@@ -101,7 +101,7 @@
 
 		</script>
 		<!--年级的按钮-->
-		<script type="text/html" id="gradelook">
+		<script type="text/html" id="grade_look">
 			<span class="layui-btn-sm layui-btn" id="gradelook">查看</span>
 		</script>
 		<script type="text/html" id="gradeupdate">
@@ -118,7 +118,7 @@
 				<span class="layui-btn-sm layui-btn" onclick="addGrade()">添加</span>
 			{{# } }} 
 		</script>
-		<script type="text/html" id="graduation">
+		<script type="text/html" id="graduation_grade">
 		{{# if(getRole()>3 ){ }} 
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >毕业</span>
 		{{# }else if(getRole()<3){ }}
@@ -127,7 +127,7 @@
 		{{# }  }}
 		{{# } }} 
 		</script>
-		<script type="text/html" id="gradedel">
+		<script type="text/html" id="grade_del">
 		{{# if(getRole()>3 ){ }} 
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
 		{{# }else if(getRole()<3){ }}
@@ -136,7 +136,7 @@
 		</script>
 		          
 		<!--班级的按钮-->
-		<script type="text/html" id="Classlook">
+		<script type="text/html" id="Class_look">
 		{{# if(getRole()>3 ){ }} 
 		<span class="layui-btn-sm layui-btn layui-btn-disabled">查看教师</span>
 		{{# }else if(getRole()<3){ }}
@@ -144,7 +144,7 @@
 		{{# } }} 
 			
 		</script>
-		<script type="text/html" id="ClassStudent">
+		<script type="text/html" id="Class_Student">
 			<span class="layui-btn-sm layui-btn" id="ClassStudent">查看学生</span>
 		</script>
 		<script type="text/html" id="addClass">
@@ -155,7 +155,7 @@
 		{{# } }} 
 			
 		</script>
-		<script type="text/html" id="Classupdate">
+		<script type="text/html" id="Class_update">
 		{{# if(getRole()>4 ){ }} 
 			<span class="layui-btn-sm layui-btn layui-btn-disabled">修改</span>
 		{{# }else if(getRole()<3){ }}
@@ -163,7 +163,7 @@
 		{{# } }} 
 			
 		</script>
-		<script type="text/html" id="ClassDel">
+		<script type="text/html" id="Class_Del">
 		{{# if(getRole()>4 ){ }} 
 			<span class="layui-btn layui-btn-sm layui-btn-disabled" >删除</span>
 		{{# }else if(getRole()<3){ }}

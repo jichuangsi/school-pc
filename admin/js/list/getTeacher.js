@@ -57,7 +57,7 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'schooldel',
 					title: '离任',
-					toolbar: '#teacherDel'
+					toolbar: '#teacher_Del'
 				},
 				{
 					field: 'id',
@@ -67,7 +67,7 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'schooldel',
 					title: '删除科目',
-					toolbar: '#teacherDelSubject'
+					toolbar: '#teacher_DelSubject'
 				},
 				{
 					field: 'id',

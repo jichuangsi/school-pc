@@ -1,4 +1,8 @@
 layui.use(['form', 'table', 'laydate'], function() {
+
+	var form = layui.form;
+	var table = layui.table;
+	var laydate = layui.laydate;
 	settab();
 
 	function settab() {
@@ -9,9 +13,6 @@ layui.use(['form', 'table', 'laydate'], function() {
 			getGrade(getSchoolId());
 		}
 	}
-	var form = layui.form;
-	var table = layui.table;
-	var laydate = layui.laydate;
 	laydate.render({
 		elem: '#stime',
 		format: 'yyyyMMdd'
@@ -98,25 +99,25 @@ layui.use(['form', 'table', 'laydate'], function() {
 		});
 	}
 
-//	form.on('select(phrase)', function(data) {
-//		if(data.value != '-1') {
-//			var id = data.value;
-//			renderTable(id);
-//		}
-//	});
+	//	form.on('select(phrase)', function(data) {
+	//		if(data.value != '-1') {
+	//			var id = data.value;
+	//			renderTable(id);
+	//		}
+	//	});
 	var graduationTime;
-	form.on('submit(formDemo)',function(data){
-		var param =data.field;
-		graduationTime=param.start;
-		renderTable(param.phraseId,param.start);
+	form.on('submit(formDemo)', function(data) {
+		var param = data.field;
+		graduationTime = param.start;
+		renderTable(param.phraseId, param.start);
 	});
 
-	renderTable = function(id,graduationTime) {
+	renderTable = function(id, graduationTime) {
 		table.render({
 			elem: '#grade',
 			method: "get",
 			async: false,
-			url: httpUrl() + "/school/getPastGrades/"+graduationTime+"/" + id,
+			url: httpUrl() + "/school/getPastGrades/" + graduationTime + "/" + id,
 			headers: {
 				'accessToken': getToken()
 			},
@@ -133,11 +134,11 @@ layui.use(['form', 'table', 'laydate'], function() {
 					{
 						field: 'id',
 						title: '查看',
-						toolbar: '#gradelook'
+						toolbar: '#grade_look'
 					}
 				]
 			],
-			page:true,
+			page: true,
 			request: {
 				pageName: 'pageIndex',
 				limitName: "pageSize"
@@ -160,20 +161,20 @@ layui.use(['form', 'table', 'laydate'], function() {
 			}
 		});
 	}
-	
-	table.on('row(grade)',function(data){
-		var param =data.data;
+
+	table.on('row(grade)', function(data) {
+		var param = data.data;
 		$(document).on('click', '#gradelook', function() {
-			renderClassTable(param.gradeId,graduationTime);
+			renderClassTable(param.gradeId, graduationTime);
 		})
 	});
-	
-	renderClassTable=function(id,graduationTime){
-			table.render({
+
+	renderClassTable = function(id, graduationTime) {
+		table.render({
 			elem: '#class',
 			method: "get",
 			async: false,
-			url: httpUrl() + "/school/getPastClass/"+graduationTime+"/" + id,
+			url: httpUrl() + "/school/getPastClass/" + graduationTime + "/" + id,
 			headers: {
 				'accessToken': getToken()
 			},
@@ -189,7 +190,7 @@ layui.use(['form', 'table', 'laydate'], function() {
 					}
 				]
 			],
-			page:true,
+			page: true,
 			request: {
 				pageName: 'pageIndex',
 				limitName: "pageSize"

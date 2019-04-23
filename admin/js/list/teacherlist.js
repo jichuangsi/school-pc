@@ -51,12 +51,12 @@ layui.use(['table', 'form'], function() {
 				{
 					field: 'subjectId',
 					title: '选择添加作为班主任',
-					toolbar: '#choicePrimaryTeacher'
+					toolbar: '#choicePrimary_Teacher'
 				},
 				{
 					field: 'subjectId',
 					title: '选择添加作为任课老师',
-					toolbar: '#choiceTeacher'
+					toolbar: '#choice_Teacher'
 				}
 			]
 		],
