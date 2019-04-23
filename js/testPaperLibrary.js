@@ -2,6 +2,8 @@ document.write("<script type='text/javascript' src='../js/httplocation.js' ></sc
 var local;
 var accessToken;
 var sclist
+var sctestlist
+var sctest
 
 function getLocation() {
 	local = httpLocation();
@@ -95,34 +97,34 @@ function searchtestpaper() {
 	looptestpaper();
 }
 //切换tab
-function tab_zz() {
-	getLocation();
-	getgradename();
-	looptestpaper();
-	$('.tab>div').eq(0).addClass('tab_change')
-	$('.tab>div').eq(1).removeClass('tab_change')
-	$('.tpl_div2_left').css('display','inline-block')
-	$('.tpl_div2_right').css('display','inline-block')
-}
+// function tab_zz() {
+// 	getLocation();
+// 	getgradename();
+// 	looptestpaper();
+// 	$('.tab>div').eq(0).addClass('tab_change')
+// 	$('.tab>div').eq(1).removeClass('tab_change')
+// 	$('.tpl_div2_left').css('display','inline-block')
+// 	$('.tpl_div2_right').css('display','inline-block')
+// }
 
-function tab_sq() {
-	$('.tab>div').eq(0).removeClass('tab_change')
-	$('.tab>div').eq(1).addClass('tab_change')
-	$('#testpaperlist').find("tr").remove()
-	$('.tpl_div2>h3').text('')
-	$('.tpl_div2_left').css('display','none')
-	$('.tpl_div2_right').css('margin','0 auto')
-	$('.tpl_div2_right').css('display','block')
-	loopquestions2()
-	toptable()
-	ii = 0
-	pagecounts = 1;
-	pagenums = 1;
-	pagetotals = 1;
-	page()
-	$(".tcdPageCode").remove();
-	$('.testPaperlist').css('margin-bottom','20px')
-}
+// function tab_sq() {
+// 	$('.tab>div').eq(0).removeClass('tab_change')
+// 	$('.tab>div').eq(1).addClass('tab_change')
+// 	$('#testpaperlist').find("tr").remove()
+// 	$('.tpl_div2>h3').text('')
+// 	$('.tpl_div2_left').css('display','none')
+// 	$('.tpl_div2_right').css('margin','0 auto')
+// 	$('.tpl_div2_right').css('display','block')
+// 	loopquestions2()
+// 	toptable()
+// 	ii = 0
+// 	pagecounts = 1;
+// 	pagenums = 1;
+// 	pagetotals = 1;
+// 	page()
+// 	$(".tcdPageCode").remove();
+// 	$('.testPaperlist').css('margin-bottom','20px')
+// }
 //上传
 
 function ShowDiv() {
@@ -176,11 +178,14 @@ function uploadfile() {
 			console.log(res)
 			if(res.code==="0010"){
 				$('.xzbox').css('display','none')
-				localStorage.setItem('sctestlist',JSON.stringify(res.data))
+				// localStorage.setItem('sctestlist',JSON.stringify(res.data))
+				sctestlist = res.data
+				sctest = sctestlist[0].questionContent.split(' ')[1]
 				document.getElementById("file").value = ''
 				// res.data.splice(0,1)
 				// previewitembaklist.content = res.data
-				toptable()
+				// toptable()
+				document.getElementById('zs').style.display = 'block'
 				loopquestions2()
 				document.getElementById('sc').style.display = 'none'
 				// console.log(previewitembaklist)
@@ -540,21 +545,57 @@ function loopquestions() {
 			a1 += "</div>";
 			//题目
 			a1 += "<div class='subjectinfo'>";
-			a1 += "<div>" + previewitembaklist.content[i].questionContent;
-			if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
-				/*var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
-				if(getquestionpic.data != null) {
-					a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
-				}*/
-				var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic, "preview-"+previewitembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
-				a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+previewitembaklist.content[i].questionIdMD52+"' src=''/>";
+			if(previewitembaklist.content[i].questionContent.indexOf("data")!=-1){
+				var newarr = previewitembaklist.content[i].questionContent.split('data')
+				var newimg = ''
+				for(let q = 1 ; q<newarr.length;q++){
+					newarr[q]
+					if(newarr[q].indexOf("第")!=-1){
+						newimg += "<img src='data"+newarr[q].split('第')[0]+"'>"
+					}else{
+						newimg += "<img src='data"+newarr[q]+"'>"
+					}
+				}
+				a1 += "<div>" + newarr[0]+newimg;
+				if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
+					/*var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
+					if(getquestionpic.data != null) {
+						a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+					}*/
+					var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic, "preview-"+previewitembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+previewitembaklist.content[i].questionIdMD52+"' src=''/>";
+				}
+				a1 += "</div>";
+			}else{
+				a1 += "<div>" + previewitembaklist.content[i].questionContent;
+				if(previewitembaklist.content[i].questionPic != null && 　previewitembaklist.content[i].questionPic != "") {
+					/*var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic); //调用下载文件的接口返回的数据
+					if(getquestionpic.data != null) {
+						a1 += " <br/> <img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
+					}*/
+					var getquestionpic = getQuestionPic(previewitembaklist.content[i].questionPic, "preview-"+previewitembaklist.content[i].questionIdMD52); //调用下载文件的接口返回的数据
+					a1 += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+previewitembaklist.content[i].questionIdMD52+"' src=''/>";
+				}
+				a1 += "</div>";
 			}
-			a1 += "</div>";
 			//题目选项
 			if(previewitembaklist.content[i].options[0] != null && previewitembaklist.content[i].options[0] != "") {
 				a1 += "<div><table><tbody>";
 				for(var j = 0; j < previewitembaklist.content[i].options.length; j++) {
-					a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + previewitembaklist.content[i].options[j] + "</td></tr>";
+					if(previewitembaklist.content[i].options[j].indexOf("data")!=-1){
+						var newarr1 = previewitembaklist.content[i].options[j].split('data')
+						var newimg1 = ''
+						for(let w = 1 ; w<newarr1.length;w++){
+							if(newarr1[w].indexOf("第")!=-1){
+								newimg1 += "<img src='data"+newarr1[w].split('第')[0]+"'>"
+							}else{
+								newimg1 += "<img src='data"+newarr1[w]+"'>"
+							}
+						}
+						a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp "+newimg1+"</td></tr>";
+					}else {
+						a1 += "<tr><td>" + String.fromCharCode(65 + j) + ":&nbsp" + previewitembaklist.content[i].options[j] + "</td></tr>";
+					}
 				}
 				a1 += "</tbody></table></div>";
 			}
@@ -747,16 +788,16 @@ function getQuestionPic(pic, pid) {
 	return retresult;
 }
 
-function toptable(){
-	var sctestlist = JSON.parse(localStorage.getItem('sctestlist'))?JSON.parse(localStorage.getItem('sctestlist')):''
-	if(sctestlist){
-		a1 = '<tr><td width="35%">' + sctestlist[0].questionContent.split(' ')[1] + '</td><td width="25%">2019年4月22日 </td>';
-		a1 += '<td width="20%"><button onclick="deltestlsit()" data="" class="tpl_div1_btn ">删除考卷</button>';
-		a1 += '<button onclick="previewtestlist()" data="" class="tpl_div1_btn">浏览考卷</button></td></tr>';
-		$("#testpaperlist").append(a1);
-	}else {
-	}
-}
+// function toptable(){
+// 	var sctestlist = JSON.parse(localStorage.getItem('sctestlist'))?JSON.parse(localStorage.getItem('sctestlist')):''
+// 	if(sctestlist){
+// 		a1 = '<tr><td width="35%">' + sctestlist[0].questionContent.split(' ')[1] + '</td><td width="25%">2019年4月22日 </td>';
+// 		a1 += '<td width="20%"><button onclick="deltestlsit()" data="" class="tpl_div1_btn ">删除考卷</button>';
+// 		a1 += '<button onclick="previewtestlist()" data="" class="tpl_div1_btn">浏览考卷</button></td></tr>';
+// 		$("#testpaperlist").append(a1);
+// 	}else {
+// 	}
+// }
 function deltestlsit(){
 	localStorage.removeItem('sctestlist')
 	$('#testpaperlist').children().remove()
@@ -781,18 +822,61 @@ function page2() {
 		}
 	});
 }
+function CloseZs(){
+	document.getElementById('zs').style.display = 'none'
+}
+function zscancel(){
+	document.getElementById('zs').style.display = 'none'
+}
+//上传保存
+function zsconfirm(){
+	console.log(sctestlist)
+	var cc = {
+		"createTime": 0,
+		"examId": "",
+		"examName": sctest,
+		"examSecondName": sctest,
+		"pageIndex": "",
+		"pageSize": "",
+		"questionModels": sctestlist,
+		"updateTime": 0
+	}
+	$.ajax({
+		url: local + "/EXAMSERVICE/exam/saveExam",
+		headers: {
+			'accessToken': accessToken
+		},
+		type: 'post',
+		async: false,
+		dataType: "json",
+		data: JSON.stringify(cc),
+		contentType: 'application/json',
+		success: function(data) {
+			if(data.code==="0010"){
+				sessionStorage.removeItem('grouplast');
+				swal("保存成功!", "", "success");
+				looptestpaper()
+			}else{
+				swal(data.msg, "", "error");
+			}			
+		},
+		error: function() {
+			swal("保存失败!", "", "success");
+		}
+	});
+}
 
 
 function loopquestions2() {
-	var sctestlist = JSON.parse(localStorage.getItem('sctestlist'))?JSON.parse(localStorage.getItem('sctestlist')):''
+	// var sctestlist = JSON.parse(localStorage.getItem('sctestlist'))?JSON.parse(localStorage.getItem('sctestlist')):''
 	var sctestlist1 = {
 		content:[]
 	}
 	if(sctestlist){
-	$('.tpl_div2_right').css('display','block');
-	$(".tpl_div2_right").find("div").remove();
+	// $('.subjectListbox').css('display','block');
+	// $(".subjectListbox").find("div").remove();
 	$(".tcdPageCode1").remove();
-	$("#previewexamName").text(sctestlist[0].questionContent.split(' ')[1]);
+	$("#zstext").text(sctest);
 	sctestlist.splice(0,1)
 	sctestlist1.content = sctestlist
 	console.log(sctestlist1)
@@ -902,14 +986,14 @@ function loopquestions2() {
 			// a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + sctestlist1.content[i].quesetionType + "</span></div>";
 			// a1 += "</div>";
 			// a1 += "</div>";
-			$(".tpl_div2_right").append(a1);
+			$(".subjectListbox").append(a1);
 		}
-		$(".tpl_div2_right").append("<div class='tcdPageCode1'></div>");
+		$(".subjectListbox").append("<div class='tcdPageCode1'></div>");
 		// page3();
 	}else{
-		$(".tpl_div2_right").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >当前没有试题信息！</h3></div>');
+		$(".subjectListbox").append('<div id="Missingdata" style="text-align: center;color:#666;padding-bottom: 30px;"><img src="../img/Missingdata.png" /><h3 >当前没有试题信息！</h3></div>');
 	}
 	}else {
-		$('.tpl_div2_right').css('display','none');
+		$('.subjectListbox').css('display','none');
 	}
 }

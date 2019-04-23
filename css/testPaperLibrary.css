@@ -90,7 +90,7 @@
 
 .subjectList {
 	position: relative;
-	height: 100%;
+	/* height: 100%; */
 	border: 1px solid #F2F2F2;
 	font-size: 14px;
 	line-height: 20px;

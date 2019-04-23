@@ -20,6 +20,52 @@
 		<link rel="stylesheet" href="../css/sweetalert.css" />
 	</head>
 	<style>
+		#zs {
+			width: 100%;
+			height: 100%;
+			padding: 20px 0;
+			display:none;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+		.zsbox {
+			width: 936px;
+			height: 650px;
+			background-color: #fff;
+			margin: 0 auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.subjectListbox {
+			width: 100%;
+			height: 500px;
+			margin: 0 auto;
+			overflow-y: scroll;
+		}
+		.zscancel {
+			position: absolute;
+			bottom: 30px;
+			padding: 5px 15px;
+			border-radius: 10px;
+			background-color: #3d72fe;
+			color: #fff;
+			cursor: pointer;
+			left:50%;
+			transform: translateX(50%)
+		}
+		.zsconfirm {
+			position: absolute;
+			bottom: 30px;
+			padding: 5px 15px;
+			border-radius: 10px;
+			background-color: #3d72fe;
+			color: #fff;
+			cursor: pointer;
+			left:50%;
+			transform: translateX(-100%)
+		}
 		#sc {
 			width: 100%;
 			height: 100%;
@@ -27,7 +73,7 @@
 			position: fixed;
 			top: 0px;
 			left: 0px;
-			background-color: rgba(0, 0, 0, 0.3)
+			background-color: rgba(0, 0, 0, 0.3);
 		}
 		.scbox {
 			width: 400px;
@@ -39,7 +85,7 @@
 			transform: translate(-50%,-50%);
 			overflow: hidden;
 		}
-		.scbox .none {
+		.none {
 			position: absolute;
 			right: 0px;
 			top:-5px;
@@ -249,10 +295,6 @@
 		</div>
 		<div class="tpl_div1" >
 			<div id="container">
-				<div class="tab">
-					<div class="tab_change" onclick="tab_zz()">自组卷题</div>
-					<div onclick="tab_sq()">上传卷题</div>
-				</div>
 				<div class="sq" onclick="ShowDiv()">上传试卷</div>
 				<div class="search bar6">
 					<form>
@@ -516,6 +558,15 @@
 								</div>
 							</div>
 					</div>
+				</div>
+			</div>
+			<div id="zs">
+				<div class="zsbox">
+					<div class="none" onclick='CloseZs()'>x</div>
+					<h3 style="text-align: center;" id="zstext">有理数的乘方、科学记数法</h3>
+					<div class="subjectListbox"></div>
+					<div class="zscancel" onclick="zscancel()">取消</div>
+					<div class="zsconfirm" onclick="zsconfirm()">保存</div>
 				</div>
 			</div>
 	</body>
