@@ -71,9 +71,6 @@ $(function() {
 	local = httpLocation();
 	accessToken = getAccessToken()
 	getgradename()
-	$('.classname').text(user.roles[0].primaryGrade.gradeName+'-'+user.roles[0].primarySubject.subjectName)
-	console.log(user.roles[0].primarySubject.subjectName+'知识点')
-	$('.Knowledge>.left').text(user.roles[0].primarySubject.subjectName+'知识点')
 	getdata()
 });
 
