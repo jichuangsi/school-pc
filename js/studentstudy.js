@@ -17,6 +17,7 @@ $(function() {
 
 function getgradename() {
 	var user = getUser()
+	console.log(user)
 	var gname = user.roles[0].phrase.phraseName;
 	var sname = user.roles[0].primarySubject.subjectName;
 	$(".Gradename").html(gname);
@@ -25,36 +26,40 @@ function getgradename() {
 
 
 function getdata() {
-    var classlist = JSON.parse(sessionStorage.getItem('classdetails'))
-    var data = {
-        classId:classlist.classId,
-        questionIds:classlist.monthQuestionIds
-    }
-    $.ajax({
-        url: local +"/COURSESTATISTICS/class/teacher/getClassStudentKnowledges",
-		// url : "http://192.168.31.154:8082/class/teacher/getClassStudentKnowledges",
-        headers: {
-            'accessToken': accessToken
-        },
-        type: "POST",
-		dataType: "json",
-        data:JSON.stringify(data),
-		contentType: 'application/json',
-        success: function(res) {
-            var html = template('student_classlist',res)
-            $('.studentlist').eq(0).append(html)
-				for (var i = 0;i<classlist.knowledgeResultModels.length;i++){
-					var div = '<div onmouseover="mouseover(this)"  onmouseout="mouseout(this)">'+classlist.knowledgeResultModels[i].knowledgeName +'</div>'
-					$('.knowledgelist').append(div)
-                }
-				var width = classlist.knowledgeResultModels.length*125+'px'
-				classlistlength = classlist.knowledgeResultModels.length
-                $('.knowledgelist').css('width',width)
-                $('.knowledgelist2').css('width',width)
-        },
-		error: function() {
+    var classlist = JSON.parse(sessionStorage.getItem('classdetails'))?JSON.parse(sessionStorage.getItem('classdetails')):''
+	console.log(classlist)
+    if(classlist){
+		var data = {
+			classId:classlist.classId,
+			questionIds:classlist.monthQuestionIds
 		}
-    });
+		$.ajax({
+			url: local +"/COURSESTATISTICS/class/teacher/getClassStudentKnowledges",
+			// url : "http://192.168.31.154:8082/class/teacher/getClassStudentKnowledges",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: "POST",
+			dataType: "json",
+			data:JSON.stringify(data),
+			contentType: 'application/json',
+			success: function(res) {
+				console.log(res)
+				var html = template('student_classlist',res)
+				$('.studentlist').eq(0).append(html)
+					for (var i = 0;i<classlist.knowledgeResultModels.length;i++){
+						var div = '<div onmouseover="mouseover(this)"  onmouseout="mouseout(this)">'+classlist.knowledgeResultModels[i].knowledgeName +'</div>'
+						$('.knowledgelist').append(div)
+					}
+					var width = classlist.knowledgeResultModels.length*125+'px'
+					classlistlength = classlist.knowledgeResultModels.length
+					$('.knowledgelist').css('width',width)
+					$('.knowledgelist2').css('width',width)
+			},
+			error: function() {
+			}
+		});
+	}
 }
 
 

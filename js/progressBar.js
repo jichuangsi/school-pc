@@ -84,6 +84,7 @@ function getdata() {
         },
         type: "GET",
         success: function(data) {
+			console.log(data)
 			if(data.code=="0010"){
 				var html = template('classlist',data)
 				classlistlength = data.data.length
