@@ -102,6 +102,10 @@ function getdata() {
 
 function getgradename() {
 	user = getUser()
+	var gname = user.roles[0].phrase.phraseName;
+	var sname = user.roles[0].primarySubject.subjectName;
+	$(".Gradename").html(gname);
+	$(".Subjectname").html(sname);
 }
 function jump(val){
 	sessionStorage.setItem('classdetails',JSON.stringify(val))
