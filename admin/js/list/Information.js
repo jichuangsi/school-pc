@@ -114,7 +114,10 @@ layui.use(['table', 'form', 'layedit'], function() {
 	form.on('select(phrase)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getGrade(id);
+			if(id!=""){
+				getGrade(id);
+			}
+			
 		}
 	});
 
@@ -160,7 +163,10 @@ layui.use(['table', 'form', 'layedit'], function() {
 	form.on('select(grade)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			getClass(id);
+			if(id!=""){
+				getClass(id);
+			}
+			
 
 		}
 	});
