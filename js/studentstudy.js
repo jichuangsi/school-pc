@@ -9,7 +9,8 @@ $(function() {
     getgradename();
     accessToken = getAccessToken()
     sessionStorage.setItem('position','报告')
-    getdata()
+	getdata()
+	// $('.center_nav').find('strong').text(JSON.parse(localStorage.getItem('userinfo')).roles[0])
 });
 
 
@@ -73,6 +74,7 @@ function public() {
             PreviewPaper(data.data)
         },
 		error: function() {
+
 		}
     });
 }
