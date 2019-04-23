@@ -336,9 +336,10 @@ cursor: pointer;
 	width: 340px;
 	height: 20px;
 	border: 20px;
-	background-color: #999;
+	background-color: #d6d4d4;
 	border-radius: 20px;
 	overflow: hidden;
+	position: relative;
 }
 .classlist .Knowledge .center .jdt{
 	width: 0px;
@@ -346,6 +347,9 @@ cursor: pointer;
 	background-color: #3D72FE;
 	border-radius: 20px;
 	transition: width 0.5s linear;
+	position: absolute;
+	left: 0px;
+	top: 0px;
 }
 .classlist .Knowledge .right {
 	text-indent: 10px;

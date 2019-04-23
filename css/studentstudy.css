@@ -222,16 +222,20 @@ border: 1px solid #9a9a9a;
     width: 110px;
     height: 20px;
     border-radius: 20px;
-    background-color: #9a9a9a;
+    background-color: #d6d4d4;
     position: absolute;
     top: 0px;
     left: 8px;
+    overflow: hidden;
 }
 .studentlist .rightbox .knowledgelist2 .jdtbox .jdt  {
     width: 0px;
     height: 20px;
     border-radius: 20px;
     background-color: #3d72fe;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 .knowledgelist {
     margin-left: 0px;

@@ -76,13 +76,14 @@ $(function() {
 
 
 function getdata() {
+	var subjectName = user.roles[0].primarySubject.subjectName
     $.ajax({
-		url: local +"/COURSESTATISTICS/class/teacher/getClassCourseByMonth",
+		url: local +"/COURSESTATISTICS/class/teacher/getClassCourseByMonth?subject="+subjectName,
 		// url : "http://192.168.31.154:8082/class/teacher/getClassCourseByMonth",
         headers: {
             'accessToken': accessToken
         },
-        type: "GET",
+		type: "GET",
         success: function(data) {
 			console.log(data)
 			if(data.code=="0010"){
