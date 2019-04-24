@@ -95,8 +95,11 @@ layui.use(['table', 'form', 'upload'], function() {
 			layer.msg("两次密码不相同", {
 				icon: 2,
 				time: 1000,
-				end: function() {}
+				end: function() {
+					layer.close(index);
+				}
 			});
+			return false;
 		} else {
 			$.ajax({
 				type: "post",

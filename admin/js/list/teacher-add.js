@@ -472,6 +472,10 @@ layui.use(['form', 'table'], function() {
 						field: 'subjectId',
 						title: '删除',
 						toolbar: '#teacher_Del'
+					}, {
+						field: 'id',
+						title: '修改密码',
+						toolbar: '#updatePwd'
 					}
 				]
 			],
@@ -540,6 +544,9 @@ layui.use(['form', 'table'], function() {
 			"teacherId": param.id,
 			"name": param.name
 		})
+		form.val('testTeacher', {
+			"teacherId": param.id
+		});
 		getUpSubject(param.primarySubject.subjectId);
 		getUpSubjects(param.secondarySubjects);
 		getUpRole(param.school.schoolId, param.roleIds);
@@ -615,6 +622,54 @@ layui.use(['form', 'table'], function() {
 			}
 		});
 		return false;
+	});
+	//修改密码
+	form.on('submit(update_Pwd)', function(data) {
+		var param = data.field;
+		if(param.newPwd != param.yesPwd) {
+			layer.msg("两次密码不相同", {
+				icon: 2,
+				time: 1000,
+				end: function() {
+					form.render("", 'testTeacher');
+					layer.close(index);
+				}
+			});
+			return false;
+		} else {
+			$.ajax({
+				type: "post",
+				url: httpUrl() + "/updateOtherPwd/" + param.teacherId + "",
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				contentType: 'application/json',
+				data: JSON.stringify(param),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('修改成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('idTest');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('idTest');
+								layer.close(index);
+							}
+						});
+					}
+				}
+			});
+			return false;
+		}
 	});
 	//获取次要科目
 	function getUpSubjects(List) {

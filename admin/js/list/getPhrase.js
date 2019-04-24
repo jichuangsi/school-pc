@@ -339,8 +339,8 @@ layui.use(['table', 'form'], function() {
 		layer.confirm('确认该年级已经毕业吗？', function(index) {
 			//捉到所有被选中的，发异步进行删除
 			$.ajax({
-				type: "DELETE",
-				url: httpUrl() + "/school/deleteGrade/" + id,
+				type: "get",
+				url: httpUrl() + "/school/graduationGrade/" + id,
 				async: false,
 				headers: {
 					'accessToken': getToken()

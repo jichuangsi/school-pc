@@ -4,6 +4,7 @@ layui.use(['form', 'upload', 'table'], function() {
 	var upload = layui.upload;
 	var table = layui.table;
 	settab();
+
 	function settab() {
 		if(getRole() == 1) {
 			var str = $('.layui-form').find('div').first().removeClass('site');
@@ -207,10 +208,10 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(phrase)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			if(id!=""){
+			if(id != "") {
 				getGrade(id);
 			}
-			
+
 		}
 	});
 
@@ -256,10 +257,9 @@ layui.use(['form', 'upload', 'table'], function() {
 	form.on('select(grade)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
-			if(id!=""){
+			if(id != "") {
 				getClass(id);
 			}
-			
 
 		}
 	});
@@ -365,34 +365,44 @@ layui.use(['form', 'upload', 'table'], function() {
 			},
 			cols: [
 				[{
-					field: 'id',
-					title: '序号',
-					type: 'numbers'
-				}, {
-					field: 'name',
-					title: '姓名'
-				}, {
-					field: 'account',
-					title: '账户'
-				}, {
-					field: 'sex',
-					title: '性别',
-					templet: function(d) {
-						if(d.sex == "M") {
-							return "男"
-						} else if(d.sex == 'F') {
-							return "女"
+						field: 'id',
+						title: '序号',
+						type: 'numbers'
+					}, {
+						field: 'name',
+						title: '姓名'
+					}, {
+						field: 'account',
+						title: '账户'
+					}, {
+						field: 'sex',
+						title: '性别',
+						templet: function(d) {
+							if(d.sex == "M") {
+								return "男"
+							} else if(d.sex == 'F') {
+								return "女"
+							}
 						}
+					},
+					{
+						field: 'd.primaryClass.className',
+						title: '学生班级',
+						templet: '<div>{{d.primaryClass?d.primaryClass.className:""}}</div>'
+					}, {
+						field: 'certification',
+						title: '修改',
+						toolbar: '#update'
+					}, {
+						field: 'id',
+						title: '删除',
+						toolbar: '#del_student'
+					}, {
+						field: 'id',
+						title: '修改密码',
+						toolbar: '#updatePwd'
 					}
-				}, {
-					field: 'certification',
-					title: '修改',
-					toolbar: '#update'
-				}, {
-					field: 'id',
-					title: '删除',
-					toolbar: '#del_student'
-				}]
+				]
 			],
 			toolbar: '#teacherSet',
 			page: true,
@@ -453,15 +463,18 @@ layui.use(['form', 'upload', 'table'], function() {
 			"studentId": param.id,
 			"name": param.name
 		});
+		form.val('student', {
+			"studentId": param.id
+		});
 		var gradeId = param.primaryGrade.gradeId;
 		var classId = param.primaryClass.classId;
 		var phrase
-		if( param.phrase.id==null&&param.phrase.phraseId!=null&&param.phrase.phraseId.length>2){
-			 phrase=param.phrase.phraseId
-		}else{
-			 phrase= param.phrase.id;
+		if(param.phrase.id == null && param.phrase.phraseId != null && param.phrase.phraseId.length > 2) {
+			phrase = param.phrase.phraseId
+		} else {
+			phrase = param.phrase.id;
 		}
-		
+
 		getUpdateGrade(phrase, gradeId);
 		if(flag) {
 			getUpdateClass(gradeId, classId);
@@ -531,7 +544,53 @@ layui.use(['form', 'upload', 'table'], function() {
 		});
 		return false;
 	});
-
+	//修改密码
+	form.on('submit(update_Pwd)', function(data) {
+		var param = data.field;
+		if(param.newPwd != param.yesPwd) {
+			layer.msg("两次密码不相同", {
+				icon: 2,
+				time: 1000,
+				end: function() {
+					layer.close(index);
+				}
+			});
+			return false;
+		} else {
+			$.ajax({
+				type: "post",
+				url: httpUrl() + "/updateOtherPwd/" + param.studentId + "",
+				async: false,
+				headers: {
+					'accessToken': getToken()
+				},
+				contentType: 'application/json',
+				data: JSON.stringify(param),
+				success: function(res) {
+					if(res.code == '0010') {
+						layer.msg('修改成功！', {
+							icon: 1,
+							time: 1000,
+							end: function() {
+								table.reload('idTest');
+								layer.close(index);
+							}
+						});
+					} else {
+						layer.msg(res.msg, {
+							icon: 2,
+							time: 1000,
+							end: function() {
+								table.reload('idTest');
+								layer.close(index);
+							}
+						});
+					}
+				}
+			});
+			return false;
+		}
+	});
 	form.on('select(gradeupdate)', function(data) {
 		if(data.value != '-1') {
 			var id = data.value;
