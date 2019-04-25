@@ -62,7 +62,9 @@
 		{{# } }}
 	</script>
 	<script type="text/html" id="teacher_Del">
+		{{# if(d.teacherName!=null){ }}
 		<span class="layui-btn layui-btn-sm layui-btn-danger" id="teacherDel">离任</span>
+		{{# } }}
 	</script>
 	<script type="text/html" id="teacher_DelSubject">
 		<span class="layui-btn layui-btn-sm layui-btn-danger" id="teacherDelSubject">删除科目</span>
