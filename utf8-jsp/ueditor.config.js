@@ -34,9 +34,9 @@
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
         , toolbars: [[
-            'fullscreen', 'source', '|',
-            'bold', 'italic', 'underline',  '|',
-            'fontsize', '|','preview'
+            // 'fullscreen', 'source', '|',
+            // 'bold', 'italic', 'underline',  '|',
+            // 'fontsize', '|','preview'
         ]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
@@ -186,6 +186,7 @@
         //fontsize
         //字号
         //,'fontsize':[10, 11, 12, 14, 16, 18, 20, 24, 36]
+        // ,'fontsize':[22]
 
         //paragraph
         //段落格式 值留空时支持多语言自动识别，若配置，则以配置值为准

@@ -169,7 +169,7 @@ function modify (){
 				if(res.data.questionPic) $("input[name='questionPic']").val(res.data.questionPic);
 				if(res.data.quesetionType=='选择题'){					
 					//题目问题
-					console.log(res.data.questionContent)
+					// console.log(res.data.questionContent)
 					var ue = UE.getEditor('Choicequestion')
 					ue.ready(function() {
 						//异步回调
@@ -179,19 +179,26 @@ function modify (){
 					$('.tab-hd').find('li').eq(0).addClass('active').siblings().removeClass('active')
 					$('.tab-bd').children().eq(0).show().siblings().hide();
 					//选择项
-					console.log(res.data.options.length)
+					// console.log(res.data.options.length)
 					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1).addClass('checkedcolor')
 					$('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1).siblings().removeClass('checkedcolor')
 					optionNumber($('.but-xzt').find('.but-xzt-an').eq(res.data.options.length-1))
 					var arr = res.data.answer.split('|')
 					for (var i = 0;i <arr.length;i++){
 						var number = arr[i].charCodeAt()-65
-						$('.but-xzt').parent().parent().next().find("label").find("input").eq(number).attr('checked','checked')
-						CheckBox($('.but-xzt').parent().parent().next().find("label").find("input")[number])
+						$('.answer').eq(number).find('input').attr('checked','checked')
+						CheckBox($('.answer').eq(number).find('input'))
 					}
-					for (var j = 0; j<res.data.options.length;j++){
-						$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
-					}
+					// for (var j = 0; j<res.data.options.length;j++){
+					// 	$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
+					// }
+					ue.ready(function() {
+						for (var j = 0; j<res.data.options.length;j++){
+							UE.getEditor('xx'+(j+1)).execCommand('insertHtml',res.data.options[j])
+						}
+						//异步回调
+					
+					})
 					//解析
 					$("textarea[name='parse']").val(res.data.parse)
 					//难度
@@ -224,13 +231,15 @@ function modify (){
 					optionNumberChe($('.but-xzt').find('.but-xzt-an').eq(res.data.options.length+4))
 					var arr = res.data.answer.split('|')
 					for (var i = 0;i <arr.length;i++){
-						var number = arr[i].charCodeAt()-65
-						$('.but-xzt').parent().parent().next().find("label").find("input").eq(number).attr('checked','checked')
-						CheckBox($('.but-xzt').parent().parent().next().find("label").find("input")[number])
+						var number = arr[i].charCodeAt()-65+5
+						$('.answer').eq(number).find('input').attr('checked','checked')
+						CheckBox($('.answer').eq(number).find('input'))
 					}
-					for (var j = 0; j<res.data.options.length;j++){
-						$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
-					}
+					ue.ready(function() {
+						for (var j = 0; j<res.data.options.length;j++){
+							UE.getEditor('dx'+(j+1)).execCommand('insertHtml',res.data.options[j])
+						}
+					})
 					//解析
 					$("textarea[name='stone']").val(res.data.parse)
 					//难度
@@ -292,9 +301,11 @@ function modify (){
 					//选择项
 					var arr = res.data.answer.split(';')
 					optionAnswer($('.but-xzt').find('.but-xzt-an').eq(arr.length+9-1))
-					for (var i = 0;i <arr.length-1;i++){
-						$('.but-xzt').parent().parent().next().find("input[name='tiankong']").eq(i).val(arr[i].split(':')[1])
-					}
+					ue.ready(function() {
+						for (var i = 0;i <arr.length-1;i++){
+							UE.getEditor('tk'+(i+1)).execCommand('insertHtml',arr[i].split(':')[1])
+						}
+					})
 					// for (var j = 0; j<res.data.options.length;j++){
 					// 	$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
 					// }
@@ -320,10 +331,12 @@ function modify (){
 					var ue = UE.getEditor('SubjectiveQuestionstone')
 					ue.ready(function() {
 						//异步回调
-					UE.getEditor('SubjectiveQuestionstone').execCommand('insertHtml',res.data.questionContent)
+						UE.getEditor('SubjectiveQuestionstone').execCommand('insertHtml',res.data.questionContent)
 					})
 					//题目答案
-					$("textarea[name='SubjectiveQuestionAnswer']").val(res.data.answer);
+					ue.ready(function() {
+						UE.getEditor('zg1').execCommand('insertHtml',res.data.answer)
+					})
 					//题目解析
 					$("textarea[name='SubjectiveQuestion']").val(res.data.parse);
 					//难度
@@ -602,34 +615,34 @@ function changeRad(obj) {
 }
 //多选题
 function CheckBox(obj) {
-	if(obj.checked) {
-		$(obj).parent().parent().find(".Answerone").text("正确答案");
-		/*var str = $(obj).val();
-		if(answer == undefined) {
-			answer = "";
-			answer = answer + str + '|';
-		} else {
-			if(answer[answer.length - 1] == "|") {
-				answer = answer + str + '|';
-			} else {
-				answer = answer + '|' + str + '|';
-			}
+	$(obj).parent().parent().find(".Answerone").text('正确答案');
+	// if(obj.checked) {
+	// 	/*var str = $(obj).val();
+	// 	if(answer == undefined) {
+	// 		answer = "";
+	// 		answer = answer + str + '|';
+	// 	} else {
+	// 		if(answer[answer.length - 1] == "|") {
+	// 			answer = answer + str + '|';
+	// 		} else {
+	// 			answer = answer + '|' + str + '|';
+	// 		}
 
-		}*/
-	} else {
-		$(obj).parent().parent().find(".Answerone").text(" ");
-		/*var nade = $(obj).val();
-		if(answer[answer.length - 1] == "|") {
-			answer = answer.substring(0, answer.length - 1);
-		}		
-		answer = answer.split('|');
-		//console.log(answer)
-		var index = answer.indexOf(nade);
-		answer.splice(index, 1);
-		answer.sort();
-		answer = answer.join('|');*/
-		//console.log(answer);
-	}
+	// 	}*/
+	// } else {
+	// 	$(obj).parent().parent().find(".Answerone").text(" ");
+	// 	/*var nade = $(obj).val();
+	// 	if(answer[answer.length - 1] == "|") {
+	// 		answer = answer.substring(0, answer.length - 1);
+	// 	}		
+	// 	answer = answer.split('|');
+	// 	//console.log(answer)
+	// 	var index = answer.indexOf(nade);
+	// 	answer.splice(index, 1);
+	// 	answer.sort();
+	// 	answer = answer.join('|');*/
+	// 	//console.log(answer);
+	// }
 
 }
 //判断
@@ -681,55 +694,87 @@ function optionNumber(obj) {
 	$(obj).addClass('checkedcolor')
 	$(obj).siblings().removeClass('checkedcolor')
 	number = $(obj).text();
-	var charater = new Array("A", "B", "C", "D", "E");
-	var soure = $(obj).parent().parent().parent();
-	soure.next().empty();
-	for(i = 0; i < number; i++) {
-		var node = document.createElement('tr');
-		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
-		nodetwo.innerHTML = '<td><input type="text" name="potions' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
-		node.append(nodetwo);
-		soure.next().append(node);
+	for(let i = 0 ; i < 5 ; i++){
+		if(i<number){
+			$('.answer').eq(i).css('display','block')
+			$('.answeript').eq(i).css('display','block')
+		}else{
+			$('.answer').eq(i).css('display','none')
+			$('.answeript').eq(i).css('display','none')
+		}
 	}
-
+	// $('.answer').eq(number-1).css('display','block')
+	// $('.answeript').eq(number-1).css('display','block')
+	// var charater = new Array("A", "B", "C", "D", "E");
+	// var soure = $(obj).parent().parent().parent();
+	// soure.next().empty();
+	// for(i = 0; i < number; i++) {
+	// 	var node = document.createElement('tr');
+	// 	var nodetwo = document.createElement('tr');
+	// 	node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="' + charater[i] + '" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>'
+	// 	nodetwo.innerHTML = '<td class="one"></td>'
+	// 	// <input type="text" name="potions' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" />
+	// 	node.append(nodetwo);
+	// 	soure.next().append(node);
+	// }
 }
 //多选题
 var charater = new Array("A", "B", "C", "D", "E");
 var potionsStoneNumber;
 
 function optionNumberChe(obj) {
+	$(obj).addClass('checkedcolor')
+	$(obj).siblings().removeClass('checkedcolor')
 	// console.log(obj)
-	potionsStoneNumber = $(obj).text();
-	var soure = $(obj).parent().parent().parent();
-	// console.log($(obj).parent().parent().parent().next().empty())
-	soure.next().empty();
-	for(i = 0; i < potionsStoneNumber; i++) {
-		var node = document.createElement('tr');
-		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
-		nodetwo.innerHTML = '<td><input type="text" name="potionsStone' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
-		node.append(nodetwo);
-		soure.next().append(node);
+	potionsStoneNumber = Number($(obj).text());
+	for(let i = 5 ; i < 10 ; i++){
+		if(i<(potionsStoneNumber+5)){
+			$('.answer').eq(i).css('display','block')
+			$('.answeript').eq(i).css('display','block')
+		}else{
+			$('.answer').eq(i).css('display','none')
+			$('.answeript').eq(i).css('display','none')
+		}
 	}
-}
+// 	var soure = $(obj).parent().parent().parent();
+// 	// console.log($(obj).parent().parent().parent().next().empty())
+// 	soure.next().empty();
+// 	for(i = 0; i < potionsStoneNumber; i++) {
+// 		var node = document.createElement('tr');
+// 		var nodetwo = document.createElement('tr');
+// 		node.innerHTML = '<td style="float: left;">' + charater[i] + '&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="' + charater[i] + '" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>'
+// 		nodetwo.innerHTML = '<td><input type="text" name="potionsStone' + i + '" value="" style="width: 958px;height: 40px;margin-left: 10px;" /></td>'
+// 		node.append(nodetwo);
+// 		soure.next().append(node);
+// 	}
+}	
 var ansCha = new Array("1:", "2:", "3:", "4:", "5:");
 //填空题
 var tknumber;
 
 function optionAnswer(obj) {
 	//console.log(obj)
-	tknumber = $(obj).text();
-	var soure = $(obj).parent().parent().parent();
-	soure.next().empty();
-	for(i = 0; i < tknumber; i++) {
-		var node = document.createElement('tr');
-		var nodetwo = document.createElement('tr');
-		node.innerHTML = '<td style="float: left; ">' + ansCha[i] + '</td>'
-		nodetwo.innerHTML = '<td><input type="text" name="tiankong" style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
-		node.append(nodetwo);
-		soure.next().append(node);
+	tknumber = Number($(obj).text());
+	for(let i = 10 ; i < 15 ; i++){
+		if(i<(tknumber+10)){
+			console.log(i)
+			$('.answer').eq(i).css('display','block')
+			$('.answeript').eq(i).css('display','block')
+		}else{
+			$('.answer').eq(i).css('display','none')
+			$('.answeript').eq(i).css('display','none')
+		}
 	}
+	// var soure = $(obj).parent().parent().parent();
+	// soure.next().empty();
+	// for(i = 0; i < tknumber; i++) {
+	// 	var node = document.createElement('tr');
+	// 	var nodetwo = document.createElement('tr');
+	// 	node.innerHTML = '<td style="float: left; ">' + ansCha[i] + '</td>'
+	// 	nodetwo.innerHTML = '<td><input type="text" name="tiankong" style="width: 958px;height: 40px;margin-left: 10px; " /></td>'
+	// 	node.append(nodetwo);
+	// 	soure.next().append(node);
+	// }
 }
 //填空题获取答案
 function pack() {
@@ -791,7 +836,7 @@ function saveQuestion() {
 		}
 		var answerOptions = new Array();
 		for(i = 0; i < number; i++) {
-			answerOptions.push($("input[name=potions" + i + "]").val());
+			answerOptions.push(UE.getEditor('xx'+(i+1)).getContent());
 		}
 		var danxuans = $("input[name='danxuan']");
 		for(var i = 0; i < danxuans.length; i++){
@@ -1002,7 +1047,7 @@ function saveQuestionStone() {
 		
 		var answerOptions = new Array();
 		for(i = 0; i < potionsStoneNumber; i++) {
-			answerOptions.push($("input[name=potionsStone" + i + "]").val());
+			answerOptions.push(UE.getEditor('dx'+(i+1)).getContent());
 		}
 		var parse = $("textarea[name='stone']").val();
 		/*if(knowledge == "请选择知识点") {
@@ -1103,13 +1148,15 @@ function saveCompletionQuestion() {
 			if(knowledge||knowledgeId||capabilityId||capability)
 			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
 		}
-		var tiankongs = $("input[name=tiankong]");
+		var tiankongs = tknumber;
 		var tiankong = "";
 		var tiankongTemp = "";
-		for(var i = 0; i < tiankongs.length; i++){
-			tiankongTemp += tiankongs[i].value;
-			tiankong += ansCha[i] + tiankongs[i].value+";";
+		for(var i = 0; i < tiankongs; i++){
+			tiankongTemp += UE.getEditor('tk'+(i+1)).getContent();
+			tiankong += ansCha[i] + UE.getEditor('tk'+(i+1)).getContent()+";";
 		}		
+		console.log(tiankongTemp)
+		console.log(tiankong)
 		var parse = $("textarea[name='Completion']").val();
 		/*if(knowledge == "请选择知识点") {
 			knowledge = " ";
@@ -1177,7 +1224,7 @@ function saveSubjectiveQuestions() {
 	var questionPic = $("input[name='questionPic']").val();
 	// var content = $("textarea[name='SubjectiveQuestionstone']").val();
 	var content = UE.getEditor('SubjectiveQuestionstone').getContent()
-	var answer = $("textarea[name='SubjectiveQuestionAnswer']").val();
+	var answer = UE.getEditor('zg1').getContent();
 	// var knowledge = $("#zgselect option:selected").attr('data');
 	// var knowledgeId = $("#zgselect option:selected").val();
 		var knowledges = []

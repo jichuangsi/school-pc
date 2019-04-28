@@ -25,9 +25,18 @@
 	<link rel="stylesheet" href="../styles/chosen.css" />
 	<link rel="stylesheet" href="../css/layer-animate-one.css" />
 	<style>
+		.tab-bd{
+			overflow: hidden;
+		}
 		.checkedcolor {
 			background-color: #3d72fe !important;
 			color: #fff !important;
+		}
+		.answer {
+			display: none;
+		}
+		.answeript {
+			display: none;
 		}
 		.black_overlay {
 			display: none;
@@ -54,6 +63,12 @@
 			background-color: white;
 			z-index: 1002;
 			overflow: auto;
+		}
+		.edui-editor-toolbarbox {
+			position: absolute !important;
+			right: 20px;
+			top: -45px;
+			z-index: 1000;
 		}
 		
 		.white_content_small {
@@ -144,7 +159,7 @@
 							<li class="thisclass">
 								<table>
 									<tr>
-										<td style="float: left;">题目</td>
+										<td style="float: left;line-height: 45px;">题目</td>
 									</tr>
 									<tr>
 										<td>
@@ -168,7 +183,51 @@
 											</div>
 										</td>
 									</tr>
-									<tr></tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">A&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="A" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="xx1" name="xx1" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">B&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="B" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="xx2" name="xx2" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">C&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="C" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="xx3" name="xx3" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">D&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="D" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="xx4" name="xx4" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">E&nbsp;&nbsp;<label class="radio"><input type="radio" onclick="changeRad(this)" value="E" name="danxuan"><i class="icon-radio"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="xx5" name="xx5" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
 									<tr>
 										<td style="float: left;">知识点</td>
 									</tr>
@@ -200,6 +259,7 @@
 											</div>
 										</td>
 									</tr>
+									
 									<!--<script>
 										$(function() {
 											bodyevent("#typenum ", "#makeupCo ", "#search-button ");
@@ -227,12 +287,13 @@
 											</div>
 										</td>
 									</tr>
+									
 								</table>
 							</li>
 							<li>
 								<table>
 									<tr>
-										<td style="float: left;">题目</td>
+										<td style="float: left;line-height: 45px;">题目</td>
 									</tr>
 									<tr>
 										<td>
@@ -256,7 +317,51 @@
 											</div>
 										</td>
 									</tr>
-									<tr></tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">A&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="A" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="dx1" name="dx1" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">B&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="B" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="dx2" name="dx2" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">C&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="C" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="dx3" name="dx3" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">D&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="D" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="dx4" name="dx4" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">E&nbsp;&nbsp;<label class="checkbox"><input type="checkbox" value="E" onclick="CheckBox(this)" name="duoxuan"><i class="icon-checkbox checkbox-indent"></i></label><label class="Answerone"></label></td>
+										<tr class="answeript">
+											<td>
+												<script id="dx5" name="dx5" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
 									<tr>
 										<td style="float: left;">知识点</td>
 									</tr>
@@ -314,7 +419,7 @@
 							<li>
 								<table>
 									<tr>
-										<td style="float: left;">题目</td>
+										<td style="float: left;line-height: 45px;">题目</td>
 									</tr>
 									<tr>
 										<td>
@@ -390,7 +495,7 @@
 							<li>
 								<table>
 									<tr>
-										<td style="float: left; ">题目</td>
+										<td style="float: left; line-height: 45px;">题目</td>
 									</tr>
 									<tr>
 										<td>
@@ -414,7 +519,51 @@
 											</div>
 										</td>
 									</tr>
-									<tr></tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">1：</td>
+										<tr class="answeript">
+											<td>
+												<script id="tk1" name="tk1" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">2：</td>
+										<tr class="answeript">
+											<td>
+												<script id="tk2" name="tk2" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">3：</td>
+										<tr class="answeript">
+											<td>
+												<script id="tk3" name="tk3" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">4：</td>
+										<tr class="answeript">
+											<td>
+												<script id="tk4" name="tk4" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
+									<tr class="answer">
+										<td style="float: left;line-height:45px">5：</td>
+										<tr class="answeript">
+											<td>
+												<script id="tk5" name="tk5" type="text/plain">
+												</script>
+											</td>
+										</tr>
+									</tr>
 									<tr>
 										<td style="float: left; ">知识点</td>
 									</tr>
@@ -470,7 +619,7 @@
 							<li>
 								<table>
 									<tr>
-										<td style="float: left; ">题目</td>
+										<td style="float: left; line-height: 45px;">题目</td>
 									</tr>
 									<tr>
 										<td>
@@ -481,11 +630,12 @@
 										</td>
 									</tr>
 									<tr>
-										<td style="float: left; ">答案</td>
+										<td style="float: left;line-height: 45px">答案</td>
 									</tr>
 									<tr>
 										<td>
-											<textarea class="text-tm" maxlength="400" name="SubjectiveQuestionAnswer"></textarea>
+											<script id="zg1" name="zg1" type="text/plain">
+											</script>
 										</td>
 									</tr>
 									<tr></tr>
@@ -572,6 +722,22 @@
 		var ue = UE.getEditor('ChoicequestionPack')
 		var ue = UE.getEditor('ChoicequestionCompletion')
 		var ue = UE.getEditor('SubjectiveQuestionstone')
+		var ue = UE.getEditor('xx1')
+		var ue = UE.getEditor('xx2')
+		var ue = UE.getEditor('xx3')
+		var ue = UE.getEditor('xx4')
+		var ue = UE.getEditor('xx5')
+		var ue = UE.getEditor('dx1')
+		var ue = UE.getEditor('dx2')
+		var ue = UE.getEditor('dx3')
+		var ue = UE.getEditor('dx4')
+		var ue = UE.getEditor('dx5')
+		var ue = UE.getEditor('tk1')
+		var ue = UE.getEditor('tk2')
+		var ue = UE.getEditor('tk3')
+		var ue = UE.getEditor('tk4')
+		var ue = UE.getEditor('tk5')
+		var ue = UE.getEditor('zg1')
 	</script>
 	</body>
 

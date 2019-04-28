@@ -6920,7 +6920,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
                     //设置默认字体和字号
                     //font-family不能呢随便改，在safari下fillchar会有解析问题
-                    'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
+                    'body{margin:8px;font-family:sans-serif;font-size:22px;}' +
                     //设置段落间距
                     'p{margin:5px 0;}</style>' +
                     ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +
@@ -7015,7 +7015,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             //编辑器不能为空内容
 
             if (domUtils.isEmptyNode(me.body)) {
-                me.body.innerHTML = '<p>' + (browser.ie ? '' : '<br/>') + '</p>';
+                me.body.innerHTML = '<span>' + (browser.ie ? '' : '<br/>') + '</span>';
             }
             //如果要求focus, 就把光标定位到内容开始
             if (options.focus) {
