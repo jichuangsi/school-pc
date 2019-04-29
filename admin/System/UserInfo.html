@@ -18,6 +18,16 @@
 		<script type="text/javascript" src="../js/System/UserIInfo.js"></script>
 
 	</head>
+	<style>
+		.widths {
+			width: 300px;
+		}
+		
+		#updateacherPwd {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
 
 	<body>
 		<div class="x-nav">
@@ -40,5 +50,43 @@
 	<script type="text/html" id="user_Del">
 		<span class="layui-btn layui-btn-sm layui-btn-danger" id="userDel">注销账户</span>
 	</script>
+		<script type="text/html" id="updatePwd">
+		<span class="layui-btn-sm layui-btn" onclick="Update()">修改密码</span>
+	</script>
+	<script>
+		function Update() {
+			index = layer.open({
+				type: 1,
+				area: ['500px', '350px'],
+				anim: 2,
+				title: '修改密码',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#updateacherPwd')
+			});
+		}
+	</script>
+		<div id="updateacherPwd" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">新密码：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="userId" />
+					<input type="password" name="newPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">确认密码：</label>
+				<div class="layui-input-block widths">
+					<input type="password" name="yesPwd" class="layui-input " lay-verify="pwd">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_Pwd">修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 </html>

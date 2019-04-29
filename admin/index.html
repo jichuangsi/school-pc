@@ -229,7 +229,7 @@
 	</body>
 	<script>
 		function updatePwd() {
-			var index = layer.open({
+			 index = layer.open({
 				type: 1,
 				area: ['500px', '350px'],
 				anim: 2,
@@ -241,11 +241,12 @@
 		}
 	</script>
 	<div id="upPwd" class="layui-fluid">
-		<form class="layui-form" autocomplete="off">
+		<form class="layui-form" autocomplete="off"lay-filter="test">
 			<div class="layui-form-item">
 				<label class="layui-form-label">旧密码：</label>
 				<div class="layui-input-block widths">
-					<input type="password" name="oldPwd" class="layui-input " lay-verify="pwd">
+					<input type="hidden" name="userId" />
+					<input type="password" name="oldPwd" class="layui-input ">
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -262,7 +263,7 @@
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-block">
-					<button class="layui-btn" lay-submit lay-filter="update_Pwd">添加</button>
+					<button class="layui-btn" lay-submit lay-filter="update_Pwd">确认修改</button>
 				</div>
 			</div>
 		</form>

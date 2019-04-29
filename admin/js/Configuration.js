@@ -7,7 +7,7 @@ var role;
 var roleName;
 //修改路径
 function httpUrl() {
-	//url = "http://192.168.31.154:8083"
+	//url = "http://192.168.31.154:8888/USERSERVICE"
 	url="http://api.jichuangsi.com/USERSERVICE"
 	//url = "http://192.168.31.108:8083"	
 	return url;
@@ -43,6 +43,11 @@ function getuserName(){
 	var userName = list.account;
 	return userName
 }
+function getUserId(){
+	var list = JSON.parse(sessionStorage.getItem("userInfo"));
+	var userId = list.id;
+	return userId
+}
 function getRole() {
 	
 	var list = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -52,6 +57,7 @@ function getRole() {
 	} else if(admin == '管理员') { //学校管理员
 		return 2
 	}
+	
 //	} else if(admin == "校长") { //校长
 //		return 2
 //	} else if(admin == "教务处") { //添加学生一级
