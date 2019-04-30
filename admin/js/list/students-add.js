@@ -304,6 +304,9 @@ layui.use(['form', 'upload', 'table'], function() {
 	upload.render({
 		elem: '#load',
 		url: httpUrl() + '/excel/saveStudentByExcel',
+		headers: {
+			'accessToken': getToken()
+		},
 		method: 'POST',
 		accept: 'file',
 		size: 10240,
