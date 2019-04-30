@@ -13,18 +13,6 @@ layui.use(['table', 'form', 'layedit'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	layedit.set({
-	  uploadImage: {
-		url: httpUrl() + "/back/school/sendMessageImage", //接口url
-		type: 'post', //默认post
-		headers: {
-			'accessToken': getToken()
-		},
-		size: 5*1024,
-		acceptMime: 'images',
-		accept: 'images'
-	  }
-	});
 	var index = layedit.build('demo', {
 		tool: [
 			'strong' //加粗
@@ -37,12 +25,9 @@ layui.use(['table', 'form', 'layedit'], function() {
 			, 'right' //右对齐
 			, 'link' //超链接
 			, 'unlink' //清除链接
-			,'face' //表情
-			,'image' //插入图片
-			//,'help' //帮助
 		]
 	});
-
+	$("#demo2").next().find('iframe').contents().find('body').prop("contenteditable",false)
 	getSchool();
 
 	function getSchool() {
@@ -225,10 +210,8 @@ layui.use(['table', 'form', 'layedit'], function() {
 
 	form.on('submit(add_info)', function(data) {
 		var param = data.field;
-		//富文本的内容		
-		//var str = layedit.getText(index)
-		var str = layedit.getContent(index);
-		//console.log(str);
+		//富文本的内容
+		var str = layedit.getText(index)
 		param.content = str;
 		var model = {
 			"schoolId": "",
@@ -370,7 +353,14 @@ layui.use(['table', 'form', 'layedit'], function() {
 					}, {
 						field: 'content',
 						title: '内容'
-					}, {
+					},
+					 {
+						field: 'content',
+						title: '内容',
+						toolbar: '#info',
+						width: 100
+					}
+					, {
 						field: 'id',
 						title: '删除',
 						width: 100,
@@ -415,10 +405,29 @@ layui.use(['table', 'form', 'layedit'], function() {
 	}
 	table.on('row(Info)', function(data) {
 		var param = data.data;
+		form.val('test',{
+			'InfoContent':param.content
+		});
+		var index = layedit.build('demo2', {
+		tool: [
+			'strong' //加粗
+			, 'italic' //斜体
+			, 'underline' //下划线
+			, 'del' //删除线
+			, '|' //分割线
+			, 'left' //左对齐
+			, 'center' //居中对齐
+			, 'right' //右对齐
+			, 'link' //超链接
+			, 'unlink' //清除链接
+		]
+	});
+		//layedit.setContent('TextareaHtmlIndex',param.content)
 		$(document).on('click', '#del', function() {
 			delInfo(param.id);
 		});
 	});
+	
 
 	function delInfo(id) {
 		layer.confirm('确认要删除该信息吗？', function(index) {

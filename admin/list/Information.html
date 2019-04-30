@@ -11,7 +11,11 @@
 		<link rel="stylesheet" href="../css/font.css">
 		<link rel="stylesheet" href="../css/xadmin.css">
 		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+<<<<<<< Updated upstream
 		<script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+=======
+		<script src="../lib/js/jquery.min.js"></script>
+>>>>>>> Stashed changes
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/Configuration.js"></script>
@@ -27,6 +31,10 @@
 		}
 		.site{
 			display: none;
+		}
+		#InfoContent{
+			display: none;
+			margin-top: 10px;
 		}
 	</style>
 
@@ -95,6 +103,31 @@
 		<script type="text/html" id="info_del">
 			<span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
 		</script>
+		<script type="text/html" id="info">
+			<span class="layui-btn layui-btn-sm" onclick="info()">详情</span>
+		</script>
+		<script>
+			function info() {
+			index = layer.open({
+				type: 1,
+				area: ['700px', '500px'],
+				anim: 2,
+				title: '发布详情',
+				maxmin: true,
+				shadeClose: true,
+				content: $('#InfoContent')
+			});
+		}
+		</script>
 	</body>
+	<div id="InfoContent" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+					<div class="layui-input-block Twowidths">
+						<textarea id="demo2" style="display: none;" name="InfoContent" class="layui-hide layui-textarea"></textarea>
+					</div>
+			</div>
+		</form>
+	</div>
 
 </html>
