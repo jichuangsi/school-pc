@@ -11,7 +11,9 @@ layui.use(['laydate', 'form', 'table'], function() {
 	var form = layui.form;
 	var table = layui.table;
 
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 	/*获取sessionStorage里面学校信息以及是什么角色*/
 	//获取学校相关标签，然后隐藏
 	//var str=$('.layui-form').find('div').first().hide();

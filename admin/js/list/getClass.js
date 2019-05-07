@@ -23,11 +23,15 @@ layui.use(['table', 'form', 'upload'], function() {
 		elem: '#student',
 		method: "get",
 		async: false,
-		url: httpUrl() + "/getStudentsForClass?classId=" + id,
+		url: httpUrl() + "/getStudentsForClassInPage?classId=" + id,
 		headers: {
 			'accessToken': getToken()
 		},
 		page: true,
+		request: {
+			pageName: 'pageIndex',
+			limitName: "pageSize"
+		},
 		cols: [
 			[{
 					field: 'studentId',
@@ -64,12 +68,19 @@ layui.use(['table', 'form', 'upload'], function() {
 		],
 		toolbar: '#addStudent',
 		parseData: function(res) {
-			var total = res.length;
+			var arr;
+			var code;
+			var total;
+			if(res.code == "0010") {
+				code = 0;
+				arr = res.data.list;
+				total = res.data.total;
+			}
 			return {
 				"code": 0,
 				"msg": res.msg,
 				"count": total,
-				"data": res
+				"data": arr
 			};
 		}
 	});

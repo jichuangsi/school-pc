@@ -6,11 +6,14 @@ layui.use(['table', 'form'], function() {
 		"schoolName": ''
 	}
 	var tourl;
+	var pagable;
 	if(getRole() >= 2) {
 		var id = getSchoolId();
 		tourl = "/school/getSchoolById/" + id + ""
+		pagable = false;
 	} else {
-		tourl = "/school/getSchools"
+		tourl = "/school/getSchoolsInPage"
+		pagable = true
 	}
 
 	table.render({
@@ -55,7 +58,11 @@ layui.use(['table', 'form'], function() {
 				}
 			]
 		],
-		page:true,
+		page:pagable,
+		request: {
+			pageName: 'pageIndex',
+			limitName: "pageSize"
+		},
 		parseData: function(res) {
 			var arr;
 			var code;
@@ -64,10 +71,11 @@ layui.use(['table', 'form'], function() {
 				code = 0;
 				if(getRole() >= 2) {
 					arr = [res.data];
+					total = arr.length;
 				} else {
-					arr = res.data
-				}
-				total = arr.length;
+					arr = res.data.list
+					total = res.data.total;					
+				}				
 			}
 			return {
 				"code": 0,

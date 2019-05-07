@@ -11,7 +11,9 @@ layui.use(['form', 'table'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 	form.on('submit(add)', function(data) {
 		var param = data.field;
 		if(param.schoolId != -1 || getRole() >= 2) {

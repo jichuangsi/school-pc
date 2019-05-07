@@ -38,11 +38,15 @@ layui.use(['laydate', 'form', 'table'], function() {
 		elem: '#teacher',
 		method: "get",
 		async: false,
-		url: httpUrl() + "/school/getSchools",
+		url: httpUrl() + "/school/getSchoolsInPage",
 		headers: {
 			'accessToken': getToken()
 		},
 		page:true,
+		request: {
+			pageName: 'pageIndex',
+			limitName: "pageSize"
+		},
 		cols: [
 			[{
 					field: 'schoolId',
@@ -78,8 +82,8 @@ layui.use(['laydate', 'form', 'table'], function() {
 			var total;
 			if(res.code == "0010") {
 				code = 0;
-				arr = res.data
-				total = arr.length;
+				arr = res.data.list
+				total = res.data.total;
 			}
 			return {
 				"code": 0,

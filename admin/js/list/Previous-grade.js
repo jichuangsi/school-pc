@@ -17,7 +17,9 @@ layui.use(['form', 'table', 'laydate'], function() {
 		elem: '#stime',
 		format: 'yyyyMMdd'
 	});
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 
 	function getSchool() {
 		$('#status').empty();

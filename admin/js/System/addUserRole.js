@@ -123,7 +123,9 @@ layui.use(['form', 'table'], function() {
 		});
 		return false;
 	});
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 	//获取学校
 	function getSchool() {
 		$('#status').empty();

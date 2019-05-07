@@ -20,7 +20,7 @@ layui.use(['table', 'form'], function() {
 		headers: {
 			'accessToken': getToken()
 		},
-		page: true,
+		page: false,
 		cols: [
 			[{
 					field: 'teacherId',

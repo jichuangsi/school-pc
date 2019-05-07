@@ -13,8 +13,9 @@ layui.use(['form', 'table'], function() {
 		}
 	}
 	var subjectsarr = []
-
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 	getSubject();
 	getSubjects();
 	form.on('submit(add)', function(data) {

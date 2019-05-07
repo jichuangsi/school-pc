@@ -28,7 +28,9 @@ layui.use(['table', 'form', 'layedit'], function() {
 		]
 	});
 	$("#demo2").next().find('iframe').contents().find('body').prop("contenteditable",false)
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 
 	function getSchool() {
 		$('#status').empty();

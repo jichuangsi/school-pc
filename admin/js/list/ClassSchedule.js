@@ -14,7 +14,9 @@ layui.use(['form', 'upload', 'table'], function() {
 		}
 	}
 	//获取学校列表
-	getSchool();
+	if(getRole() == 1) {
+		getSchool();
+	}
 
 	function getSchool() {
 		$('#status').empty();

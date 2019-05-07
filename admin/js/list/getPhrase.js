@@ -68,7 +68,7 @@ layui.use(['table', 'form'], function() {
 				}
 			]
 		],
-		page:true,
+		page:false,
 		toolbar: '#addPhrase',
 		parseData: function(res) {
 			var arr;
@@ -258,7 +258,7 @@ layui.use(['table', 'form'], function() {
 					}
 				]
 			],
-			page:true,
+			page:false,
 			toolbar: '#addGrade',
 			parseData: function(res) {
 				var arr;
@@ -450,11 +450,15 @@ layui.use(['table', 'form'], function() {
 			elem: '#classList',
 			method: "get",
 			async: false,
-			url: httpUrl() + "/class/findClasses/" + id + "",
+			url: httpUrl() + "/class/findClassesInPage/" + id + "",
 			headers: {
 				'accessToken': getToken()
 			},
 			page: true,
+			request: {
+				pageName: 'pageIndex',
+				limitName: "pageSize"
+			},
 			cols: [
 				[{
 						field: 'classId',
@@ -499,7 +503,7 @@ layui.use(['table', 'form'], function() {
 				var total;
 				if(res.code == "0010") {
 					code = 0;
-					arr = res.data;
+					arr = res.data.list;
 					total = arr.length;
 				}
 				return {

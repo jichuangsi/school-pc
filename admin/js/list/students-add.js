@@ -13,7 +13,9 @@ layui.use(['form', 'upload', 'table'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
-	getSchool()
+	if(getRole() == 1) {
+		getSchool();
+	}
 	var Phrase = [];
 	/*两种额外情况，校长一级别添加学生,直接隐藏学校在做判断*/
 	/*另外一种教师添加学生,需要获取教师所在的班级及各种信息，从而隐藏部分标签，跳过判断重新做相应的判断*/
