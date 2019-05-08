@@ -131,7 +131,7 @@ layui.use(['laydate', 'form', 'table'], function() {
 					}
 				]
 			],
-			page:true,
+			page:false,
 			toolbar: '#addPhrase', 
 			parseData: function(res) {
 				var arr;

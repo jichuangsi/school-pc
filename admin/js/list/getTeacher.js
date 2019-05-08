@@ -299,9 +299,9 @@ layui.use(['table', 'form'], function() {
 		$('#Info').text('当前:' + list.className)
 	}
 	setClass();
-	getSubjects();
-	getClassList();
-	getSubject();
+	//getSubjects();
+	//getClassList();
+	//getSubject();
 	//加载科目
 	//获取教学主要科目
 	function getSubject() {

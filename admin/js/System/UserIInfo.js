@@ -52,7 +52,7 @@ layui.use(['form', 'table'], function() {
 		headers: {
 			'accessToken': getToken()
 		},
-		page: true,
+		page: false,
 		cols: [
 			[{
 					field: 'id',

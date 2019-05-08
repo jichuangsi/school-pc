@@ -249,7 +249,7 @@ layui.use(['form', 'table'], function() {
 					}
 				]
 			],
-			page: true,
+			page: false,
 			parseData: function(res) {
 				var arr;
 				var code;

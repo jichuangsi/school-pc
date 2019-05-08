@@ -187,7 +187,7 @@ layui.use(['form', 'table'], function() {
 					}
 				]
 			],
-			page: true,
+			page: false,
 			toolbar: '#addGrade',
 			parseData: function(res) {
 				var arr;
