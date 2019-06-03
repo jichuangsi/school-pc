@@ -200,7 +200,9 @@ function modify (){
 					
 					})
 					//解析
-					$("textarea[name='parse']").val(res.data.parse)
+					ue.ready(function() {
+						UE.getEditor('parse').execCommand('insertHtml',res.data.parse)
+					})
 					//难度
 					$("input[name='group-radio']").eq(5-Number(res.data.difficulty)).attr('checked','checked')
 					difficultys = res.data.difficulty;
@@ -241,7 +243,9 @@ function modify (){
 						}
 					})
 					//解析
-					$("textarea[name='stone']").val(res.data.parse)
+					ue.ready(function() {
+						UE.getEditor('stone').execCommand('insertHtml',res.data.parse)
+					})
 					//难度
 					$("input[name='group-radio']").eq(10-Number(res.data.difficulty)).attr('checked','checked')
 					difficultys = res.data.difficulty;
@@ -274,7 +278,9 @@ function modify (){
 					}
 					console.log($('.but-xzt').find("input[name=panduan]"))
 					//解析
-					$("textarea[name='parsePack']").val(res.data.parse)
+					ue.ready(function() {
+						UE.getEditor('parsePack').execCommand('insertHtml',res.data.parse)
+					})
 					//难度
 					$("input[name='group-radio']").eq(15-Number(res.data.difficulty)).attr('checked','checked')
 					difficultys = res.data.difficulty;
@@ -310,7 +316,9 @@ function modify (){
 					// 	$('.but-xzt').parent().parent().next().find("input[type='text']").eq(j).val(res.data.options[j])
 					// }
 					//解析
-					$("textarea[name='Completion']").val(res.data.parse)
+					ue.ready(function() {
+						UE.getEditor('Completion').execCommand('insertHtml',res.data.parse)
+					})
 					//难度
 					$("input[name='group-radio']").eq(20-Number(res.data.difficulty)).attr('checked','checked')
 					difficultys = res.data.difficulty;
@@ -338,7 +346,9 @@ function modify (){
 						UE.getEditor('zg1').execCommand('insertHtml',res.data.answer)
 					})
 					//题目解析
-					$("textarea[name='SubjectiveQuestion']").val(res.data.parse);
+					ue.ready(function() {
+						UE.getEditor('SubjectiveQuestion').execCommand('insertHtml',res.data.parse)
+					})
 					//难度
 					$("input[name='group-radio']").eq(25-Number(res.data.difficulty)).attr('checked','checked')
 					difficultys = res.data.difficulty;
@@ -857,7 +867,7 @@ function saveQuestion() {
 			swal("请提供题目答案!", "", "warning");
 			return;
 		}	
-		var parse = $("textarea[name='parse']").val();
+		var parse = UE.getEditor('parse').getContent();
 		var cc = {
 			"questionId":questionid,
 			"questionContent": content,
@@ -941,7 +951,7 @@ function saveQuestionPack() {
 			if(knowledge||knowledgeId||capabilityId||capability)
 			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
 		}
-		var parse = $("textarea[name='parsePack']").val();
+		var parse = UE.getEditor('parsePack').getContent();
 		
 		var panduans = $("input[name='panduan']");
 		for(var i = 0; i < panduans.length; i++){
@@ -1049,7 +1059,7 @@ function saveQuestionStone() {
 		for(i = 0; i < potionsStoneNumber; i++) {
 			answerOptions.push(UE.getEditor('dx'+(i+1)).getContent());
 		}
-		var parse = $("textarea[name='stone']").val();
+		var parse = UE.getEditor('stone').getContent();
 		/*if(knowledge == "请选择知识点") {
 			knowledge = " ";
 		}*/
@@ -1157,7 +1167,7 @@ function saveCompletionQuestion() {
 		}		
 		console.log(tiankongTemp)
 		console.log(tiankong)
-		var parse = $("textarea[name='Completion']").val();
+		var parse = UE.getEditor('Completion').getContent();
 		/*if(knowledge == "请选择知识点") {
 			knowledge = " ";
 		}*/
@@ -1248,7 +1258,7 @@ function saveSubjectiveQuestions() {
 			if(knowledge||knowledgeId||capabilityId||capability)
 			knowledges.push({knowledge:knowledge,knowledgeId:knowledgeId,capabilityId:capabilityId,capability:capability})
 		}	
-	var parse = $("textarea[name='SubjectiveQuestion']").val();
+	var parse = UE.getEditor('SubjectiveQuestion').getContent();
 	/*if(knowledge == "请选择知识点") {
 		knowledge = " ";
 	}*/

@@ -208,6 +208,11 @@ function formSub() {
 
 		var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 		var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
+		var newtime = (new Date()).getTime()
+		if(newtime>currentDateLong){
+			swal("选择的提交时间已过","请选择正确的提交时间", "warning");
+			return;
+		}
 		var cc = {
 			"classId": classid,
 			"className": className,

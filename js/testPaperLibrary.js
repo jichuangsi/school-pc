@@ -128,10 +128,13 @@ function searchtestpaper() {
 //上传
 
 function ShowDiv() {
+	$('.ipt').find('span').css('display','none')
+	$('.ipt').find('div').css('display','block')
 	document.getElementById('sc').style.display = 'block'
 	var myfile = document.getElementById('file');
 	myfile.onchange = function(){
 		$('.ipt').find('div').css('display','none')
+		$('.ipt').find('span').css('display','block')
 		$('.ipt').find('span').text(myfile.files[0].name)
 		console.log(myfile.files[0].name)
 		// uploadfile()
@@ -163,9 +166,10 @@ function CloseDiv() {
 function uploadfile() {
 	$('.xzbox').css('display','block')
 	var formData = new FormData();
-	formData.append("file",document.getElementById("file").files[0]);
+	formData.append('file',document.getElementById("file").files[0]);
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/importword/open",
+		// url:"http://192.168.31.56:8088/importword/open",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -180,7 +184,7 @@ function uploadfile() {
 				$('.xzbox').css('display','none')
 				// localStorage.setItem('sctestlist',JSON.stringify(res.data))
 				sctestlist = res.data
-				sctest = sctestlist[0].questionContent.split(' ')[1]
+				sctest = document.getElementById("file").files[0].name.split('.')[0]
 				document.getElementById("file").value = ''
 				// res.data.splice(0,1)
 				// previewitembaklist.content = res.data
@@ -191,6 +195,10 @@ function uploadfile() {
 				// console.log(previewitembaklist)
 				// console.log($('.ajax-file-upload-red')[1])
 				// attachmentList.push({"name":files[0],"sub":data.data.sub,"contentType":data.data.contentType,"status":"I"});
+			}else{
+				swal("上传失败!", "此文件出错", "error");
+				$('.xzbox').css('display','none')
+				$('.sc').css('display','none')
 			}
 		},
 		error: function() {}
@@ -201,7 +209,7 @@ function uploadAttachments(){
 	
 	var uploadObj = $("#fileuploader").uploadFile({
 		url:local + "/QUESTIONSREPOSITORY/importword/open",
-		// url:"http://192.168.31.9:8088/importword/open",
+		// url:"http://192.168.31.56:8088/importword/open",
 		fileName:"file",
 		showDelete: true,
 		//showDownload:true,
@@ -544,7 +552,7 @@ function loopquestions() {
 			}
 			a1 += "</div>";
 			//题目
-			a1 += "<div class='subjectinfo'>";
+			a1 += "<div class='subjectinfo clearfix'>";
 			if(previewitembaklist.content[i].questionContent.indexOf("data")!=-1){
 				var newarr = previewitembaklist.content[i].questionContent.split('data')
 				var newimg = ''
@@ -854,7 +862,8 @@ function zsconfirm(){
 		success: function(data) {
 			if(data.code==="0010"){
 				sessionStorage.removeItem('grouplast');
-				swal("保存成功!", "", "success");
+				swal("保存成功!", "成功", "success");
+				$("#zs").css('display','none');
 				looptestpaper()
 			}else{
 				swal(data.msg, "", "error");
@@ -899,7 +908,7 @@ function loopquestions2() {
 			}
 			a1 += "</div>";
 			//题目
-			a1 += "<div class='subjectinfo'>";
+			a1 += "<div class='subjectinfo clearfix'>";
 			if(sctestlist1.content[i].questionContent.indexOf("data")!=-1){
 				var newarr = sctestlist1.content[i].questionContent.split('data')
 				var newimg = ''

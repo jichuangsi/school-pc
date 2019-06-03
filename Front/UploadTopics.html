@@ -25,6 +25,13 @@
 	<link rel="stylesheet" href="../styles/chosen.css" />
 	<link rel="stylesheet" href="../css/layer-animate-one.css" />
 	<style>
+		#Choicequestion,#ChoicequestionStone,
+		#ChoicequestionPack,#ChoicequestionCompletion,#SubjectiveQuestionstone {
+			height: 200px;
+		}
+		#parse,#stone,#parsePack,#Completion,#SubjectiveQuestion {
+			height: 230px;
+		}
 		.tab-bd{
 			overflow: hidden;
 		}
@@ -270,7 +277,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea maxlength="400" name="parse" class="text-tm" id="parse" style="height: 230px;width: 958px;font-weight: 500;"></textarea>
+											<!-- <textarea maxlength="400" name="parse" class="text-tm" id="parse" style="height: 230px;width: 958px;font-weight: 500;"></textarea> -->
+											<script id="parse" name="parse" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -397,7 +407,10 @@
 									</tr>
 									<tr>
 										<td>
-											<textarea maxlength="400" name="stone" class="text-tm" style="height: 230px;width: 958px;font-weight: 500;"></textarea>
+											<!-- <textarea maxlength="400" name="stone" class="text-tm" style="height: 230px;width: 958px;font-weight: 500;"></textarea> -->
+											<script id="stone" name="stone" type="text/plain">
+        
+											</script>
 										</td>
 									</tr>
 									<tr>
@@ -474,7 +487,12 @@
 										<td style="float: left; ">解析</td>
 									</tr>
 									<tr>
-										<td><textarea maxlength="600" name="parsePack" class="text-tm" style="height: 230px; "></textarea></td>
+										<!-- <td><textarea maxlength="600" name="parsePack" class="text-tm" style="height: 230px; "></textarea></td> -->
+										<td>
+											<script id="parsePack" name="parsePack" type="text/plain">
+			
+											</script>
+										</td>
 									</tr>
 									<tr>
 										<td style="float: left; ">难易度</td>
@@ -598,7 +616,12 @@
 										<td style="float: left; ">解析</td>
 									</tr>
 									<tr>
-										<td><textarea maxlength="600 " name="Completion" class="text-tm" style="height: 230px; "></textarea></td>
+										<!-- <td><textarea maxlength="600 " name="Completion" class="text-tm" style="height: 230px; "></textarea></td> -->
+										<td>
+											<script id="Completion" name="Completion" type="text/plain">
+			
+											</script>
+										</td>
 									</tr>
 									<tr>
 										<td style="float: left; ">难易度</td>
@@ -673,7 +696,12 @@
 										<td style="float: left; ">解析</td>
 									</tr>
 									<tr>
-										<td><textarea maxlength="600 " name="SubjectiveQuestion" class="text-tm" style="height: 230px; "></textarea></td>
+										<td>
+											<!-- <textarea maxlength="600 " name="SubjectiveQuestion" class="text-tm" style="height: 230px; "></textarea> -->
+											<script id="SubjectiveQuestion" name="SubjectiveQuestion" type="text/plain">
+			
+											</script>
+										</td>
 									</tr>
 									<tr>
 										<td style="float: left; ">难易度</td>
@@ -738,6 +766,11 @@
 		var ue = UE.getEditor('tk4')
 		var ue = UE.getEditor('tk5')
 		var ue = UE.getEditor('zg1')
+		var ue = UE.getEditor('parse')
+		var ue = UE.getEditor('stone')
+		var ue = UE.getEditor('parsePack')
+		var ue = UE.getEditor('Completion')
+		var ue = UE.getEditor('SubjectiveQuestion')
 	</script>
 	</body>
 

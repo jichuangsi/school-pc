@@ -273,6 +273,11 @@ function formSub() {
 
 		var startTime = ymd + " " + hh + ":" + mm + ":" + "00";
 		var currentDateLong = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
+		var newtime = (new Date()).getTime()
+		if(newtime>currentDateLong){
+			swal("选择的上课时间已过","请选择正确的上课时间", "warning");
+			return;
+		}
 		var cc = {
 			"classId": classid,
 			"className": className,
@@ -290,7 +295,7 @@ function formSub() {
 			"subjectName": user.roles[0].primarySubject.subjectName,
 			"attachments": attachmentList
 		};
-		//console.log(JSON.stringify(cc));
+		// console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/COURSESERVICE/console/saveCourse",
 			headers: {

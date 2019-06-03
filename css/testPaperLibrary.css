@@ -351,3 +351,13 @@ button {
 		border-radius: 4px;
 		cursor: pointer;
 	}
+	
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+  }
+  
+  .clearfix {
+	zoom: 1;
+  }

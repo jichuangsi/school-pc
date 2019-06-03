@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="../css/Newclassroom_Newtestpaper.css" />
 	<script type="text/javascript" src="..\js\httplocation.js"></script>
 	<script type="text/javascript" src="../js/studentstudy.js"></script>
+	<script type="text/javascript" src="../echarts.min.js"></script>
 	<style type="text/css">
 		.nav-top-manin-but {
 			float: left;
@@ -44,6 +45,10 @@
 					<div class="btn fr" onclick="public()">班级共错题</div>
 				</div>
 				<div class="center_list clearfix">
+					<div class="echart clearfix">
+						<div class="fl" id="chartmain" style="width:400px; height: 350px;"></div>
+						<div class="fr" id="chart" style="width:700px; height: 350px;"></div>
+					</div>
 					<div class="list_nav fr"><span>得分率：</span>
 						<i style="background-color: #59e8e3;"></i>0~0.6
 						<i style="background-color: #ee3dfe;"></i>0.6~0.7
@@ -86,7 +91,14 @@
 			<div class="left fl">
 					<div>学生列表</div>
 					{{each data as val index}}
-					<div>{{val.studentName}}</div>
+					<div>{{val.studentName}}<span class="xiangqing"></span>
+						<ul>
+							<li>认知得分率</li>
+						{{each val.capability as item index}}
+							<li>{{item}}</li>
+						{{/each}}
+						</ul>
+					</div>
 					{{/each}}
 				</div>
 				<div class="right fr">
@@ -118,6 +130,7 @@
 				</div>
 		</script>
 		<script>
+			
 		</script>
 	</body>
 
