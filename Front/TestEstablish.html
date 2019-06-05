@@ -28,6 +28,18 @@
 	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
 	<link rel="stylesheet" id="pageloader-css" href="../css/pageloader.css" type="text/css" media="all" />
 	<style>
+		.fenshu {
+			padding: 2px 5px;
+			font-weight: 700;
+			color: #3d72fe;
+			border: 1px solid #3d72fe;
+			border-radius: 50%;
+			margin-top: -20px;
+			cursor: pointer;
+		}
+		.fstext{
+			margin-top: -20px;
+		}
 		.black_overlay {
 			display: none;
 			position: absolute;
@@ -170,6 +182,15 @@
 								</td>
 							</tr>
 							<tr>
+								<td></td>
+								<td>
+									<div class="fr fenshu" onclick="fenshu()">
+										+
+									</div>
+									<div class="fr fstext">设置题目分数：</div>
+								</td>
+							</tr>
+							<tr>
 								<td>
 									<div class="box-sub" id="sub" type="submit" style="font-size: 18px;" onclick="formSub()">新建考试</div>
 									<div class="box-sub" style="margin-left: 20px;font-size: 18px;" onclick="ShowDiv('MyDiv','fade')">上传考试附件</div>
@@ -190,6 +211,13 @@
 								</td>
 							</tr>
 						</table>
+						<div class="addFraction">
+							<div class="text">请填写题目分数<div class="none" onclick="outadd()">x</div></div>
+							单选题：<input type="number">
+							多选题：<input type="number">
+							主观题：<input type="number">
+							<div class="addconfirm" onclick="addFraction()">确认</div>
+						</div>
 					</div>
 					<!-- <button class="box-sub" onclick="uploadIcon()">上传图标</button> -->
 					<!-- <script type="text/javascript" src="../js/tinyImgUpload.js"></script> -->
@@ -250,6 +278,21 @@
 				jQuery('.bonfire-pageloader-icon').css('right', ((browserwidth - jQuery(".bonfire-pageloader-icon").width()) / 2)).css('top', ((browserheight - jQuery(".bonfire-pageloader-icon").height()) / 2));
 			};
 			resizenow();
+			function fenshu () {
+				$('.addFraction').css('display','block')
+			}
+			function addFraction () {
+				if($('.addFraction > input').eq(0).val()!=''&&$('.addFraction > input').eq(1).val()!=''&&$('.addFraction > input').eq(2).val()!=''){
+					$('.addFraction').css('display','none')
+					$('.fenshu').css('borderColor','#3d72fe')
+					$('.fenshu').css('color','#3d72fe')
+				}else {
+					swal("请填写题目分数","请点击加号填写题目分数", "warning");
+				}
+			}
+			function outadd () {
+				$('.addFraction').css('display','none')
+			}
 		</script>
 	</body>
 

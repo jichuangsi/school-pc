@@ -189,6 +189,7 @@ function formSub() {
 		var className = $("#AttendClass option:selected").text();
 		var questionInSession = gettaskQuestion();
 		var Name = document.getElementById("ClassName").value;
+		var points = [$('.addFraction > input').eq(0).val(),$('.addFraction > input').eq(1).val(),$('.addFraction > input').eq(2).val()]
 		if(!Name) {
 			swal("请输入习题名称！", "", "warning");
 			return;
@@ -213,10 +214,17 @@ function formSub() {
 			swal("选择的提交时间已过","请选择正确的提交时间", "warning");
 			return;
 		}
+		if(points.length != 3||$('.addFraction > input').eq(0).val()==''||$('.addFraction > input').eq(1).val()==''||$('.addFraction > input').eq(2).val()==''){
+			$('.fenshu').css('borderColor','red')
+			$('.fenshu').css('color','red')
+			swal("请填写题目分数","请点击加号填写题目分数", "warning");
+			return;
+		}
 		var cc = {
 			"classId": classid,
 			"className": className,
 			"homeworkEndTime": currentDateLong,
+			"points": points,
 			"homeworkInfo": info,
 			"homeworkName": Name,
 			"homeworkPublishTime": 0,
@@ -229,6 +237,7 @@ function formSub() {
 		//console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/HOMEWORKSERVICE/console/saveHomeWork",
+			// url: "http://192.168.31.108:8888/HOMEWORKSERVICE/console/saveHomeWork",
 			headers: {
 				'accessToken': accessToken
 			},

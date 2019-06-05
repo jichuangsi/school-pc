@@ -446,3 +446,44 @@ body {
 .red{
 	border:red 1px solid;
 }
+.addFraction {
+	font-size: 23px;
+	position: absolute;
+	left: 50%;
+	top: 30%;
+	border-radius: 5px;
+	background-color: #fff;
+	border: 3px solid #3d72fe;
+	transform: translate(-50%,-50%);
+	padding: 20px 20px;
+	z-index: 100;
+	display: none;
+}
+
+.addFraction .text {
+	font-size: 24px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.addFraction .none {
+	float: right;
+	padding: 1px 5px;
+	cursor: pointer;
+}
+.addFraction input {
+	width: 100px;
+	border-radius: 5px;
+	text-align: center;
+	border: 1px solid #3d72fe;
+}
+.addFraction .addconfirm {
+	font-size: 18px;
+	border-radius: 5px;
+	width: 100px;
+	padding: 5px 0px;
+	color: #fff;
+	cursor: pointer;
+	margin: 20px auto;
+	text-align: center;
+	background-color: #59e8e3;
+}

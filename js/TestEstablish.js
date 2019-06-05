@@ -189,6 +189,7 @@ function formSub() {
 		var className = $("#AttendClass option:selected").text();
 		var questionInSession = gettestQuestion();
 		var Name = document.getElementById("ClassName").value;
+		var points = [$('.addFraction > input').eq(0).val(),$('.addFraction > input').eq(1).val(),$('.addFraction > input').eq(2).val()]
 		if(!Name) {
 			swal("请输入考试名称！", "", "warning");
 			return;
@@ -213,10 +214,17 @@ function formSub() {
 			swal("选择的提交时间已过","请选择正确的提交时间", "warning");
 			return;
 		}
+		if(points.length != 3||$('.addFraction > input').eq(0).val()==''||$('.addFraction > input').eq(1).val()==''||$('.addFraction > input').eq(2).val()==''){
+			$('.fenshu').css('borderColor','red')
+			$('.fenshu').css('color','red')
+			swal("请填写题目分数","请点击加号填写题目分数", "warning");
+			return;
+		}
 		var cc = {
 			"classId": classid,
 			"className": className,
 			"testEndTime": currentDateLong,
+			"points": points,
 			"testInfo": info,
 			"testName": Name,
 			"testPublishTime": 0,
@@ -230,6 +238,7 @@ function formSub() {
 		$.ajax({
 			url: local + "/TESTSERVICE/console/saveTest",
 			// url:"http://192.168.31.182:8087/console/saveTest",
+			// url: "http://192.168.31.108:8888/TESTSERVICE/console/saveTest",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -239,7 +248,7 @@ function formSub() {
 			data: JSON.stringify(cc),
 			contentType: 'application/json',
 			success: function(returndata) {
-				console.log(returndata)
+				// console.log(returndata)
 				if(returndata.code == "0010") {
 					swal("新建成功!", "", "success");
 					sessionStorage.removeItem('testlast');
@@ -702,7 +711,7 @@ function hideLoading(){
 	$(".bonfire-pageloader-icon").addClass('bonfire-pageloader-icon-hide');
 }
 //获取小测
-function getTransferExams(id) {		
+function getTransferExams(id) {	
 	removeExamQuestionsInSession();
 	if(id==-1) return;
 	if(addExamQuestions2Session(id)) return;

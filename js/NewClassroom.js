@@ -223,7 +223,8 @@ function formSub() {
 		var cpic = $("#icon").value;
 		var classid = document.getElementById("AttendClass").value;
 		var className = $("#AttendClass option:selected").text();
-		var questionInSession = getQuestion();			
+		var questionInSession = getQuestion();	
+		var points = [$('.addFraction > input').eq(0).val(),$('.addFraction > input').eq(1).val(),$('.addFraction > input').eq(2).val()]
 		/*if(className == "请选择试卷") {
 			className = "";
 		} else {
@@ -285,6 +286,7 @@ function formSub() {
 			"courseInfo": info,
 			"courseName": Name,
 			"courseStartTime": currentDateLong,
+			"points": points,
 			"createTime": 0,
 			"pageNum": 0,
 			"pageSize": 0,
@@ -298,6 +300,7 @@ function formSub() {
 		// console.log(JSON.stringify(cc));
 		$.ajax({
 			url: local + "/COURSESERVICE/console/saveCourse",
+			// url:'http://192.168.31.108:8888/COURSESERVICE/console/saveCourse',
 			headers: {
 				'accessToken': accessToken
 			},

@@ -351,7 +351,15 @@ button {
 		border-radius: 4px;
 		cursor: pointer;
 	}
-	
+	.gx {
+		position: absolute;
+		right: 460px;
+		padding: 8px 18px;
+		background-color: #3D72FE;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+	}
 .clearfix:after {
 	content: "";
 	display: block;
