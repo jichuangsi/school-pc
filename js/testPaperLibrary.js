@@ -834,6 +834,7 @@ function CloseZs(){
 	document.getElementById('zs').style.display = 'none'
 }
 function zscancel(){
+	$('.subjectListbox').children().remove()
 	document.getElementById('zs').style.display = 'none'
 }
 //上传保存
@@ -864,6 +865,7 @@ function zsconfirm(){
 				sessionStorage.removeItem('grouplast');
 				swal("保存成功!", "成功", "success");
 				$("#zs").css('display','none');
+				$('.subjectListbox').children().remove()
 				looptestpaper()
 			}else{
 				swal(data.msg, "", "error");
