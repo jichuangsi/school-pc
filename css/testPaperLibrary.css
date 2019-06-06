@@ -359,6 +359,7 @@ button {
 		color: #fff;
 		border-radius: 4px;
 		cursor: pointer;
+		display: none;
 	}
 .clearfix:after {
 	content: "";
