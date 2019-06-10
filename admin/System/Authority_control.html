@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>分配URL</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script src="../lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/System/Authority_control.js"></script>
+	</head>
+	<style>
+		.bor {
+			border: solid 2px;
+			border-color: #009688;
+		}
+		
+		.widths {
+			width: 300px;
+		}
+		
+		.liys {
+			font-size: 18px;
+			border: 1px solid #009688;
+			margin-bottom: 10px;
+		}
+		
+		.liys:hover {
+			cursor: pointer;
+			background-color: #009688;
+			color: white;
+		}
+		
+		.ys {
+			background-color: #009688;
+			color: white;
+		}
+	</style>
+
+	<body>
+		<div class="x-nav">
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+		</div>
+		<div class="x-body">
+			<div class="layui-row ">
+				<form class="layui-form" autocomplete="off" lay-filter="test">
+					<div class="layui-form-item">
+						<label class="layui-form-label"></label>
+						<div class="layui-input-block widths">
+							<select name="role" lay-verify="required" lay-filter="role" id="status">
+								<option value="-1">请选择角色用户</option>
+								<option value="头饰">学校管理员</option>
+								<option value="辅料">管理员</option>
+								<option value="杂货类">老师</option>
+							</select>
+
+						</div>
+					</div>
+				</form>
+				<div class="layui-col-md3 layui-col-lg-offset1">
+					<fieldset class="layui-elem-field bor">
+						<legend>权限分配</legend>
+						<div class="layui-field-box">
+							<div style="width: 100%;  height:600px;overflow:auto;" class="bor" id="library">
+								<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
+								</ul>
+							</div>
+						</div>
+					</fieldset>
+
+				</div>
+				<div class="layui-col-md2" style="height:600px;align-content: center;">
+					<div class="layui-row grid-demo" style="margin-top: 100%;">
+						<div class="layui-col-md6" style="text-align: center;">
+							<span class="layui-btn layui-btn-radius" id="del">
+							<i class="layui-icon layui-icon-prev" style="font-size: 30px;" ></i> 
+						</span>
+						</div>
+						<div class="layui-col-md6" style="text-align: center;">
+							<span class="layui-btn layui-btn-radius" id="add">
+							<i class="layui-icon layui-icon-next" style="font-size: 30px; " ></i> 
+						</span>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<fieldset class="layui-elem-field bor">
+						<legend>角色权限</legend>
+						<div class="layui-field-box">
+							<div style="width: 100%; height: 600px;overflow:auto;" class="bor" id="area">
+								<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
+								</ul>
+							</div>
+						</div>
+					</fieldset>
+
+				</div>
+			</div>
+			<blockquote class="layui-elem-quote layui-quote-nm">单击选择，双击取消</blockquote>
+		</div>
+		<script>
+			$(function() {
+				$("ul").on("click", "li", function() {
+					//$(this).addClass("ys").siblings().removeClass("ys");
+					$(this).addClass("ys")
+				})
+				$("ul").on("dblclick", "li", function() {
+					$(this).removeClass("ys")
+				})
+			})
+		</script>
+	</body>
+
+</html>

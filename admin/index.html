@@ -184,13 +184,24 @@
 								</a>
 							</li>
 
-							<li id="create2">
+							<li class="create2">
 								<a _href="System/UserInfo.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>查看用户</cite>
 								</a>
 							</li>
-
+							<li class="create2">
+								<a _href="System/Privilege-management.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>权限管理</cite>
+								</a>
+							</li>
+							<li class="create2">
+								<a _href="System/Authority_control.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>权限分配</cite>
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -229,7 +240,7 @@
 	</body>
 	<script>
 		function updatePwd() {
-			 index = layer.open({
+			index = layer.open({
 				type: 1,
 				area: ['500px', '350px'],
 				anim: 2,
@@ -241,7 +252,7 @@
 		}
 	</script>
 	<div id="upPwd" class="layui-fluid">
-		<form class="layui-form" autocomplete="off"lay-filter="test">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
 			<div class="layui-form-item">
 				<label class="layui-form-label">旧密码：</label>
 				<div class="layui-input-block widths">

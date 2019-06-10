@@ -10,6 +10,8 @@ function httpUrl() {
 	//url = "http://192.168.31.154:8888/USERSERVICE"
 	url="http://api.jichuangsi.com/USERSERVICE"
 	//url = "http://192.168.31.108:8083"	
+	//url="http://192.168.31.83:8083"
+//	url="http://192.168.31.182:8083";
 	return url;
 }
 //获取token

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>权限管理</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script src="../lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/System/Privilege-management.js" ></script>
+	</head>
+	<style>
+		.widths {
+			width: 300px;
+		}
+		
+		#updateURL {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
+
+	<body>
+		<div class="x-nav">
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+		</div>
+		<div class="x-body">
+			<div class="layui-row">
+				<div class="layui-col-md5">
+					<form class="layui-form" autocomplete="off">
+						<div class="layui-form-item">
+							<label class="layui-form-label">页面标题：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="name" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">页面URL：</label>
+							<div class="layui-input-block widths">
+								<input type="text" name="url" class="layui-input" lay-verify="required">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="add_url" type="submit">确认添加</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="layui-col-md7">
+					<table id="demo" lay-filter="demo"></table>
+				</div>
+			</div>
+		</div>
+		<script type="text/html" id="Url_del">
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="userDel">删除</span>
+		</script>
+		<script type="text/html" id="Url_update">
+			<span class="layui-btn layui-btn-sm " onclick="Update()">修改</span>
+		</script>
+		<script>
+			function Update() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '350px'],
+					anim: 2,
+					title: '修改URL',
+					maxmin: true,
+					shadeClose: true,
+					content: $('#updateURL')
+				});
+			}
+		</script>
+
+	</body>
+		<div id="updateURL" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">标题名称：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="id" />
+					<input type="text" name="name" class="layui-input " lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">页面URL：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="url" class="layui-input " lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="update_url">确认修改</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</html>

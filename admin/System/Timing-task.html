@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>定时任务</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script src="../lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+	</head>
+
+	<body>
+		<div class="x-body">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">任务名称：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">开启时间：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">结束时间：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">控制Url：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">相关api：</label>
+					<div class="layui-input-block widths">
+						<input type="text" name="account" class="layui-input" lay-verify="required">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">验证：</label>
+					<div class="layui-input-block widths">
+						<div id="slider"></div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit lay- filter="formDemo">确认开启</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+		<script>
+			layui.config({
+				base: '../js/modules/'
+			}).extend({
+				numinput: 'numinput/numinput',
+				sliderVerify: 'numinput/sliderVerify',
+				notice: 'dist/notice'
+			}).use(['form', 'numinput', 'sliderVerify', 'notice'], function() {
+				var form = layui.form,
+					numinp = layui.numinput,
+					sliderVerify = layui.sliderVerify,
+					notice = layui.notice;
+				numinp.init({
+					// 123:123键置顶, 789:789键置顶
+					topBtns: 123,
+					// 右侧功能按钮
+					rightBtns: true,
+					// 监听键盘事件
+					listening: true
+					// 批量配置默认小数精确度
+					//	defaultPrec: ''
+				});
+				var slider = sliderVerify.render({
+					elem: '#slider',
+					isAutoVerify: false, //关闭自动验证
+					bg: 'layui-bg-red', //自定义背景
+					onOk: function() { //当验证通过回调
+						//layer.msg("滑块验证通过");
+						notice.success("通过验证！");
+					}
+				});
+				//监听提交
+				form.on('submit(formDemo)', function(data) {
+					if(slider.isOk()) { //用于表单验证是否已经滑动成功
+						layer.msg(JSON.stringify(data.field));
+					} else {
+						layer.msg("请先通过滑块验证");
+					}
+					return false;
+				});
+			})
+		</script>
+	</body>
+
+</html>
