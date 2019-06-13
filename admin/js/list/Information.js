@@ -13,6 +13,18 @@ layui.use(['table', 'form', 'layedit'], function() {
 			getPhrase(getSchoolId());
 		}
 	}
+	layedit.set({
+	  uploadImage: {
+		url: httpUrl() + "/back/school/sendMessageImage", //接口url
+		type: 'post', //默认post
+		headers: {
+			'accessToken': getToken()
+		},
+		size: 5*1024,
+		acceptMime: 'images',
+		accept: 'images'
+	  }
+	});
 	var index = layedit.build('demo', {
 		tool: [
 			'strong' //加粗
@@ -25,6 +37,9 @@ layui.use(['table', 'form', 'layedit'], function() {
 			, 'right' //右对齐
 			, 'link' //超链接
 			, 'unlink' //清除链接
+			,'face' //表情
+			,'image' //插入图片
+			//,'help' //帮助
 		]
 	});
 	$("#demo2").next().find('iframe').contents().find('body').prop("contenteditable",false)
@@ -212,8 +227,10 @@ layui.use(['table', 'form', 'layedit'], function() {
 
 	form.on('submit(add_info)', function(data) {
 		var param = data.field;
-		//富文本的内容
-		var str = layedit.getText(index)
+		//富文本的内容		
+		//var str = layedit.getText(index)
+		var str = layedit.getContent(index);
+		//console.log(str);
 		param.content = str;
 		var model = {
 			"schoolId": "",
