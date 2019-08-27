@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script src="../lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
+		<script src="../js/list/courseware_list.js"></script>
+		<title></title>
+	</head>
+	<style type="text/css">
+		#Courseware_sharing {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		.widths {
+			width: 300px;
+		}
+	</style>
+
+	<body>
+		<div class="x-body">
+			<table id="demo" lay-filter="demo"></table>
+		</div>
+	</body>
+	<script type="text/html" id="delCoursew">
+		<span class="layui-btn layui-btn-sm layui-btn-danger" id="del">删除</span>
+	</script>
+	<script type="text/html" id="downloadCourseware">
+		<span class="layui-btn-sm layui-btn" id="download">下载</span>
+	</script>
+	<script type="text/html" id="updateCourseware">
+		<span class="layui-btn-sm layui-btn" onclick="CoursewSharing()">共享</span>
+	</script>
+	<script>
+		function CoursewSharing() {
+			index = layer.open({
+				type: 1,
+				area: ['500px', '300px'],
+				anim: 2,
+				title: '课件共享',
+				maxmin: true,
+				shadeClose: true, //点击遮罩关闭
+				content: $('#Courseware_sharing')
+			});
+		}
+	</script>
+	<div id="Courseware_sharing" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="courseware">
+			<!--<div class="layui-form-item">
+				<label class="layui-form-label">共享课件：</label>
+				<div class="layui-input-block widths">
+					<select name="coursewareid" id="courseware" lay-filter="courseware">
+					</select>
+				</div>
+			</div>-->
+			<div class="layui-form-item">
+				<label class="layui-form-label">共享年级：</label>
+				<div class="layui-input-block widths">
+					<input type="hidden" name="coursewareid" />
+					<input type="hidden" name="coursewarename" />
+					<select name="gradeid" id="grade" lay-filter="grade">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">共享科目：</label>
+				<div class="layui-input-block widths">
+					<select name="subjectid" id="subject" lay-filter="subject">
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="sharing">确认共享</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</html>

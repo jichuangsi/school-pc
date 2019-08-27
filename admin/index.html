@@ -113,10 +113,15 @@
 							<li>
 								<a _href="System/addUserRole.html">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>添加学校用户角色</cite>
+									<cite>添加学校用户职位</cite>
 								</a>
 							</li>
-
+							<li>
+								<a _href="list/Courseware-Sharing.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>课件共享</cite>
+								</a>
+							</li>
 						</ul>
 					</li>
 					<li>
@@ -191,6 +196,12 @@
 								</a>
 							</li>
 							<li class="create2">
+								<a _href="System/Classified-management.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>分类管理</cite>
+								</a>
+							</li>
+							<li class="create2">
 								<a _href="System/Privilege-management.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>权限管理</cite>
@@ -200,6 +211,12 @@
 								<a _href="System/Authority_control.html">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>权限分配</cite>
+								</a>
+							</li>
+							<li class="create2">
+								<a _href="System/Timing-task.html">
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>定时任务</cite>
 								</a>
 							</li>
 						</ul>
@@ -254,15 +271,9 @@
 	<div id="upPwd" class="layui-fluid">
 		<form class="layui-form" autocomplete="off" lay-filter="test">
 			<div class="layui-form-item">
-				<label class="layui-form-label">旧密码：</label>
-				<div class="layui-input-block widths">
-					<input type="hidden" name="userId" />
-					<input type="password" name="oldPwd" class="layui-input ">
-				</div>
-			</div>
-			<div class="layui-form-item">
 				<label class="layui-form-label">新密码：</label>
 				<div class="layui-input-block widths">
+					<input type="hidden" name="userId" />
 					<input type="password" name="newPwd" class="layui-input " lay-verify="pwd">
 				</div>
 			</div>

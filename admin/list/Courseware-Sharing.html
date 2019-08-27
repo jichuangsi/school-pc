@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../css/font.css">
+		<link rel="stylesheet" href="../css/xadmin.css">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+		<script src="../lib/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/xadmin.js"></script>
+		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/list/Courseware-Sharing.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
+		<title>课件共享</title>
+	</head>
+	<style type="text/css">
+		#add_Courseware {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		#Courseware_sharing {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		.widths {
+			width: 300px;
+		}
+	</style>
+
+	<body>
+		<div class="x-nav">
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+		</div>
+		<div class="x-body">
+			<table id="demo" lay-filter="demo"> </table>
+			<blockquote class="layui-elem-quote"><a href="#">下载模板</a></blockquote>
+		</div>
+		<script type="text/html" id="CoursewareList">
+			<span class="layui-btn-sm layui-btn" onclick="courseware_list()">课件列表</span>
+		</script>
+		<script type="text/html" id="CoursewareSharingList">
+			<span class="layui-btn-sm layui-btn" onclick="SharingList()">分享列表</span>
+		</script>
+		<script type="text/html" id="addCourseware">
+			<span class="layui-btn-sm layui-btn" onclick="addCourseware()">添加</span>
+		</script>
+	
+		<script>
+			function addCourseware() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '250px'],
+					anim: 2,
+					title: '上传课件',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: $('#add_Courseware')
+				});
+			}
+
+			function courseware_list() {
+				index = layer.open({
+					type: 2,
+					area:  ['80%', '80%'],
+					anim: 2,
+					title: '课件列表',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: 'courseware_list.html'
+				});
+			}
+			function SharingList() {
+				index = layer.open({
+					type: 2,
+					area: ['80%', '80%'],
+					anim: 2,
+					title: '共享列表',
+					maxmin: true,
+					shadeClose: true, //点击遮罩关闭
+					content: 'sharingList.html'
+				});
+			}
+		</script>
+	</body>
+	<div id="add_Courseware" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="student">
+			<!--<div class="layui-form-item">
+				<label class="layui-form-label">选择老师：</label>
+				<div class="layui-input-block widths">
+					<select name="teacher" id="teacher" lay-filter="teacher">
+					</select>
+				</div>
+			</div>-->
+			<div class="layui-form-item">
+				<label class="layui-form-label">课件名称：</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="name" class="layui-input ">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button style="display:none;" class="layui-btn" lay-submit lay-filter="submit_courseware" id="submit_courseware">提交</button>
+					<div class="layui-upload">
+						<button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+						<button type="button" class="layui-btn" id="test9">开始上传</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</html>

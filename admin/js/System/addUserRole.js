@@ -33,7 +33,7 @@ layui.use(['form', 'table'], function() {
 					},
 					{
 						field: 'roleName',
-						title: '角色'
+						title: '职位'
 					},
 					{
 						field: 'id',

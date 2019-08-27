@@ -15,98 +15,105 @@
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/Configuration.js"></script>
+		<script type="text/javascript" src="../js/System/Timing-task.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
 	</head>
+	<style>
+		.widths {
+			width: 300px;
+		}
+		
+		#taskAdd {
+			display: none;
+			margin-top: 10px;
+		}
+		
+		#taskSee {
+			display: none;
+			margin-top: 10px;
+		}
+	</style>
 
 	<body>
-		<div class="x-body">
-			<form class="layui-form">
-				<div class="layui-form-item">
-					<label class="layui-form-label">任务名称：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">开启时间：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">结束时间：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">控制Url：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">相关api：</label>
-					<div class="layui-input-block widths">
-						<input type="text" name="account" class="layui-input" lay-verify="required">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">验证：</label>
-					<div class="layui-input-block widths">
-						<div id="slider"></div>
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<div class="layui-input-block">
-						<button class="layui-btn" lay-submit lay- filter="formDemo">确认开启</button>
-						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-					</div>
-				</div>
-			</form>
-
+		<div class="x-nav">
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
 		</div>
+		<div class="x-body">
+			<table id="demo" lay-filter="demo"></table>
+		</div>
+		<script type="text/html" id="task_del">
+			<span class="layui-btn layui-btn-sm layui-btn-danger" id="taskDel">删除</span>
+		</script>
+		<script type="text/html" id="task_suspend">
+			<span class="layui-btn layui-btn-sm " id="taskSuspend">暂停</span>
+		</script>
+		<script type="text/html" id="task_start">
+			<span class="layui-btn layui-btn-sm " onclick="taskSee()">开始</span>
+		</script>
+		<script type="text/html" id="task_end">
+			<span class="layui-btn layui-btn-sm " onclick="Update()">结束</span>
+		</script>
+		<script type="text/html" id="task_add">
+			<span class="layui-btn layui-btn-sm " onclick="taskAdd()">添加</span>
+		</script>
+		<script type="text/html" id="task_recovery">
+			<span class="layui-btn layui-btn-sm " id="taskRecovery">恢复</span>
+		</script>
+		<script type="text/html" id="task_see">
+			<span class="layui-btn layui-btn-sm " onclick="taskSee()">查看执行周期</span>
+		</script>
 		<script>
-			layui.config({
-				base: '../js/modules/'
-			}).extend({
-				numinput: 'numinput/numinput',
-				sliderVerify: 'numinput/sliderVerify',
-				notice: 'dist/notice'
-			}).use(['form', 'numinput', 'sliderVerify', 'notice'], function() {
-				var form = layui.form,
-					numinp = layui.numinput,
-					sliderVerify = layui.sliderVerify,
-					notice = layui.notice;
-				numinp.init({
-					// 123:123键置顶, 789:789键置顶
-					topBtns: 123,
-					// 右侧功能按钮
-					rightBtns: true,
-					// 监听键盘事件
-					listening: true
-					// 批量配置默认小数精确度
-					//	defaultPrec: ''
+			function taskAdd() {
+				index = layer.open({
+					type: 1,
+					area: ['500px', '350px'],
+					anim: 2,
+					title: '添加',
+					maxmin: true,
+					shadeClose: true,
+					content: $('#taskAdd')
 				});
-				var slider = sliderVerify.render({
-					elem: '#slider',
-					isAutoVerify: false, //关闭自动验证
-					bg: 'layui-bg-red', //自定义背景
-					onOk: function() { //当验证通过回调
-						//layer.msg("滑块验证通过");
-						notice.success("通过验证！");
-					}
+			}
+
+			function taskSee() {
+				index = layer.open({
+					type: 1,
+					area: ['835px', '450px'],
+					anim: 2,
+					title: '查看执行周期',
+					maxmin: true,
+					shadeClose: true,
+					content: $('#taskSee')
 				});
-				//监听提交
-				form.on('submit(formDemo)', function(data) {
-					if(slider.isOk()) { //用于表单验证是否已经滑动成功
-						layer.msg(JSON.stringify(data.field));
-					} else {
-						layer.msg("请先通过滑块验证");
-					}
-					return false;
-				});
-			})
+			}
 		</script>
 	</body>
+	<div id="taskSee" class="layui-fluid">
+		<div id="toolfk-widget" data-url="generate-crontab" style="height: 350px;"></div>
+		<!--<script type="text/javascript" src="//www.toolfk.com/widget.js" async="async"></script>-->
+	</div>
+	<div id="taskAdd" class="layui-fluid">
+		<form class="layui-form" autocomplete="off" lay-filter="test">
+			<div class="layui-form-item">
+				<label class="layui-form-label">添加包名:</label>
+				<div class="layui-input-block widths">
+					<input type="text" name="jobName" class="layui-input " lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">cron表达式:</label>
+				<div class="layui-input-block widths">
+					<!--<div id="toolfk-widget" data-url="generate-crontab"></div><script type="text/javascript" src="//www.toolfk.com/widget.js" async="async"></script>-->
+					<input type="text" name="cron" class="layui-input " lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<div class="layui-btn" lay-submit lay-filter="add_task">立即提交</div>
+				</div>
+			</div>
+		</form>
+	</div>
 
 </html>

@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
 		<script type="text/javascript" src="../js/System/Authority_control.js"></script>
+		<script type="text/javascript" src="../js/util.js"></script>
 	</head>
 	<style>
 		.bor {
@@ -28,6 +29,8 @@
 		}
 		
 		.liys {
+			line-height: 40px;
+			user-select: none;
 			font-size: 18px;
 			border: 1px solid #009688;
 			margin-bottom: 10px;
@@ -35,11 +38,12 @@
 		
 		.liys:hover {
 			cursor: pointer;
-			background-color: #009688;
-			color: white;
+			/*background-color: #009688;
+			color: white;*/
 		}
 		
 		.ys {
+			user-select: none;
 			background-color: #009688;
 			color: white;
 		}
@@ -70,9 +74,10 @@
 					<fieldset class="layui-elem-field bor">
 						<legend>权限分配</legend>
 						<div class="layui-field-box">
-							<div style="width: 100%;  height:600px;overflow:auto;" class="bor" id="library">
-								<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
-								</ul>
+							<div style="width: 100%;  height:600px;overflow:auto;font-size: 18px;" class="bor" id="library">
+								<div id="urlTree" class="demo-tree-more layui-anim-scaleSpring"></div>
+								<!--<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
+								</ul>-->
 							</div>
 						</div>
 					</fieldset>
@@ -81,12 +86,12 @@
 				<div class="layui-col-md2" style="height:600px;align-content: center;">
 					<div class="layui-row grid-demo" style="margin-top: 100%;">
 						<div class="layui-col-md6" style="text-align: center;">
-							<span class="layui-btn layui-btn-radius" id="del">
+							<button class="layui-btn layui-btn-radius" id="del" title="取消角色权限">
 							<i class="layui-icon layui-icon-prev" style="font-size: 30px;" ></i> 
-						</span>
+						</button>
 						</div>
 						<div class="layui-col-md6" style="text-align: center;">
-							<span class="layui-btn layui-btn-radius" id="add">
+							<span class="layui-btn layui-btn-radius" id="add" lay-demo="getChecked" title="添加角色权限">
 							<i class="layui-icon layui-icon-next" style="font-size: 30px; " ></i> 
 						</span>
 						</div>
@@ -97,20 +102,19 @@
 						<legend>角色权限</legend>
 						<div class="layui-field-box">
 							<div style="width: 100%; height: 600px;overflow:auto;" class="bor" id="area">
-								<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
-								</ul>
+								<div id="roleTree" class="demo-tree-more layui-anim-scaleSpring"></div>
+								<!--<ul style="width: 90%;margin:10px auto;text-align: center;line-height: 45px;">
+								</ul>-->
 							</div>
 						</div>
 					</fieldset>
 
 				</div>
 			</div>
-			<blockquote class="layui-elem-quote layui-quote-nm">单击选择，双击取消</blockquote>
 		</div>
 		<script>
 			$(function() {
 				$("ul").on("click", "li", function() {
-					//$(this).addClass("ys").siblings().removeClass("ys");
 					$(this).addClass("ys")
 				})
 				$("ul").on("dblclick", "li", function() {

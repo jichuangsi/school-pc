@@ -111,10 +111,10 @@ layui.use(['table', 'form'], function() {
 		var subjectList = param.secondarySubjects
 		showSubject(subjectList);
 		$(document).on('click', '#choiceTeacher', function() {
-			ChoiceTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName);
+			ChoiceTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase.phraseId);
 		});
 		$(document).on('click', '#choicePrimaryTeacher', function() {
-			ChoicePrimaryTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName);
+			ChoicePrimaryTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase.phraseId);
 		});
 	});
 	///
@@ -131,7 +131,10 @@ layui.use(['table', 'form'], function() {
 		}
 	}
 
-	function ChoiceTeacher(id, subjectId, subjectName) {
+	function ChoiceTeacher(id, subjectId, subjectName,phraseId) {
+		if(list.phraseId==null){
+			list.phraseId=phraseId
+		}
 		var model = {
 			"phraseName":list.phraseName,
 			"phraseId":list.phraseId,
@@ -209,7 +212,10 @@ layui.use(['table', 'form'], function() {
 		});
 	}
 
-	function ChoicePrimaryTeacher(id, subjectId, subjectName) {
+	function ChoicePrimaryTeacher(id, subjectId, subjectName,phraseId) {
+		if(list.phraseId==null){
+			list.phraseId=phraseId
+		}
 		var param = {
 			"phraseName":list.phraseName,
 			"phraseId":list.phraseId,
@@ -252,4 +258,5 @@ layui.use(['table', 'form'], function() {
 			});
 		});
 	}
+	
 });

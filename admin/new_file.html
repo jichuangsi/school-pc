@@ -15,12 +15,82 @@
 		<script src="./lib/js/jquery.min.js"></script>
 		<script src="./lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<script type="text/javascript" src="./js/Configuration.js"></script>
 	</head>
 
 	<body>
-		<input type="checkbox" name="" title="写作" checked>
-		<input type="checkbox" name="" title="发呆">
-		<input type="checkbox" name="" title="禁用" disabled>
+		<div id="test1" class="demo-tree"></div>
+		<button class="layui-btn" id="add">获取</button>
+		<script>
+			layui.use(['tree', 'util'], function() {
+				var tree = layui.tree,
+					util = layui.util
+				get();
+
+				function get() {
+					$.ajax({
+						type: "get",
+						url: './json/city.json',
+						contentType: 'application/json',
+						success: function(d) {
+							var inst1 = tree.render({
+								elem: '#test1',
+								showCheckbox: true,
+								data: d,
+								id: 'treeUrlId'
+							});
+						}
+					})
+				}
+				$(document).on('click', '#add', function() {
+					getbox()
+				});
+
+				function getbox() {
+					console.log(tree);
+					var checkedData = tree.getChecked('treeUrlId'); //获取选中节点的数据
+					console.log(checkedData)
+				}
+				//getSort();
+				var sortList = [];
+				//获取分类
+				function getSort() {
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/getAllUseWay",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						contentType: 'application/json',
+						success: function(res) {
+							if(res.code == '0010') {
+								sortList = res.data;
+								console.log(sortList)
+							}
+						}
+					});
+				}
+				getRole();
+				//获取权限
+				function getRole() {
+					$.ajax({
+						type: "get",
+						url: httpUrl() + "/back/role/getRoles",
+						async: false,
+						headers: {
+							'accessToken': getToken()
+						},
+						success: function(res) {
+							if(res.code == '0010') {
+								var arr = [];
+								arr = res.data;
+							}
+						}
+					});
+				}
+			});
+		</script>
 	</body>
 
 </html>

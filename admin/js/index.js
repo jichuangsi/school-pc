@@ -57,7 +57,7 @@ layui.use("form", function() {
 			$('#site').removeClass('site')
 		} else if(admin == '管理员') { //学校管理员
 			$('#nav').first('li').find('ul').first().find('li').slice(0, 1).hide();
-			$('#create3').hide();
+			//$('#create3').hide();
 			$('#create').hide();
 			$('.create2').hide();
 			$('#site').hide();

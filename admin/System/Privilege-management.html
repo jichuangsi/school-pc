@@ -15,7 +15,7 @@
 		<script src="../lib/js/jquery.min.js"></script>
 		<script type="text/javascript" src="../lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="../js/xadmin.js"></script>
-		<script type="text/javascript" src="../js/System/Privilege-management.js" ></script>
+		<script type="text/javascript" src="../js/System/Privilege-management.js"></script>
 	</head>
 	<style>
 		.widths {
@@ -37,6 +37,14 @@
 			<div class="layui-row">
 				<div class="layui-col-md5">
 					<form class="layui-form" autocomplete="off">
+						<div class="layui-form-item">
+							<label class="layui-form-label">权限分类</label>
+							<div class="layui-input-block widths">
+								<select name="usewayid" lay-verify="required" lay-filter="status" id="status">
+									<option value="-1">请选择分类</option>
+								</select>
+							</div>
+						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">页面标题：</label>
 							<div class="layui-input-block widths">
@@ -68,6 +76,21 @@
 		<script type="text/html" id="Url_update">
 			<span class="layui-btn layui-btn-sm " onclick="Update()">修改</span>
 		</script>
+		<script type="text/html" id="search">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12">
+					<div class="layui-input-inline" style="width: 150px;">
+						<select name="type" id="useway" lay-filter="useway">
+							<option value="-1">请选择分类</option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<input type="text" name="name" placeholder="标题" autocomplete="off" class="layui-input" style="width: 150px;">
+					</div>
+					<div class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></div>
+				</form>
+			</div>
+		</script>
 		<script>
 			function Update() {
 				index = layer.open({
@@ -83,13 +106,23 @@
 		</script>
 
 	</body>
-		<div id="updateURL" class="layui-fluid">
+	<div id="updateURL" class="layui-fluid">
 		<form class="layui-form" autocomplete="off" lay-filter="test">
 			<div class="layui-form-item">
 				<label class="layui-form-label">标题名称：</label>
 				<div class="layui-input-block widths">
 					<input type="hidden" name="id" />
+					<!--<input type="hidden" name="usewayid" />-->
 					<input type="text" name="name" class="layui-input " lay-verify="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">分类：</label>
+
+				<div class="layui-input-block widths">
+					<select name="usewayid" id="Update_useway" lay-filter="Update_useway">
+						<option value="-1">请选择分类</option>
+					</select>
 				</div>
 			</div>
 			<div class="layui-form-item">
