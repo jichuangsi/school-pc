@@ -111,10 +111,10 @@ layui.use(['table', 'form'], function() {
 		var subjectList = param.secondarySubjects
 		showSubject(subjectList);
 		$(document).on('click', '#choiceTeacher', function() {
-			ChoiceTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase.phraseId);
+			ChoiceTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase);
 		});
 		$(document).on('click', '#choicePrimaryTeacher', function() {
-			ChoicePrimaryTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase.phraseId);
+			ChoicePrimaryTeacher(param.id, param.primarySubject.subjectId, param.primarySubject.subjectName,param.phrase);
 		});
 	});
 	///
@@ -133,7 +133,7 @@ layui.use(['table', 'form'], function() {
 
 	function ChoiceTeacher(id, subjectId, subjectName,phraseId) {
 		if(list.phraseId==null){
-			list.phraseId=phraseId
+			list.phraseId=phraseId;
 		}
 		var model = {
 			"phraseName":list.phraseName,

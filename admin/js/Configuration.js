@@ -62,14 +62,4 @@ function getRole() {
 	} else if(admin == '管理员') { //学校管理员
 		return 2
 	}
-
-	//	} else if(admin == "校长") { //校长
-	//		return 2
-	//	} else if(admin == "教务处") { //添加学生一级
-	//		return 3
-	//	} else if(admin =="教师" ) {
-	//		return 4;
-	//	} else {
-	//		return 5;
-	//	}
 }
