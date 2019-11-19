@@ -13,7 +13,7 @@ window.onload = function () {
 	if(sessionStorage.getItem('Selection')){
 		radioItembank($("input[name='ther']").parent()[Number(sessionStorage.getItem('Selection'))-1]);
 		dropSwifts($('.d-firstNav').eq(0), '.d-firstDrop');
-		sessionStorage.removeItem('Selection');
+		// sessionStorage.removeItem('Selection');
 	}
 	/*if(sessionStorage.getItem('one')&&sessionStorage.getItem('two')){
 		edition_click(this,sessionStorage.getItem('one'),sessionStorage.getItem('two'))

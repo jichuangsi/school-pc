@@ -38,7 +38,7 @@ $(function() {
 	document.documentElement.style.fontSize = document.documentElement.clientWidth * 0.1 + 'px';
 
 	var options = {
-		path: local + "/QUESTIONSREPOSITORY/self/sendQuestionPic?code=" + orcode,
+		path: local + "/QUESTIONSREPOSITORY/"+selectionState+"/sendQuestionPic?code=" + orcode,
 		res: {},
 		onSuccess: function(res) {
 			var data = JSON.parse(res);
@@ -83,7 +83,7 @@ function tabs(tabTit, on, tabCon) {
 function transPic(){
 	var cc = {'code':orcode,'sub':$("input[name='questionPic']").val()};
 	$.ajax({
-		url: local + '/QUESTIONSREPOSITORY/self/transQuestionPic',
+		url: local + '/QUESTIONSREPOSITORY/'+selectionState+'/transQuestionPic',
 		type: 'POST',
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
@@ -161,7 +161,7 @@ function modify (){
 		//console.log(id)
 		//console.log(accessToken)
 		$.ajax({
-			url: local + '/QUESTIONSREPOSITORY/self/getQuestion/'+questionid,
+			url: local + '/QUESTIONSREPOSITORY/'+selectionState+'/getQuestion/'+questionid,
 			headers: {
 				'accessToken': accessToken
 			},
@@ -1385,7 +1385,7 @@ function Lookimg() {
 		"questionPic": questionPic,
 		};
 		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/self/getQuestionPic",
+			url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/getQuestionPic",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -1414,7 +1414,7 @@ function Lookimg() {
 		});
 	}else{
 		$.ajax({
-			url: local +'/QUESTIONSREPOSITORY/self/viewQuestionPic/'+orcode,
+			url: local +'/QUESTIONSREPOSITORY/'+selectionState+'/viewQuestionPic/'+orcode,
 			type: 'GET',
 			data: {},
 			headers: {
