@@ -13,6 +13,12 @@ var arr;
 var orcode
 var radioall
 var questionid = ''
+var selectionState = ''
+if(sessionStorage.getItem('Selection') == '2'){
+	selectionState = 'school'
+}else if(sessionStorage.getItem('Selection') == '3'){
+	selectionState = 'self'
+}
 $(function() {
 	getLocation();
 	modify();
@@ -895,7 +901,7 @@ function saveQuestion() {
 
 		//console.log(JSON.stringify(cc));
 		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/saveQuestion",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -992,7 +998,7 @@ function saveQuestionPack() {
 			"code": orcode
 		}
 		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/saveQuestion",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -1099,7 +1105,7 @@ function saveQuestionStone() {
 			"code": orcode
 		}
 		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/saveQuestion",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -1203,7 +1209,7 @@ function saveCompletionQuestion() {
 			"code": orcode
 		}
 		$.ajax({
-			url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+			url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/saveQuestion",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -1288,7 +1294,7 @@ function saveSubjectiveQuestions() {
 	}
 	console.log(cc)
 	$.ajax({
-		url: local + "/QUESTIONSREPOSITORY/self/saveQuestion",
+		url: local + "/QUESTIONSREPOSITORY/"+selectionState+"/saveQuestion",
 		headers: {
 			'accessToken': accessToken
 		},
