@@ -25,7 +25,8 @@ function Login() {
 			"userPwd": pwd
 		}
 		$.ajax({
-			url: local + "/api/auth/login",
+			// local +   /api/auth 修改登陆
+			url: "http://192.168.1.3:8083/login",
 			type: "post",
 			async: false,
 			contentType: 'application/json',

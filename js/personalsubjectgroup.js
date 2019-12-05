@@ -13,7 +13,7 @@ window.onload = function () {
 	if(sessionStorage.getItem('Selection')){
 		radioItembank($("input[name='ther']").parent()[Number(sessionStorage.getItem('Selection'))-1]);
 		dropSwifts($('.d-firstNav').eq(0), '.d-firstDrop');
-		// sessionStorage.removeItem('Selection');
+		sessionStorage.removeItem('Selection');
 	}
 	/*if(sessionStorage.getItem('one')&&sessionStorage.getItem('two')){
 		edition_click(this,sessionStorage.getItem('one'),sessionStorage.getItem('two'))
@@ -179,7 +179,16 @@ function loopitem() {
 							knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
 					});
 				}
-				a1 += knowledge;				
+				a1 += knowledge;
+				var features="";
+				if(!itembaklist.content[i].topic||itembaklist.content[i].topic.length===0){
+					features="<div class='info_3_div'><p><span>本题暂未添加分类！</span></p></div>"
+				}else{
+					itembaklist.content[i].topic.forEach(function(item, index){
+						features+="<div class='info_3_div'><p><span>" + item.tname + " -- " + item.type + "</span></p></div>";
+					});
+				}
+				a1+=features;
 				a1 += "</div>";
 				a1 += "<div class='info_4'><span>【题型】</span><span class='info_4_span'>" + itembaklist.content[i].quesetionType + "</span></div>";
 				a1 += "</div>";
@@ -273,6 +282,7 @@ function customCollectionImg_click(obj) {
 			}
 		}
 		$.ajax({
+			//这里修改
 			url: local + "/QUESTIONSREPOSITORY/favor/saveQuestion",
 			headers: {
 				'accessToken': accessToken
@@ -302,6 +312,7 @@ function customCollectionImg_click(obj) {
 			"ids": cs
 		};
 		$.ajax({
+			//这里修改
 			url: local + "/QUESTIONSREPOSITORY/favor/deleteQuestions",
 			headers: {
 				'accessToken': accessToken
@@ -355,6 +366,7 @@ function getItembankinfo() {
 		"pageSize": 4
 	};
 	$.ajax({
+		//url: local + "/QUESTIONSREPOSITORY/" + itembackMethod,这里修改
 		url: local + "/QUESTIONSREPOSITORY/" + itembackMethod,
 		headers: {
 			'accessToken': accessToken
@@ -366,6 +378,7 @@ function getItembankinfo() {
 		contentType: 'application/json',
 		success: function(data) {
 			itembaklist = data.data;
+				console.log(itembaklist)
 		},
 		error: function() {
 			alert("失败");
@@ -380,6 +393,7 @@ function isExistFavor(md52) {
 		"MD52": md52,
 	};
 	$.ajax({
+		//这里修改了
 		url: local + "/QUESTIONSREPOSITORY/favor/isExistFavor",
 		headers: {
 			'accessToken': accessToken
@@ -405,6 +419,7 @@ function getQuestionPic(pic, pid) {
 		"questionPic": pic,
 	};
 	$.ajax({
+		//这里修改了
 		url: local + "/QUESTIONSREPOSITORY/" + getQuestionPicUrl,
 		headers: {
 			'accessToken': accessToken

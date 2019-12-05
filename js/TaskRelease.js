@@ -9,13 +9,14 @@ var count; //多少堂课
 var sortNum = 2;
 var getQuestionPicUrl = "self/getQuestionPic"; //获取图片的接口路径
 var hwstatus = 'EMPTY';
+
 function setCount(count, currentPage, size) {
 	$("#count").text(count);
-	if(count>0){			
+	if(count > 0) {
 		$("#index").text(currentPage);
 		var size1 = Math.ceil(count / size);
 		$("#Size").text(size1);
-	}else{
+	} else {
 		$("#index").text('');
 		$("#Size").text('');
 	}
@@ -34,8 +35,8 @@ $(function() {
 	initAttendtimemin("");
 	inintUPdate();
 	showHomeworkList(true);
-	sessionStorage.setItem('position','习题')
-	
+	sessionStorage.setItem('position', '习题')
+
 });
 
 function getNowFormatDate() {
@@ -76,37 +77,38 @@ function liall(obj) {
 	} else if($(obj).text() == "已结束") {
 		hwstatus = 'COMPLETED';
 		showHomeworkList(true);
-	}else {
+	} else {
 		hwstatus = "EMPTY";
 		showHomeworkList(true);
 	}
 }
 
-function checkPageElement(pageIndex){
+function checkPageElement(pageIndex) {
 	var cname = $("#cname").val();
 	var ymd = $("#ymd").val();
-	if(ymd){
+	if(ymd) {
 		var startTime = ymd + " 00:00:00";
 		ymd = new Date(startTime.replace(new RegExp("-", "gm"), "/")).getTime();
 	}
-	if(!pageIndex){
+	if(!pageIndex) {
 		pageIndex = 1;
 	}
 	var cs = {
 		"keyWord": cname, //名称，简介查询
-		"pageIndex": pageIndex,//页码
-		"pageSize": pageSize,//每页记录数
-		"sortNum": sortNum,//排序
+		"pageIndex": pageIndex, //页码
+		"pageSize": pageSize, //每页记录数
+		"sortNum": sortNum, //排序
 		"status": hwstatus, //状态
 		"time": ymd //日期
 	};
 	return cs;
 }
 
-function showHomeworkList(first, pageIndex){
+function showHomeworkList(first, pageIndex) {
 	var cs = checkPageElement(pageIndex);
 	$.ajax({
 		url: local + "/HOMEWORKSERVICE/console/getSortedList",
+		//		url: "http://192.168.1.3:8086" + "/console/getSortedList",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -121,10 +123,10 @@ function showHomeworkList(first, pageIndex){
 			if(first) $("#main-list").empty();
 			pageList(data.data.total, data.data.pageNum, data.data.pageSize);
 			setCount(data.data.total, data.data.pageNum, data.data.pageSize);
-			LookClass(data.data.content, (data.data.pageNum-1)*data.data.pageSize);
+			LookClass(data.data.content, (data.data.pageNum - 1) * data.data.pageSize);
 			hwLlistInPage = data.data.content;
 			//count = data.data.total;
-			
+
 		},
 		error: function() {
 
@@ -187,7 +189,7 @@ function pageList(count, currentPage, size) {
 }*/
 
 function LookClass(datalist, num) {
-	if(datalist&&datalist.length > 0) {
+	if(datalist && datalist.length > 0) {
 		var sourceNode = document.getElementById("main-list");
 		for(i = 0; i < datalist.length; i++) {
 			++num;
@@ -203,8 +205,8 @@ function LookClass(datalist, num) {
 			} else if(datalist[i].homeworkStatus === "COMPLETED") {
 				al = "已结束";
 			}
-			var dateStr = '-';	
-			if(datalist[i].homeworkEndTime&&datalist[i].homeworkEndTime>0){
+			var dateStr = '-';
+			if(datalist[i].homeworkEndTime && datalist[i].homeworkEndTime > 0) {
 				var formatDate = formatTimestamp(datalist[i].homeworkEndTime);
 				var date = formatDate.split(' ')
 				var time = date[1].split(':');
@@ -215,29 +217,29 @@ function LookClass(datalist, num) {
 			con.innerHTML += '<div class="class-static">' + al + '</div>';
 			con.innerHTML += '<div class="room-static"><label>习题名称：</label><span name="name">' + datalist[i].homeworkName + '</span></div>';
 			con.innerHTML += '<div class="room-class-two"><label>对应班级：</label><span name="className">' + datalist[i].className + '</span></div>';
-			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:106px;top:84px;background-color:#59e8e3;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';	
-			if(datalist[i].homeworkStatus === "NOTSTART") {			
+			con.innerHTML += '<div class="room-introduction  btn btn8" style="left:106px;top:89px;background-color:#59e8e3;" onclick="showInfo(this)">习题范畴<input type="hidden" name="info" value="' + datalist[i].homeworkInfo + '"/></div>';
+			if(datalist[i].homeworkStatus === "NOTSTART") {
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>发布习题</div>';
-			}else if(datalist[i].homeworkStatus === "PROGRESS"){
+			} else if(datalist[i].homeworkStatus === "PROGRESS") {
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'FINISH\',this)"><input type="hidden"  value="' + id + '"/>终止作答</div>';
-			}else if(datalist[i].homeworkStatus === "COMPLETED"){
+			} else if(datalist[i].homeworkStatus === "COMPLETED") {
 				// con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 				con.innerHTML += '<div class="class-but-ph-hk" style="background-color:#999"><input type="hidden"  value="' + id + '"/>习题已结束</div>';
-			}
-			else if(datalist[i].homeworkStatus === "FINISH"){
+			} else if(datalist[i].homeworkStatus === "FINISH") {
 				con.innerHTML += '<div class="class-but-ph-hk" onclick="updateHomeworkStatus(\'PROGRESS\',this)"><input type="hidden"  value="' + id + '"/>重新发布</div>';
 			}
-			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>'+dateStr+'</div>';
+			con.innerHTML += '<div class="btn btn8 class-xq-xs"onclick="teacher()" style="display: block;">添加学生</div>';
+			con.innerHTML += '<div class="room-static but-kc"><label>提交时间：</label>' + dateStr + '</div>';
 			con.innerHTML += '<div class="room-class-two but-kc"><label></label></div>';
 			if(datalist[i].homeworkStatus === "NOTSTART") {
 				con.innerHTML += '<div class="but-update" style="left:-18px"  onclick="ShowDiv(MyDiv,fade,this)"><input type="hidden" name="id" value="' + id + '"  />修改习题</div>';
 			}
 			if(datalist[i].homeworkStatus === "NOTSTART") {
-			con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
+				con.innerHTML += '<div class="class-but-del-hk" onclick="DelDate(this)"><input type="hidden"  value="' + id + '"  />删除习题</div>';
 			}
 			if(datalist[i].homeworkStatus === "FINISH") {
 				con.innerHTML += '<div class="class-but-del-hk" style="background-color:#3D72FE" onclick="updateHomeworkStatus(\'COMPLETED\',this)"><input type="hidden"  value="' + id + '"  />结束习题</div>';
-				}
+			}
 			con.innerHTML += '<div class="class-bottom"><div class="room-static"><label>班级人数：</label><span>' + datalist[i].students.length + '人</span><div class="btn btn8 class-xq" onclick="showList(this)">题目列表</div><input type="hidden" name="userId" value="' + id + '"  /></div><div><div class="room-class-two"> ';
 			sourceNode.append(con);
 		}
@@ -260,6 +262,7 @@ function showBg(obj) {
 function inintUPdate() {
 	$.ajax({
 		url: local + "/HOMEWORKSERVICE/console/getElements",
+		//		url: "http://192.168.1.3:8086" + "/console/getElements",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -289,36 +292,81 @@ function initAttendClass(AttendClassText, sClass) {
 	}
 }
 
-function updateHomeworkStatus(newStatus, obj){
+function updateHomeworkStatus(newStatus, obj) {
 	var id = $(obj).find("input").val();
 	var cc = {
 		"homeworkId": id,
 		"homeworkStatus": newStatus
 	};
-	$.ajax({
-		url: local + "/HOMEWORKSERVICE/console/updateHomeWorkStatus",
-		headers: {
-			'accessToken': accessToken
-		},
-		type: 'POST',
-		async: true,
-		cache: false,
-		data: JSON.stringify(cc),
-		contentType: 'application/json',
-		success: function(returndata) {
-			if(returndata.code==="0010"){
-				swal("操作完成!", "", "success");
-				setTimeout(function() {
-					window.location.reload();
-				}, 1000);			
-			}else{
-				swal("出错啦", returndata.msg, "error");
+	console.log(newStatus)
+	if(student.length != null && student.length != 0) {
+		cc.student = student;
+		if(newStatus == 'FINISH') {
+			var msg = '成功终止'
+			for(var i = 0; i < student.length; i++) {
+				msg += student[i].name + ','
 			}
-		},
-		error: function(returndata) {
-			swal("发布失败!", "", "error");
+			msg += "学生做题！"
+		} else {
+			var msg = '成功向'
+			for(var i = 0; i < student.length; i++) {
+				msg += student[i].name + ','
+			}
+			msg += "学生发布题目！"
 		}
-	});
+
+		$.ajax({
+			url: local + "/HOMEWORKSERVICE/console/updateHomeWorkStatus",
+			//			url: "http://192.168.1.3:8086" + "/console/updateHomeWorkStatusAndStudent",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: true,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				if(returndata.code === "0010") {
+					swal(msg, "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 2000);
+				} else {
+					swal("出错啦", returndata.msg, "error");
+				}
+			},
+			error: function(returndata) {
+				swal("发布失败!", "", "error");
+			}
+		});
+	} else {
+		$.ajax({
+			url: local + "/HOMEWORKSERVICE/console/updateHomeWorkStatus",
+			//			url: "http://192.168.1.3:8086" + "/console/updateHomeWorkStatus",
+			headers: {
+				'accessToken': accessToken
+			},
+			type: 'POST',
+			async: true,
+			cache: false,
+			data: JSON.stringify(cc),
+			contentType: 'application/json',
+			success: function(returndata) {
+				if(returndata.code === "0010") {
+					swal("操作完成!", "", "success");
+					setTimeout(function() {
+						window.location.reload();
+					}, 1000);
+				} else {
+					swal("出错啦", returndata.msg, "error");
+				}
+			},
+			error: function(returndata) {
+				swal("发布失败!", "", "error");
+			}
+		});
+	}
 }
 
 function updateSub() {
@@ -349,6 +397,7 @@ function updateSub() {
 	};
 	$.ajax({
 		url: local + "/HOMEWORKSERVICE/console/updateHomeWorkContent",
+		//		url: "http://192.168.1.3:8086" + "/console/updateHomeWorkContent",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -358,13 +407,13 @@ function updateSub() {
 		data: JSON.stringify(cc),
 		contentType: 'application/json',
 		success: function(returndata) {
-			if(returndata.code==="0010"){
+			if(returndata.code === "0010") {
 				swal("修改完成!", "", "success");
 				CloseDiv("MyDiv", "fade");
 				setTimeout(function() {
 					window.location.reload();
-				}, 1000);			
-			}else{
+				}, 1000);
+			} else {
 				swal("出错啦", returndata.msg, "error");
 			}
 		},
@@ -439,6 +488,7 @@ function DelDate(obj) {
 
 		$.ajax({
 			url: local + "/HOMEWORKSERVICE/console/deleteHomeWork",
+			//			url: "http://192.168.1.3:8086" + "/console/deleteHomeWork",
 			headers: {
 				'accessToken': accessToken
 			},
@@ -480,7 +530,7 @@ function ShowDiv(MyDiv, fade, obj) {
 	var name = $(obj).parent().find("span[name='name']").text();
 	$("#name").val(name);
 	var str = $(obj).parent().find(".ClassTime").text();
-	if(str){
+	if(str) {
 		var ymd = str.split(" ")[0];
 		ymd = ymd.replace(/[^\d]/g, '-');
 		ymd = ymd.substring(0, 10);
@@ -488,7 +538,7 @@ function ShowDiv(MyDiv, fade, obj) {
 		var hm = str.split(" ")[1].split(":");
 		$("#time-hour").val(hm[0]);
 		$("#time-min").val(hm[1]);
-	}	
+	}
 	var info = $(obj).parent().find("input[name='info']").val();
 	$("#ClassroomSynopsis").val(info);
 	document.getElementById("MyDiv").style.display = 'block';
@@ -534,18 +584,18 @@ function getDate(obj) {
 			a1 = "CollectionNo";
 		}
 		var knowledge = "";
-			if(!questionNode[i].knowledges||questionNode[i].knowledges.length===0) {
-				knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
-			} else {
-				questionNode[i].knowledges.forEach(function(item, index){
-					if(item.knowledge&&item.capability)
-						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
-					else if(item.knowledge&&!item.capability)
-						knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
-					else if(!item.knowledge&&item.capability)
-						knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
-				});
-			}
+		if(!questionNode[i].knowledges || questionNode[i].knowledges.length === 0) {
+			knowledge = "<div class='info_3_div'><p><span>本题暂未归纳！</span></p></div>"
+		} else {
+			questionNode[i].knowledges.forEach(function(item, index) {
+				if(item.knowledge && item.capability)
+					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- " + item.capability + "</span></p></div>";
+				else if(item.knowledge && !item.capability)
+					knowledge += "<div class='info_3_div'><p><span>" + item.knowledge + " -- /" + "</span></p></div>";
+				else if(!item.knowledge && item.capability)
+					knowledge += "<div class='info_3_div'><p><span>" + "/ -- " + item.capability + "</span></p></div>";
+			});
+		}
 		var j = 0;
 		var node = document.createElement("div");
 		var num1 = Math.round(Math.random() * 9999);
@@ -553,8 +603,8 @@ function getDate(obj) {
 		var num3 = (Math.round(Math.random() * 9999)) / 100;
 		node.setAttribute("class", "subjectList");
 		var a2 = "";
-		var imgurl="";
-		node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/></div>';//<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
+		var imgurl = "";
+		node.innerHTML = '<div class="subjectList_top"><span>' + num + '</span><img onclick="CollectionImg_click(this)" src="../img/' + a1 + '.png" /><input type="hidden" name="Mid" value=" ' + questionNode[i].questionIdMD52 + '"/><input type="hidden" id="qid" value=" ' + questionNode.questionId + '"/></div>'; //<i onclick="Truequestion_click(this)" class="Truequestion">真题</i>
 		if(questionNode[i].options[0] != null && questionNode[i].options[0] != "") {
 			a2 = "<div style='clear:both;'><table><tbody>";
 			for(var j = 0; j < questionNode[i].options.length; j++) {
@@ -568,19 +618,19 @@ function getDate(obj) {
 			if(getquestionpic.data != null) {
 				imgurl = "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' src='data:image/jpeg;base64," + getquestionpic.data.content + "'/>";
 			}*/
-			var getquestionpic = getQuestionPic(questionNode[i].questionPic, "preview-"+questionNode[i].questionIdMD52); //调用下载文件的接口返回的数据
-			imgurl += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-"+questionNode[i].questionIdMD52+"' src=''/>";
+			var getquestionpic = getQuestionPic(questionNode[i].questionPic, "preview-" + questionNode[i].questionIdMD52); //调用下载文件的接口返回的数据
+			imgurl += "<br/><img style='display: inline;max-width: 700px;max-height: 350px;' id='preview-" + questionNode[i].questionIdMD52 + "' src=''/>";
 		}
 		node.innerHTML += '<div class="subjectinfo"><div class="subcontent">' + questionNode[i].questionContent + imgurl + '</div>' + a2 + '</div>';
 		node.innerHTML += '<div class="subjectDetails"><span class="s_span" style="position: absolute;left: 1%;">组卷<i class="num1">' + num1 + '</i>次</span><span class="s_span" style="position: absolute;margin-left: 13%;">作答<i class="num2">' + num2 + '</i>人次</span><span class="s_span" style="position: absolute;left: 26%;">平均得分率<i class="num3">' + num3 + '%</i></span><a class="analysis" onclick="analysis_click(this)" style="position: absolute;left: 50%;"><i><img src="../img/analysis.png" /> </i> 解析</a><a class="Situation" onclick="Situation_click(this)" style="position: absolute;left: 60%;"><i><img src="../img/Situation.png" /> </i> 考情</a></div>';
 		//<div class="sub-del" onclick="delObj(this)">删除题目</div><input type="hidden" id="delId" value="' + questionNode[i].questionIdMD52 + '" /></div>';
-		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail?'':"<br/><span>"+questionNode[i].answerDetail+"</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点-认知能力】</span>' + knowledge + '</div><div class="info_4"><span>【题型】</span><span class="info_4_span">' 
-		+ (!questionNode[i].questionTypeInCN?'':questionNode[i].questionTypeInCN) + '</span></div></div>';
+		node.innerHTML += '<div class="subject_info" style="display: none;"><div class="info_1"><span>【答案】</span><span>' + questionNode[i].answer + '</span>' + (!questionNode[i].answerDetail ? '' : "<br/><span>" + questionNode[i].answerDetail + "</span>") + '</div><div class="info_2"><span>【解析】</span><div class="info_2_div">' + questionNode[i].parse + '</div></div><div class="info_3"><span> 【知识点-认知能力】</span>' + knowledge + '</div><div class="info_4"><span>【题型】</span><span class="info_4_span">' +
+			(!questionNode[i].questionTypeInCN ? '' : questionNode[i].questionTypeInCN) + '</span></div></div>';
 		source.appendChild(node);
 	}
 }
 
-function Situation_click(obj){
+function Situation_click(obj) {
 
 }
 
@@ -661,6 +711,7 @@ function isExistFavor(md52) {
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/favor/isExistFavor",
+		//		url: "http://192.168.1.3:8088" + "/favor/isExistFavor",
 		headers: {
 			'accessToken': accessToken
 		},
@@ -725,6 +776,7 @@ function getQuestionPic(pic, pid) {
 	};
 	$.ajax({
 		url: local + "/QUESTIONSREPOSITORY/" + getQuestionPicUrl,
+		//		url: "http://192.168.1.3:8086" + getQuestionPicUrl,
 		headers: {
 			'accessToken': accessToken
 		},
@@ -735,7 +787,7 @@ function getQuestionPic(pic, pid) {
 		contentType: 'application/json',
 		success: function(data) {
 			//retresult = data;
-			if(data.code==="0010"){
+			if(data.code === "0010") {
 				if(data.data.content) $("#" + pid).attr('src', "data:image/jpeg;base64," + data.data.content);
 			}
 		},
@@ -744,4 +796,18 @@ function getQuestionPic(pic, pid) {
 		}
 	});
 	return retresult;
+}
+//获取学生
+var student = [];
+
+function getStudent(newStatus, obj) {
+	var selectArr = demo1.getValue();
+
+	for(var i = 0; i < selectArr.length; i++) {
+		student.push({
+			studentId: selectArr[i].value,
+			studentName: selectArr[i].name
+		})
+	}
+	layer.close(index);
 }

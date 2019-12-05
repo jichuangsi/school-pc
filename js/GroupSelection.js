@@ -258,6 +258,27 @@ function Obtain_subject() {
 		$("#page_lefts").text(pagenum1);
 		$("#page_rights").text(pagecount1);
 		var num = 1;
+		$(".f4").empty();
+		var paperType=[];
+		var flag=false;
+		for(var i = 0; i < subjectlist.content.length; i++){
+			if(subjectlist.content[i].tipc==undefined){
+				flag=false;
+			}else{
+				paperType.push(subjectlist.content[i].tipc)
+				flag=true;
+			}
+		}
+		//找到类型然后添加
+		if(flag){
+			for(var j = 0; j < paperType.length; j++) {
+				var a1 = "<a  onclick='paperType_a_click(this," + paperType[j].tname + ")'>" + paperType[j].type + "</a>";
+				$(".f4").append(a1);
+			}
+		}else{
+			$(".f4").parent().empty();
+		}
+		
 		for(var i = 0; i < subjectlist.content.length; i++, num++) {
 			var a1 = "<div class='subjectList'><div class='subjectList_top'><span>" + num + "</span>";
 			isExistFavor(subjectlist.content[i].questionNode.qid); //调用判断是否已经收藏该题目
@@ -769,6 +790,7 @@ function edition_click(obj, editionid,gradeId) {
 		"editionId": editionid
 	};
 	$.ajax({
+		//这里修改了/QUESTIONSREPOSITORY
 		url: local + "/QUESTIONSREPOSITORY/question/getChapterInfo",
 		headers: {
 			'accessToken': accessToken
@@ -1016,6 +1038,7 @@ function Chapter_click() {
 		"page": pageIndex1
 	};
 	$.ajax({
+		//这里修改了
 		url: local + "/QUESTIONSREPOSITORY/question/getQuestionsExtraByKnowledge",
 		headers: {
 			'accessToken': accessToken
@@ -1037,6 +1060,7 @@ function Chapter_click() {
 
 function inits() {
 	$.ajax({
+		//这里修改了/QUESTIONSREPOSITORY
 		url: local + "/QUESTIONSREPOSITORY/question/getOtherBasicInfo",
 		headers: {
 			'accessToken': accessToken
@@ -1055,6 +1079,7 @@ function inits() {
 		}
 	});
 	$.ajax({
+		//这里修改了
 		url: local + "/QUESTIONSREPOSITORY/question/getSubjectEditionInfoByTeacher",
 		headers: {
 			'accessToken': accessToken
